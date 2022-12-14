@@ -52,7 +52,7 @@ body {
   display: flex;
   height: 100vh;
 }
-.onboard-wrapper .left {
+.onboard-wrapper .left, .onboard-wrapper .left-signin {
   width: 100%;
   height: 100%;
   background-image: url("../images/unsplash.png");
@@ -61,7 +61,15 @@ body {
   background-position: center center;
   flex: 1;
 }
-.onboard-wrapper .right {
+.onboard-wrapper .left-signin {
+  background-image: url("../images/unsplash_signin.png");
+}
+@media screen and (max-width: 1024px) {
+  .onboard-wrapper .left-signin {
+    display: none;
+  }
+}
+.onboard-wrapper .right, .onboard-wrapper .right-signin {
   width: 100%;
   height: 100%;
   flex: 1;
@@ -76,6 +84,87 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+}
+@media screen and (max-width: 1024px) {
+  .onboard-wrapper .right, .onboard-wrapper .right-signin {
+    display: none;
+  }
+}
+.onboard-wrapper .right-signin-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 80px 40px auto 40px;
+  min-height: 300px;
+}
+.onboard-wrapper .right-signin-container-nav {
+  display: flex;
+  justify-content: flex-start;
+  padding: 21px 10px;
+  cursor: pointer;
+}
+.onboard-wrapper .right-signin-container-content {
+  margin: 80px 60px;
+}
+.onboard-wrapper .right-signin-container-content .heading .logo {
+  max-width: 120px;
+  max-height: 30px;
+}
+.onboard-wrapper .right-signin-container-content .heading .welcome {
+  margin-top: 16px;
+  font-size: 32px;
+}
+.onboard-wrapper .right-signin-container-content .group-input {
+  margin: 32px 0px;
+}
+.onboard-wrapper .right-signin-container-content .group-action .signin {
+  width: 100%;
+}
+.onboard-wrapper .right-signin-container-content .group-action .register-link {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+}
+.onboard-wrapper .right-signin-container-content .group-action .register-link .have-account {
+  font-weight: 400;
+  margin-right: 8px;
+}
+.onboard-wrapper .right-signin-container-content .group-action .register-link .register-now {
+  font-weight: 400;
+  color: #C43330;
+  text-decoration: none;
+}
+.onboard-wrapper .right-signin-container-content .sign-seperator {
+  margin-top: 32px;
+  width: 100%;
+  height: 24px;
+  text-align: center;
+  border-top: 1px solid #7F7F7F;
+}
+.onboard-wrapper .right-signin-container-content .sign-seperator .sepe-title {
+  font-weight: 400;
+  font-family: "Roboto";
+  font-style: normal;
+  font-size: 16px;
+  background-color: #FFF;
+  padding: 0 16px;
+  position: relative;
+  top: -16px;
+}
+.onboard-wrapper .right-signin-container-content .signin-other-platform .sign-google {
+  margin-bottom: 24px;
+}
+.onboard-wrapper .right-signin-container-content .signin-other-platform .sign-other-btn {
+  background-color: #fff !important;
+  border: 1px solid #C43330 !important;
+  width: 100%;
+  flex-direction: row !important;
+  color: #C43330 !important;
+}
+@media screen and (max-width: 1024px) {
+  .onboard-wrapper .right-signin {
+    display: block;
+  }
 }
 .onboard-wrapper .container {
   width: 380px;
@@ -98,11 +187,7 @@ body {
   line-height: 150%;
   color: #343434;
 }
-
 @media screen and (max-width: 1024px) {
-  .onboard-wrapper .right {
-    display: none;
-  }
   .onboard-wrapper .container {
     padding: 60px 32px;
     border-radius: 8px;
@@ -112,15 +197,16 @@ body {
     width: auto;
   }
 }
-.btn {
-  background-color: #C43330;
+
+.ibuild-btn, .onboard-wrapper .right-signin-container-content .signin-other-platform .sign-other-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  background-color: #C43330;
   border-radius: 8px;
-  border-color: #C43330;
+  border: 1px solid transparent;
   color: #fff;
   min-width: 380px;
   min-height: 46px;
@@ -129,9 +215,18 @@ body {
   text-align: center;
 }
 @media screen and (max-width: 1024px) {
-  .btn {
+  .ibuild-btn, .onboard-wrapper .right-signin-container-content .signin-other-platform .sign-other-btn {
     min-width: 270px;
   }
+}
+
+label {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  color: #343434;
 }
 
 /*# sourceMappingURL=app.css.map */
