@@ -1,0 +1,137 @@
+html {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+input,
+textarea,
+select,
+button {
+  outline: none;
+}
+
+input {
+  line-height: normal;
+}
+
+label,
+button {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+body {
+  line-height: 1;
+  font-family: "Roboto", sans-serif;
+  color: #343434;
+  font-weight: 500;
+  background-color: white;
+}
+
+.wrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  height: 100vh;
+}
+.wrapper .unsplash {
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/unsplash.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  flex: 1;
+}
+.wrapper .spacing {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+}
+.wrapper .spacing-bottom {
+  height: 386px;
+  bottom: 0;
+  left: 50%;
+  right: 0;
+  position: absolute;
+  background-image: url("../images/bottom.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.wrapper .container {
+  width: 380px;
+  height: 272px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0px;
+  gap: 24px;
+  position: absolute;
+  top: 30%;
+  right: 20%;
+  background-color: #fff;
+}
+.wrapper .container .text-intro {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 150%;
+  color: #343434;
+}
+
+@media screen and (max-width: 1024px) {
+  .wrapper .spacing {
+    display: none;
+  }
+  .wrapper .container {
+    padding: 60px 32px;
+    border-radius: 8px;
+    left: 20px;
+    right: 20px;
+    top: 242px;
+    width: auto;
+  }
+}
+.btn {
+  background-color: #C43330;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 8px;
+  border-color: #C43330;
+  color: #fff;
+  min-width: 380px;
+  min-height: 46px;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+}
+@media screen and (max-width: 1024px) {
+  .btn {
+    min-width: 270px;
+  }
+}
+
+/*# sourceMappingURL=app.css.map */
