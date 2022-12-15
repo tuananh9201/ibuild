@@ -256,6 +256,12 @@ label {
   border: 0px solid #ECECEC;
   width: 100%;
 }
+@media screen and (max-width: 1024px) {
+  .main-header {
+    padding-top: 56px;
+    border-bottom: 0.5px solid #BFBFBF;
+  }
+}
 .main-header .logo {
   gap: 24px;
   max-width: 90px;
@@ -302,6 +308,7 @@ label {
 
 #menuDrawer {
   padding: 52px 28px !important;
+  width: 86%;
 }
 
 .nav-item {
