@@ -30,6 +30,14 @@ body {
       display: none;
     }
   }
+  .left-signup{
+    @extend .left;
+    background-image: url("../images/signup-bg.png");
+
+    @media screen and (max-width:$breakpoint) {
+      display: none;
+    }
+  }
 
   .right {
     width: 100%;
