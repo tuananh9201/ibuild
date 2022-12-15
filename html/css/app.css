@@ -44,6 +44,7 @@ body {
   color: #343434;
   font-weight: 500;
   background-color: white;
+  height: 100%;
 }
 
 .onboard-wrapper {
@@ -235,6 +236,83 @@ label {
   font-size: 16px;
   line-height: 150%;
   color: #343434;
+}
+
+.wrapper {
+  max-width: 1440px;
+  height: auto;
+  padding: 0;
+  margin: auto;
+  display: flex;
+}
+
+.main-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 16px 60px;
+  gap: 16px;
+  background: #fff;
+  border: 0px solid #ECECEC;
+  width: 100%;
+}
+.main-header .logo {
+  gap: 24px;
+  max-width: 90px;
+  max-height: 24px;
+}
+.main-header .menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.main-header .menu .menu-items {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0;
+  gap: 32px;
+}
+.main-header .menu .menu-items .menu-item {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  cursor: pointer;
+  color: #343434;
+  text-decoration: none;
+}
+@media screen and (max-width: 1024px) {
+  .main-header .menu .menu-items {
+    display: none;
+  }
+}
+.main-header .menu .toggle-button {
+  display: none;
+}
+@media screen and (max-width: 1024px) {
+  .main-header .menu .toggle-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+}
+
+#menuDrawer {
+  padding: 52px 28px !important;
+}
+
+.nav-item {
+  margin-bottom: 24px;
+}
+
+.nav-link {
+  color: #343434 !important;
+  font-weight: 400 !important;
+  font-size: 16px !important;
+  line-height: 150% !important;
 }
 
 /*# sourceMappingURL=app.css.map */
