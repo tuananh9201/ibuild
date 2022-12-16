@@ -211,3 +211,10 @@ label {
   width: 144px;
   min-width: 144px !important;
 }
+.sepec-menu {
+  display: flex;
+  align-items: center !important;
+  .spece{
+    padding: 0 8px;
+  }
+}

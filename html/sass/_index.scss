@@ -76,6 +76,9 @@
 
 .nav-item {
     margin-bottom: 24px;
+    &:last-child{
+        margin-bottom: 0;
+    }
 }
 
 .nav-link {
@@ -292,7 +295,6 @@
 
     .nav-item {
         margin-bottom: 16px !important;
-
         &:last-child {
             margin-bottom: 0px;
         }

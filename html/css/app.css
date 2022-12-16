@@ -243,6 +243,14 @@ label {
   min-width: 144px !important;
 }
 
+.sepec-menu {
+  display: flex;
+  align-items: center !important;
+}
+.sepec-menu .spece {
+  padding: 0 8px;
+}
+
 .wrapper {
   max-width: 1440px;
   height: auto;
@@ -319,6 +327,9 @@ label {
 
 .nav-item {
   margin-bottom: 24px;
+}
+.nav-item:last-child {
+  margin-bottom: 0;
 }
 
 .nav-link {
