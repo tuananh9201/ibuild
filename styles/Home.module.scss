@@ -1,3 +1,5 @@
+@import "mixins";
+
 .container {
   padding: 0 2rem;
 }
@@ -71,6 +73,10 @@
   justify-content: center;
   flex-wrap: wrap;
   max-width: 800px;
+  @include desktop() {
+    width: 100%;
+    flex-direction: column;
+  }
 }
 
 .card {
