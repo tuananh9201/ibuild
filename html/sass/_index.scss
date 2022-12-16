@@ -192,7 +192,10 @@
             background: #ffffff;
             box-shadow: 0px 5px 15px 1px rgba(0, 0, 0, 0.1);
             cursor: pointer;
-
+            transition: box-shadow .3s;
+            &:hover {
+                box-shadow: 1px 10px 15px 1px rgba(0, 0, 0, 0.3);
+            }
             .img-feat {
                 min-height: 180px;
             }
