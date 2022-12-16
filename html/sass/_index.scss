@@ -14,12 +14,12 @@
     padding: 16px 60px;
     gap: 16px;
     background: #fff;
-    border: 0px solid #ECECEC;
+    border: 0px solid #ececec;
     width: 100%;
 
     @media screen and (max-width: $breakpoint) {
         padding-top: 56px;
-        border-bottom: 0.5px solid #BFBFBF;
+        border-bottom: 0.5px solid #bfbfbf;
     }
 
     .logo {
@@ -41,7 +41,7 @@
             gap: 32px;
 
             .menu-item {
-                font-family: 'Roboto';
+                font-family: "Roboto";
                 font-style: normal;
                 font-weight: 400;
                 font-size: 16px;
@@ -67,7 +67,6 @@
             }
         }
     }
-
 }
 
 #menuDrawer {
@@ -95,14 +94,82 @@
     .search-content {
         width: 100%;
         min-height: 440px;
+        flex-direction: column;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         border-radius: 20px;
         background-image: url("../images/search-bg.png");
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center center;
 
+        .title {
+            color: #fff !important;
+            font-weight: 600;
+            font-size: 40px;
+            text-align: center;
+            line-height: 150%;
+
+            @media screen and (max-width: $breakpoint) {
+                font-size: 20px;
+                padding-left: 20px;
+            }
+        }
+
+        .search-input-container {
+            display: flex;
+            min-height: 56px;
+            width: 50%;
+            align-items: center;
+            padding: 5px;
+            gap: 10px;
+            border: 1px solid #dddddd;
+            border-radius: 8px;
+            justify-content: space-between;
+            background-color: #fff;
+
+            .search-icon {
+                margin-left: 8px;
+            }
+
+            .input-search {
+                width: 100%;
+
+                #search-input {
+                    border: none !important;
+                    &::placeholder {
+                        color: $text-color !important;
+                        opacity: 1 !important;
+                        font-weight: 400;
+                        font-size: 16px;
+                        @media screen and (max-width: $breakpoint) {
+                            color: #717171;
+                        }
+                    }
+
+                    &:-ms-input-placeholder {
+                        color: $text-color !important;
+                    }
+
+                    &::-ms-input-placeholder {
+                        color: $text-color !important;
+                    }
+                }
+            }
+            .button-search{
+                @media screen and (max-width: $breakpoint) {
+                    display: none !important;
+                }
+            }
+            @media screen and (max-width: $breakpoint) {
+                width: 100% !important;
+            }
+        }
+
         @media screen and (max-width: $breakpoint) {
             min-height: 242px;
+            padding: 40px;
         }
     }
 
@@ -122,15 +189,16 @@
             padding: 80px 32px;
             gap: 24px;
             min-height: 540px;
-            background: #FFFFFF;
+            background: #ffffff;
             box-shadow: 0px 5px 15px 1px rgba(0, 0, 0, 0.1);
             cursor: pointer;
+
             .img-feat {
                 min-height: 180px;
             }
 
             .card-desc {
-                font-family: 'Roboto';
+                font-family: "Roboto";
                 font-style: normal;
                 font-weight: 400;
                 font-size: 16px;
@@ -140,22 +208,27 @@
         }
     }
 }
+
 .main-footer {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 0px;
     gap: 16px;
-    border-top:  1px solid #DDDDDD;
+    border-top: 1px solid #dddddd;
+
     .row-footer {
         width: 100%;
     }
+
     .info {
         padding: 56px 24px 16px 120px;
+
         .logo-space {
             display: flex;
             flex-direction: column;
         }
+
         .desc {
             margin-top: 8px;
             font-weight: 400;
@@ -163,34 +236,40 @@
             line-height: 21px;
         }
     }
+
     .addresses {
         display: flex;
         align-items: flex-start;
         padding-left: 120px;
         gap: 8px;
-        .address-icon{
+
+        .address-icon {
             width: 24px;
             height: 24px;
         }
-        .address-info{
-            .desc{
+
+        .address-info {
+            .desc {
                 margin-bottom: 8px;
                 font-weight: 400;
                 font-size: 14px;
                 line-height: 21px;
+
                 :last-child {
                     margin-bottom: 0px;
                 }
             }
         }
     }
-    .copyright{
+
+    .copyright {
         width: 100%;
         display: flex;
         align-items: flex-start;
         justify-content: center;
         padding: 0px 0px 16px;
         gap: 16px;
+
         .text {
             display: flex;
             flex-direction: row;
@@ -204,28 +283,36 @@
         }
     }
 }
+
 .footer-menu {
     padding: 115px 0px 0px 50px;
-    .nav-item{
+
+    .nav-item {
         margin-bottom: 16px !important;
-        &:last-child{
+
+        &:last-child {
             margin-bottom: 0px;
         }
     }
-    @media screen and (max-width:$breakpoint) {
+
+    @media screen and (max-width: $breakpoint) {
         padding-left: 120px;
     }
 }
+
 .footer-form {
     margin: 115px 50px;
     padding: 0px;
-    #footer-search-input{
+
+    #footer-search-input {
         background-color: $primary-color;
     }
-    @media screen and (max-width:$breakpoint) {
+
+    @media screen and (max-width: $breakpoint) {
         padding-left: 70px;
     }
 }
+
 .row {
     @media screen and (max-width: $breakpoint) {
         gap: 24px !important;
