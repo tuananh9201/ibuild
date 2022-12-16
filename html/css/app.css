@@ -471,4 +471,9 @@ label {
   }
 }
 
+.menu-item:hover {
+  color: #C43330 !important;
+  font-weight: 500 !important;
+}
+
 /*# sourceMappingURL=app.css.map */
