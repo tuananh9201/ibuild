@@ -40,7 +40,7 @@ img {
 
 body {
   line-height: 1;
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", sans-serif !important;
   color: #343434;
   font-weight: 500;
   background-color: white;
@@ -244,6 +244,7 @@ label {
   padding: 0;
   margin: auto;
   display: flex;
+  flex-direction: column;
 }
 
 .main-header {
@@ -320,6 +321,154 @@ label {
   font-weight: 400 !important;
   font-size: 16px !important;
   line-height: 150% !important;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 60px 16px;
+}
+.main-content .search-content {
+  width: 100%;
+  min-height: 440px;
+  border-radius: 20px;
+  background-image: url("../images/search-bg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+@media screen and (max-width: 1024px) {
+  .main-content .search-content {
+    min-height: 242px;
+  }
+}
+.main-content section.cards {
+  margin-top: 10px;
+  padding: 80px 0;
+}
+.main-content section.cards .my-cards {
+  width: 100%;
+  margin: auto !important;
+}
+.main-content section.cards .my-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 32px;
+  gap: 24px;
+  min-height: 540px;
+  background: #FFFFFF;
+  box-shadow: 0px 5px 15px 1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+.main-content section.cards .my-card .img-feat {
+  min-height: 180px;
+}
+.main-content section.cards .my-card .card-desc {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  text-align: center;
+}
+
+.main-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 16px;
+  border-top: 1px solid #DDDDDD;
+}
+.main-footer .row-footer {
+  width: 100%;
+}
+.main-footer .info {
+  padding: 56px 24px 16px 120px;
+}
+.main-footer .info .logo-space {
+  display: flex;
+  flex-direction: column;
+}
+.main-footer .info .desc {
+  margin-top: 8px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+}
+.main-footer .addresses {
+  display: flex;
+  align-items: flex-start;
+  padding-left: 120px;
+  gap: 8px;
+}
+.main-footer .addresses .address-icon {
+  width: 24px;
+  height: 24px;
+}
+.main-footer .addresses .address-info .desc {
+  margin-bottom: 8px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+}
+.main-footer .addresses .address-info .desc :last-child {
+  margin-bottom: 0px;
+}
+.main-footer .copyright {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0px 0px 16px;
+  gap: 16px;
+}
+.main-footer .copyright .text {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+}
+
+.footer-menu {
+  padding: 115px 0px 0px 50px;
+}
+.footer-menu .nav-item {
+  margin-bottom: 16px !important;
+}
+.footer-menu .nav-item:last-child {
+  margin-bottom: 0px;
+}
+@media screen and (max-width: 1024px) {
+  .footer-menu {
+    padding-left: 120px;
+  }
+}
+
+.footer-form {
+  margin: 115px 50px;
+  padding: 0px;
+}
+.footer-form #footer-search-input {
+  background-color: #C43330;
+}
+@media screen and (max-width: 1024px) {
+  .footer-form {
+    padding-left: 70px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .row {
+    gap: 24px !important;
+  }
 }
 
 /*# sourceMappingURL=app.css.map */
