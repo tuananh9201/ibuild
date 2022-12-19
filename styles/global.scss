@@ -224,3 +224,10 @@ label {
     padding: 0 8px;
   }
 }
+
+.menu-item {
+  &:hover {
+      color: $primary-color !important;
+      font-weight: 500 !important;
+  }
+}
