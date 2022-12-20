@@ -37,7 +37,8 @@ body {
       display: none;
     }
   }
-  .left-signup{
+
+  .left-signup {
     @extend .left;
     background-image: url("../images/signup-bg.png");
 
@@ -62,12 +63,15 @@ body {
       background-repeat: no-repeat;
       background-position: center center;
     }
+
     @media screen and (max-width: $breakpoint) {
       display: none;
     }
   }
+
   .right-signin {
     @extend .right;
+
     &-container {
       display: flex;
       flex-direction: column;
@@ -81,48 +85,62 @@ body {
         padding: 21px 10px;
         cursor: pointer;
       }
-      &-content{
-        margin: 80px 60px;
-        .heading{
 
-          .logo{
+      &-content {
+        margin: 80px 60px;
+
+        @media screen and (max-width: $breakpoint) {
+          margin: 48px 20px;
+        }
+
+        .heading {
+
+          .logo {
             max-width: 120px;
             max-height: 30px;
           }
-          .welcome{
+
+          .welcome {
             margin-top: 16px;
             font-size: 32px;
           }
         }
+
         .group-input {
           margin: 32px 0px;
         }
-        .group-action{
+
+        .group-action {
           .signin {
             width: 100%;
           }
-          .register-link{
+
+          .register-link {
             margin-top: 24px;
             display: flex;
             justify-content: flex-end;
-            .have-account{
+
+            .have-account {
               font-weight: 400;
               margin-right: 8px;
             }
-            .register-now{
+
+            .register-now {
               font-weight: 400;
               color: $primary-color;
               text-decoration: none;
             }
           }
         }
+
         .sign-seperator {
           margin-top: 32px;
           width: 100%;
           height: 24px;
           text-align: center;
           border-top: 1px solid #7F7F7F;
-          .sepe-title{
+
+          .sepe-title {
             font-weight: 400;
             font-family: 'Roboto';
             font-style: normal;
@@ -133,11 +151,13 @@ body {
             top: -16px;
           }
         }
-        .signin-other-platform{
+
+        .signin-other-platform {
           .sign-google {
             margin-bottom: 24px;
           }
-          .sign-other-btn{
+
+          .sign-other-btn {
             @extend .ibuild-btn;
             background-color: #fff !important;
             border: 1px solid $primary-color !important;
@@ -147,11 +167,17 @@ body {
           }
         }
       }
+
+      @media screen and (max-width:$breakpoint) {
+        margin: 0;
+      }
     }
+
     @media screen and (max-width: $breakpoint) {
       display: block;
     }
   }
+
   .container {
     width: 380px;
     height: 272px;
@@ -173,6 +199,7 @@ body {
       line-height: 150%;
       color: $text-color;
     }
+
     @media screen and (max-width: $breakpoint) {
       padding: 60px 32px;
       border-radius: 8px;
@@ -213,21 +240,24 @@ label {
   line-height: 150%;
   color: $text-color;
 }
+
 .btn-search {
   width: 144px;
   min-width: 144px !important;
 }
+
 .sepec-menu {
   display: flex;
   align-items: center !important;
-  .spece{
+
+  .spece {
     padding: 0 8px;
   }
 }
 
 .menu-item {
   &:hover {
-      color: $primary-color !important;
-      font-weight: 500 !important;
+    color: $primary-color !important;
+    font-weight: 500 !important;
   }
 }

@@ -1,8 +1,6 @@
 import { ReactElement } from "react";
 import MainLayout from "../components/main-layout";
 import { NextPageWithLayout } from "./_app";
-import { cardProd, docsRule, ibuildInfo, searchIcon } from "@/constants/images";
-import Image from "next/image";
 const EmptyPage: NextPageWithLayout = () => {
   return (
     <>
