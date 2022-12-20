@@ -14,6 +14,7 @@
     align-items: flex-start;
     padding: 32px 0px 60px;
     gap: 32px;
+    width: 100%;
 
     .filter {
         display: flex;
@@ -34,6 +35,189 @@
         align-items: center;
         padding: 0px;
         gap: 24px;
+        width: 100%;
+
+        .result-desc {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0px;
+            gap: 16px;
+            min-height: 46px;
+            margin-bottom: 24px;
+            width: 100%;
+
+            .result-text {
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 150%;
+            }
+        }
+
+        .product-card {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 16px;
+            isolation: isolate;
+            min-height: 389px;
+            min-width: 308px;
+            background: #F8F9FF;
+            border-radius: 4px;
+
+            &_container {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0px;
+                gap: 16px;
+                width: 100%;
+
+                &_body {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    padding: 0px;
+                    gap: 16px;
+                    width: 100%;
+
+                    .card-top {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        padding: 0px;
+                        gap: 8px;
+
+                        .location {
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                            padding: 0px;
+                            gap: 10px;
+
+                            .location-icon {
+                                width: 20px;
+                                height: 20px;
+                            }
+                        }
+
+                        .supplier-info {
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                            padding: 0px;
+                            gap: 4px;
+
+                            .supplier-image {
+                                width: 40px;
+                                height: 40px;
+                            }
+
+                            .supplier-title {
+                                font-weight: 500;
+                                font-size: 16px;
+                                line-height: 150%;
+                            }
+                        }
+                    }
+
+                    .product-info {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: flex-start;
+                        padding: 0px;
+                        gap: 8px;
+
+                        h3.product-category-title {
+                            font-weight: 500;
+                            font-size: 16px !important;
+                            line-height: 150% !important;
+                            margin-bottom: 8px;
+                            text-transform: uppercase;
+                        }
+
+                        .product-category-icons {
+                            display: flex;
+                            flex-direction: row;
+                            align-items: flex-start;
+                            padding: 0px;
+                            gap: 8px;
+
+                            .product-category-icon-item {
+                                display: flex;
+                                flex-direction: row;
+                                align-items: flex-start;
+                                padding: 8px;
+
+                                width: 36px;
+                                height: 36px;
+                                background: #FFFFFF;
+                                border-radius: 36px;
+                            }
+                        }
+                    }
+
+                    .price-range {
+                        font-weight: 500;
+                        font-size: 20px;
+                        line-height: 150%;
+                        color: $text-color;
+                        margin-bottom: 16px;
+                    }
+
+                    .product-card-body-bottom {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        align-items: flex-start;
+                        padding: 0px;
+                        gap: 8px;
+                        width: 100%;
+
+                        .row-populate {
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: space-between;
+                            align-items: center;
+                            padding: 0px;
+                            gap: 10px;
+                            width: 100%;
+                            margin-bottom: 8px;
+
+                            &:last-child {
+                                margin-bottom: 0px;
+                            }
+                        }
+
+                        .extras {
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: space-between;
+                            align-items: center;
+                            gap: 10px;
+
+                            .item {
+                                width: 24px;
+                                height: 24px;
+                                background-color: #FFFFFF;
+                                border-radius: 36px;
+                            }
+                        }
+                    }
+
+                }
+
+                &_actions {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: flex-start;
+                    padding: 0px;
+                    gap: 8px;
+                }
+            }
+        }
     }
 }
 

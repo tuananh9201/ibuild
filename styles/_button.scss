@@ -59,3 +59,27 @@
         color: #fff
     }
 }
+
+.btn-in-card {
+    @extend .ibuild-btn;
+    min-width: 100%;
+    min-height: 44px;
+    border-radius: 4px;
+
+    &.view-detail {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 20px;
+        width: 72px;
+    }
+
+    &.outline {
+        min-height: 44px;
+        min-width: 44px;
+        /* Primary */
+        background-color: #fff !important;
+        border: 1px solid $primary-color;
+    }
+}
