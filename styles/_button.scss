@@ -1,0 +1,61 @@
+@import "variables";
+
+.btn-search {
+    width: 144px;
+    min-width: 144px !important;
+}
+
+.ibuild-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: $primary-color;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    color: #fff;
+    min-width: 380px;
+    min-height: 46px;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+
+    @media screen and (max-width:$breakpoint) {
+        min-width: 270px;
+    }
+}
+
+.ibuild-btn-outline {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 11px 37px;
+    gap: 10px;
+
+    min-width: 276px;
+    min-height: 46px;
+    /* Primary */
+    background: #fff;
+    border: 1px solid $primary-color;
+    border-radius: 8px;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 5;
+    align-self: stretch;
+    flex-grow: 0;
+    color: $primary-color;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+
+    &:hover {
+        background: $primary-color;
+        color: #fff
+    }
+}

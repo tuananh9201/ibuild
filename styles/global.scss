@@ -3,6 +3,8 @@
 @import "product";
 @import "role";
 @import "index";
+@import "button";
+@import "product";
 
 body {
   line-height: 1;
@@ -215,26 +217,7 @@ body {
   }
 }
 
-.ibuild-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  background-color: $primary-color;
-  border-radius: 8px;
-  border: 1px solid transparent;
-  color: #fff;
-  min-width: 380px;
-  min-height: 46px;
-  font-size: 16px;
-  font-weight: 500;
-  text-align: center;
 
-  @media screen and (max-width:$breakpoint) {
-    min-width: 270px;
-  }
-}
 
 label {
   font-family: 'Roboto';
@@ -245,10 +228,6 @@ label {
   color: $text-color;
 }
 
-.btn-search {
-  width: 144px;
-  min-width: 144px !important;
-}
 
 .sepec-menu {
   display: flex;
@@ -263,5 +242,15 @@ label {
   &:hover {
     color: $primary-color !important;
     font-weight: 500 !important;
+  }
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+
+  .item {
+    margin-left: 0px;
+    margin-top: 16px;
   }
 }
