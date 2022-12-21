@@ -1,0 +1,612 @@
+[
+  {
+    "id": "1",
+    "name": "Trung Tâm VLXD Đồng Tâm",
+    "city": "Hà Nội",
+    "address": "Bắc Từ Liêm, Hà Nội",
+    "geo": {
+      "lat": 0,
+      "lng": 0
+    },
+    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.png",
+    "categories": [
+      {
+        "id": "0",
+        "name": "Thiết bị vệ sinh",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.png",
+        "parentId": "0"
+      },
+      {
+        "id": "1",
+        "name": "Bồn cầu",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/toilet.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "2",
+        "name": "Bồn tắm",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/shower.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "3",
+        "name": "Sen tắm",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/shower.svg",
+        "parentId": "0"
+      }
+    ],
+    "productQuantity": {
+      "min": 300,
+      "max": 1000
+    },
+    "space": "3 Km",
+    "brandsPopulate": [
+      {
+        "id": "1",
+        "name": "TOTO",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      },
+      {
+        "id": "2",
+        "name": "KOLHLER",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      },
+      {
+        "id": "3",
+        "name": "INAX",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      }
+    ],
+    "phoneNumber": "0272 387 2233",
+    "priceRange": "10.000.000 - 30.000.000 đ"
+  },
+  {
+    "id": "2",
+    "name": "Showroom TOTO Tuấn Tú",
+    "city": "Hà Nội",
+    "address": "Bắc Từ Liêm, Hà Nội",
+    "geo": {
+      "lat": 0,
+      "lng": 0
+    },
+    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png",
+    "categories": [
+      {
+        "id": "0",
+        "name": "Thiết bị vệ sinh",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.png",
+        "parentId": "0"
+      },
+      {
+        "id": "1",
+        "name": "Bồn cầu",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/toilet.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "2",
+        "name": "Bồn tắm",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/shower.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "3",
+        "name": "Sen tắm",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/shower.svg",
+        "parentId": "0"
+      }
+    ],
+    "productQuantity": {
+      "min": 300,
+      "max": 1000
+    },
+    "space": "3 Km",
+    "brandsPopulate": [
+      {
+        "id": "1",
+        "name": "TOTO",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      },
+      {
+        "id": "2",
+        "name": "KOLHLER",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      },
+      {
+        "id": "3",
+        "name": "INAX",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      }
+    ],
+    "phoneNumber": "0272 387 2233",
+    "priceRange": "10.000.000 - 30.000.000 đ"
+  },
+  {
+    "id": "3",
+    "name": "Trung Tâm VLXD Đồng Tâm",
+    "city": "Hà Nội",
+    "address": "Bắc Từ Liêm, Hà Nội",
+    "geo": {
+      "lat": 0,
+      "lng": 0
+    },
+    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.png",
+    "categories": [
+      {
+        "id": "0",
+        "name": "Thiết bị vệ sinh",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png",
+        "parentId": "0"
+      },
+      {
+        "id": "1",
+        "name": "Bồn cầu",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/toilet.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "2",
+        "name": "Bồn tắm",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/shower.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "3",
+        "name": "Sen tắm",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/shower.svg",
+        "parentId": "0"
+      }
+    ],
+    "productQuantity": {
+      "min": 300,
+      "max": 1000
+    },
+    "space": "3 Km",
+    "brandsPopulate": [
+      {
+        "id": "1",
+        "name": "TOTO",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      },
+      {
+        "id": "2",
+        "name": "KOLHLER",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      },
+      {
+        "id": "3",
+        "name": "INAX",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      }
+    ],
+    "phoneNumber": "0272 387 2233",
+    "priceRange": "10.000.000 - 30.000.000 đ"
+  },
+  {
+    "id": "4",
+    "name": "Trung Tâm VLXD Đồng Tâm",
+    "city": "Hà Nội",
+    "address": "Bắc Từ Liêm, Hà Nội",
+    "geo": {
+      "lat": 0,
+      "lng": 0
+    },
+    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.png",
+    "categories": [
+      {
+        "id": "0",
+        "name": "Thiết bị vệ sinh",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp4.png",
+        "parentId": "0"
+      },
+      {
+        "id": "1",
+        "name": "Bồn cầu",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/toilet.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "2",
+        "name": "Bồn tắm",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/shower.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "3",
+        "name": "Sen tắm",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/shower.svg",
+        "parentId": "0"
+      }
+    ],
+    "productQuantity": {
+      "min": 300,
+      "max": 1000
+    },
+    "space": "3 Km",
+    "brandsPopulate": [
+      {
+        "id": "1",
+        "name": "TOTO",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      },
+      {
+        "id": "2",
+        "name": "KOLHLER",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      },
+      {
+        "id": "3",
+        "name": "INAX",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      }
+    ],
+    "phoneNumber": "0272 387 2233",
+    "priceRange": "10.000.000 - 30.000.000 đ"
+  },
+  {
+    "id": "5",
+    "name": "Trung Tâm VLXD Đồng Tâm",
+    "city": "Hà Nội",
+    "address": "Bắc Từ Liêm, Hà Nội",
+    "geo": {
+      "lat": 0,
+      "lng": 0
+    },
+    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.png",
+    "categories": [
+      {
+        "id": "0",
+        "name": "Thiết bị vệ sinh",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/toilet.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "1",
+        "name": "Bồn cầu",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/toilet.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "2",
+        "name": "Bồn tắm",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/shower.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "3",
+        "name": "Sen tắm",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/shower.svg",
+        "parentId": "0"
+      }
+    ],
+    "productQuantity": {
+      "min": 300,
+      "max": 1000
+    },
+    "space": "3 Km",
+    "brandsPopulate": [
+      {
+        "id": "1",
+        "name": "TOTO",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      },
+      {
+        "id": "2",
+        "name": "KOLHLER",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      },
+      {
+        "id": "3",
+        "name": "INAX",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      }
+    ],
+    "phoneNumber": "0272 387 2233",
+    "priceRange": "10.000.000 - 30.000.000 đ"
+  },
+  {
+    "id": "6",
+    "name": "Showroom TOTO Tuấn Tú",
+    "city": "Hà Nội",
+    "address": "Bắc Từ Liêm, Hà Nội",
+    "geo": {
+      "lat": 0,
+      "lng": 0
+    },
+    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.png",
+    "categories": [
+      {
+        "id": "0",
+        "name": "Thiết bị vệ sinh",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/toilet.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "1",
+        "name": "Bồn cầu",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/toilet.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "2",
+        "name": "Bồn tắm",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/shower.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "3",
+        "name": "Sen tắm",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/shower.svg",
+        "parentId": "0"
+      }
+    ],
+    "productQuantity": {
+      "min": 300,
+      "max": 1000
+    },
+    "space": "18 Km",
+    "brandsPopulate": [
+      {
+        "id": "1",
+        "name": "TOTO",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      },
+      {
+        "id": "2",
+        "name": "KOLHLER",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      },
+      {
+        "id": "3",
+        "name": "INAX",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      }
+    ],
+    "phoneNumber": "0272 387 2233",
+    "priceRange": "10.000.000 - 30.000.000 đ"
+  },
+  {
+    "id": "7",
+    "name": "Đại lý Viglacera Việt Nam",
+    "city": "Hà Nội",
+    "address": "Bắc Từ Liêm, Hà Nội",
+    "geo": {
+      "lat": 0,
+      "lng": 0
+    },
+    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp4.png",
+    "categories": [
+      {
+        "id": "0",
+        "name": "Thiết bị vệ sinh",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/toilet.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "1",
+        "name": "Bồn cầu",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/toilet.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "2",
+        "name": "Bồn tắm",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/shower.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "3",
+        "name": "Sen tắm",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/shower.svg",
+        "parentId": "0"
+      }
+    ],
+    "productQuantity": {
+      "min": 0,
+      "max": 25
+    },
+    "space": "23 Km",
+    "brandsPopulate": [
+      {
+        "id": "1",
+        "name": "TOTO",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      },
+      {
+        "id": "2",
+        "name": "KOLHLER",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      },
+      {
+        "id": "3",
+        "name": "INAX",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      }
+    ],
+    "phoneNumber": "0272 387 2233",
+    "priceRange": "10.000.000 - 30.000.000 đ"
+  },
+  {
+    "id": "8",
+    "name": "Showroom TOTO Tuấn Tú",
+    "city": "Hà Nội",
+    "address": "Bắc Từ Liêm, Hà Nội",
+    "geo": {
+      "lat": 0,
+      "lng": 0
+    },
+    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png",
+    "categories": [
+      {
+        "id": "0",
+        "name": "Thiết bị vệ sinh",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/toilet.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "1",
+        "name": "Bồn cầu",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/toilet.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "2",
+        "name": "Bồn tắm",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/shower.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "3",
+        "name": "Sen tắm",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/shower.svg",
+        "parentId": "0"
+      }
+    ],
+    "productQuantity": {
+      "min": 1,
+      "max": 30
+    },
+    "space": "13 Km",
+    "brandsPopulate": [
+      {
+        "id": "1",
+        "name": "TOTO",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      },
+      {
+        "id": "2",
+        "name": "KOLHLER",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      },
+      {
+        "id": "3",
+        "name": "INAX",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      }
+    ],
+    "phoneNumber": "0272 387 2233",
+    "priceRange": "5.000.000 - 7.000.000 đ"
+  },
+  {
+    "id": "9",
+    "name": "Trung Tâm VLXD Đồng Tâm",
+    "city": "Hà Nội",
+    "address": "Bắc Từ Liêm, Hà Nội",
+    "geo": {
+      "lat": 0,
+      "lng": 0
+    },
+    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.png",
+    "categories": [
+      {
+        "id": "0",
+        "name": "Thiết bị vệ sinh",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/toilet.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "1",
+        "name": "Bồn cầu",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/toilet.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "2",
+        "name": "Bồn tắm",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/shower.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "3",
+        "name": "Sen tắm",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/shower.svg",
+        "parentId": "0"
+      }
+    ],
+    "productQuantity": {
+      "min": 300,
+      "max": 1000
+    },
+    "space": "6 Km",
+    "brandsPopulate": [
+      {
+        "id": "1",
+        "name": "TOTO",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      },
+      {
+        "id": "2",
+        "name": "KOLHLER",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      },
+      {
+        "id": "3",
+        "name": "INAX",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      }
+    ],
+    "phoneNumber": "0272 387 2233",
+    "priceRange": "14.000.000 - 32.000.000 đ"
+  },
+  {
+    "id": "10",
+    "name": "Trung Tâm VLXD Đồng Tâm",
+    "city": "Hà Nội",
+    "address": "Bắc Từ Liêm, Hà Nội",
+    "geo": {
+      "lat": 0,
+      "lng": 0
+    },
+    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.png",
+    "categories": [
+      {
+        "id": "0",
+        "name": "Thiết bị vệ sinh",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/toilet.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "1",
+        "name": "Bồn cầu",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/toilet.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "2",
+        "name": "Bồn tắm",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/shower.svg",
+        "parentId": "0"
+      },
+      {
+        "id": "3",
+        "name": "Sen tắm",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/icons/shower.svg",
+        "parentId": "0"
+      }
+    ],
+    "productQuantity": {
+      "min": 300,
+      "max": 1000
+    },
+    "space": "3 Km",
+    "brandsPopulate": [
+      {
+        "id": "1",
+        "name": "TOTO",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      },
+      {
+        "id": "2",
+        "name": "KOLHLER",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      },
+      {
+        "id": "3",
+        "name": "INAX",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+      }
+    ],
+    "phoneNumber": "0272 387 2233",
+    "priceRange": "12.000.000 - 50.000.000 đ"
+  }
+]

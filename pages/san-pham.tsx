@@ -5,6 +5,8 @@ import { Row, Col } from "antd";
 import Head from "next/head";
 import ProductFilter from "@/components/filters/product-filter";
 import ProductCard from "@/components/products/product-card";
+import suppliers from "../data/suppliers.json";
+
 const HomePage: NextPageWithLayout = () => {
   return (
     <>
@@ -25,15 +27,19 @@ const HomePage: NextPageWithLayout = () => {
             </div>
             <div className="products-result">
               <Row>
-                <Col style={{ padding: 12 }} sm={24} md={12} lg={8}>
-                  <ProductCard />
-                </Col>
-                <Col style={{ padding: 12 }} sm={24} md={12} lg={8}>
-                  <ProductCard />
-                </Col>
-                <Col style={{ padding: 12 }} sm={24} md={12} lg={8}>
-                  <ProductCard />
-                </Col>
+                {suppliers.map((supplier) => {
+                  return (
+                    <Col
+                      key={supplier.id}
+                      style={{ padding: 12 }}
+                      sm={24}
+                      md={12}
+                      lg={8}
+                    >
+                      <ProductCard supplier={supplier} />
+                    </Col>
+                  );
+                })}
               </Row>
             </div>
           </div>

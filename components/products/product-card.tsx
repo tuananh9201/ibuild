@@ -14,8 +14,15 @@ import {
 import Image from "next/image";
 import { Tooltip } from "antd";
 import { useState } from "react";
-const ProductCard = () => {
+import { ISupplier } from "types";
+interface ICard {
+  supplier: ISupplier;
+}
+const ProductCard = (props: ICard) => {
+  const { supplier } = props;
   const [phoneIcon, setPhoneIcon] = useState(btnPhoneIconPri);
+  const rootCategory = supplier.categories.find((c) => c.parentId === "0");
+  const childCategory = supplier.categories.filter((c) => c.parentId !== "0");
   return (
     <div className="product-card">
       <div className="product-card_container">
@@ -25,58 +32,58 @@ const ProductCard = () => {
               <div className="location-icon">
                 <Image src={addressIcon} alt="" />
               </div>
-              <span className="location">Bắc Từ Liêm, Hà Nội</span>
+              <span className="location">{supplier.address}</span>
             </div>
             <div className="supplier-info">
               <div className="supplier-image">
-                <Image src={Supplier1} alt="" />
+                <Image
+                  width={40}
+                  height={40}
+                  src={rootCategory?.logo || Supp2}
+                  alt=""
+                />
               </div>
-              <span className="supplier-title">Đại lý Viglacera Việt Nam</span>
+              <span className="supplier-title">{supplier.name}</span>
             </div>
           </div>
           <div className="product-info">
-            <h3 className="product-category-title">Thiết bị vệ sinh</h3>
+            <h3 className="product-category-title">{rootCategory?.name}</h3>
             <div className="product-category-icons">
-              <div className="product-category-icon-item">
-                <Image src={toiletIcon} alt="" />
-              </div>
-              <div className="product-category-icon-item">
-                <Image src={showerIcon} alt="" />
-              </div>
-              <div className="product-category-icon-item">
-                <Image src={toiletIcon} alt="" />
-              </div>
-              <div className="product-category-icon-item">
-                <Image src={showerIcon} alt="" />
-              </div>
-              <div className="product-category-icon-item">
-                <Image src={toiletIcon} alt="" />
-              </div>
+              {childCategory.map((c) => {
+                return (
+                  <div key={c.id} className="product-category-icon-item">
+                    <Image
+                      height={36}
+                      width={36}
+                      src={c.logo || toiletIcon}
+                      alt=""
+                    />
+                  </div>
+                );
+              })}
             </div>
           </div>
-          <span className="price-range">20.000.000 - 50.000.000 đ</span>
+          <span className="price-range">{supplier.priceRange}</span>
           <div className="product-card-body-bottom">
             <div className="row-populate">
               <span className="text">Hãng phổ biến</span>
               <div className="extras">
-                <div className="item">
-                  <Image src={Supp2} alt="" />
-                </div>
-                <div className="item">
-                  <Image src={Supp3} alt="" />
-                </div>
-                <div className="item">
-                  <Image src={Supp4} alt="" />
-                </div>
+                {supplier.brandsPopulate.map((brand) => (
+                  <div key={brand.id} className="item">
+                    <Image height={24} width={24} src={brand.logo} alt="" />
+                  </div>
+                ))}
               </div>
             </div>
             <div className="row-populate">
               <span className="text">SL sản phẩm</span>
-              <div className="extras">300 - 1000</div>
+              <div className="extras">
+                {supplier.productQuantity.min} - {supplier.productQuantity.max}
+              </div>
             </div>
             <div className="row-populate">
               <span className="text">Khoảng cách</span>
-              <div className="extras">3km</div>
+              <div className="extras">{supplier.space}</div>
             </div>
           </div>
         </div>
@@ -87,7 +94,7 @@ const ProductCard = () => {
             title={
               <div className="tooltip-container">
                 <Image src={btnPhoneIconBlack} alt="" />
-                <span>0272 387 2233</span>
+                <span>{supplier.phoneNumber}</span>
               </div>
             }
             color="white"
