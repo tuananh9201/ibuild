@@ -10,7 +10,9 @@ import ibuildInfo from "../images/build-info.svg";
 import backIcon from "../images/icons/BackIcon.png";
 import googleIcon from "../images/icons/Google.png";
 import facebookIcon from "../images/icons/Facebook.png";
-import btnPhoneIcon from "../images/icons/ButtonPhoneIcon.png";
+import btnPhoneIconPri from "../images/icons/phone_in_talk_red.svg";
+import btnPhoneIconTranf from "../images/icons/phone_in_talk_tranf.svg";
+import btnPhoneIconBlack from "../images/icons/phone_in_talk_black.svg";
 import btnBookmarkIcon from "../images/icons/ButtonBookmarkIcon.png";
 import Supplier1 from "../images/Supplier1.svg";
 import toiletIcon from "../images/icons/toilet.svg";
@@ -31,7 +33,9 @@ export {
   backIcon,
   googleIcon,
   facebookIcon,
-  btnPhoneIcon,
+  btnPhoneIconPri,
+  btnPhoneIconBlack,
+  btnPhoneIconTranf,
   btnBookmarkIcon,
   Supplier1,
   toiletIcon,

@@ -81,5 +81,10 @@
         /* Primary */
         background-color: #fff !important;
         border: 1px solid $primary-color;
+
+        &:hover {
+            background-color: $primary-color !important;
+            color: #fff !important;
+        }
     }
 }

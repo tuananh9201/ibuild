@@ -5,13 +5,17 @@ import {
   Supplier1,
   addressIcon,
   btnBookmarkIcon,
-  btnPhoneIcon,
+  btnPhoneIconBlack,
+  btnPhoneIconPri,
+  btnPhoneIconTranf,
   showerIcon,
   toiletIcon,
 } from "@/constants/images";
 import Image from "next/image";
-
+import { Tooltip } from "antd";
+import { useState } from "react";
 const ProductCard = () => {
+  const [phoneIcon, setPhoneIcon] = useState(btnPhoneIconPri);
   return (
     <div className="product-card">
       <div className="product-card_container">
@@ -78,13 +82,35 @@ const ProductCard = () => {
         </div>
         <div className="product-card_container_actions">
           <button className="btn-in-card view-detail">Xem chi tiết</button>
-          <button className="btn-in-card outline">
-            <Image src={btnPhoneIcon} alt="" />
-          </button>
+
+          <Tooltip
+            title={
+              <div className="tooltip-container">
+                <Image src={btnPhoneIconBlack} alt="" />
+                <span>0272 387 2233</span>
+              </div>
+            }
+            color="white"
+          >
+            <button
+              onMouseEnter={() => {
+                setPhoneIcon(btnPhoneIconTranf);
+              }}
+              onMouseLeave={() => {
+                setPhoneIcon(btnPhoneIconPri);
+              }}
+              className="btn-in-card outline"
+            >
+              <Image src={phoneIcon} alt="" />
+            </button>
+          </Tooltip>
           <button className="btn-in-card outline">
             <Image src={btnBookmarkIcon} alt="" />
           </button>
         </div>
+      </div>
+      <div className="matched-label">
+        <span className="matched-number">93%</span>
       </div>
     </div>
   );

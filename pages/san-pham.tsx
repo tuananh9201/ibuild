@@ -25,7 +25,13 @@ const HomePage: NextPageWithLayout = () => {
             </div>
             <div className="products-result">
               <Row>
-                <Col sm={24} md={12} lg={8}>
+                <Col style={{ padding: 12 }} sm={24} md={12} lg={8}>
+                  <ProductCard />
+                </Col>
+                <Col style={{ padding: 12 }} sm={24} md={12} lg={8}>
+                  <ProductCard />
+                </Col>
+                <Col style={{ padding: 12 }} sm={24} md={12} lg={8}>
                   <ProductCard />
                 </Col>
               </Row>

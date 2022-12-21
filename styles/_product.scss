@@ -27,6 +27,10 @@
         .filter-item {
             margin-top: 24px;
         }
+
+        @media screen and (max-width:$breakpoint) {
+            display: none;
+        }
     }
 
     .products {
@@ -217,6 +221,25 @@
                     gap: 8px;
                 }
             }
+
+            .matched-label {
+                position: absolute;
+                width: 43px;
+                height: 44px;
+                right: 16px;
+                top: 12px;
+                background: #BEDCFF;
+                border-radius: 0px 0px 4px 4px;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                span {
+                    font-weight: 500;
+                    font-size: 16px;
+                }
+            }
         }
     }
 }
@@ -236,4 +259,19 @@
     gap: 8px;
     align-items: center;
     margin: 16px 0px;
+}
+
+.tooltip-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    align-items: center;
+    padding: 10px;
+    gap: 4px;
+    isolation: isolate;
+    color: $text-color;
+
+    span {
+        margin-left: 8px;
+    }
 }
