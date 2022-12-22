@@ -1,14 +1,16 @@
 import Head from "next/head";
 import "../styles/menu.module.scss";
 import Script from "next/script";
-import logoImage from "../images/iBuild.svg";
-import Image from "next/image";
+
 import Footer from "./footer";
-import { menuIcon } from "@/constants/images";
+
 import Link from "next/link";
+import MainHeader from "./layouts/header";
+
 interface IMainLayoutProps {
   children: React.ReactNode;
 }
+
 export default function MainLayout({ children }: IMainLayoutProps) {
   return (
     <>
@@ -35,41 +37,7 @@ export default function MainLayout({ children }: IMainLayoutProps) {
         />
       </Head>
       <div className="wrapper">
-        <div className="main-header">
-          <Link href="/" className="logo">
-            <Image src={logoImage} alt="IBUILD" />
-          </Link>
-          <div className="menu">
-            <div className="menu-items">
-              <Link href="/san-pham" className="menu-item">
-                Sản phẩm
-              </Link>
-              <Link href="van-ban-phap-ly" className="menu-item">
-                Văn bản pháp lý
-              </Link>
-              <Link href="/thong-tin-xay-dung" className="menu-item">
-                Thông tin xây dựng
-              </Link>
-              <span>
-                <Link href="/dang-ky" className="menu-item">
-                  Đăng ký{" "}
-                </Link>
-                /
-                <Link href="/dang-nhap" className="menu-item">
-                  Đăng nhập
-                </Link>
-              </span>
-            </div>
-            <div
-              className="toggle-button"
-              data-bs-toggle="offcanvas"
-              data-bs-target="#menuDrawer"
-              aria-controls="offcanvasNavbar"
-            >
-              <Image src={menuIcon} alt="" />
-            </div>
-          </div>
-        </div>
+        <MainHeader />
         {children}
         <Footer />
         <div

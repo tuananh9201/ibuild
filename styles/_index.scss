@@ -14,8 +14,11 @@
     padding: 16px 60px;
     gap: 16px;
     background: #fff;
-    border: 0px solid #ececec;
     width: 100%;
+
+    &.header-border {
+        border-bottom: 1px solid #ececec;
+    }
 
     @media screen and (max-width: $breakpoint) {
         padding-top: 56px;
@@ -76,7 +79,8 @@
 
 .nav-item {
     margin-bottom: 24px;
-    &:last-child{
+
+    &:last-child {
         margin-bottom: 0;
     }
 }
@@ -141,11 +145,13 @@
 
                 #search-input {
                     border: none !important;
+
                     &::placeholder {
                         color: $text-color !important;
                         opacity: 1 !important;
                         font-weight: 400;
                         font-size: 16px;
+
                         @media screen and (max-width: $breakpoint) {
                             color: #717171;
                         }
@@ -160,11 +166,13 @@
                     }
                 }
             }
-            .button-search{
+
+            .button-search {
                 @media screen and (max-width: $breakpoint) {
                     display: none !important;
                 }
             }
+
             @media screen and (max-width: $breakpoint) {
                 width: 100% !important;
             }
@@ -196,9 +204,11 @@
             box-shadow: 0px 5px 15px 1px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             transition: box-shadow .3s;
+
             &:hover {
                 box-shadow: 1px 10px 15px 1px rgba(0, 0, 0, 0.3);
             }
+
             .img-feat {
                 min-height: 180px;
             }
@@ -295,6 +305,7 @@
 
     .nav-item {
         margin-bottom: 16px !important;
+
         &:last-child {
             margin-bottom: 0px;
         }

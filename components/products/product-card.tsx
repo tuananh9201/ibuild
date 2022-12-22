@@ -1,14 +1,10 @@
 import {
   Supp2,
-  Supp3,
-  Supp4,
-  Supplier1,
   addressIcon,
   btnBookmarkIcon,
   btnPhoneIconBlack,
   btnPhoneIconPri,
   btnPhoneIconTranf,
-  showerIcon,
   toiletIcon,
 } from "@/constants/images";
 import Image from "next/image";

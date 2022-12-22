@@ -239,10 +239,32 @@ label {
 }
 
 .menu-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 4px;
+
   &:hover {
     color: $primary-color !important;
     font-weight: 500 !important;
+    margin-bottom: 0px;
+
+    .bottom-menu {
+      display: block;
+      background: #C43330;
+      border-radius: 1px;
+      width: 50%;
+      width: 24px;
+      height: 2px;
+    }
   }
+
+  .bottom-menu {
+    display: none
+  }
+
+
 }
 
 .checkbox-group {
@@ -253,4 +275,11 @@ label {
     margin-left: 0px;
     margin-top: 16px;
   }
+}
+
+.wrap-menu {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
 }
