@@ -6,6 +6,10 @@
     align-items: flex-start;
     padding: 0px 80px;
 
+    @media screen and (max-width: $breakpoint) {
+        padding: 16px 20px 38px;
+        gap: 16px;
+    }
 }
 
 .product-container {
@@ -58,16 +62,23 @@
                 line-height: 150%;
             }
 
-            .ant-select-selector {
-                min-height: 46px;
-                font-family: 'Roboto';
-                font-style: normal;
-                font-weight: 400;
-                font-size: 16px;
-                line-height: 150%;
-                display: flex;
-                align-items: center;
+            .result-sort {
+                @media screen and (max-width: $breakpoint) {
+                    display: none;
+                }
+
+                .ant-select-selector {
+                    min-height: 46px;
+                    font-family: 'Roboto';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 16px;
+                    line-height: 150%;
+                    display: flex;
+                    align-items: center;
+                }
             }
+
         }
 
         .product-card {
