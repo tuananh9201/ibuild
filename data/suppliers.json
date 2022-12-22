@@ -8,12 +8,12 @@
       "lat": 0,
       "lng": 0
     },
-    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.png",
+    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.svg",
     "categories": [
       {
         "id": "0",
         "name": "Thiết bị vệ sinh",
-        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.png",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.svg",
         "parentId": "0"
       },
       {
@@ -74,7 +74,7 @@
       {
         "id": "0",
         "name": "Thiết bị vệ sinh",
-        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.png",
+        "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.svg",
         "parentId": "0"
       },
       {
@@ -130,7 +130,7 @@
       "lat": 0,
       "lng": 0
     },
-    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.png",
+    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.svg",
     "categories": [
       {
         "id": "0",
@@ -191,7 +191,7 @@
       "lat": 0,
       "lng": 0
     },
-    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.png",
+    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.svg",
     "categories": [
       {
         "id": "0",
@@ -252,7 +252,7 @@
       "lat": 0,
       "lng": 0
     },
-    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.png",
+    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.svg",
     "categories": [
       {
         "id": "0",
@@ -313,7 +313,7 @@
       "lat": 0,
       "lng": 0
     },
-    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.png",
+    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.svg",
     "categories": [
       {
         "id": "0",
@@ -496,7 +496,7 @@
       "lat": 0,
       "lng": 0
     },
-    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.png",
+    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.svg",
     "categories": [
       {
         "id": "0",
@@ -557,7 +557,7 @@
       "lat": 0,
       "lng": 0
     },
-    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.png",
+    "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp2.svg",
     "categories": [
       {
         "id": "0",
