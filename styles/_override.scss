@@ -1,0 +1,8 @@
+@import "variables";
+
+.ant-pagination-item-active {
+    background-color: $primary-color !important;
+    color: #FFF !important;
+    font-weight: 500;
+    font-size: 16px;
+}

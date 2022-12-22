@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import MainLayout from "../components/main-layout";
 import { NextPageWithLayout } from "./_app";
-import { Row, Col, Select } from "antd";
+import { Row, Col, Select, Pagination } from "antd";
 import Head from "next/head";
 import ProductFilter from "@/components/filters/product-filter";
 import ProductCard from "@/components/products/product-card";
@@ -65,6 +65,9 @@ const HomePage: NextPageWithLayout = () => {
                   );
                 })}
               </Row>
+            </div>
+            <div className="pagination">
+              <Pagination defaultCurrent={1} total={50} />
             </div>
           </div>
         </div>
