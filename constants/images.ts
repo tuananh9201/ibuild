@@ -13,7 +13,7 @@ import facebookIcon from "../images/icons/Facebook.png";
 import btnPhoneIconPri from "../images/icons/phone_in_talk_red.svg";
 import btnPhoneIconTranf from "../images/icons/phone_in_talk_tranf.svg";
 import btnPhoneIconBlack from "../images/icons/phone_in_talk_black.svg";
-import btnBookmarkIcon from "../images/icons/ButtonBookmarkIcon.png";
+import btnBookmarkIcon from "../images/icons/bookmark_border.svg";
 import Supplier1 from "../images/Supplier1.svg";
 import toiletIcon from "../images/icons/toilet.svg";
 import showerIcon from "../images/icons/shower.svg";
@@ -22,6 +22,7 @@ import Supp3 from "../images/Supp3.png";
 import Supp4 from "../images/Supp4.png";
 import arrowBackIos from "../images/icons/arrow_back_ios.svg";
 import filterIcon from "../images/icons/filter_alt.svg";
+import shoppingBasket from "../images/icons/shopping_basket.svg";
 export {
   logo,
   addressIcon,
@@ -47,4 +48,5 @@ export {
   Supp4,
   arrowBackIos,
   filterIcon,
+  shoppingBasket,
 };

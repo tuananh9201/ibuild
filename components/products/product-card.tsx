@@ -11,14 +11,19 @@ import Image from "next/image";
 import { Tooltip } from "antd";
 import { useState } from "react";
 import { ISupplier } from "types";
+import { useRouter } from "next/router";
 interface ICard {
   supplier: ISupplier;
 }
 const ProductCard = (props: ICard) => {
   const { supplier } = props;
+  const router = useRouter();
   const [phoneIcon, setPhoneIcon] = useState(btnPhoneIconPri);
   const rootCategory = supplier.categories.find((c) => c.parentId === "0");
   const childCategory = supplier.categories.filter((c) => c.parentId !== "0");
+  const handleClickProduct = (slug: string) => {
+    router.push(`/san-pham/${slug}`);
+  };
   return (
     <div className="product-card">
       <div className="product-card_container">
@@ -84,7 +89,14 @@ const ProductCard = (props: ICard) => {
           </div>
         </div>
         <div className="product-card_container_actions">
-          <button className="btn-in-card view-detail">Xem chi tiết</button>
+          <button
+            onClick={() => {
+              handleClickProduct(supplier.id);
+            }}
+            className="btn-in-card view-detail"
+          >
+            Xem chi tiết
+          </button>
 
           <Tooltip
             title={
