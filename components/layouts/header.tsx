@@ -9,10 +9,26 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+const menus = [
+  {
+    name: "Sản phẩm",
+    href: "/san-pham",
+  },
+  {
+    name: "Văn bản pháp lý",
+    href: "/van-ban-phap-ly",
+  },
+  {
+    name: "Thông tin xây dựng",
+    href: "/thong-tin-xay-dung",
+  },
+];
 const MainHeader = () => {
   const router = useRouter();
   const currentPath = router.pathname;
   const headerClass = currentPath === "/" ? "" : "header-border";
+  console.log("currentPath :", currentPath);
+
   return (
     <div className={`main-header ${headerClass}`}>
       <div className="header-nav">
@@ -40,18 +56,18 @@ const MainHeader = () => {
         </div>
         <div className="menu">
           <div className="menu-items">
-            <Link href="/san-pham" className="menu-item">
-              Sản phẩm
-              <div className="bottom-menu"></div>
-            </Link>
-            <Link href="van-ban-phap-ly" className="menu-item">
-              Văn bản pháp lý
-              <div className="bottom-menu"></div>
-            </Link>
-            <Link href="/thong-tin-xay-dung" className="menu-item">
-              Thông tin xây dựng
-              <div className="bottom-menu"></div>
-            </Link>
+            {menus.map((menu, idx) => (
+              <Link
+                key={idx}
+                href={menu.href}
+                className={`menu-item ${
+                  menu.href === currentPath ? "active" : ""
+                }`}
+              >
+                {menu.name}
+                <div className="bottom-menu"></div>
+              </Link>
+            ))}
             <span className="wrap-menu">
               <Link href="/dang-ky" className="menu-item">
                 Đăng ký <div className="bottom-menu"></div>
