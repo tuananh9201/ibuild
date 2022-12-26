@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import MainLayout from "@/components/main-layout";
 import { NextPageWithLayout } from "../_app";
-import { Row, Col, Select, Pagination, Tooltip } from "antd";
+
 import Head from "next/head";
 import style from "@/styles/modules/product-detail.module.scss";
 import suppliers from "../../data/suppliers.json";
@@ -10,11 +10,11 @@ import {
   Supp4,
   addressIcon,
   btnBookmarkIcon,
-  btnPhoneIconBlack,
   btnPhoneIconTranf,
   shoppingBasket,
 } from "@/constants/images";
 import Image from "next/image";
+import ProductChartPrice from "@/components/products/product-chart-price";
 const DetailProduct: NextPageWithLayout = () => {
   const { query } = useRouter();
   const { slug } = query;
@@ -62,7 +62,7 @@ const DetailProduct: NextPageWithLayout = () => {
                       onClick={() => {
                         // handleClickProduct(supplier.id);
                       }}
-                      className="btn-in-card view-detail"
+                      className={style.buttonPhone}
                     >
                       <Image src={btnPhoneIconTranf} alt="" />
                       0272 387 2233
@@ -100,7 +100,9 @@ const DetailProduct: NextPageWithLayout = () => {
               </div>
             </div>
           </div>
-          <div className="product-chart-price"></div>
+          <div className={style.productChartPrice}>
+            <ProductChartPrice />
+          </div>
         </section>
         <section className="relate-product"></section>
       </div>
