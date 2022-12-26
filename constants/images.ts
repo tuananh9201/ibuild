@@ -20,6 +20,8 @@ import showerIcon from "../images/icons/shower.svg";
 import Supp2 from "../images/Supp2.png";
 import Supp3 from "../images/Supp3.png";
 import Supp4 from "../images/Supp4.png";
+import arrowBackIos from "../images/icons/arrow_back_ios.svg";
+import filterIcon from "../images/icons/filter_alt.svg";
 export {
   logo,
   addressIcon,
@@ -43,4 +45,6 @@ export {
   Supp2,
   Supp3,
   Supp4,
+  arrowBackIos,
+  filterIcon,
 };

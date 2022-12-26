@@ -50,7 +50,7 @@ const HomePage: NextPageWithLayout = () => {
               </div>
             </div>
             <div className="products-result">
-              <Row>
+              <Row style={{ justifyContent: "center" }}>
                 {suppliers.map((supplier) => {
                   return (
                     <Col

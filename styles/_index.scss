@@ -18,10 +18,12 @@
 
     &.header-border {
         border-bottom: 1px solid #ececec;
+        display: flex;
+        flex-direction: column;
     }
 
     @media screen and (max-width: $breakpoint) {
-        padding-top: 56px;
+        padding: 56px 20px 16px 20px;
         border-bottom: 0.5px solid #bfbfbf;
     }
 
