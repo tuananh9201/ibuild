@@ -15,6 +15,7 @@ import {
 } from "@/constants/images";
 import Image from "next/image";
 import ProductChartPrice from "@/components/products/product-chart-price";
+import Carousel from "@/components/products/carousel";
 const DetailProduct: NextPageWithLayout = () => {
   const { query } = useRouter();
   const { slug } = query;
@@ -29,9 +30,11 @@ const DetailProduct: NextPageWithLayout = () => {
       </Head>
       <div className="product-main">
         <section className={style.productDetail}>
-          <Row className={style.productInfo}>
-            <Col md={24} lg={12}>
-              <div className={style.productSlider}></div>
+          <Row gutter={{ sm: 16 }} className={style.productInfo}>
+            <Col style={{ width: "100%" }} md={24} lg={12}>
+              <div className={style.productSlider}>
+                <Carousel />
+              </div>
             </Col>
             <Col md={24} lg={12}>
               <div className={style.productDetailInfo}>

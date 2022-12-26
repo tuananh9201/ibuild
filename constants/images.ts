@@ -23,6 +23,11 @@ import Supp4 from "../images/Supp4.png";
 import arrowBackIos from "../images/icons/arrow_back_ios.svg";
 import filterIcon from "../images/icons/filter_alt.svg";
 import shoppingBasket from "../images/icons/shopping_basket.svg";
+import thumb1 from "../images/C1.png";
+import thumb2 from "../images/C2.png";
+import thumb3 from "../images/C3.png";
+import thumb4 from "../images/C4.png";
+import imgFeat from "../images/Feat.png";
 export {
   logo,
   addressIcon,
@@ -49,4 +54,9 @@ export {
   arrowBackIos,
   filterIcon,
   shoppingBasket,
+  thumb1,
+  thumb2,
+  thumb3,
+  thumb4,
+  imgFeat,
 };

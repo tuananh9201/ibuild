@@ -11,7 +11,8 @@
     width: 100%;
 
     .productInfo {
-        width: 100%;
+        width: 100% !important;
+        padding-left: 24px;
 
         .productSlider {
             flex: 1;
@@ -25,6 +26,8 @@
             justify-content: space-between;
             gap: 24px;
             flex-direction: column;
+
+
 
             .productDetailInfoTop {
                 display: flex;
@@ -92,6 +95,12 @@
 
                     div {
                         flex: 1;
+                        width: 100%;
+                    }
+
+                    @media screen and (max-width: $breakpoint) {
+                        flex-direction: column;
+                        justify-content: space-between;
                     }
                 }
             }
@@ -132,4 +141,10 @@
     font-weight: 500;
     font-size: 20px;
     line-height: 150%;
+}
+
+.productSlider {
+    @media screen and (max-width:$breakpoint) {
+        margin-bottom: 16px;
+    }
 }
