@@ -12,6 +12,7 @@ import { Tooltip } from "antd";
 import { useState } from "react";
 import { ISupplier } from "types";
 import { useRouter } from "next/router";
+import Link from "next/link";
 interface ICard {
   supplier: ISupplier;
 }
@@ -37,12 +38,14 @@ const ProductCard = (props: ICard) => {
             </div>
             <div className="supplier-info">
               <div className="supplier-image">
-                <Image
-                  width={40}
-                  height={40}
-                  src={rootCategory?.logo || Supp2}
-                  alt=""
-                />
+                <Link href="/dai-ly">
+                  <Image
+                    width={40}
+                    height={40}
+                    src={rootCategory?.logo || Supp2}
+                    alt=""
+                  />
+                </Link>
               </div>
               <span className="supplier-title">{supplier.name}</span>
             </div>

@@ -28,6 +28,8 @@ import thumb2 from "../images/C2.png";
 import thumb3 from "../images/C3.png";
 import thumb4 from "../images/C4.png";
 import imgFeat from "../images/Feat.png";
+import supplierBg from "../images/supplier_bg.png";
+import supplierAvatarLarge from "../images/SupplierAvatarLarge.png";
 export {
   logo,
   addressIcon,
@@ -59,4 +61,6 @@ export {
   thumb3,
   thumb4,
   imgFeat,
+  supplierBg,
+  supplierAvatarLarge,
 };
