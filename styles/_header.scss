@@ -87,8 +87,7 @@
     .header-search-mobile {
         @extend .headerSearch;
         display: flex;
-        max-width: 300px;
-        width: auto !important;
+        width: 100%;
     }
 
     .icon-filter {
