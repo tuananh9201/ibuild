@@ -124,5 +124,59 @@
     "month": "7",
     "value": 54200,
     "category": "Lavabo"
+  },
+  {
+    "year": "2022",
+    "month": "8",
+    "value": 18200,
+    "category": "Bồn cầu"
+  },
+  {
+    "year": "2022",
+    "month": "8",
+    "value": 27200,
+    "category": "Sen tắm"
+  },
+  {
+    "year": "2022",
+    "month": "8",
+    "value": 24200,
+    "category": "Lavabo"
+  },
+  {
+    "year": "2022",
+    "month": "9",
+    "value": 8200,
+    "category": "Bồn cầu"
+  },
+  {
+    "year": "2022",
+    "month": "9",
+    "value": 17200,
+    "category": "Sen tắm"
+  },
+  {
+    "year": "2022",
+    "month": "9",
+    "value": 42200,
+    "category": "Lavabo"
+  },
+  {
+    "year": "2022",
+    "month": "10",
+    "value": 17200,
+    "category": "Bồn cầu"
+  },
+  {
+    "year": "2022",
+    "month": "10",
+    "value": 31200,
+    "category": "Sen tắm"
+  },
+  {
+    "year": "2022",
+    "month": "10",
+    "value": 22200,
+    "category": "Lavabo"
   }
 ]

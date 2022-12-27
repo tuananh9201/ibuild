@@ -8,15 +8,7 @@ const ProductChartPrice = () => {
     xField: "month",
     yField: "value",
     seriesField: "category",
-    color: [
-      "#6897a7",
-      "#8bc0d6",
-      "#60d7a7",
-      "#dedede",
-      "#fedca9",
-      "#fab36f",
-      "#d96d6f",
-    ],
+    color: ["#366FEB", "#08A822", "#F3960A"],
     xAxis: {
       //   type: "time",
       //   mask: "MM",
@@ -27,13 +19,13 @@ const ProductChartPrice = () => {
     yAxis: {
       label: {
         formatter: (v: string) =>
-          `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`),
+          `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`) + " vnđ",
       },
     },
     legend: {
       position: "top",
     },
-    smooth: true,
+    // smooth: true,
     animation: {
       appear: {
         animation: "path-in",
@@ -43,7 +35,7 @@ const ProductChartPrice = () => {
   };
   return (
     <div className="product-chart">
-      <Line style={{ width: "100%" }} {...config} />
+      <Area style={{ width: "100%" }} {...config} />
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { Row, Col, Input } from "antd";
 export default function Footer() {
   return (
     <div className="main-footer">
-      <Row>
+      <Row style={{ width: "100%" }}>
         <Col md={24} lg={8}>
           <div className="info">
             <div className="logo-space">
