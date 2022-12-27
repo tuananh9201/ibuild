@@ -8,6 +8,11 @@
     padding: 0px;
     gap: 24px;
 
+    @media screen and (max-width: $breakpoint) {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+
     .thumbnail {
         width: 80px;
         display: flex;
@@ -16,15 +21,24 @@
         padding: 0px;
         gap: 8px;
 
+        &::-webkit-scrollbar {
+            width: 10px;
+        }
+
         .thumbItem {
             width: 80px;
             height: 80px;
+
+            &:hover {
+                cursor: pointer;
+                box-shadow: 1px 1px 5px #aaaaaa;
+            }
         }
 
         @media screen and (max-width:$breakpoint) {
-            position: absolute;
-            bottom: 0;
-            left: 0;
+            // position: absolute;
+            // bottom: 0;
+            // left: 0;
             flex-direction: row;
             justify-content: center;
             align-items: center;
@@ -33,9 +47,10 @@
 
     .imgFeature {
         border-radius: 4px;
+        object-fit: cover;
 
         @media screen and (max-width:$breakpoint) {
-            padding-bottom: 88px;
+            max-height: 100%;
         }
     }
 }

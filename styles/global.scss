@@ -7,6 +7,7 @@
 @import "product";
 @import "override";
 @import "header";
+@import "~react-image-gallery/styles/scss/image-gallery.scss";
 
 body {
   line-height: 1;
@@ -289,4 +290,18 @@ label {
   flex-direction: row;
   gap: 8px;
   align-items: center;
+}
+
+// overrid .image-gallery-thumbnail
+.image-gallery-thumbnail {
+  max-width: 80px;
+  max-height: 80px;
+
+  &.active {
+    border: 2px solid $primary-color
+  }
+
+  &:hover {
+    border: 2px solid $primary-color
+  }
 }

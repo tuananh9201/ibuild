@@ -88,6 +88,7 @@
         @extend .headerSearch;
         display: flex;
         width: 100%;
+        max-width: 80%;
     }
 
     .icon-filter {

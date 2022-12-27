@@ -5,9 +5,11 @@ import {
   menuIcon,
   searchIcon,
 } from "@/constants/images";
+import { Drawer } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 const menus = [
   {
@@ -26,33 +28,37 @@ const menus = [
 const MainHeader = () => {
   const router = useRouter();
   const currentPath = router.pathname;
+  const [openMenu, setOpenMenu] = useState(false);
   const headerClass = currentPath === "/" ? "" : "header-border";
-  console.log("currentPath :", currentPath);
-
+  const handleClickBack = () => {
+    router.back();
+  };
   return (
     <div className={`main-header ${headerClass}`}>
       <div className="header-nav">
         <div className="headerLeft">
-          <div className="nav_navigate">
+          <div onClick={() => handleClickBack()} className="nav_navigate">
             <Image src={arrowBackIos} alt="" />
           </div>
           <Link href="/" className="logo">
             <Image src={logo} alt="IBUILD" />
           </Link>
           <div
+            onClick={() => {
+              setOpenMenu(!openMenu);
+            }}
             className="toggle-button hidden-lg"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#menuDrawer"
-            aria-controls="offcanvasNavbar"
           >
             <Image src={menuIcon} alt="" />
           </div>
-          <div className="headerSearch">
-            <div className="search-icon">
-              <Image src={searchIcon} alt="" />
+          {currentPath !== "/" ? (
+            <div className="headerSearch">
+              <div className="search-icon">
+                <Image src={searchIcon} alt="" />
+              </div>
+              <input type="text" placeholder="Bạn đang muốn tìm gì?" />
             </div>
-            <input type="text" placeholder="Bạn đang muốn tìm gì?" />
-          </div>
+          ) : null}
         </div>
         <div className="menu">
           <div className="menu-items">
@@ -92,6 +98,44 @@ const MainHeader = () => {
           <Image src={filterIcon} alt="" />
         </div>
       </div>
+      <Drawer
+        onClose={() => {
+          setOpenMenu(false);
+        }}
+        closable={false}
+        title=""
+        placement="right"
+        open={openMenu}
+      >
+        <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <li className="nav-item">
+            <Link className="nav-link menu-item" href="/san-pham">
+              Sản phẩm
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link menu-item" href="/van-ban-phap-ly">
+              Văn bản pháp lý
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link menu-item" href="/thong-tin-xay-dung">
+              Thông tin xây dựng
+            </Link>
+          </li>
+          <li className="nav-item">
+            <span className="sepec-menu">
+              <Link href="/dang-ky" className="nav-link menu-item">
+                Đăng ký{" "}
+              </Link>
+              <span className="spece"> / </span>
+              <Link href="/dang-nhap" className="nav-link menu-item">
+                Đăng nhập
+              </Link>
+            </span>
+          </li>
+        </ul>
+      </Drawer>
     </div>
   );
 };

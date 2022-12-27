@@ -2,7 +2,7 @@ import Head from "next/head";
 import "../styles/menu.module.scss";
 import Script from "next/script";
 
-import Footer from "./footer";
+import Footer from "./layouts/footer";
 
 import Link from "next/link";
 import MainHeader from "./layouts/header";
@@ -23,43 +23,6 @@ export default function MainLayout({ children }: IMainLayoutProps) {
         <MainHeader />
         {children}
         <Footer />
-        <div
-          className="offcanvas offcanvas-end"
-          tabIndex={-1}
-          id="menuDrawer"
-          aria-labelledby="offcanvasNavbarLabel"
-        >
-          <div className="offcanvas-body">
-            <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-              <li className="nav-item">
-                <Link className="nav-link menu-item" href="/san-pham">
-                  Sản phẩm
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link menu-item" href="/van-ban-phap-ly">
-                  Văn bản pháp lý
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link menu-item" href="/thong-tin-xay-dung">
-                  Thông tin xây dựng
-                </Link>
-              </li>
-              <li className="nav-item">
-                <span className="sepec-menu">
-                  <Link href="/dang-ky" className="nav-link menu-item">
-                    Đăng ký{" "}
-                  </Link>
-                  <span className="spece"> / </span>
-                  <Link href="/dang-nhap" className="nav-link menu-item">
-                    Đăng nhập
-                  </Link>
-                </span>
-              </li>
-            </ul>
-          </div>
-        </div>
       </div>
     </>
   );
