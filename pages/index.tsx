@@ -2,7 +2,8 @@ import { ReactElement } from "react";
 import MainLayout from "../components/main-layout";
 import { NextPageWithLayout } from "./_app";
 import { cardProd, docsRule, ibuildInfo, searchIcon } from "@/constants/images";
-import Image from 'next/image'
+import { Row, Col } from "antd";
+import Image from "next/image";
 const HomePage: NextPageWithLayout = () => {
   return (
     <>
@@ -27,14 +28,10 @@ const HomePage: NextPageWithLayout = () => {
           </div>
         </section>
         <section className="cards">
-          <div className="row">
-            <div className="col-md-12 col-lg-4">
+          <Row gutter={32}>
+            <Col md={24} lg={8}>
               <div className="my-card card-product">
-                <Image
-                  className="img-feat"
-                  src={cardProd}
-                  alt=""
-                />
+                <Image className="img-feat" src={cardProd} alt="" />
                 <h3>Sản phẩm</h3>
                 <span className="card-desc">
                   Nisl debitis tincidunt expedita architecto, ligula, sapiente
@@ -43,8 +40,8 @@ const HomePage: NextPageWithLayout = () => {
                   fames nonummy porro.
                 </span>
               </div>
-            </div>
-            <div className="col-md-12 col-lg-4">
+            </Col>
+            <Col md={24} lg={8}>
               <div className="my-card">
                 <Image className="img-feat" src={docsRule} alt="" />
                 <h3>Văn bản pháp lý</h3>
@@ -55,14 +52,10 @@ const HomePage: NextPageWithLayout = () => {
                   fames nonummy porro.
                 </span>
               </div>
-            </div>
-            <div className="col-md-12 col-lg-4">
+            </Col>
+            <Col md={24} lg={8}>
               <div className="my-card">
-                <Image
-                  className="img-feat"
-                  src={ibuildInfo}
-                  alt=""
-                />
+                <Image className="img-feat" src={ibuildInfo} alt="" />
                 <h3>Thông tin xây dựng</h3>
                 <span className="card-desc">
                   Nisl debitis tincidunt expedita architecto, ligula, sapiente
@@ -71,8 +64,8 @@ const HomePage: NextPageWithLayout = () => {
                   fames nonummy porro.
                 </span>
               </div>
-            </div>
-          </div>
+            </Col>
+          </Row>
         </section>
       </div>
     </>

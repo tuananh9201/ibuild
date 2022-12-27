@@ -220,6 +220,10 @@
             cursor: pointer;
             transition: box-shadow .3s;
 
+            @media screen and (max-width: $breakpoint) {
+                margin-bottom: 24px;
+            }
+
             &:hover {
                 box-shadow: 1px 10px 15px 1px rgba(0, 0, 0, 0.3);
             }

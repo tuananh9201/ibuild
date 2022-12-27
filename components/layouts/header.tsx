@@ -51,14 +51,12 @@ const MainHeader = () => {
           >
             <Image src={menuIcon} alt="" />
           </div>
-          {currentPath !== "/" ? (
-            <div className="headerSearch">
-              <div className="search-icon">
-                <Image src={searchIcon} alt="" />
-              </div>
-              <input type="text" placeholder="Bạn đang muốn tìm gì?" />
+          <div className="headerSearch">
+            <div className="search-icon">
+              <Image src={searchIcon} alt="" />
             </div>
-          ) : null}
+            <input type="text" placeholder="Bạn đang muốn tìm gì?" />
+          </div>
         </div>
         <div className="menu">
           <div className="menu-items">
