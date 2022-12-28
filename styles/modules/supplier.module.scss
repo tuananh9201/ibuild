@@ -20,17 +20,29 @@
         position: relative;
 
         .supplierBackground {
-            height: 227px;
+            max-height: 227px;
+            height: auto;
+
+            @media screen and (max-width: $breakpoint) {
+                img {
+                    max-height: 150px;
+                }
+            }
+
+            .supplierBackgroundImage {
+                @media screen and (max-width: $breakpoint) {
+                    border-radius: 4px;
+                }
+            }
         }
 
         .supplierInfo {
-            height: 68px;
             padding-left: 226px;
             margin-top: 16px;
 
             @media screen and (max-width: $breakpoint) {
                 padding-left: 0px;
-                margin-top: 24px;
+                margin-top: 48px;
             }
 
             .supplierInfoDetail {
@@ -47,6 +59,11 @@
                 .supplierInfoDetailName {
                     display: flex;
                     flex-direction: column;
+
+                    @media screen and (max-width: $breakpoint) {
+                        flex-direction: column-reverse;
+                        gap: 8px;
+                    }
 
                     .supplierAddress {
                         display: flex;
@@ -74,6 +91,11 @@
 
                 .supplierInfoDetailAction {
                     max-width: 276px;
+
+                    @media screen and (max-width: $breakpoint) {
+                        max-width: 100%;
+                        width: 100%;
+                    }
                 }
             }
         }
@@ -87,8 +109,15 @@
             bottom: 0;
 
             @media screen and (max-width: $breakpoint) {
-                left: 44%;
-                bottom: 24px;
+                left: 41%;
+                bottom: 132px;
+                width: 80px;
+                height: 80px;
+
+                img {
+                    width: 80px;
+                    height: 80px;
+                }
             }
         }
     }

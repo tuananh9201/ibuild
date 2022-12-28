@@ -20,7 +20,11 @@ const SupplierPage: NextPageWithLayout = () => {
       <div className={style.supplierMain}>
         <div className={style.supplierHeader}>
           <div className={style.supplierBackground}>
-            <Image src={supplierBg} alt="bg" />
+            <Image
+              className={style.supplierBackgroundImage}
+              src={supplierBg}
+              alt="bg"
+            />
           </div>
           <div className={style.supplierInfo}>
             <div className={style.supplierInfoDetail}>
