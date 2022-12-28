@@ -10,6 +10,8 @@ import {
   supplierAvatarLarge,
   supplierBg,
 } from "@/constants/images";
+import Link from "next/link";
+import SupplierChart from "@/components/supplier/supplier-chart";
 const SupplierPage: NextPageWithLayout = () => {
   return (
     <>
@@ -56,6 +58,25 @@ const SupplierPage: NextPageWithLayout = () => {
           </div>
           <div className={style.supplierAvatar}>
             <Image src={supplierAvatarLarge} alt="bg" />
+          </div>
+        </div>
+        <div className={style.supplierContainer}>
+          <div className={style.supplierHeaderMenu}>
+            <Link href="/" className="menu-item active">
+              Thông tin nhà cung cấp
+              <div className="bottom-menu"></div>
+            </Link>
+            <Link href="/" className="menu-item">
+              Tất cả sản phẩm
+              <div className="bottom-menu"></div>
+            </Link>
+            <Link href="/" className="menu-item">
+              Giới thiệu chung
+              <div className="bottom-menu"></div>
+            </Link>
+          </div>
+          <div className={style.supplierHeaderContent}>
+            <SupplierChart />
           </div>
         </div>
       </div>

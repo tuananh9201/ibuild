@@ -250,6 +250,10 @@ label {
   justify-content: center;
   align-items: center;
   margin-bottom: 4px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: $text-color;
 
   &:hover {
     color: $primary-color !important;
