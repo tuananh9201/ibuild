@@ -34,38 +34,30 @@ const data = [
   },
 ];
 const config: PieConfig = {
-  //   appendPadding: 24,
-  //   padding: 36,
+  // appendPadding: [0, 8, 8, -8],
+  padding: [0, 8],
+  limitInPlot: true,
   data,
   angleField: "value",
-  colorField: "color",
+  colorField: "type",
+  color: data.map((d) => d.color),
   radius: 1,
   innerRadius: 0.6,
+  width: 200,
+  height: 200,
+  autoFit: true,
+  legend: {
+    layout: "vertical",
+    position: "right",
+    flipPage: true,
+  },
   label: {
     type: "inner",
     offset: "-50%",
     content: "{value}",
     style: {
       textAlign: "center",
-      fontSize: 14,
-    },
-  },
-  interactions: [
-    {
-      type: "element-selected",
-    },
-    {
-      type: "element-active",
-    },
-  ],
-  statistic: {
-    content: {
-      style: {
-        whiteSpace: "pre-wrap",
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-      },
-      content: "",
+      fontSize: 12,
     },
   },
 };

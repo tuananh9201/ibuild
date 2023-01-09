@@ -12,6 +12,8 @@ import {
 } from "@/constants/images";
 import Link from "next/link";
 import SupplierChart from "@/components/supplier/supplier-chart";
+import SupplierTopViewChart from "@/components/supplier/top-view-chart";
+import { Row, Col } from "antd";
 const SupplierPage: NextPageWithLayout = () => {
   return (
     <>
@@ -75,9 +77,18 @@ const SupplierPage: NextPageWithLayout = () => {
               <div className="bottom-menu"></div>
             </Link>
           </div>
-          <div className={style.supplierHeaderContent}>
-            <SupplierChart />
-          </div>
+          <Row>
+            <Col sm={24} md={8}>
+              <div className={style.supplierHeaderContent}>
+                <SupplierChart />
+              </div>
+            </Col>
+            <Col sm={24} md={16}>
+              <div className={style.supplierTopViewChart}>
+                <SupplierTopViewChart />
+              </div>
+            </Col>
+          </Row>
         </div>
       </div>
     </>

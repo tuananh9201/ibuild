@@ -128,6 +128,7 @@
     flex-direction: column;
     align-items: flex-start;
     padding: 0px;
+    width: 100%;
 
     .supplierHeaderMenu {
         display: flex;
@@ -143,29 +144,41 @@
         align-items: flex-start;
         padding: 40px 0px 0px;
         gap: 40px;
+    }
 
-        .chart {
-            display: flex;
-            flex-direction: row;
-            align-items: flex-start;
-            padding: 0px;
-            gap: 24px;
+    .chart {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 0px;
+        gap: 24px;
 
-            .cardChartPie {
-                flex: 1;
-                background: #F8F9FF;
-                border-radius: 8px;
+        .cardChartPie {
+            flex: 1;
+            background: #F8F9FF;
+            border-radius: 8px;
 
-                .title {
-                    padding: 16px 32px;
-                }
-
-                .pie {}
+            .title {
+                padding: 16px 32px;
             }
 
-            .cardChartBar {
-                @extend .cardChartPie;
-                flex: 2
+            .pie {}
+        }
+
+        .cardChartBar {
+            @extend .cardChartPie;
+            flex: 2
+        }
+    }
+
+    .supplierTopViewChart {
+        background: #F8F9FF;
+        border-radius: 8px;
+        padding: 24px;
+
+        .supplierTopViewChartBar {
+            .supplierTopViewChartBarTitle {
+                @extend .title;
             }
         }
     }
