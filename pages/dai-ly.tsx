@@ -14,6 +14,9 @@ import Link from "next/link";
 import SupplierChart from "@/components/supplier/supplier-chart";
 import SupplierTopViewChart from "@/components/supplier/top-view-chart";
 import { Row, Col } from "antd";
+import suppliers from "../data/suppliers.json";
+import ProductCard from "@/components/products/product-card";
+
 const SupplierPage: NextPageWithLayout = () => {
   return (
     <>
@@ -77,7 +80,7 @@ const SupplierPage: NextPageWithLayout = () => {
               <div className="bottom-menu"></div>
             </Link>
           </div>
-          <Row>
+          <Row style={{ width: "100%" }}>
             <Col sm={24} md={8}>
               <div className={style.supplierHeaderContent}>
                 <SupplierChart />
@@ -89,6 +92,26 @@ const SupplierPage: NextPageWithLayout = () => {
               </div>
             </Col>
           </Row>
+          <section className={style.sectionTopViewProduct}>
+            <h3>Nhóm sản phẩm được xem nhiều nhất</h3>
+            <div className="products-result">
+              <Row style={{ justifyContent: "center" }}>
+                {suppliers.map((supplier) => {
+                  return (
+                    <Col
+                      key={supplier.id}
+                      style={{ padding: 12 }}
+                      sm={24}
+                      md={12}
+                      lg={6}
+                    >
+                      <ProductCard supplier={supplier} />
+                    </Col>
+                  );
+                })}
+              </Row>
+            </div>
+          </section>
         </div>
       </div>
     </>

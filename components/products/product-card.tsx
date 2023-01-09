@@ -13,6 +13,7 @@ import { useState } from "react";
 import { ISupplier } from "types";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import style from "@/styles/modules/product-card.module.scss";
 interface ICard {
   supplier: ISupplier;
 }
@@ -26,18 +27,22 @@ const ProductCard = (props: ICard) => {
     router.push(`/san-pham/${slug}`);
   };
   return (
-    <div className="product-card">
-      <div className="product-card_container">
-        <div className="product-card_container_body">
-          <div className="card-top">
-            <div className="location">
-              <div className="location-icon">
+    <div className={style.productCard}>
+      <div className={style.productCard_Container}>
+        <div className={style.productCard_Container_Body}>
+          <div className={style.productCard_Container_Body_Top}>
+            <div className={style.productCard_Container_Body_Top_Location}>
+              <div
+                className={style.productCard_Container_Body_Top_Location_Icon}
+              >
                 <Image src={addressIcon} alt="" />
               </div>
-              <span className="location">{supplier.address}</span>
+              <span className={style.productCard_Container_Body_Top_Location}>
+                {supplier.address}
+              </span>
             </div>
-            <div className="supplier-info">
-              <div className="supplier-image">
+            <div className={style.productCard_Container_Body_Top_Info}>
+              <div className={style.productCard_Container_Body_Top_Info_Image}>
                 <Link href="/dai-ly">
                   <Image
                     width={40}
@@ -47,15 +52,22 @@ const ProductCard = (props: ICard) => {
                   />
                 </Link>
               </div>
-              <span className="supplier-title">{supplier.name}</span>
+              <span className={style.productCard_Container_Body_Top_Info_Title}>
+                {supplier.name}
+              </span>
             </div>
           </div>
-          <div className="product-info">
-            <h3 className="product-category-title">{rootCategory?.name}</h3>
-            <div className="product-category-icons">
+          <div className={style.productCard_Container_Body_Body}>
+            <h3 className={style.productCard_Container_Body_Body_Title}>
+              {rootCategory?.name}
+            </h3>
+            <div className={style.productCard_Container_Body_Body_Icons}>
               {childCategory.map((c) => {
                 return (
-                  <div key={c.id} className="product-category-icon-item">
+                  <div
+                    key={c.id}
+                    className={style.productCard_Container_Body_Body_Icons_Item}
+                  >
                     <Image
                       height={36}
                       width={36}
@@ -67,31 +79,52 @@ const ProductCard = (props: ICard) => {
               })}
             </div>
           </div>
-          <span className="price-range">{supplier.priceRange}</span>
-          <div className="product-card-body-bottom">
-            <div className="row-populate">
+          <span className={style.productCard_Container_PriceRange}>
+            {supplier.priceRange}
+          </span>
+          <div className={style.productCard_Container_Body_Bottom}>
+            <div className={style.productCard_Container_Body_Bottom_Populate}>
               <span className="text">Hãng phổ biến</span>
-              <div className="extras">
+              <div
+                className={
+                  style.productCard_Container_Body_Bottom_Populate_Extras
+                }
+              >
                 {supplier.brandsPopulate.map((brand) => (
-                  <div key={brand.id} className="item">
+                  <div
+                    key={brand.id}
+                    className={
+                      style.productCard_Container_Body_Bottom_Populate_Extras_Item
+                    }
+                  >
                     <Image height={24} width={24} src={brand.logo} alt="" />
                   </div>
                 ))}
               </div>
             </div>
-            <div className="row-populate">
+            <div className={style.productCard_Container_Body_Bottom_Populate}>
               <span className="text">SL sản phẩm</span>
-              <div className="extras">
+              <div
+                className={
+                  style.productCard_Container_Body_Bottom_Populate_Extras
+                }
+              >
                 {supplier.productQuantity.min} - {supplier.productQuantity.max}
               </div>
             </div>
-            <div className="row-populate">
+            <div className={style.productCard_Container_Body_Bottom_Populate}>
               <span className="text">Khoảng cách</span>
-              <div className="extras">{supplier.space}</div>
+              <div
+                className={
+                  style.productCard_Container_Body_Bottom_Populate_Extras
+                }
+              >
+                {supplier.space}
+              </div>
             </div>
           </div>
         </div>
-        <div className="product-card_container_actions">
+        <div className={style.productCard_Container_Body_Actions}>
           <button
             onClick={() => {
               handleClickProduct(supplier.id);
@@ -127,8 +160,8 @@ const ProductCard = (props: ICard) => {
           </button>
         </div>
       </div>
-      <div className="matched-label">
-        <span className="matched-number">93%</span>
+      <div className={style.productCard_MatchedLabel}>
+        <span className={style.productCard_MatchedLabel_Number}>93%</span>
       </div>
     </div>
   );

@@ -1,0 +1,185 @@
+@import "variables";
+
+.productCard {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px;
+    isolation: isolate;
+    min-height: 389px;
+    min-width: 308px;
+    background: #F8F9FF;
+    border-radius: 4px;
+
+    &_Container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0px;
+        gap: 16px;
+        width: 100%;
+
+        &_Body {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 0px;
+            gap: 16px;
+            width: 100%;
+
+            &_Top {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0px;
+                gap: 8px;
+
+                &_Location {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    padding: 0px;
+                    gap: 10px;
+
+                    &_Icon {
+                        width: 20px;
+                        height: 20px;
+                    }
+                }
+
+                &_Info {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    padding: 0px;
+                    gap: 4px;
+
+                    &_Image {
+                        width: 40px;
+                        height: 40px;
+                    }
+
+                    &_Title {
+                        font-weight: 500;
+                        font-size: 16px;
+                        line-height: 150%;
+                    }
+
+                }
+            }
+
+            &_Body {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                padding: 0px;
+                gap: 8px;
+
+                &_Title {
+                    font-weight: 500;
+                    font-size: 16px !important;
+                    line-height: 150% !important;
+                    margin-bottom: 8px;
+                    text-transform: uppercase;
+                }
+
+                &_Icons {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: flex-start;
+                    padding: 0px;
+                    gap: 8px;
+
+                    &_Item {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: flex-start;
+                        padding: 8px;
+
+                        width: 36px;
+                        height: 36px;
+                        background: #FFFFFF;
+                        border-radius: 36px;
+                    }
+                }
+            }
+
+            &_PriceRange {
+                font-weight: 500;
+                font-size: 20px;
+                line-height: 150%;
+                color: $text-color;
+                margin-bottom: 16px;
+            }
+
+            &_Bottom {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: flex-start;
+                padding: 0px;
+                gap: 8px;
+                width: 100%;
+
+                &_Populate {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 0px;
+                    gap: 10px;
+                    width: 100%;
+                    margin-bottom: 8px;
+
+                    &:last-child {
+                        margin-bottom: 0px;
+                    }
+
+                    &_Extras {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        align-items: center;
+                        gap: 10px;
+
+                        &_Item {
+                            width: 24px;
+                            height: 24px;
+                            background-color: #FFFFFF;
+                            border-radius: 36px;
+                        }
+                    }
+                }
+            }
+
+            &_Actions {
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+                padding: 0px;
+                gap: 8px;
+                width: 100%;
+            }
+        }
+    }
+
+    &_MatchedLabel {
+        position: absolute;
+        width: 43px;
+        height: 44px;
+        right: 16px;
+        top: 12px;
+        background: #BEDCFF;
+        border-radius: 0px 0px 4px 4px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &_Number {
+            font-weight: 500;
+            font-size: 16px;
+        }
+    }
+}
