@@ -93,7 +93,9 @@ const SupplierPage: NextPageWithLayout = () => {
             </Col>
           </Row>
           <section className={style.sectionTopViewProduct}>
-            <h3>Nhóm sản phẩm được xem nhiều nhất</h3>
+            <div className={style.SectionTopViewTitle}>
+              Nhóm sản phẩm được xem nhiều nhất
+            </div>
             <div className="products-result">
               <Row style={{ justifyContent: "center" }}>
                 {suppliers.map((supplier) => {
