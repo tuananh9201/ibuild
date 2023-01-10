@@ -1,6 +1,9 @@
 import style from "@/styles/modules/supplier.module.scss";
-import { Pie, PieConfig } from "@ant-design/plots";
-
+import { PieConfig } from "@ant-design/charts";
+import dynamic from "next/dynamic";
+const Pie = dynamic(() => import("@ant-design/charts").then(({ Pie }) => Pie), {
+  ssr: false,
+});
 const data = [
   {
     type: "Thiết bị vệ sinh",

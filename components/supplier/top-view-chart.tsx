@@ -1,7 +1,12 @@
 import style from "@/styles/modules/supplier.module.scss";
-import { Column } from "@ant-design/charts";
 import { BarConfig } from "@ant-design/plots";
-
+import dynamic from "next/dynamic";
+const Column = dynamic(
+  () => import("@ant-design/charts").then(({ Column }) => Column),
+  {
+    ssr: false,
+  }
+);
 const data = [
   {
     label: "thiết bị vệ sinh.",

@@ -1,7 +1,12 @@
-import { Area } from "@ant-design/plots";
 import data from "../../data/product-chart.json";
-import { AreaConfig } from "@ant-design/charts";
-import { Line } from "@ant-design/plots";
+import { AreaConfig } from "@ant-design/plots";
+import dynamic from "next/dynamic";
+const Area = dynamic(
+  () => import("@ant-design/charts").then(({ Area }) => Area),
+  {
+    ssr: false,
+  }
+);
 const ProductChartPrice = () => {
   const config: AreaConfig = {
     data,
