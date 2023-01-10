@@ -6,7 +6,9 @@ import style from "@/styles/modules/supplier.module.scss";
 import Image from "next/image";
 import {
   addressIcon,
+  bgProject,
   btnPhoneIconTranf,
+  projectAvata,
   supplierAvatarLarge,
   supplierBg,
 } from "@/constants/images";
@@ -16,6 +18,43 @@ import SupplierTopViewChart from "@/components/supplier/top-view-chart";
 import { Row, Col } from "antd";
 import suppliers from "../data/suppliers.json";
 import ProductCard from "@/components/products/product-card";
+import ProjectCard from "@/components/project/project-card";
+import { IProject } from "types";
+
+const projects: IProject[] = [
+  {
+    id: 1,
+    name: "Vinhome Ocean Park",
+    des: "Quos aliquip repudiandae condimentum congue anim vitae voluptates velit aliquet fugit beatae.",
+    owner: "Vinhomes",
+    avata: projectAvata,
+    image: bgProject,
+  },
+  {
+    id: 2,
+    name: "Vinhomes The Empire",
+    des: "Quos aliquip repudiandae condimentum congue anim vitae voluptates velit aliquet fugit beatae.",
+    owner: "Vinhomes",
+    avata: projectAvata,
+    image: bgProject,
+  },
+  {
+    id: 3,
+    name: "Vinhomes Wonder Park",
+    des: "Quos aliquip repudiandae condimentum congue anim vitae voluptates velit aliquet fugit beatae.",
+    owner: "Vinhomes",
+    avata: projectAvata,
+    image: bgProject,
+  },
+  {
+    id: 4,
+    name: "Vinhomes Green Hạ Long",
+    des: "Quos aliquip repudiandae condimentum congue anim vitae voluptates velit aliquet fugit beatae.",
+    owner: "Vinhomes",
+    avata: projectAvata,
+    image: bgProject,
+  },
+];
 
 const SupplierPage: NextPageWithLayout = () => {
   return (
@@ -113,6 +152,26 @@ const SupplierPage: NextPageWithLayout = () => {
                 })}
               </Row>
             </div>
+          </section>
+          <section className={style.SectionProjects}>
+            <div className={style.SectionProjects_Title}>
+              Dự án tham gia của nhà cung cấp
+            </div>
+            <Row>
+              {projects.map((project) => {
+                return (
+                  <Col
+                    key={project.id}
+                    style={{ padding: 12 }}
+                    sm={24}
+                    md={12}
+                    lg={6}
+                  >
+                    <ProjectCard project={project} />
+                  </Col>
+                );
+              })}
+            </Row>
           </section>
         </div>
       </div>

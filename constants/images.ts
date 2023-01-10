@@ -30,6 +30,8 @@ import thumb4 from "../images/C4.png";
 import imgFeat from "../images/Feat.png";
 import supplierBg from "../images/supplier_bg.png";
 import supplierAvatarLarge from "../images/SupplierAvatarLarge.png";
+import bgProject from "../images/bg-project.jpg";
+import projectAvata from "../images/projectAvata.svg";
 export {
   logo,
   addressIcon,
@@ -63,4 +65,6 @@ export {
   imgFeat,
   supplierBg,
   supplierAvatarLarge,
+  bgProject,
+  projectAvata,
 };

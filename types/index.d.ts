@@ -28,3 +28,12 @@ export interface ISupplier {
   phoneNumber: string;
   priceRange: string;
 }
+
+export interface IProject {
+  id: number;
+  name: string;
+  owner: string;
+  des: string;
+  avata: StaticImageData;
+  image: StaticImageData;
+}

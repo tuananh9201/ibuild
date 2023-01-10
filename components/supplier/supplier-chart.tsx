@@ -34,8 +34,8 @@ const data = [
   },
 ];
 const config: PieConfig = {
-  // appendPadding: [0, 8, 8, -8],
-  padding: [0, 8],
+  appendPadding: [24, 24, 24, 24],
+  // padding: ,
   limitInPlot: true,
   data,
   angleField: "value",
@@ -44,12 +44,12 @@ const config: PieConfig = {
   radius: 1,
   innerRadius: 0.6,
   width: 200,
-  height: 200,
+  height: 400,
   autoFit: true,
   legend: {
-    layout: "vertical",
-    position: "right",
-    flipPage: true,
+    layout: "horizontal",
+    position: "bottom",
+    flipPage: false,
   },
   label: {
     type: "inner",

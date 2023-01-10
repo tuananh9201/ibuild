@@ -138,14 +138,15 @@
         align-items: flex-start;
         padding: 40px 0px 0px;
         gap: 24px;
+        margin-bottom: 40px;
     }
 
     .supplierHeaderContent {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        padding: 40px 0px 0px;
         gap: 40px;
+        height: 100%;
     }
 
     .chart {
@@ -161,7 +162,11 @@
             border-radius: 8px;
 
             .title {
-                padding: 16px 32px;
+                padding: 24px 28px;
+                text-align: center;
+                font-weight: 400;
+                font-size: 20px;
+                line-height: 150%;
             }
         }
 
@@ -187,5 +192,11 @@
         font-weight: 500;
         font-size: 20px;
         margin: 24px 0;
+    }
+
+    .SectionProjects {
+        &_Title {
+            @extend .SectionTopViewTitle;
+        }
     }
 }
