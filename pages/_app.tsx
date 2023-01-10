@@ -14,13 +14,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return getLayout(
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: "#C43330",
-        },
-      }}
-    >
+    <ConfigProvider>
       <Component {...pageProps} />
     </ConfigProvider>
   );
