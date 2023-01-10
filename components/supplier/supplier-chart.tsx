@@ -1,8 +1,10 @@
 import style from "@/styles/modules/supplier.module.scss";
 import { PieConfig } from "@ant-design/charts";
 import dynamic from "next/dynamic";
+import LoadingComponent from "../common/loading";
 const Pie = dynamic(() => import("@ant-design/charts").then(({ Pie }) => Pie), {
   ssr: false,
+  loading: () => <LoadingComponent />,
 });
 const data = [
   {

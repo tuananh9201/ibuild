@@ -1,10 +1,12 @@
 import data from "../../data/product-chart.json";
 import { AreaConfig } from "@ant-design/plots";
 import dynamic from "next/dynamic";
+import LoadingComponent from "../common/loading";
 const Area = dynamic(
   () => import("@ant-design/charts").then(({ Area }) => Area),
   {
     ssr: false,
+    loading: () => <LoadingComponent />,
   }
 );
 const ProductChartPrice = () => {

@@ -3,6 +3,7 @@ import "../styles/global.scss";
 import type { AppProps } from "next/app";
 import { ReactElement, ReactNode } from "react";
 import { ConfigProvider } from "antd";
+import "antd/dist/antd.css";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
