@@ -1,18 +1,32 @@
-import { ReactElement } from "react";
+import { ReactElement, useState, useEffect } from "react";
 import { NextPageWithLayout } from "../../_app";
 import Head from "next/head";
 import style from "@/styles/modules/supplier.module.scss";
-import Link from "next/link";
-import SupplierChart from "@/components/supplier/supplier-chart";
-import SupplierTopViewChart from "@/components/supplier/top-view-chart";
 import { Row, Col, Select } from "antd";
-import { IProject } from "types";
+
 import SupplierLayout from "@/components/layouts/supplier-layout";
 import ProductCategories from "@/components/supplier/product-categories";
 import { searchIcon } from "@/constants/images";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import ProductGroups from "@/components/supplier/product-groups";
 
 const SupplierProductsPage: NextPageWithLayout = () => {
+  const [tabSelected, setTabSelected] = useState("group");
+  const [currentPath, setcurrentPath] = useState("");
+  const router = useRouter();
+  const { query } = router;
+  console.log(router);
+
+  useEffect(() => {
+    const { tab, slug } = query;
+    setTabSelected(tab === "san-pham-le" ? "product" : "group");
+    if (slug) {
+      const cPath = router.pathname.replace("[slug]", slug.toString());
+      setcurrentPath(cPath);
+    }
+  }, [query]);
+
   return (
     <>
       <Head>
@@ -38,14 +52,38 @@ const SupplierProductsPage: NextPageWithLayout = () => {
             </div>
             <div className={style.Supp_products_Wrapper_Filters}>
               <div className={style.Supp_products_Wrapper_Filters_Menu}>
-                <a href="#" className="menu-item active">
+                <div
+                  onClick={() => {
+                    router.push({
+                      pathname: currentPath,
+                      query: {
+                        tab: "nhom-san-pham",
+                      },
+                    });
+                  }}
+                  className={`menu-item ${
+                    tabSelected === "group" ? "active" : ""
+                  }`}
+                >
                   Nhóm sản phẩm
                   <div className="bottom-menu"></div>
-                </a>
-                <a href="#" className="menu-item">
+                </div>
+                <div
+                  onClick={() => {
+                    router.push({
+                      pathname: currentPath,
+                      query: {
+                        tab: "san-pham-le",
+                      },
+                    });
+                  }}
+                  className={`menu-item ${
+                    tabSelected !== "group" ? "active" : ""
+                  }`}
+                >
                   Sản phẩm bán lẻ
                   <div className="bottom-menu"></div>
-                </a>
+                </div>
               </div>
               <div className={style.Supp_products_Wrapper_Filters_Product_Sort}>
                 <div className="result-sort">
@@ -72,7 +110,9 @@ const SupplierProductsPage: NextPageWithLayout = () => {
                 </div>
               </div>
             </div>
-            <div className={style.Supp_products_Wrapper_Products}></div>
+            <div className={style.Supp_products_Wrapper_Products}>
+              {tabSelected === "group" ? <ProductGroups /> : <h1>No</h1>}
+            </div>
           </div>
         </Col>
       </Row>
