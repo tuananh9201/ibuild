@@ -2,49 +2,15 @@ import { ReactElement } from "react";
 import { NextPageWithLayout } from "../../_app";
 import Head from "next/head";
 import style from "@/styles/modules/supplier.module.scss";
-import { bgProject, projectAvata } from "@/constants/images";
 import Link from "next/link";
 import SupplierChart from "@/components/supplier/supplier-chart";
 import SupplierTopViewChart from "@/components/supplier/top-view-chart";
-import { Row, Col } from "antd";
+import { Row, Col, Select } from "antd";
 import { IProject } from "types";
 import SupplierLayout from "@/components/layouts/supplier-layout";
 import ProductCategories from "@/components/supplier/product-categories";
-
-const projects: IProject[] = [
-  {
-    id: 1,
-    name: "Vinhome Ocean Park",
-    des: "Quos aliquip repudiandae condimentum congue anim vitae voluptates velit aliquet fugit beatae.",
-    owner: "Vinhomes",
-    avata: projectAvata,
-    image: bgProject,
-  },
-  {
-    id: 2,
-    name: "Vinhomes The Empire",
-    des: "Quos aliquip repudiandae condimentum congue anim vitae voluptates velit aliquet fugit beatae.",
-    owner: "Vinhomes",
-    avata: projectAvata,
-    image: bgProject,
-  },
-  {
-    id: 3,
-    name: "Vinhomes Wonder Park",
-    des: "Quos aliquip repudiandae condimentum congue anim vitae voluptates velit aliquet fugit beatae.",
-    owner: "Vinhomes",
-    avata: projectAvata,
-    image: bgProject,
-  },
-  {
-    id: 4,
-    name: "Vinhomes Green Hạ Long",
-    des: "Quos aliquip repudiandae condimentum congue anim vitae voluptates velit aliquet fugit beatae.",
-    owner: "Vinhomes",
-    avata: projectAvata,
-    image: bgProject,
-  },
-];
+import { searchIcon } from "@/constants/images";
+import Image from "next/image";
 
 const SupplierProductsPage: NextPageWithLayout = () => {
   return (
@@ -57,7 +23,58 @@ const SupplierProductsPage: NextPageWithLayout = () => {
         <Col md={6} className={style.Supp_products_Categories}>
           <ProductCategories />
         </Col>
-        <Col md={18}></Col>
+        <Col md={18}>
+          <div className={style.Supp_products_Wrapper}>
+            <div className={style.Supp_products_Wrapper_Title}>
+              Thiết bị vệ sinh & phòng tắm
+            </div>
+            <div className={style.Supp_products_Wrapper_Search}>
+              <div className={style.Supp_products_Wrapper_Search_Icon}>
+                <Image src={searchIcon} width={20} height={20} alt="" />
+              </div>
+              <div className={style.Supp_products_Wrapper_Search_Input}>
+                <input placeholder="Tìm sản phẩm trong nhà cung cấp" />
+              </div>
+            </div>
+            <div className={style.Supp_products_Wrapper_Filters}>
+              <div className={style.Supp_products_Wrapper_Filters_Menu}>
+                <a href="#" className="menu-item active">
+                  Nhóm sản phẩm
+                  <div className="bottom-menu"></div>
+                </a>
+                <a href="#" className="menu-item">
+                  Sản phẩm bán lẻ
+                  <div className="bottom-menu"></div>
+                </a>
+              </div>
+              <div className={style.Supp_products_Wrapper_Filters_Product_Sort}>
+                <div className="result-sort">
+                  <Select
+                    defaultValue="latest"
+                    style={{
+                      width: 205,
+                      height: 46,
+                      fontSize: 16,
+                      fontWeight: 400,
+                    }}
+                    onChange={() => {}}
+                    options={[
+                      {
+                        value: "latest",
+                        label: "Mới nhất",
+                      },
+                      {
+                        value: "older",
+                        label: "Cũ nhất",
+                      },
+                    ]}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className={style.Supp_products_Wrapper_Products}></div>
+          </div>
+        </Col>
       </Row>
     </>
   );

@@ -214,39 +214,61 @@
     }
 }
 
-.Supp_products_Categories {
-    width: 100%;
-
+.Supp_products_Wrapper {
     &_Title {
         font-style: normal;
-        font-weight: 400;
+        font-weight: 500;
         font-size: 20px;
         line-height: 150%;
     }
 
-    &_List {
-        &_Item {
-            margin-top: 24px;
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 150%;
-            padding-left: 8px;
+    &_Search {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 12px;
+        max-width: 350px;
+        background: #FFFFFF;
+        border: 1px solid #DDDDDD;
+        border-radius: 4px;
+        margin: 24px 0;
 
-            &.active {
-                color: $primary-color;
-                border-left: 2px solid $primary-color;
-                background-color: $primary-color;
-            }
+        &_Icon {
+            margin-right: 8px;
+        }
 
-            &:hover {
-                cursor: pointer;
-                color: $primary-color;
-                border-left: 2px solid $primary-color;
+        &_Input {
+            width: 100%;
+
+            input {
+                width: 100%;
+                border: none;
+
+                &::placeholder {
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 14px;
+                }
             }
         }
     }
 
-    @media screen and (max-width: $breakpoint) {
-        display: none !important;
+    &_Filters {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px;
+        gap: 24px;
+
+        &_Menu {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 24px;
+        }
+
     }
+
+    &_Products {}
 }
