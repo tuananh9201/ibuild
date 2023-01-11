@@ -145,7 +145,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
         gap: 40px;
         height: 100%;
         width: 100%;
@@ -155,7 +154,7 @@
         display: flex;
         flex-direction: row;
         align-items: flex-start;
-        padding: 0px;
+        padding-right: 12px;
         width: 100%;
 
         @media screen and (max-width: $breakpoint) {
@@ -182,20 +181,25 @@
         }
     }
 
-    .supplierTopViewChart {
-        background: #F8F9FF;
-        border-radius: 8px;
-        padding: 24px;
+    .supplierTopViewChart_Wapper {
+        padding-left: 12px;
 
-        .supplierTopViewChartBar {
-            .supplierTopViewChartBarTitle {
-                font-style: normal;
-                font-weight: 400;
-                font-size: 20px;
-                margin-bottom: 8px;
+        .supplierTopViewChart {
+            background: #F8F9FF;
+            border-radius: 8px;
+            padding: 24px;
+
+            .supplierTopViewChartBar {
+                .supplierTopViewChartBarTitle {
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 20px;
+                    margin-bottom: 8px;
+                }
             }
         }
     }
+
 
     .SectionTopViewTitle {
         font-weight: 500;
@@ -207,5 +211,11 @@
         &_Title {
             @extend .SectionTopViewTitle;
         }
+    }
+}
+
+.Supp_products_Categories {
+    @media screen and (max-width: $breakpoint) {
+        display: none !important;
     }
 }
