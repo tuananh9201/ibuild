@@ -215,6 +215,37 @@
 }
 
 .Supp_products_Categories {
+    width: 100%;
+
+    &_Title {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 150%;
+    }
+
+    &_List {
+        &_Item {
+            margin-top: 24px;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 150%;
+            padding-left: 8px;
+
+            &.active {
+                color: $primary-color;
+                border-left: 2px solid $primary-color;
+                background-color: $primary-color;
+            }
+
+            &:hover {
+                cursor: pointer;
+                color: $primary-color;
+                border-left: 2px solid $primary-color;
+            }
+        }
+    }
+
     @media screen and (max-width: $breakpoint) {
         display: none !important;
     }
