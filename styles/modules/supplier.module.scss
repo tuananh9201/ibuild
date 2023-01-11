@@ -183,7 +183,10 @@
 
         .supplierTopViewChartBar {
             .supplierTopViewChartBarTitle {
-                @extend .title;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 20px;
+                margin-bottom: 8px;
             }
         }
     }
