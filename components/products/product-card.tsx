@@ -16,6 +16,7 @@ import Link from "next/link";
 import style from "@/styles/modules/product-card.module.scss";
 interface ICard {
   supplier: ISupplier;
+  showMatched?: boolean;
 }
 const ProductCard = (props: ICard) => {
   const { supplier } = props;
@@ -129,7 +130,7 @@ const ProductCard = (props: ICard) => {
             onClick={() => {
               handleClickProduct(supplier.id);
             }}
-            className="btn-in-card view-detail"
+            className={style.productCard_Container_Body_Actions_BtnView}
           >
             Xem chi tiết
           </button>
@@ -150,19 +151,23 @@ const ProductCard = (props: ICard) => {
               onMouseLeave={() => {
                 setPhoneIcon(btnPhoneIconPri);
               }}
-              className="btn-in-card outline"
+              className={style.productCard_Container_Body_Actions_BtnOutline}
             >
               <Image src={phoneIcon} alt="" />
             </button>
           </Tooltip>
-          <button className="btn-in-card outline">
+          <button
+            className={style.productCard_Container_Body_Actions_BtnOutline}
+          >
             <Image src={btnBookmarkIcon} alt="" />
           </button>
         </div>
       </div>
-      <div className={style.productCard_MatchedLabel}>
-        <span className={style.productCard_MatchedLabel_Number}>93%</span>
-      </div>
+      {props.showMatched ? (
+        <div className={style.productCard_MatchedLabel}>
+          <span className={style.productCard_MatchedLabel_Number}>93%</span>
+        </div>
+      ) : null}
     </div>
   );
 };

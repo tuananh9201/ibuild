@@ -3,7 +3,6 @@ import { NextPageWithLayout } from "../../_app";
 import Head from "next/head";
 import style from "@/styles/modules/supplier.module.scss";
 import { bgProject, projectAvata } from "@/constants/images";
-import Link from "next/link";
 import SupplierChart from "@/components/supplier/supplier-chart";
 import SupplierTopViewChart from "@/components/supplier/top-view-chart";
 import { Row, Col } from "antd";

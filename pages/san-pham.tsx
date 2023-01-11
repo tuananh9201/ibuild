@@ -60,7 +60,7 @@ const HomePage: NextPageWithLayout = () => {
                       md={12}
                       lg={8}
                     >
-                      <ProductCard supplier={supplier} />
+                      <ProductCard showMatched={true} supplier={supplier} />
                     </Col>
                   );
                 })}

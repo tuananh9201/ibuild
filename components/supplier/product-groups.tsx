@@ -1,4 +1,4 @@
-import { Row, Col } from "antd";
+import { Row, Col, Pagination } from "antd";
 import ProductCard from "../products/product-card";
 import suppliers from "../../data/suppliers.json";
 const ProductGroups = () => {
@@ -9,6 +9,13 @@ const ProductGroups = () => {
           <ProductCard supplier={supplier} />
         </Col>
       ))}
+      <div className="pagination">
+        <Pagination
+          defaultPageSize={6}
+          defaultCurrent={1}
+          total={suppliers.length}
+        />
+      </div>
     </Row>
   );
 };
