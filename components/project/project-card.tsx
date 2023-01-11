@@ -30,7 +30,7 @@ const ProjectCard = (props: ICard) => {
     <div className={style.ProjectCard}>
       <div className={style.ProjectCard_Container}>
         <div className={style.ProjectCard_Container_FeatureImage}>
-          <Image src={project.image} alt="" />
+          <Image height={150} src={project.image} alt="" />
         </div>
         <div className={style.ProjectCard_Container_Info}>
           <div className={style.ProjectCard_Container_Info_Title}>

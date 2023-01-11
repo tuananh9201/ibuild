@@ -3,7 +3,6 @@ import "../styles/global.scss";
 import type { AppProps } from "next/app";
 import { ReactElement, ReactNode } from "react";
 import { ConfigProvider } from "antd";
-import "antd/dist/antd.css";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -15,7 +14,13 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return getLayout(
-    <ConfigProvider>
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: "#C43330",
+        },
+      }}
+    >
       <Component {...pageProps} />
     </ConfigProvider>
   );

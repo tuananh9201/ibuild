@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
-import MainLayout from "../components/main-layout";
-import { NextPageWithLayout } from "./_app";
+import MainLayout from "@/components/main-layout";
+import { NextPageWithLayout } from "../_app";
 import Head from "next/head";
 import style from "@/styles/modules/supplier.module.scss";
 import Image from "next/image";
@@ -16,7 +16,7 @@ import Link from "next/link";
 import SupplierChart from "@/components/supplier/supplier-chart";
 import SupplierTopViewChart from "@/components/supplier/top-view-chart";
 import { Row, Col } from "antd";
-import suppliers from "../data/suppliers.json";
+import suppliers from "../../data/suppliers.json";
 import ProductCard from "@/components/products/product-card";
 import ProjectCard from "@/components/project/project-card";
 import { IProject } from "types";
@@ -56,7 +56,7 @@ const projects: IProject[] = [
   },
 ];
 
-const SupplierPage: NextPageWithLayout = () => {
+const SupplierProductPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
@@ -120,12 +120,12 @@ const SupplierPage: NextPageWithLayout = () => {
             </Link>
           </div>
           <Row style={{ width: "100%" }}>
-            <Col md={24} lg={8}>
+            <Col sm={24} md={8}>
               <div className={style.supplierHeaderContent}>
                 <SupplierChart />
               </div>
             </Col>
-            <Col md={24} lg={16}>
+            <Col sm={24} md={16}>
               <div className={style.supplierTopViewChart}>
                 <SupplierTopViewChart />
               </div>
@@ -157,7 +157,7 @@ const SupplierPage: NextPageWithLayout = () => {
             <div className={style.SectionProjects_Title}>
               Dự án tham gia của nhà cung cấp
             </div>
-            <Row gutter={[8, 16]}>
+            <Row>
               {projects.map((project) => {
                 return (
                   <Col
@@ -178,11 +178,11 @@ const SupplierPage: NextPageWithLayout = () => {
     </>
   );
 };
-SupplierPage.getLayout = function getLayout(page: ReactElement) {
+SupplierProductPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <>
       <MainLayout>{page}</MainLayout>
     </>
   );
 };
-export default SupplierPage;
+export default SupplierProductPage;
