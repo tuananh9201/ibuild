@@ -139,7 +139,11 @@
         padding: 40px 0px 0px;
         gap: 24px;
         margin-bottom: 40px;
-        overflow-y: auto;
+
+        @media screen and (max-width:$breakpoint) {
+            overflow: auto;
+            white-space: nowrap;
+        }
     }
 
     .supplierHeaderContent {
