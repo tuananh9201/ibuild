@@ -139,6 +139,7 @@
         padding: 40px 0px 0px;
         gap: 24px;
         margin-bottom: 40px;
+        max-width: 100%;
 
         @media screen and (max-width:$breakpoint) {
             overflow: auto;
@@ -283,4 +284,14 @@
     &_Products {
         margin-top: 32px;
     }
+}
+
+.Supplier_About_Content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 32px 0px 0px;
+    gap: 24px;
+    font-weight: 400;
+    line-height: 150%;
 }
