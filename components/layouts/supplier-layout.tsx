@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Footer from "./footer";
 
-import Link from "next/link";
 import MainHeader from "./header";
 import style from "@/styles/modules/supplier.module.scss";
 import {
@@ -11,12 +10,33 @@ import {
   supplierBg,
 } from "@/constants/images";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 
 interface IMainLayoutProps {
   children: React.ReactNode;
 }
-
+const mapTab = {
+  "gioi-thieu-chung": 2,
+  "san-pham": 1,
+  "[slug]": 0,
+};
 export default function SupplierLayout({ children }: IMainLayoutProps) {
+  const router = useRouter();
+  const [currentTab, setCurrentTab] = useState(0);
+  useEffect(() => {
+    let path = router.pathname.split("/");
+    let cTab = 0;
+    for (const [key, value] of Object.entries(mapTab)) {
+      console.log(`${key}: ${value}`);
+      if (path[path.length - 1].includes(key)) {
+        cTab = value;
+        break;
+      }
+    }
+    setCurrentTab(cTab);
+  }, [router]);
+
   return (
     <>
       <Head>
@@ -69,18 +89,49 @@ export default function SupplierLayout({ children }: IMainLayoutProps) {
           </div>
           <div className={style.supplierContainer}>
             <div className={style.supplierHeaderMenu}>
-              <Link href="/" className="menu-item active">
+              <div
+                onClick={() => {
+                  router.push({
+                    pathname: `/dai-ly/[slug]`,
+                    query: {
+                      slug: router.query.slug,
+                    },
+                  });
+                }}
+                className={`menu-item ${currentTab === 0 ? "active" : ""} `}
+              >
                 Thông tin nhà cung cấp
                 <div className="bottom-menu"></div>
-              </Link>
-              <Link href="/" className="menu-item">
+              </div>
+              <div
+                onClick={() => {
+                  router.push({
+                    pathname: `/dai-ly/[slug]/san-pham`,
+                    query: {
+                      ...router.query,
+                      tab: "nhom-san-pham",
+                    },
+                  });
+                }}
+                className={`menu-item ${currentTab === 1 ? "active" : ""} `}
+              >
                 Tất cả sản phẩm
                 <div className="bottom-menu"></div>
-              </Link>
-              <Link href="/" className="menu-item">
+              </div>
+              <div
+                onClick={() => {
+                  router.push({
+                    pathname: `/dai-ly/[slug]/gioi-thieu-chung`,
+                    query: {
+                      slug: router.query.slug,
+                    },
+                  });
+                }}
+                className={`menu-item ${currentTab === 2 ? "active" : ""} `}
+              >
                 Giới thiệu chung
                 <div className="bottom-menu"></div>
-              </Link>
+              </div>
             </div>
             {children}
           </div>
