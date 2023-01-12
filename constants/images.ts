@@ -34,6 +34,10 @@ import bgProject from "../images/bg-project.jpg";
 import projectAvata from "../images/projectAvata.svg";
 import retailFeature from "../images/retailFeature.png";
 import suppAbout from "../images/supp-about.png";
+import news1 from "../images/news/news1.png";
+import news2 from "../images/news/news2.png";
+import news3 from "../images/news/news3.png";
+import news4 from "../images/news/news4.png";
 export {
   logo,
   addressIcon,
@@ -71,4 +75,8 @@ export {
   projectAvata,
   retailFeature,
   suppAbout,
+  news1,
+  news2,
+  news3,
+  news4,
 };

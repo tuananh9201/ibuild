@@ -1,0 +1,120 @@
+@import "variables";
+
+.Build_Features {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 32px;
+    width: 100%;
+
+    @media screen and (max-width:$breakpoint) {
+        flex-direction: column;
+    }
+
+    &_Top1 {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0px;
+        gap: 24px;
+
+        &_Image {
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        &_Title {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 0px;
+
+            &_Date {
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 150%;
+                color: #717171;
+            }
+
+            &_Title {
+                font-style: normal;
+                font-weight: 500;
+                font-size: 24px;
+                line-height: 150%;
+            }
+        }
+
+        &_Desc {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 150%;
+            color: #717171;
+        }
+    }
+
+    &_Top25 {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0px;
+        gap: 32px;
+    }
+}
+
+.Build_News {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    gap: 32px;
+}
+
+.Build_Administrative {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    gap: 32px;
+}
+
+.Build_Card_Feature {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: 24px;
+
+    &_Image {
+        flex: 1;
+        border-radius: 4px;
+    }
+
+    &_Desc {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0px;
+
+        @media screen and (max-width:$breakpoint) {
+            flex: 1
+        }
+
+        &_Date {
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 150%;
+            color: #717171;
+        }
+
+        &_Title {
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 150%;
+            color: $text-color;
+        }
+    }
+}
