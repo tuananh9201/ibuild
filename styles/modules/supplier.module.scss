@@ -139,6 +139,7 @@
         padding: 40px 0px 0px;
         gap: 24px;
         margin-bottom: 40px;
+        overflow-y: auto;
     }
 
     .supplierHeaderContent {
@@ -268,6 +269,11 @@
             gap: 24px;
         }
 
+        &_Sort {
+            @media screen and (max-width: $breakpoint) {
+                display: none !important;
+            }
+        }
     }
 
     &_Products {

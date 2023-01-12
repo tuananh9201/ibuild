@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "name": "Camera Wifi không dây Yoosee HD 3 râu 1080p",
+    "price": "590.000 VND",
+    "matched": 90,
+    "supplier": {},
+    "brand": {
+      "id": "1",
+      "name": "Yoosee",
+      "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Cửa thép chống cháy 2GL",
+    "price": "10.000 - 55.000 đ",
+    "matched": 90,
+    "supplier": {},
+    "brand": {
+      "id": "1",
+      "name": "Asenware",
+      "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+    }
+  },
+  {
+    "id": 3,
+    "name": "Đèn chớp báo cháy Hochiki HES3-24WR",
+    "price": "10.000 VND",
+    "matched": 95,
+    "supplier": {},
+    "brand": {
+      "id": "1",
+      "name": "Yoosee",
+      "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+    }
+  },
+  {
+    "id": 4,
+    "name": "Camera Wifi không dây Yoosee HD 3 râu 1080p",
+    "price": "590.000 VND",
+    "matched": 90,
+    "supplier": {},
+    "brand": {
+      "id": "1",
+      "name": "Yoosee",
+      "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+    }
+  },
+  {
+    "id": 5,
+    "name": "Cửa thép chống cháy 2GL",
+    "price": "10.000 - 55.000 đ",
+    "matched": 90,
+    "supplier": {},
+    "brand": {
+      "id": "1",
+      "name": "Asenware",
+      "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+    }
+  },
+  {
+    "id": 6,
+    "name": "Đèn chớp báo cháy Hochiki HES3-24WR",
+    "price": "10.000 VND",
+    "matched": 95,
+    "supplier": {},
+    "brand": {
+      "id": "1",
+      "name": "Yoosee",
+      "logo": "https://bk-miki-client.s3.ap-southeast-1.amazonaws.com/images/Supp3.png"
+    }
+  }
+]

@@ -37,3 +37,12 @@ export interface IProject {
   avata: StaticImageData;
   image: StaticImageData;
 }
+
+export interface IRetailProduct {
+  id: number;
+  supplier: ISupplier;
+  name: string;
+  image?: string;
+  matched: number;
+  brand: IBrand;
+}

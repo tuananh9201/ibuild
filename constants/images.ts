@@ -32,6 +32,7 @@ import supplierBg from "../images/supplier_bg.png";
 import supplierAvatarLarge from "../images/SupplierAvatarLarge.png";
 import bgProject from "../images/bg-project.jpg";
 import projectAvata from "../images/projectAvata.svg";
+import retailFeature from "../images/retailFeature.png";
 export {
   logo,
   addressIcon,
@@ -67,4 +68,5 @@ export {
   supplierAvatarLarge,
   bgProject,
   projectAvata,
+  retailFeature,
 };

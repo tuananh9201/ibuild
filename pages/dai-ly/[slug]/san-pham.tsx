@@ -10,6 +10,7 @@ import { searchIcon } from "@/constants/images";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import ProductGroups from "@/components/supplier/product-groups";
+import ProductRetails from "@/components/supplier/product-retail";
 
 const SupplierProductsPage: NextPageWithLayout = () => {
   const [tabSelected, setTabSelected] = useState("group");
@@ -85,7 +86,7 @@ const SupplierProductsPage: NextPageWithLayout = () => {
                   <div className="bottom-menu"></div>
                 </div>
               </div>
-              <div className={style.Supp_products_Wrapper_Filters_Product_Sort}>
+              <div className={style.Supp_products_Wrapper_Filters_Sort}>
                 <div className="result-sort">
                   <Select
                     defaultValue="latest"
@@ -111,7 +112,7 @@ const SupplierProductsPage: NextPageWithLayout = () => {
               </div>
             </div>
             <div className={style.Supp_products_Wrapper_Products}>
-              {tabSelected === "group" ? <ProductGroups /> : <h1>No</h1>}
+              {tabSelected === "group" ? <ProductGroups /> : <ProductRetails />}
             </div>
           </div>
         </Col>
