@@ -38,6 +38,7 @@ import news1 from "../images/news/news1.png";
 import news2 from "../images/news/news2.png";
 import news3 from "../images/news/news3.png";
 import news4 from "../images/news/news4.png";
+import rightIcon from "../images/icons/rightIcon.png";
 export {
   logo,
   addressIcon,
@@ -79,4 +80,5 @@ export {
   news2,
   news3,
   news4,
+  rightIcon,
 };

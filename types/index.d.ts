@@ -46,3 +46,10 @@ export interface IRetailProduct {
   matched: number;
   brand: IBrand;
 }
+export interface INews {
+  id: string;
+  title: string;
+  date: string;
+  image: string;
+  des: string;
+}

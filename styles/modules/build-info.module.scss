@@ -65,19 +65,11 @@
 }
 
 .Build_News {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0px;
-    gap: 32px;
+    margin-top: 60px;
 }
 
 .Build_Administrative {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0px;
-    gap: 32px;
+    margin-top: 60px;
 }
 
 .Build_Card_Feature {
@@ -115,6 +107,75 @@
             font-size: 20px;
             line-height: 150%;
             color: $text-color;
+        }
+    }
+}
+
+.New_Section_Title {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 32px;
+
+    &_Title {
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 150%;
+    }
+
+    &_ViewMore {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+
+        &_Text {
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 150%;
+            color: $primary-color;
+        }
+
+        &_Image {
+            // background: $primary-color;
+            width: 16px;
+            height: 16px;
+        }
+    }
+}
+
+.Build_Card_Normal {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 24px;
+
+    &_Image {
+        border-radius: 4px;
+        min-height: 187px;
+        width: 100%;
+    }
+
+    &_Desc {
+        &_Date {
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        &_Title {
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 150%;
+        }
+
+        &_Desc {
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 150%;
         }
     }
 }
