@@ -44,7 +44,7 @@ const ProductCard = (props: ICard) => {
             </div>
             <div className={style.productCard_Container_Body_Top_Info}>
               <div className={style.productCard_Container_Body_Top_Info_Image}>
-                <Link href="/dai-ly">
+                <Link href={`/dai-ly/${supplier.id}`}>
                   <Image
                     width={40}
                     height={40}
