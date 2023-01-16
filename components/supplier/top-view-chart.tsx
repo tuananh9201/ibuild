@@ -1,14 +1,5 @@
 import style from "@/styles/modules/supplier.module.scss";
-import { BarConfig } from "@ant-design/plots";
-import dynamic from "next/dynamic";
-import LoadingComponent from "../common/loading";
-const Column = dynamic(
-  () => import("@ant-design/charts").then(({ Column }) => Column),
-  {
-    ssr: false,
-    loading: () => <LoadingComponent />,
-  }
-);
+import { BarConfig, Column } from "@ant-design/plots";
 const data = [
   {
     label: "thiết bị vệ sinh.",

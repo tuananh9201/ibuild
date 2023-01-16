@@ -39,6 +39,7 @@ import news2 from "../images/news/news2.png";
 import news3 from "../images/news/news3.png";
 import news4 from "../images/news/news4.png";
 import rightIcon from "../images/icons/rightIcon.png";
+import breadcrumIcon from "../images/icons/arrow_forward_ios_black.png";
 export {
   logo,
   addressIcon,
@@ -81,4 +82,5 @@ export {
   news3,
   news4,
   rightIcon,
+  breadcrumIcon,
 };

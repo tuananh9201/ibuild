@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
-import MainLayout from "../components/main-layout";
-import { NextPageWithLayout } from "./_app";
+import MainLayout from "@/components/main-layout";
+import { NextPageWithLayout } from "../_app";
 import Head from "next/head";
 import style from "@/styles/modules/build-info.module.scss";
 import { Row, Col } from "antd";
@@ -8,8 +8,18 @@ import Image from "next/image";
 import { news1, rightIcon } from "@/constants/images";
 import NewCardFeature from "@/components/news/new-card-feature";
 import NewCardNormal from "@/components/news/news-card-normal";
-import news from "../data/news1.json";
+
+import useSWR from "swr";
+import { fetchNewsForHome } from "lib/api/news";
+import { INews } from "lib/types";
+
 const ThongTinXayDung: NextPageWithLayout = () => {
+  const { data, error } = useSWR<INews[], []>("news", fetchNewsForHome, {
+    fallbackData: [],
+  });
+  if (!data) {
+    return <div>error</div>;
+  }
   return (
     <>
       <Head>
@@ -61,8 +71,8 @@ const ThongTinXayDung: NextPageWithLayout = () => {
             </div>
           </div>
           <div className={style.New_Container}>
-            <Row gutter={32}>
-              {news.map((n) => (
+            <Row gutter={[32, 32]}>
+              {data.map((n) => (
                 <Col key={n.id} lg={6} md={24}>
                   <NewCardNormal news={n} />
                 </Col>
@@ -87,8 +97,8 @@ const ThongTinXayDung: NextPageWithLayout = () => {
             </div>
           </div>
           <div className={style.New_Container}>
-            <Row gutter={32}>
-              {news.map((n) => (
+            <Row gutter={[32, 32]}>
+              {data.map((n) => (
                 <Col key={n.id} lg={6} md={24}>
                   <NewCardNormal news={n} />
                 </Col>
@@ -100,6 +110,16 @@ const ThongTinXayDung: NextPageWithLayout = () => {
     </>
   );
 };
+export async function getStaticProps() {
+  // `getStaticProps` is executed on the server side.
+  const newss = await fetchNewsForHome("/news");
+  return {
+    props: {
+      newss: newss,
+    },
+  };
+}
+
 ThongTinXayDung.getLayout = function getLayout(page: ReactElement) {
   return (
     <>

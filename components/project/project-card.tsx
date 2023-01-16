@@ -11,7 +11,7 @@ import {
 import Image from "next/image";
 import { Tooltip } from "antd";
 import { useState } from "react";
-import { IProject } from "types";
+import { IProject } from "lib/types";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import style from "@/styles/modules/project-card.module.scss";

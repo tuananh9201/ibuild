@@ -10,7 +10,7 @@ import {
 import Image from "next/image";
 import { Tooltip } from "antd";
 import { useState } from "react";
-import { ISupplier } from "types";
+import { ISupplier } from "lib/types";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import style from "@/styles/modules/product-card.module.scss";

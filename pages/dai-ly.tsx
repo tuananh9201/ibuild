@@ -10,7 +10,7 @@ import { Row, Col } from "antd";
 import suppliers from "../data/suppliers.json";
 import ProductCard from "@/components/products/product-card";
 import ProjectCard from "@/components/project/project-card";
-import { IProject } from "types";
+import { IProject } from "lib/types";
 import SupplierLayout from "@/components/layouts/supplier-layout";
 
 const projects: IProject[] = [

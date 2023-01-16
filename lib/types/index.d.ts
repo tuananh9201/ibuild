@@ -46,10 +46,17 @@ export interface IRetailProduct {
   matched: number;
   brand: IBrand;
 }
+interface INewCategory {
+  id: string;
+  name: string;
+  slug: string;
+}
 export interface INews {
   id: string;
   title: string;
   date: string;
   image: string;
   des: string;
+  slug: string;
+  category: INewCategory;
 }
