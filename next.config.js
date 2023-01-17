@@ -6,9 +6,9 @@ const nextConfig = {
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],
   },
-  experimental: {
-    esmExternals: "loose",
-  },
+  // experimental: {
+  //   esmExternals: "loose",
+  // },
   images: {
     remotePatterns: [
       {
