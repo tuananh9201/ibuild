@@ -37,3 +37,30 @@ export interface IProject {
   avata: StaticImageData;
   image: StaticImageData;
 }
+
+export interface IRetailProduct {
+  id: number;
+  supplier: ISupplier;
+  name: string;
+  image?: string;
+  matched: number;
+  brand: IBrand;
+}
+export interface INewCategory {
+  id: string;
+  name: string;
+  slug: string;
+}
+export interface INews {
+  id: string;
+  title: string;
+  date: string;
+  image: string;
+  des: string;
+  slug: string;
+  category: INewCategory;
+}
+export interface IBreadcrums {
+  slug: string;
+  title: string;
+}

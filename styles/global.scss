@@ -259,6 +259,7 @@ label {
     color: $primary-color !important;
     font-weight: 500 !important;
     margin-bottom: 0px;
+    cursor: pointer;
 
     .bottom-menu {
       display: block;
@@ -320,6 +321,45 @@ label {
   min-width: 200px;
 }
 
-.ant-col {
+.ant-col,
+.ant-row {
   width: 100% !important;
+}
+
+.supplier-categories {
+  width: 100%;
+
+  &_title {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 150%;
+  }
+
+  &_list {
+    &_item {
+      margin-top: 24px;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 150%;
+      padding-left: 4px;
+
+      &.active {
+        color: $primary-color;
+        border-left: 2px solid $primary-color;
+        font-weight: 500;
+      }
+
+      &:hover {
+        cursor: pointer;
+        color: $primary-color;
+        border-left: 2px solid $primary-color;
+        font-weight: 500;
+      }
+    }
+  }
+
+  @media screen and (max-width: $breakpoint) {
+    display: none !important;
+  }
 }

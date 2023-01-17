@@ -32,6 +32,16 @@ import supplierBg from "../images/supplier_bg.png";
 import supplierAvatarLarge from "../images/SupplierAvatarLarge.png";
 import bgProject from "../images/bg-project.jpg";
 import projectAvata from "../images/projectAvata.svg";
+import retailFeature from "../images/retailFeature.png";
+import suppAbout from "../images/supp-about.png";
+import news1 from "../images/news/news1.png";
+import news2 from "../images/news/news2.png";
+import news3 from "../images/news/news3.png";
+import news4 from "../images/news/news4.png";
+import newsDetail from "../images/new.png";
+import newsDetail2 from "../images/newDetail2.png";
+import rightIcon from "../images/icons/rightIcon.png";
+import breadcrumIcon from "../images/icons/arrow_forward_ios_black.png";
 export {
   logo,
   addressIcon,
@@ -67,4 +77,14 @@ export {
   supplierAvatarLarge,
   bgProject,
   projectAvata,
+  retailFeature,
+  suppAbout,
+  news1,
+  news2,
+  news3,
+  news4,
+  rightIcon,
+  breadcrumIcon,
+  newsDetail,
+  newsDetail2,
 };

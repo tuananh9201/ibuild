@@ -3,7 +3,7 @@ import { BarConfig } from "@ant-design/plots";
 import dynamic from "next/dynamic";
 import LoadingComponent from "../common/loading";
 const Column = dynamic(
-  () => import("@ant-design/charts").then(({ Column }) => Column),
+  () => import("@ant-design/plots").then(({ Column }) => Column),
   {
     ssr: false,
     loading: () => <LoadingComponent />,
@@ -86,15 +86,17 @@ const config: BarConfig = {
 const SupplierTopViewChart = () => {
   return (
     <div className={style.supplierTopViewChart}>
-      <div className={style.supplierTopViewChartBar}>
-        <div className={style.supplierTopViewChartBarTitle}>
-          <span>Nhóm sản phẩm được xem nhiều nhất</span>
+      <div className={style.supplierTopViewChart}>
+        <div className={style.supplierTopViewChartBar}>
+          <div className={style.supplierTopViewChartBarTitle}>
+            <span>Nhóm sản phẩm được xem nhiều nhất</span>
+          </div>
+          <div className={style.pie}>
+            <Column {...config} />
+          </div>
         </div>
-        <div className={style.pie}>
-          <Column {...config} />
-        </div>
+        <div className={style.chartBar}></div>
       </div>
-      <div className={style.chartBar}></div>
     </div>
   );
 };

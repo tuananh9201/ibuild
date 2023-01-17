@@ -5,25 +5,24 @@ import {
   btnPhoneIconBlack,
   btnPhoneIconPri,
   btnPhoneIconTranf,
+  retailFeature,
   toiletIcon,
 } from "@/constants/images";
 import Image from "next/image";
 import { Tooltip } from "antd";
 import { useState } from "react";
-import { ISupplier } from "lib/types";
+import { IRetailProduct } from "lib/types";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import style from "@/styles/modules/product-card.module.scss";
 interface ICard {
-  supplier: ISupplier;
+  retail: IRetailProduct;
   showMatched?: boolean;
 }
-const ProductCard = (props: ICard) => {
-  const { supplier } = props;
+const RetailCard = (props: ICard) => {
+  const { supplier } = props.retail;
   const router = useRouter();
   const [phoneIcon, setPhoneIcon] = useState(btnPhoneIconPri);
-  const rootCategory = supplier.categories.find((c) => c.parentId === "0");
-  const childCategory = supplier.categories.filter((c) => c.parentId !== "0");
   const handleClickProduct = (slug: string) => {
     router.push(`/san-pham/${slug}`);
   };
@@ -44,47 +43,30 @@ const ProductCard = (props: ICard) => {
             </div>
             <div className={style.productCard_Container_Body_Top_Info}>
               <div className={style.productCard_Container_Body_Top_Info_Image}>
-                <Link href={`/dai-ly/${supplier.id}`}>
+                <Link href="/dai-ly">
                   <Image
                     width={40}
                     height={40}
-                    src={rootCategory?.logo || Supp2}
+                    src={props.retail.brand?.logo || Supp2}
                     alt=""
                   />
                 </Link>
               </div>
               <span className={style.productCard_Container_Body_Top_Info_Title}>
-                {supplier.name}
+                {props.retail.brand.name}
               </span>
             </div>
           </div>
           <div className={style.productCard_Container_Body_Body}>
             <h3 className={style.productCard_Container_Body_Body_Title}>
-              {rootCategory?.name}
+              {props.retail.name}
             </h3>
-            <div className={style.productCard_Container_Body_Body_Icons}>
-              {childCategory.map((c) => {
-                return (
-                  <div
-                    key={c.id}
-                    className={style.productCard_Container_Body_Body_Icons_Item}
-                  >
-                    <Image
-                      height={36}
-                      width={36}
-                      src={c.logo || toiletIcon}
-                      alt=""
-                    />
-                  </div>
-                );
-              })}
-            </div>
           </div>
           <span className={style.productCard_Container_PriceRange}>
             {supplier.priceRange}
           </span>
           <div className={style.productCard_Container_Body_Bottom}>
-            <div className={style.productCard_Container_Body_Bottom_Populate}>
+            {/* <div className={style.productCard_Container_Body_Bottom_Populate}>
               <span className="text">Hãng phổ biến</span>
               <div
                 className={
@@ -102,7 +84,7 @@ const ProductCard = (props: ICard) => {
                   </div>
                 ))}
               </div>
-            </div>
+            </div> */}
             <div className={style.productCard_Container_Body_Bottom_Populate}>
               <span className="text">SL sản phẩm</span>
               <div
@@ -123,6 +105,9 @@ const ProductCard = (props: ICard) => {
                 {supplier.space}
               </div>
             </div>
+          </div>
+          <div className={style.productCard_Container_Body_ImageFeature}>
+            <Image src={retailFeature} alt={props.retail.name} />
           </div>
         </div>
         <div className={style.productCard_Container_Body_Actions}>
@@ -165,11 +150,13 @@ const ProductCard = (props: ICard) => {
       </div>
       {props.showMatched ? (
         <div className={style.productCard_MatchedLabel}>
-          <span className={style.productCard_MatchedLabel_Number}>93%</span>
+          <span className={style.productCard_MatchedLabel_Number}>
+            {props.retail.matched}%
+          </span>
         </div>
       ) : null}
     </div>
   );
 };
 
-export default ProductCard;
+export default RetailCard;

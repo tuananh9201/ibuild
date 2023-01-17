@@ -112,7 +112,7 @@
 
             @media screen and (max-width: $breakpoint) {
                 left: 41%;
-                bottom: 132px;
+                bottom: 152px;
                 width: 80px;
                 height: 80px;
 
@@ -139,13 +139,18 @@
         padding: 40px 0px 0px;
         gap: 24px;
         margin-bottom: 40px;
+        max-width: 100%;
+
+        @media screen and (max-width:$breakpoint) {
+            overflow: auto;
+            white-space: nowrap;
+        }
     }
 
     .supplierHeaderContent {
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
         gap: 40px;
         height: 100%;
         width: 100%;
@@ -155,7 +160,7 @@
         display: flex;
         flex-direction: row;
         align-items: flex-start;
-        padding: 0px;
+        padding-right: 12px;
         width: 100%;
 
         @media screen and (max-width: $breakpoint) {
@@ -182,20 +187,25 @@
         }
     }
 
-    .supplierTopViewChart {
-        background: #F8F9FF;
-        border-radius: 8px;
-        padding: 24px;
+    .supplierTopViewChart_Wapper {
+        padding-left: 12px;
 
-        .supplierTopViewChartBar {
-            .supplierTopViewChartBarTitle {
-                font-style: normal;
-                font-weight: 400;
-                font-size: 20px;
-                margin-bottom: 8px;
+        .supplierTopViewChart {
+            background: #F8F9FF;
+            border-radius: 8px;
+            padding: 24px;
+
+            .supplierTopViewChartBar {
+                .supplierTopViewChartBarTitle {
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 20px;
+                    margin-bottom: 8px;
+                }
             }
         }
     }
+
 
     .SectionTopViewTitle {
         font-weight: 500;
@@ -208,4 +218,80 @@
             @extend .SectionTopViewTitle;
         }
     }
+}
+
+.Supp_products_Wrapper {
+    &_Title {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 150%;
+    }
+
+    &_Search {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 12px;
+        max-width: 350px;
+        background: #FFFFFF;
+        border: 1px solid #DDDDDD;
+        border-radius: 4px;
+        margin: 24px 0;
+
+        &_Icon {
+            margin-right: 8px;
+        }
+
+        &_Input {
+            width: 100%;
+
+            input {
+                width: 100%;
+                border: none;
+
+                &::placeholder {
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+
+    &_Filters {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px;
+        gap: 24px;
+
+        &_Menu {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 24px;
+        }
+
+        &_Sort {
+            @media screen and (max-width: $breakpoint) {
+                display: none !important;
+            }
+        }
+    }
+
+    &_Products {
+        margin-top: 32px;
+    }
+}
+
+.Supplier_About_Content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 32px 0px 0px;
+    gap: 24px;
+    font-weight: 400;
+    line-height: 150%;
 }
