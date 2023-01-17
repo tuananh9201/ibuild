@@ -244,13 +244,22 @@
 
         &:hover {
             &:not(:last-child) {
-                color: $primary-color;
                 cursor: pointer;
+
+                a {
+                    color: $primary-color;
+                }
             }
         }
 
         span {
             white-space: nowrap;
+
+            a {
+                &:visited {
+                    color: $text-color
+                }
+            }
 
             @media screen and (max-width: $breakpoint) {
                 white-space: pre-wrap;
