@@ -5,15 +5,26 @@ import { INews } from "lib/types";
 import Link from "next/link";
 interface NewsProps {
   news: INews;
+  hideDescription?: boolean;
 }
 const NewCardNormal = (props: NewsProps) => {
   return (
     <div className={style.Build_Card_Normal}>
       <div className={style.Build_Card_Normal_Image}>
         <Link
-          href={`/thong-tin-xay-dung/${props.news.category.slug}/${props.news.slug}`}
+          href={{
+            pathname: `/thong-tin-xay-dung`,
+            query: {
+              cslug: props.news.category.slug,
+              slug: props.news.slug,
+            },
+          }}
         >
-          <Image style={{ width: "100%" }} src={news2} alt="" />
+          <Image
+            style={{ width: "100%", minHeight: "187px" }}
+            src={news2}
+            alt=""
+          />
         </Link>
       </div>
       <div className={style.Build_Card_Normal_Desc}>
@@ -27,9 +38,11 @@ const NewCardNormal = (props: NewsProps) => {
             {props.news.title}
           </Link>
         </div>
-        <div className={style.Build_Card_Normal_Desc_Desc}>
-          {props.news.des}
-        </div>
+        {props?.hideDescription ? null : (
+          <div className={style.Build_Card_Normal_Desc_Desc}>
+            {props.news.des}
+          </div>
+        )}
       </div>
     </div>
   );

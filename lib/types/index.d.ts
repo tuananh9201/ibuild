@@ -46,7 +46,7 @@ export interface IRetailProduct {
   matched: number;
   brand: IBrand;
 }
-interface INewCategory {
+export interface INewCategory {
   id: string;
   name: string;
   slug: string;
@@ -59,4 +59,8 @@ export interface INews {
   des: string;
   slug: string;
   category: INewCategory;
+}
+export interface IBreadcrums {
+  slug: string;
+  title: string;
 }
