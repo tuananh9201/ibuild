@@ -10,7 +10,6 @@ import {
   fetchNewCategories,
   fetchNewsForHome,
 } from "lib/api/news";
-import { INewCategory, INews } from "lib/types";
 import { ParsedUrlQuery } from "querystring";
 import useSWR from "swr";
 import Breadcrums from "@/components/common/breadcrums";
