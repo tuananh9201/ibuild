@@ -1,5 +1,9 @@
 @import "variables";
 
+.NewsMain {
+    margin: 20px;
+}
+
 .Build_Features {
     display: flex;
     flex-direction: row;
@@ -231,6 +235,10 @@
     width: 100%;
     margin-top: 40px;
 
+    @media screen and (max-width:$breakpoint) {
+        padding: 20px;
+    }
+
     &_Text {
         display: flex;
         font-style: normal;
@@ -238,9 +246,13 @@
         font-size: 16px;
         line-height: 150%;
         gap: 16px;
-
-
         color: $text-color;
+
+        @media screen and (max-width: $breakpoint) {
+            &:first-child {
+                display: none;
+            }
+        }
 
         &:hover {
             &:not(:last-child) {
@@ -252,6 +264,12 @@
             }
         }
 
+        &:last-child {
+            width: calc(100% - 158px);
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
         span {
             white-space: nowrap;
 
@@ -259,10 +277,6 @@
                 &:visited {
                     color: $text-color
                 }
-            }
-
-            @media screen and (max-width: $breakpoint) {
-                white-space: pre-wrap;
             }
         }
 
