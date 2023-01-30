@@ -5,7 +5,7 @@ import OnBoardLayout from "@/components/onboard-layout";
 import Image from "next/image";
 import { backIcon, logo } from "@/constants/images";
 import Link from "next/link";
-import { Button, Form, Input } from "antd";
+import { Form, Input } from "antd";
 const EmptyPage: NextPageWithLayout = () => {
   const [form] = Form.useForm();
   return (
@@ -41,7 +41,19 @@ const EmptyPage: NextPageWithLayout = () => {
                     </div>
                   }
                 >
-                  <Input size="large" placeholder="Nhập mật khẩu" />
+                  <Input.Password size="large" placeholder="Nhập mật khẩu" />
+                </Form.Item>
+                <Form.Item
+                  label={
+                    <div>
+                      {" "}
+                      Nhập lại mật khẩu <span style={{ color: "red" }}>
+                        *
+                      </span>{" "}
+                    </div>
+                  }
+                >
+                  <Input.Password size="large" placeholder="Nhập mật khẩu" />
                 </Form.Item>
                 <Form.Item>
                   <div className="group-action">

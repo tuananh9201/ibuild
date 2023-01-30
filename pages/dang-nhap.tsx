@@ -5,7 +5,9 @@ import OnBoardLayout from "@/components/onboard-layout";
 import Image from "next/image";
 import { backIcon, facebookIcon, googleIcon, logo } from "@/constants/images";
 import Link from "next/link";
+import { Form, Input } from "antd";
 const EmptyPage: NextPageWithLayout = () => {
+  const [form] = Form.useForm();
   return (
     <>
       <Head>
@@ -24,38 +26,37 @@ const EmptyPage: NextPageWithLayout = () => {
               </div>
               <div className="welcome">Chào mừng quay trở lại!</div>
             </div>
-            <div className="group-input">
-              <div className="mb-4">
-                <label htmlFor="username" className="form-label">
-                  Tên đăng nhập
-                </label>
-                <input
-                  className="form-control"
-                  id="username"
-                  placeholder="Nhập tên đăng nhập"
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="password" className="form-label">
-                  Mật khẩu <span className="field-required">*</span>
-                </label>
-                <input
-                  type="password"
-                  className="form-control"
-                  id="password"
-                  placeholder="Nhập mật khẩu"
-                />
-              </div>
+            <div className="form-sign-up">
+              <Form layout="vertical" form={form} style={{ maxWidth: 600 }}>
+                <Form.Item label="Tên đăng nhập">
+                  <Input size="large" placeholder="Nhập tên đăng nhập" />
+                </Form.Item>
+                <Form.Item
+                  label={
+                    <div>
+                      {" "}
+                      Mật khẩu <span style={{ color: "red" }}>*</span>{" "}
+                    </div>
+                  }
+                >
+                  <Input.Password size="large" placeholder="Nhập mật khẩu" />
+                </Form.Item>
+                <Form.Item>
+                  <div className="group-action">
+                    <button className="ibuild-btn signin">Đăng nhập</button>
+                    <div className="register-link">
+                      <span className="have-account">
+                        Bạn chưa có tài khoản?
+                      </span>
+                      <Link href="/dang-ky" className="register-now">
+                        Đăng ký ngay
+                      </Link>
+                    </div>
+                  </div>
+                </Form.Item>
+              </Form>
             </div>
-            <div className="group-action">
-              <button className="ibuild-btn signin">Đăng nhập</button>
-              <div className="register-link">
-                <span className="have-account">Bạn chưa có tài khoản?</span>
-                <Link href="/dang-ky" className="register-now">
-                  Đăng ký ngay
-                </Link>
-              </div>
-            </div>
+
             <div className="sign-seperator">
               <span className="sepe-title">Đăng nhập bằng cách khác</span>
             </div>
