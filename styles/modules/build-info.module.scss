@@ -4,6 +4,22 @@
     margin: 20px;
 }
 
+.NewsCategoryMain {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 40px 120px 60px;
+    gap: 60px;
+
+    &_List {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0px;
+        gap: 32px;
+    }
+}
+
 .Build_Features {
     display: flex;
     flex-direction: row;
