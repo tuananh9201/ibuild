@@ -18,7 +18,7 @@ import {
 import style from "@/styles/modules/build-info.module.scss";
 import { INewCategory } from "lib/types";
 import Breadcrums from "@/components/common/breadcrums";
-import { Col, Row } from "antd";
+import { Col, Pagination, Row } from "antd";
 import NewCardNormal from "@/components/news/news-card-normal";
 import newss from "@/data/news1.json";
 interface IParams extends ParsedUrlQuery {
@@ -59,6 +59,9 @@ const NewCategories: NextPageWithLayout = () => {
             ))}
           </Row>
         </div>
+      </div>
+      <div className={style.NewsPagination}>
+        <Pagination total={50} current={1} pageSize={10} />
       </div>
     </>
   );
