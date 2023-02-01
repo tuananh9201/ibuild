@@ -45,7 +45,7 @@ const ThongTinXayDung: NextPageWithLayout = () => {
               Nullam scelerisque alias nemo repudiandae cupidatat, habitasse
               adipisicing, hendrerit, aliquet, fusce metus dolor libero? Ab,
               viverra dictumst penatibus odio, sodales magnam provident non
-              adipiscing adipisicing, laudantium iaculis pede,
+              adipiscing adipisicing, laudantium iaculis pede, f
             </div>
           </div>
           <div className={style.Build_Features_Top25}>

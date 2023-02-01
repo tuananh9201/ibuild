@@ -1,5 +1,25 @@
 @import "variables";
 
+.NewsMain {
+    margin: 20px;
+}
+
+.NewsCategoryMain {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 40px 120px 60px;
+    gap: 60px;
+
+    &_List {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0px;
+        gap: 32px;
+    }
+}
+
 .Build_Features {
     display: flex;
     flex-direction: row;
@@ -231,6 +251,10 @@
     width: 100%;
     margin-top: 40px;
 
+    @media screen and (max-width:$breakpoint) {
+        padding: 20px;
+    }
+
     &_Text {
         display: flex;
         font-style: normal;
@@ -238,22 +262,37 @@
         font-size: 16px;
         line-height: 150%;
         gap: 16px;
-
-
         color: $text-color;
+
+        @media screen and (max-width: $breakpoint) {
+            &:first-child {
+                display: none;
+            }
+        }
 
         &:hover {
             &:not(:last-child) {
-                color: $primary-color;
                 cursor: pointer;
+
+                a {
+                    color: $primary-color;
+                }
             }
+        }
+
+        &:last-child {
+            width: calc(100% - 158px);
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         span {
             white-space: nowrap;
 
-            @media screen and (max-width: $breakpoint) {
-                white-space: pre-wrap;
+            a {
+                &:visited {
+                    color: $text-color
+                }
             }
         }
 
@@ -300,4 +339,11 @@
         line-height: 125%;
         margin-bottom: 32px;
     }
+}
+
+.NewsPagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 32px 0px;
 }
