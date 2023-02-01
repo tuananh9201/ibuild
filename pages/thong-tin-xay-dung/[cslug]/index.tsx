@@ -5,18 +5,9 @@ import Head from "next/head";
 import { ParsedUrlQuery } from "querystring";
 import useSWR from "swr";
 import { useRouter } from "next/router";
-import {
-  GetServerSidePropsContext,
-  GetStaticPaths,
-  GetStaticPropsContext,
-} from "next";
-import {
-  fetchNewCategories,
-  fetchNewCategoryBySlug,
-  fetchNewDefault,
-} from "lib/api/news";
+import { GetServerSidePropsContext } from "next";
+import { fetchNewCategoryBySlug } from "lib/api/news";
 import style from "@/styles/modules/build-info.module.scss";
-import { INewCategory } from "lib/types";
 import Breadcrums from "@/components/common/breadcrums";
 import { Col, Pagination, Row } from "antd";
 import NewCardNormal from "@/components/news/news-card-normal";
