@@ -1,0 +1,65 @@
+@import "variables";
+
+.Main {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 60px 120px;
+    gap: 40px;
+
+    @media screen and (max-width: $breakpoint) {
+        padding: 0px 20px;
+        justify-content: center;
+        align-items: center;
+        gap: 24px;
+        margin: 24px 0;
+    }
+
+    &_SearchSection {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0px 103px;
+        width: 100%;
+
+        @media screen and (max-width: $breakpoint) {
+            padding: 0 20px;
+        }
+
+        &_Card {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 32px;
+            gap: 16px;
+            background: #F8F9FF;
+            border-radius: 4px;
+            width: 100%;
+
+            @media screen and (max-width: $breakpoint) {
+                border-radius: 8px;
+                padding: 24px;
+            }
+
+            &_Title {
+                font-style: normal;
+                font-weight: 400;
+                font-size: 20px;
+                margin-bottom: 16px;
+            }
+
+            &_Search {
+                width: 100%;
+            }
+        }
+    }
+
+    &_Categories {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0px;
+
+        &_Item {}
+    }
+}
