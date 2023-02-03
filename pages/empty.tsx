@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import MainLayout from "../components/main-layout";
+import MainLayout from "@/components/main-layout";
 import { NextPageWithLayout } from "./_app";
 import Head from "next/head";
 const EmptyPage: NextPageWithLayout = () => {

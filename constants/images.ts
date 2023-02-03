@@ -42,6 +42,8 @@ import newsDetail from "../images/new.png";
 import newsDetail2 from "../images/newDetail2.png";
 import rightIcon from "../images/icons/rightIcon.png";
 import breadcrumIcon from "../images/icons/arrow_forward_ios_black.png";
+import bgRootCategory from "../images/image 6.png";
+
 export {
   logo,
   addressIcon,
@@ -87,4 +89,5 @@ export {
   breadcrumIcon,
   newsDetail,
   newsDetail2,
+  bgRootCategory,
 };

@@ -8,6 +8,9 @@ export interface ICategory {
   name: string;
   logo: string;
   parentId?: string;
+  image?: string;
+  icon?: string;
+  slug?: string;
 }
 export interface ISupplier {
   id: string;
