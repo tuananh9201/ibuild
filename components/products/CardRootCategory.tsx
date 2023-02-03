@@ -33,7 +33,7 @@ export default function CardRootCategory({ category }: Props) {
             if (idx > 3) return null;
             if (idx === 3) {
               return (
-                <div className={style.CardRoot_Main_Childs_Item}>
+                <div key={idx} className={style.CardRoot_Main_Childs_Item}>
                   <div className={style.CardRoot_Main_Childs_Item_Icon}></div>
                   <Link
                     href={`/${category.slug}`}
