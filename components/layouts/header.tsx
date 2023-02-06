@@ -26,12 +26,14 @@ const menus = [
     href: "/thong-tin-xay-dung",
   },
 ];
+const pathsShowBackButton = ["/"];
 const MainHeader = () => {
   const router = useRouter();
   const currentPath = router.pathname;
   const [openMenu, setOpenMenu] = useState(false);
   const headerClass = currentPath === "/" ? "" : "header-border";
   const { width } = useWindowDimensions();
+  const isHidden = pathsShowBackButton.includes(router.pathname);
   const handleClickBack = () => {
     router.back();
   };
@@ -39,9 +41,13 @@ const MainHeader = () => {
     <div className={`main-header ${headerClass}`}>
       <div className="header-nav">
         <div className="headerLeft">
-          <div onClick={() => handleClickBack()} className="nav_navigate">
-            <Image src={arrowBackIos} alt="" />
-          </div>
+          {isHidden ? null : (
+            <div onClick={() => handleClickBack()} className="nav_navigate">
+              {" "}
+              <Image src={arrowBackIos} alt="" />
+            </div>
+          )}
+
           <Link href="/" className="logo">
             <Image src={logo} alt="IBUILD" />
           </Link>
