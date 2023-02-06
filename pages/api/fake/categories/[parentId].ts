@@ -8,5 +8,7 @@ export default function handler(
   res: NextApiResponse<ICategory[]>
 ) {
   const { parentId } = req.query;
-  res.status(200).json(categories.filter((c) => c.parent_id === parentId));
+  setTimeout(() => {
+    res.status(200).json(categories.filter((c) => c.parentId === parentId));
+  }, 5000);
 }

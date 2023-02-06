@@ -3,57 +3,46 @@ import style from "@/styles/modules/productCategories/card.module.scss";
 import Image from "next/image";
 import { bgRootCategory } from "@/constants/images";
 import { ICategory } from "lib/types";
-import useSWR from "swr";
-import { fetchChildsCategories } from "lib/api/category";
-import { Skeleton } from "antd";
 import Link from "next/link";
 
 type Props = {
   category: ICategory;
+  isLast?: boolean;
+  children?: ICategory[];
+  parent?: ICategory;
 };
 
-export default function CardRootCategory({ category }: Props) {
-  const {
-    data: childs,
-    error,
-    isLoading,
-  } = useSWR<ICategory[], []>(category.id || "1", fetchChildsCategories, {
-    fallbackData: [],
-  });
-  if (error) {
-    return <div>error</div>;
-  }
+const CategoryChildItem = ({ parent, category, isLast }: Props) => {
+  return (
+    <div className={style.CardRoot_Main_Childs_Item}>
+      <div className={style.CardRoot_Main_Childs_Item_Icon}></div>
+      <Link
+        href={
+          isLast ? `/san-pham/${parent?.slug}` : `/san-pham/${category.slug}`
+        }
+        className={style.CardRoot_Main_Childs_Item_Text}
+      >
+        {isLast ? "Xem tất cả" : category.name}
+      </Link>
+    </div>
+  );
+};
+
+export default function CardRootCategory({ category, children }: Props) {
   return (
     <div className={style.CardRoot}>
       <div className={style.CardRoot_Main}>
         <div className={style.CardRoot_Main_Name}>{category.name}</div>
         <div className={style.CardRoot_Main_Childs}>
-          {isLoading ? <Skeleton loading={true} active /> : null}
-          {childs?.map((cate, idx) => {
+          {children?.map((cate, idx) => {
             if (idx > 3) return null;
-            if (idx === 3) {
-              return (
-                <div key={idx} className={style.CardRoot_Main_Childs_Item}>
-                  <div className={style.CardRoot_Main_Childs_Item_Icon}></div>
-                  <Link
-                    href={`/${category.slug}`}
-                    className={style.CardRoot_Main_Childs_Item_Text}
-                  >
-                    Xem tất cả
-                  </Link>
-                </div>
-              );
-            }
             return (
-              <div key={cate.id} className={style.CardRoot_Main_Childs_Item}>
-                <div className={style.CardRoot_Main_Childs_Item_Icon}></div>
-                <Link
-                  href={`/${cate.slug}`}
-                  className={style.CardRoot_Main_Childs_Item_Text}
-                >
-                  {cate.name}
-                </Link>
-              </div>
+              <CategoryChildItem
+                parent={category}
+                key={idx}
+                isLast={idx === 3}
+                category={cate}
+              />
             );
           })}
         </div>

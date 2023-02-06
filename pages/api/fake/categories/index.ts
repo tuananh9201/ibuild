@@ -7,6 +7,7 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<ICategory[]>
 ) {
-  console.log("******************* categories server : ", categories);
-  res.status(200).json(categories);
+  setTimeout(() => {
+    res.status(200).json(categories);
+  }, 5000);
 }

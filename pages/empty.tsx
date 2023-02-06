@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 import MainLayout from "@/components/main-layout";
 import { NextPageWithLayout } from "./_app";
 import Head from "next/head";
+import { Skeleton } from "antd";
 const EmptyPage: NextPageWithLayout = () => {
   return (
     <>
@@ -11,6 +12,11 @@ const EmptyPage: NextPageWithLayout = () => {
       </Head>
       <div className="main-content">
         <h1>Empty</h1>
+        <div>
+          <Skeleton active />
+          <Skeleton />
+          <Skeleton />
+        </div>
       </div>
     </>
   );

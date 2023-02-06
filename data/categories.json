@@ -3,154 +3,154 @@
     "id": "1",
     "slug": "he-thong-camera",
     "name": "Hệ thống camera",
-    "parent_id": "0",
+    "parentId": "0",
     "logo": "string"
   },
   {
     "id": "2",
     "slug": "he-thong-chi-dan",
     "name": "Hệ thống chỉ dẫn",
-    "parent_id": "1",
+    "parentId": "1",
     "logo": "string"
   },
   {
     "id": "3",
     "slug": "he-thong-chi-dan",
     "name": "Hệ thống giám sát truy nhập",
-    "parent_id": "1",
+    "parentId": "1",
     "logo": "string"
   },
   {
     "id": "4",
     "slug": "he-thong-chi-dan",
     "name": "Hệ thống phòng cháy chữa cháy",
-    "parent_id": "1",
+    "parentId": "1",
     "logo": "string"
   },
   {
     "id": "41",
     "slug": "he-thong-chi-dan",
     "name": "XXXX",
-    "parent_id": "1",
+    "parentId": "1",
     "logo": "string"
   },
   {
     "id": "5",
     "slug": "co-dien-lanh",
     "name": "Cơ - Điện - Lạnh",
-    "parent_id": "0",
+    "parentId": "0",
     "logo": "string"
   },
   {
     "id": "6",
     "slug": "be-boi-va-phu-kien",
     "name": "Bể bơi và phụ kiện",
-    "parent_id": "5",
+    "parentId": "5",
     "logo": "string"
   },
   {
     "id": "7",
     "slug": "bon-be-chua-nuoc",
     "name": "Bồn - Bể chứa nước",
-    "parent_id": "5",
+    "parentId": "5",
     "logo": "string"
   },
   {
     "id": "8",
     "slug": "may-bom",
     "name": "Máy bơm",
-    "parent_id": "5",
+    "parentId": "5",
     "logo": "string"
   },
   {
     "id": "9",
     "slug": "he-thong-cong-tac-o-cam",
     "name": "Hệ thống công tắc - ổ cắm",
-    "parent_id": "5",
+    "parentId": "5",
     "logo": "string"
   },
   {
     "id": "10",
     "slug": "he-thong-cong-tac-o-cam",
     "name": "ZZZZZ",
-    "parent_id": "5",
+    "parentId": "5",
     "logo": "string"
   },
   {
     "id": "11",
     "slug": "thiet-bi-cong-nghe",
     "name": "Thiết bị công nghệ",
-    "parent_id": "0",
+    "parentId": "0",
     "logo": "string"
   },
   {
     "id": "12",
     "slug": "he-thong-am-thanh-anh-sang",
     "name": "Hệ thống âm thanh - ánh sáng",
-    "parent_id": "11",
+    "parentId": "11",
     "logo": "string"
   },
   {
     "id": "13",
     "slug": "he-thong-am-thanh-anh-sang",
     "name": "Hệ thống biến thế và tủ điện",
-    "parent_id": "11",
+    "parentId": "11",
     "logo": "string"
   },
   {
     "id": "14",
     "slug": "he-thong-am-thanh-anh-sang",
     "name": "Hệ thống công tắc - ổ cắm",
-    "parent_id": "11",
+    "parentId": "11",
     "logo": "string"
   },
   {
     "id": "15",
     "slug": "he-thong-am-thanh-anh-sang",
     "name": "Hệ thống thông gió & điều hoà không khí",
-    "parent_id": "11",
+    "parentId": "11",
     "logo": "string"
   },
   {
     "id": "16",
     "slug": "he-thong-am-thanh-anh-sang",
     "name": "Hệ thống thông gió & điều hoà không khí",
-    "parent_id": "11",
+    "parentId": "11",
     "logo": "string"
   },
   {
     "id": "17",
     "slug": "do-noi-ngoai-that",
     "name": "Đồ nội & Ngoại thất",
-    "parent_id": "0",
+    "parentId": "0",
     "logo": "string"
   },
   {
     "id": "18",
     "slug": "cua-cua-so-va-phu-kien",
     "name": "Cửa - Cửa sổ và phụ kiện",
-    "parent_id": "17",
+    "parentId": "17",
     "logo": "string"
   },
   {
     "id": "19",
     "slug": "do-dung-va-do-dac",
     "name": "Đồ dùng & Đồ đạc",
-    "parent_id": "17",
+    "parentId": "17",
     "logo": "string"
   },
   {
     "id": "20",
     "slug": "he-thong-bep",
     "name": "Hệ thống bếp",
-    "parent_id": "17",
+    "parentId": "17",
     "logo": "string"
   },
   {
     "id": "21",
     "slug": "phong-tam-thiet-bi-ve-sinh",
     "name": "Phòng tắm- thiết bị vệ sinh",
-    "parent_id": "17",
+    "parentId": "17",
     "logo": "string"
   }
 ]
