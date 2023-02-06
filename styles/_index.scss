@@ -132,10 +132,11 @@
             font-size: 40px;
             text-align: center;
             line-height: 150%;
+            margin-bottom: 32px;
 
             @media screen and (max-width: $breakpoint) {
                 font-size: 20px;
-                padding-left: 20px;
+                padding: 0 32px;
             }
         }
 
@@ -160,9 +161,10 @@
 
                 #search-input {
                     border: none !important;
+                    width: 100%;
 
                     &::placeholder {
-                        color: $text-color !important;
+                        color: #717171;
                         opacity: 1 !important;
                         font-weight: 400;
                         font-size: 16px;

@@ -9,7 +9,7 @@ const HomePage: NextPageWithLayout = () => {
     <>
       <div className="main-content">
         <section className="search-content">
-          <h1 className="title">Trao quyền cho thế giới để xây dựng</h1>
+          <div className="title">Trao quyền cho thế giới để xây dựng</div>
           <div className="search-input-container">
             <div className="search-icon">
               <Image src={searchIcon} alt="" />
@@ -28,7 +28,7 @@ const HomePage: NextPageWithLayout = () => {
           </div>
         </section>
         <section className="cards">
-          <Row gutter={32}>
+          <Row gutter={{ xs: 8, sm: 16, md: 32 }}>
             <Col md={24} lg={8}>
               <div className="my-card card-product">
                 <Image className="img-feat" src={cardProd} alt="" />
