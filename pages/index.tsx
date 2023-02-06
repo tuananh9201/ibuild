@@ -28,7 +28,7 @@ const HomePage: NextPageWithLayout = () => {
           </div>
         </section>
         <section className="cards">
-          <Row gutter={{ xs: 8, sm: 16, md: 32 }}>
+          <Row gutter={{ lg: 32 }}>
             <Col md={24} lg={8}>
               <div className="my-card card-product">
                 <Image className="img-feat" src={cardProd} alt="" />
