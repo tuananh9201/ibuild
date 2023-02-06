@@ -10,6 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import useWindowDimensions from "utils/dimension";
 
 const menus = [
   {
@@ -30,6 +31,7 @@ const MainHeader = () => {
   const currentPath = router.pathname;
   const [openMenu, setOpenMenu] = useState(false);
   const headerClass = currentPath === "/" ? "" : "header-border";
+  const { width } = useWindowDimensions();
   const handleClickBack = () => {
     router.back();
   };
@@ -103,24 +105,24 @@ const MainHeader = () => {
         closable={false}
         title=""
         placement="right"
+        destroyOnClose
         open={openMenu}
+        width="100vw-44px"
       >
-        <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-          <li className="nav-item">
-            <Link className="nav-link menu-item" href="/san-pham">
-              Sản phẩm
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link menu-item" href="/van-ban-phap-ly">
-              Văn bản pháp lý
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link menu-item" href="/thong-tin-xay-dung">
-              Thông tin xây dựng
-            </Link>
-          </li>
+        <ul className="navbar-nav-mobile">
+          {menus.map((menu) => (
+            <li key={menu.href} className="nav-item">
+              <span
+                className="nav-link menu-item"
+                onClick={() => {
+                  router.push(menu.href);
+                  setOpenMenu(false);
+                }}
+              >
+                {menu.name}
+              </span>
+            </li>
+          ))}
           <li className="nav-item">
             <span className="sepec-menu">
               <Link href="/dang-ky" className="nav-link menu-item">
