@@ -1,14 +1,15 @@
 import React from "react";
 import style from "@/styles/modules/productCategories/card.module.scss";
 import Image from "next/image";
-import { bgRootCategory } from "@/constants/images";
+import { bgRootCategory, bgRootCategoryMobile } from "@/constants/images";
 import { ICategory } from "lib/types";
 import Link from "next/link";
+import useWindowDimensions from "utils/dimension";
 
 type Props = {
   category: ICategory;
   isLast?: boolean;
-  children?: ICategory[];
+  categoriesChildren?: ICategory[];
   parent?: ICategory;
 };
 
@@ -28,13 +29,17 @@ const CategoryChildItem = ({ parent, category, isLast }: Props) => {
   );
 };
 
-export default function CardRootCategory({ category, children }: Props) {
+export default function CardRootCategory({
+  category,
+  categoriesChildren,
+}: Props) {
+  const { width } = useWindowDimensions();
   return (
     <div className={style.CardRoot}>
       <div className={style.CardRoot_Main}>
         <div className={style.CardRoot_Main_Name}>{category.name}</div>
         <div className={style.CardRoot_Main_Childs}>
-          {children?.map((cate, idx) => {
+          {categoriesChildren?.map((cate, idx) => {
             if (idx > 3) return null;
             return (
               <CategoryChildItem
@@ -48,7 +53,10 @@ export default function CardRootCategory({ category, children }: Props) {
         </div>
       </div>
       <div className={style.CardRoot_Image}>
-        <Image alt="" src={bgRootCategory} />
+        <Image
+          alt=""
+          src={width >= 1024 ? bgRootCategory : bgRootCategoryMobile}
+        />
       </div>
     </div>
   );

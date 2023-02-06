@@ -43,7 +43,9 @@ const SanPham: NextPageWithLayout<Props> = (props: Props) => {
           {roots?.map((c) => (
             <Col key={c.id} md={24} lg={12}>
               <CardRootCategory
-                children={categories?.filter((c) => c.parentId === c.parentId)}
+                categoriesChildren={categories?.filter(
+                  (c) => c.parentId === c.parentId
+                )}
                 category={c}
               />
             </Col>
