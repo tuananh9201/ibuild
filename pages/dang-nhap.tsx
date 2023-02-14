@@ -3,9 +3,11 @@ import { NextPageWithLayout } from "./_app";
 import Head from "next/head";
 import OnBoardLayout from "@/components/onboard-layout";
 import Image from "next/image";
-import { backIcon, facebookIcon, googleIcon, logo } from "@/constants/images";
+import { backIcon, facebookIcon, logo } from "@/constants/images";
 import Link from "next/link";
 import { Form, Input } from "antd";
+import GoogleLoginButton from "@/components/common/GoogleLoginButton";
+import FacebookLoginButton from "@/components/common/FacebookLoginButton";
 const EmptyPage: NextPageWithLayout = () => {
   const [form] = Form.useForm();
   return (
@@ -61,14 +63,8 @@ const EmptyPage: NextPageWithLayout = () => {
               <span className="sepe-title">Đăng nhập bằng cách khác</span>
             </div>
             <div className="signin-other-platform">
-              <button className="sign-other-btn sign-google">
-                <Image src={googleIcon} alt="" /> Đăng nhập bằng tài khoản
-                Google
-              </button>
-              <button className="sign-other-btn sign-facebook">
-                <Image src={facebookIcon} alt="" /> Đăng nhập bằng tài khoản
-                Facebook
-              </button>
+              <GoogleLoginButton />
+              <FacebookLoginButton />
             </div>
           </div>
         </div>
