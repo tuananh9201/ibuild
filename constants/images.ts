@@ -44,7 +44,7 @@ import rightIcon from "../images/icons/rightIcon.png";
 import breadcrumIcon from "../images/icons/arrow_forward_ios_black.png";
 import bgRootCategory from "../images/image 6.png";
 import bgRootCategoryMobile from "../images/bg_category_mobile.png";
-
+import signUpSuccess from "../images/SignUpSuccess.png";
 export {
   logo,
   addressIcon,
@@ -92,4 +92,5 @@ export {
   newsDetail2,
   bgRootCategory,
   bgRootCategoryMobile,
+  signUpSuccess,
 };

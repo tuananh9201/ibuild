@@ -9,6 +9,8 @@ import { Analytics } from "@vercel/analytics/react";
 import { colorPrimary } from "@/constants/colors";
 import { getAnalytics } from "firebase/analytics";
 import app from "utils/firebase";
+import { AnimatePresence } from "framer-motion";
+
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
@@ -48,7 +50,9 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           },
         }}
       >
-        <Component {...pageProps} />
+        <AnimatePresence mode="wait" initial={false}>
+          <Component {...pageProps} />
+        </AnimatePresence>
       </ConfigProvider>
       <Analytics />
     </SWRConfig>

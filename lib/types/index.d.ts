@@ -67,3 +67,10 @@ export interface IBreadcrums {
   slug: string;
   title: string;
 }
+
+export type User = {
+  id: number;
+  full_name: string;
+  email: string;
+  access_token?: string;
+};
