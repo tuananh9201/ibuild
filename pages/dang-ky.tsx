@@ -49,8 +49,6 @@ const SignUpPage: NextPageWithLayout = () => {
   const accessTokenState = useSelector(
     (state: RootState) => state.auth.accessToken
   );
-  console.log("accessTokenState: ", accessTokenState);
-
   const [loadingRegister, setLoadingRegister] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const handleSubmit = () => {
@@ -80,14 +78,6 @@ const SignUpPage: NextPageWithLayout = () => {
     }, 5000);
     return () => clearTimeout(timeout);
   }, [isSuccess]);
-  useEffect(() => {
-    if (accessTokenState) {
-      message.info("Đăng nhập thành công !");
-      router.push({
-        pathname: "/",
-      });
-    }
-  }, [accessTokenState, router]);
 
   return (
     <>

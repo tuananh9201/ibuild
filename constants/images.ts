@@ -45,6 +45,8 @@ import breadcrumIcon from "../images/icons/arrow_forward_ios_black.png";
 import bgRootCategory from "../images/image 6.png";
 import bgRootCategoryMobile from "../images/bg_category_mobile.png";
 import signUpSuccess from "../images/SignUpSuccess.png";
+import useIcon from "../images/icons/User.png";
+import logoutIcon from "../images/icons/Logout.png";
 export {
   logo,
   addressIcon,
@@ -93,4 +95,6 @@ export {
   bgRootCategory,
   bgRootCategoryMobile,
   signUpSuccess,
+  useIcon,
+  logoutIcon,
 };

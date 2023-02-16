@@ -6,11 +6,13 @@ import {
   searchIcon,
 } from "@/constants/images";
 import { Drawer } from "antd";
+import useUser from "lib/hooks/user";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import useWindowDimensions from "utils/dimension";
+import UserAvatar from "./avatar";
 
 const menus = [
   {
@@ -29,6 +31,8 @@ const menus = [
 const pathsShowBackButton = ["/"];
 const MainHeader = () => {
   const router = useRouter();
+  const { user, mutate, loggedOut } = useUser();
+
   const currentPath = router.pathname;
   const [openMenu, setOpenMenu] = useState(false);
   const headerClass = currentPath === "/" ? "" : "header-border";
@@ -80,16 +84,20 @@ const MainHeader = () => {
                 <div className="bottom-menu"></div>
               </Link>
             ))}
-            <span className="wrap-menu">
-              <Link href="/dang-ky" className="menu-item">
-                Đăng ký <div className="bottom-menu"></div>
-              </Link>
-              /
-              <Link href="/dang-nhap" className="menu-item">
-                Đăng nhập
-                <div className="bottom-menu"></div>
-              </Link>
-            </span>
+            {user ? (
+              <UserAvatar user={user} />
+            ) : (
+              <span className="wrap-menu">
+                <Link href="/dang-ky" className="menu-item">
+                  Đăng ký <div className="bottom-menu"></div>
+                </Link>
+                /
+                <Link href="/dang-nhap" className="menu-item">
+                  Đăng nhập
+                  <div className="bottom-menu"></div>
+                </Link>
+              </span>
+            )}
           </div>
         </div>
       </div>
