@@ -34,31 +34,31 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   }, []);
 
   return getLayout(
-    <SWRConfig
-      value={{
-        onError: (error, key) => {
-          if (error.status !== 403 && error.status !== 404) {
-            // We can send the error to Sentry,
-            // or show a notification UI.
-            console.log("SHIT");
-          }
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: colorPrimary,
         },
       }}
     >
-      <ConfigProvider
-        theme={{
-          token: {
-            colorPrimary: colorPrimary,
-          },
-        }}
-      >
-        <Provider store={store}>
-          <AnimatePresence mode="wait" initial={false}>
+      <Provider store={store}>
+        <AnimatePresence mode="wait" initial={false}>
+          <SWRConfig
+            value={{
+              onError: (error, key) => {
+                if (error.status !== 403 && error.status !== 404) {
+                  // We can send the error to Sentry,
+                  // or show a notification UI.
+                  console.log("SHIT");
+                }
+              },
+            }}
+          >
             <Component {...pageProps} />
-          </AnimatePresence>
-        </Provider>
-      </ConfigProvider>
+          </SWRConfig>
+        </AnimatePresence>
+      </Provider>
       <Analytics />
-    </SWRConfig>
+    </ConfigProvider>
   );
 }

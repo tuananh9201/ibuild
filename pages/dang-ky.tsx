@@ -46,22 +46,16 @@ const SignUpPage: NextPageWithLayout = () => {
   const [form] = Form.useForm();
   const router = useRouter();
   const dispatch = useDispatch();
-  const accessTokenState = useSelector(
-    (state: RootState) => state.auth.accessToken
-  );
   const [loadingRegister, setLoadingRegister] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const handleSubmit = () => {
-    form.submit();
-  };
   const onFinish = async (values: any) => {
-    console.log("Received values of form: ", values);
     const credential = {
       email: values.email,
       password: values.password,
     };
+    setLoadingRegister(true);
     const accessToken = await register(credential);
-    console.log("accessToken : ", accessToken);
+    // setLoadingRegister(false);
     if (accessToken) {
       setToken(accessToken);
       dispatch(login(accessToken));
@@ -193,7 +187,6 @@ const SignUpPage: NextPageWithLayout = () => {
                         message: "Ký tự thường",
                       },
                     ]}
-                    hasFeedback
                   >
                     <Input.Password size="large" placeholder="Nhập mật khẩu" />
                   </Form.Item>
@@ -222,17 +215,13 @@ const SignUpPage: NextPageWithLayout = () => {
                         },
                       }),
                     ]}
-                    hasFeedback
                   >
                     <Input.Password size="large" placeholder="Nhập mật khẩu" />
                   </Form.Item>
                   <Form.Item>
                     <div className="group-action">
                       <button
-                        onClick={() => {
-                          console.log("***");
-                          handleSubmit();
-                        }}
+                        disabled={loadingRegister}
                         className="ibuild-btn signin"
                       >
                         Đăng ký

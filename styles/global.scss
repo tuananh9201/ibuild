@@ -365,6 +365,12 @@ label {
   }
 }
 
+button:disabled,
+button[disabled] {
+  background: #D1D1D1;
+  color: #FFF;
+}
+
 // Overrid antd css
 .ant-form-item-explain-error {
   margin: 4px 0 !important;
