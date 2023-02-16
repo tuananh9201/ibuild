@@ -149,7 +149,7 @@ const EmptyPage: NextPageWithLayout = () => {
                     </button>
                     <div className="register-link">
                       <span className="have-account">Bạn đã có tài khoản?</span>
-                      <Link href="/dang-ky" className="register-now">
+                      <Link href="/dang-nhap" className="register-now">
                         Đăng nhập ngay
                       </Link>
                     </div>
