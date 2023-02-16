@@ -364,3 +364,8 @@ label {
     display: none !important;
   }
 }
+
+// Overrid antd css
+.ant-form-item-explain-error {
+  margin: 8px 0 !important;
+}
