@@ -10,6 +10,8 @@ import { colorPrimary } from "@/constants/colors";
 import { getAnalytics } from "firebase/analytics";
 import app from "utils/firebase";
 import { AnimatePresence } from "framer-motion";
+import { store } from "../store/store";
+import { Provider } from "react-redux";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -50,9 +52,11 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           },
         }}
       >
-        <AnimatePresence mode="wait" initial={false}>
-          <Component {...pageProps} />
-        </AnimatePresence>
+        <Provider store={store}>
+          <AnimatePresence mode="wait" initial={false}>
+            <Component {...pageProps} />
+          </AnimatePresence>
+        </Provider>
       </ConfigProvider>
       <Analytics />
     </SWRConfig>

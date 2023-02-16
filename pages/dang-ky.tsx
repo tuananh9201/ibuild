@@ -5,11 +5,15 @@ import OnBoardLayout from "@/components/onboard-layout";
 import Image from "next/image";
 import { backIcon, logo, signUpSuccess } from "@/constants/images";
 import Link from "next/link";
-import { Form, Input } from "antd";
+import { Form, Input, message } from "antd";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import { register } from "lib/api/auth";
+import { setToken } from "lib/api/api";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "store/features/auth/auth";
+import { RootState } from "store/store";
 const SignUpSuccess = () => {
   return (
     <div
@@ -41,6 +45,12 @@ const SignUpSuccess = () => {
 const SignUpPage: NextPageWithLayout = () => {
   const [form] = Form.useForm();
   const router = useRouter();
+  const dispatch = useDispatch();
+  const accessTokenState = useSelector(
+    (state: RootState) => state.auth.accessToken
+  );
+  console.log("accessTokenState: ", accessTokenState);
+
   const [loadingRegister, setLoadingRegister] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const handleSubmit = () => {
@@ -52,9 +62,12 @@ const SignUpPage: NextPageWithLayout = () => {
       email: values.email,
       password: values.password,
     };
-    const user = await register(credential);
-    console.log("user : ", user);
-
+    const accessToken = await register(credential);
+    console.log("accessToken : ", accessToken);
+    if (accessToken) {
+      setToken(accessToken);
+      dispatch(login(accessToken));
+    }
     setIsSuccess(true);
   };
   useEffect(() => {
@@ -67,6 +80,14 @@ const SignUpPage: NextPageWithLayout = () => {
     }, 5000);
     return () => clearTimeout(timeout);
   }, [isSuccess]);
+  useEffect(() => {
+    if (accessTokenState) {
+      message.info("Đăng nhập thành công !");
+      router.push({
+        pathname: "/",
+      });
+    }
+  }, [accessTokenState, router]);
 
   return (
     <>
@@ -135,6 +156,14 @@ const SignUpPage: NextPageWithLayout = () => {
                       {
                         type: "email",
                         message: "Email không hợp lệ",
+                      },
+                      {
+                        validator: (_, value) =>
+                          value
+                            ? Promise.resolve()
+                            : Promise.reject(
+                                new Error("Should accept agreement")
+                              ),
                       },
                     ]}
                   >
