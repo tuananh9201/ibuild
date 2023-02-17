@@ -7,4 +7,5 @@ export const authWithAccessToken = async (): Promise<User | undefined> => {
     const user = resp.data.data;
     return user;
   }
+  throw "Not authenticated";
 };

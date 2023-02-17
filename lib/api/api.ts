@@ -4,6 +4,8 @@ import axios, {
   AxiosRequestHeaders,
 } from "axios";
 import { message } from "antd";
+import { store } from "../../store/store";
+import { unAuthorized } from "../../store/features/auth/auth";
 
 interface CustomAxiosRequestHeaders extends AxiosRequestHeaders {
   Authorization?: string;
@@ -33,12 +35,19 @@ const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
 
 const onRequestError = (error: AxiosError): Promise<AxiosError> => {
   // add some handle
-  console.log("===================");
-  console.log(error);
+
   if (error.response && error.response.data) {
     const errorMessage = error.response.data?.message;
     const errorCode = error.response.status;
-    message.error(`${errorCode} - ${errorMessage}`);
+    if (errorCode === 401) {
+      message.error(
+        `Phiên đăng nhập của bạn đã hết hạn, vui lòng đăng nhập lại.`
+      );
+      const { dispatch } = store;
+      dispatch(unAuthorized());
+    } else if (errorCode === 400) {
+      message.error(`${errorCode} - ${errorMessage}`);
+    }
   }
   return Promise.reject(error);
 };

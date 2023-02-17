@@ -7,67 +7,78 @@ import Image from "next/image";
 import { logoutIcon, useIcon } from "@/constants/images";
 import { User } from "lib/types";
 import user from "store/features/user/user";
+import { useDispatch } from "react-redux";
+import { logout } from "store/features/auth/auth";
 
 interface IUserAvatarProps {
   user: User;
 }
-const items: MenuProps["items"] = [
-  {
-    key: "1",
-    label: (
-      <div
-        style={{
-          display: "flex",
-          gap: 8,
-          width: "100%",
-          padding: 8,
-        }}
-      >
-        <Image width={20} height={20} src={useIcon} alt="" />
-        <span>Thông tin tài khoản</span>
-      </div>
-    ),
-  },
-  {
-    type: "divider",
-  },
-  {
-    key: "2",
-    label: (
-      <div
-        style={{
-          display: "flex",
-          gap: 16,
-          width: "100%",
-          padding: 8,
-        }}
-      >
-        <span>Chuyên gia </span>
-        <Switch checked={false} />
-      </div>
-    ),
-  },
-  {
-    type: "divider",
-  },
-  {
-    key: "3",
-    label: (
-      <div
-        style={{
-          display: "flex",
-          gap: 8,
-          width: "100%",
-          padding: 8,
-        }}
-      >
-        <Image width={20} height={20} src={logoutIcon} alt="" />
-        <span>Đăng xuất</span>
-      </div>
-    ),
-  },
-];
+
 const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
+  const dispatch = useDispatch();
+
+  const handleLougout = () => {
+    dispatch(logout());
+  };
+  const items: MenuProps["items"] = [
+    {
+      key: "1",
+      label: (
+        <div
+          style={{
+            display: "flex",
+            gap: 8,
+            width: "100%",
+            padding: 8,
+          }}
+        >
+          <Image width={20} height={20} src={useIcon} alt="" />
+          <span>Thông tin tài khoản</span>
+        </div>
+      ),
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "2",
+      label: (
+        <div
+          style={{
+            display: "flex",
+            gap: 16,
+            width: "100%",
+            padding: 8,
+          }}
+        >
+          <span>Chuyên gia </span>
+          <Switch checked={false} />
+        </div>
+      ),
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "3",
+      onClick: () => {
+        handleLougout();
+      },
+      label: (
+        <div
+          style={{
+            display: "flex",
+            gap: 8,
+            width: "100%",
+            padding: 8,
+          }}
+        >
+          <Image width={20} height={20} src={logoutIcon} alt="" />
+          <span>Đăng xuất</span>
+        </div>
+      ),
+    },
+  ];
   return (
     <div className={style.Avatar_Area}>
       <Avatar size={24} icon={<UserOutlined />} />
