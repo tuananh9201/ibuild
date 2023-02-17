@@ -1,18 +1,38 @@
-import { ReactElement, useEffect } from "react";
+import { ReactElement, useState } from "react";
 import { NextPageWithLayout } from "./_app";
 import Head from "next/head";
 import OnBoardLayout from "@/components/onboard-layout";
 import Image from "next/image";
 import { backIcon, logo, unsplashLogin } from "@/constants/images";
 import Link from "next/link";
-import { Form, Input } from "antd";
+import { Form, Input, Spin } from "antd";
 import GoogleLoginButton from "@/components/common/GoogleLoginButton";
 import FacebookLoginButton from "@/components/common/FacebookLoginButton";
 import { validateEmailExists } from "lib/api/user";
+import { loginApi } from "lib/api/auth";
+import { setToken } from "lib/api/api";
+import { useDispatch } from "react-redux";
+import { login } from "store/features/auth/auth";
+import { LoadingOutlined } from "@ant-design/icons";
+
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
 const EmptyPage: NextPageWithLayout = () => {
   const [form] = Form.useForm();
-  const onFinish = (values: any) => {
-    console.log(values);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const onFinish = async (values: any) => {
+    if (loading) return;
+    const { email, password } = values;
+    setLoading(true);
+    const accessToken = await loginApi({ email, password });
+    if (accessToken) {
+      setToken(accessToken);
+      dispatch(login(accessToken));
+    }
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   };
   const handleEmailValidation = async (
     _: any,
@@ -24,12 +44,6 @@ const EmptyPage: NextPageWithLayout = () => {
     }
     return Promise.resolve(true);
   };
-  useEffect(() => {
-    const isFormValid = () =>
-      form.getFieldsError().some((item) => item.errors.length > 0);
-    const valid = isFormValid();
-    console.log(" valid ", valid);
-  }, [form]);
 
   return (
     <>
@@ -71,14 +85,15 @@ const EmptyPage: NextPageWithLayout = () => {
                   label="Email"
                   name="email"
                   validateTrigger="onBlur"
+                  hasFeedback
                   rules={[
                     {
                       required: true,
-                      message: "Vui lòng nhập tên đăng nhập",
+                      message: "Vui lòng nhập tên email",
                     },
                     {
                       type: "email",
-                      message: "* Email không đúng định dạng",
+                      message: "Tên đăng nhập chưa chính xác",
                     },
                     () => ({
                       validator(rule, value) {
@@ -92,7 +107,7 @@ const EmptyPage: NextPageWithLayout = () => {
                         }
                         return Promise.resolve();
                       },
-                      message: "Email không tồn tại",
+                      message: "Tên đăng nhập chưa chính xác",
                     }),
                   ]}
                 >
@@ -142,24 +157,31 @@ const EmptyPage: NextPageWithLayout = () => {
                     </Link>
                   </div>
                 </Form.Item>
-                <Form.Item>
-                  <div className="group-action">
-                    <button
-                      disabled
-                      type="submit"
-                      className="ibuild-btn signin"
-                    >
-                      Đăng nhập
-                    </button>
-                    <div className="register-link">
-                      <span className="have-account">
-                        Bạn chưa có tài khoản?
-                      </span>
-                      <Link href="/dang-ky" className="register-now">
-                        Đăng ký ngay
-                      </Link>
+                <Form.Item shouldUpdate>
+                  {() => (
+                    <div className="group-action">
+                      <button
+                        disabled={
+                          form
+                            .getFieldsError()
+                            .filter(({ errors }) => errors.length).length > 0 ||
+                          loading
+                        }
+                        type="submit"
+                        className="ibuild-btn signin"
+                      >
+                        {loading ? <Spin indicator={antIcon} /> : "Đăng nhập"}
+                      </button>
+                      <div className="register-link">
+                        <span className="have-account">
+                          Bạn chưa có tài khoản?
+                        </span>
+                        <Link href="/dang-ky" className="register-now">
+                          Đăng ký ngay
+                        </Link>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </Form.Item>
               </Form>
             </div>

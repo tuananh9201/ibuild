@@ -2,14 +2,15 @@ import axios, {
   AxiosError,
   AxiosRequestConfig,
   AxiosRequestHeaders,
+  AxiosHeaders,
 } from "axios";
 import { message } from "antd";
 import { store } from "../../store/store";
 import { unAuthorized } from "../../store/features/auth/auth";
 
-interface CustomAxiosRequestHeaders extends AxiosRequestHeaders {
-  Authorization?: string;
-}
+// interface CustomAxiosRequestHeaders extends AxiosRequestHeaders {
+//   Authorization: string;
+// }
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
 });
@@ -21,13 +22,11 @@ export const setToken = (access_token: string) => {
 
 const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
   // add something configs
-
   const token = localStorage.getItem("access_token");
-  console.log("token : ", token);
   if (token) {
-    const mHeaders = {
+    const mHeaders = AxiosHeaders.from({
       Authorization: `Bearer ${token}`,
-    } as CustomAxiosRequestHeaders;
+    }) as AxiosRequestHeaders;
     config.headers = mHeaders;
   }
   return config;
@@ -37,7 +36,7 @@ const onRequestError = (error: AxiosError): Promise<AxiosError> => {
   // add some handle
 
   if (error.response && error.response.data) {
-    const errorMessage = error.response.data?.message;
+    // const errorMessage = error.response.data?.message;
     const errorCode = error.response.status;
     if (errorCode === 401) {
       message.error(
@@ -45,12 +44,13 @@ const onRequestError = (error: AxiosError): Promise<AxiosError> => {
       );
       const { dispatch } = store;
       dispatch(unAuthorized());
-    } else if (errorCode === 400) {
-      message.error(`${errorCode} - ${errorMessage}`);
     }
+    // else if (errorCode === 400) {
+    //   message.error(`${errorCode} - ${errorMessage}`);
+    // }
   }
   return Promise.reject(error);
 };
 api.interceptors.request.use(onRequest);
-api.interceptors.response.use((response) => response, onRequestError);
+// api.interceptors.response.use((response) => response, onRequestError);
 export default api;

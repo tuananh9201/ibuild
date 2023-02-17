@@ -58,7 +58,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           </SWRConfig>
         </AnimatePresence>
       </Provider>
-      <Analytics />
+      {/* <Analytics /> */}
     </ConfigProvider>
   );
 }
