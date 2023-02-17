@@ -14,12 +14,14 @@ import { setToken } from "lib/api/api";
 import { useDispatch } from "react-redux";
 import { login } from "store/features/auth/auth";
 import { LoadingOutlined } from "@ant-design/icons";
+import { useRouter } from "next/router";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const EmptyPage: NextPageWithLayout = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const dispatch = useDispatch();
   const onFinish = async (values: any) => {
     if (loading) return;
@@ -29,6 +31,18 @@ const EmptyPage: NextPageWithLayout = () => {
     if (accessToken) {
       setToken(accessToken);
       dispatch(login(accessToken));
+      setTimeout(() => {
+        let redirectPath = router.query?.redirect || "/";
+        if (typeof redirectPath === "object") {
+          redirectPath = "/";
+        }
+        let currentQuery = router.query;
+        delete currentQuery["redirect"];
+        router.push({
+          pathname: redirectPath,
+          query: currentQuery,
+        });
+      }, 1000);
     }
     setTimeout(() => {
       setLoading(false);

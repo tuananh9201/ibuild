@@ -51,8 +51,10 @@ const SignUpPage: NextPageWithLayout = () => {
   const [form] = Form.useForm();
   const router = useRouter();
   const dispatch = useDispatch();
+  const [isinitPage, setIsinitPage] = useState(true);
   const [loadingRegister, setLoadingRegister] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [disabledConfim, setDisabledConfim] = useState(true);
   const onFinish = async (values: any) => {
     const credential = {
       email: values.email,
@@ -66,6 +68,23 @@ const SignUpPage: NextPageWithLayout = () => {
       dispatch(login(accessToken));
     }
     setIsSuccess(true);
+  };
+  const validPassword = (password: string) => {
+    if (password.length < 8 && password.length > 20) {
+      return false;
+    }
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}$/.test(
+      password
+    );
+  };
+  const onChangeValues = (changedValues: any, allValues: any) => {
+    if (Object.keys(changedValues).includes("password")) {
+      console.log("changedValues ", changedValues);
+      const passValue = changedValues["password"];
+      const valid = validPassword(passValue);
+      setDisabledConfim(!valid);
+    }
+    !isinitPage && setIsinitPage(false);
   };
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -89,6 +108,7 @@ const SignUpPage: NextPageWithLayout = () => {
             width: "100%",
             height: "100%",
           }}
+          priority={true}
           src={unsplashSignUp}
           alt=""
         />
@@ -142,6 +162,7 @@ const SignUpPage: NextPageWithLayout = () => {
                   style={{ maxWidth: "100%" }}
                   requiredMark={false}
                   scrollToFirstError
+                  onValuesChange={onChangeValues}
                 >
                   <Form.Item
                     name="email"
@@ -230,25 +251,43 @@ const SignUpPage: NextPageWithLayout = () => {
                       }),
                     ]}
                   >
-                    <Input.Password size="large" placeholder="Nhập mật khẩu" />
+                    <Input.Password
+                      // disabled={
+                      //   form
+                      //     .getFieldsError(["password"])
+                      //     .filter(({ errors }) => errors.length).length > 0
+                      // }
+                      disabled={disabledConfim}
+                      size="large"
+                      placeholder="Nhập mật khẩu"
+                    />
                   </Form.Item>
-                  <Form.Item>
-                    <div className="group-action">
-                      <button
-                        disabled={loadingRegister}
-                        className="ibuild-btn signin"
-                      >
-                        Đăng ký
-                      </button>
-                      <div className="register-link">
-                        <span className="have-account">
-                          Bạn đã có tài khoản?
-                        </span>
-                        <Link href="/dang-nhap" className="register-now">
-                          Đăng nhập ngay
-                        </Link>
+                  <Form.Item shouldUpdate>
+                    {() => (
+                      <div className="group-action">
+                        <button
+                          disabled={
+                            form
+                              .getFieldsError()
+                              .filter(({ errors }) => errors.length).length >
+                              0 ||
+                            loadingRegister ||
+                            isinitPage
+                          }
+                          className="ibuild-btn signin"
+                        >
+                          Đăng ký
+                        </button>
+                        <div className="register-link">
+                          <span className="have-account">
+                            Bạn đã có tài khoản?
+                          </span>
+                          <Link href="/dang-nhap" className="register-now">
+                            Đăng nhập ngay
+                          </Link>
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </Form.Item>
                 </Form>
               </motion.div>

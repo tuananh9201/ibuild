@@ -9,6 +9,7 @@ import { User } from "lib/types";
 import user from "store/features/user/user";
 import { useDispatch } from "react-redux";
 import { logout } from "store/features/auth/auth";
+import { useRouter } from "next/router";
 
 interface IUserAvatarProps {
   user: User;
@@ -16,9 +17,16 @@ interface IUserAvatarProps {
 
 const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
   const dispatch = useDispatch();
-
+  const router = useRouter();
   const handleLougout = () => {
     dispatch(logout());
+    router.push({
+      pathname: "/dang-nhap",
+      query: {
+        ...router.query,
+        redirect: router.pathname,
+      },
+    });
   };
   const items: MenuProps["items"] = [
     {
