@@ -84,7 +84,7 @@ const SignUpPage: NextPageWithLayout = () => {
       const valid = validPassword(passValue);
       setDisabledConfim(!valid);
     }
-    !isinitPage && setIsinitPage(false);
+    setIsinitPage(false);
   };
   useEffect(() => {
     const timeout = setTimeout(() => {
