@@ -47,6 +47,8 @@ import bgRootCategoryMobile from "../images/bg_category_mobile.png";
 import signUpSuccess from "../images/SignUpSuccess.png";
 import useIcon from "../images/icons/User.png";
 import logoutIcon from "../images/icons/Logout.png";
+import unsplashLogin from "../images/unsplash_login.png";
+import unsplashSignUp from "../images/unsplash_signup.png";
 export {
   logo,
   addressIcon,
@@ -97,4 +99,6 @@ export {
   signUpSuccess,
   useIcon,
   logoutIcon,
+  unsplashLogin,
+  unsplashSignUp,
 };

@@ -3,7 +3,12 @@ import { NextPageWithLayout } from "./_app";
 import Head from "next/head";
 import OnBoardLayout from "@/components/onboard-layout";
 import Image from "next/image";
-import { backIcon, logo, signUpSuccess } from "@/constants/images";
+import {
+  backIcon,
+  logo,
+  signUpSuccess,
+  unsplashSignUp,
+} from "@/constants/images";
 import Link from "next/link";
 import { Form, Input, message } from "antd";
 import { useState, useEffect } from "react";
@@ -78,7 +83,16 @@ const SignUpPage: NextPageWithLayout = () => {
       <Head>
         <title>Đăng ký</title>
       </Head>
-      <div className="left-signup"></div>
+      <div className="left-signup">
+        <Image
+          style={{
+            width: "100%",
+            height: "100%",
+          }}
+          src={unsplashSignUp}
+          alt=""
+        />
+      </div>
       <div className="right-signin">
         <div className="right-signin-container">
           <div className="right-signin-container-nav">
@@ -125,13 +139,13 @@ const SignUpPage: NextPageWithLayout = () => {
                   onFinish={onFinish}
                   layout="vertical"
                   form={form}
-                  style={{ maxWidth: 600 }}
+                  style={{ maxWidth: "100%" }}
                   requiredMark={false}
                   scrollToFirstError
                 >
                   <Form.Item
                     name="email"
-                    label="Tên đăng nhập"
+                    label="Email"
                     rules={[
                       {
                         required: true,
@@ -141,14 +155,14 @@ const SignUpPage: NextPageWithLayout = () => {
                         type: "email",
                         message: "Email không hợp lệ",
                       },
-                      {
-                        validator: (_, value) =>
-                          value
-                            ? Promise.resolve()
-                            : Promise.reject(
-                                new Error("Should accept agreement")
-                              ),
-                      },
+                      // {
+                      //   validator: (_, value) =>
+                      //     value
+                      //       ? Promise.resolve()
+                      //       : Promise.reject(
+                      //           new Error("Should accept agreement")
+                      //         ),
+                      // },
                     ]}
                   >
                     <Input size="large" placeholder="Nhập tên đăng nhập" />

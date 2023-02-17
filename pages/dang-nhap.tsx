@@ -3,19 +3,36 @@ import { NextPageWithLayout } from "./_app";
 import Head from "next/head";
 import OnBoardLayout from "@/components/onboard-layout";
 import Image from "next/image";
-import { backIcon, facebookIcon, logo } from "@/constants/images";
+import {
+  backIcon,
+  facebookIcon,
+  logo,
+  unsplashLogin,
+} from "@/constants/images";
 import Link from "next/link";
 import { Form, Input } from "antd";
 import GoogleLoginButton from "@/components/common/GoogleLoginButton";
 import FacebookLoginButton from "@/components/common/FacebookLoginButton";
 const EmptyPage: NextPageWithLayout = () => {
   const [form] = Form.useForm();
+  const onFinish = (values: any) => {
+    console.log(values);
+  };
   return (
     <>
       <Head>
         <title>Đăng nhập</title>
       </Head>
-      <div className="left-signin"></div>
+      <div className="left-signin">
+        <Image
+          style={{
+            width: "100%",
+            height: "100%",
+          }}
+          src={unsplashLogin}
+          alt=""
+        />
+      </div>
       <div className="right-signin">
         <div className="right-signin-container">
           <div className="right-signin-container-nav">
@@ -26,26 +43,83 @@ const EmptyPage: NextPageWithLayout = () => {
               <div className="logo">
                 <Image src={logo} alt="" />
               </div>
-              <div className="welcome">Chào mừng quay trở lại!</div>
+              <div className="welcome"></div>
             </div>
             <div className="form-sign-up">
-              <Form layout="vertical" form={form} style={{ maxWidth: 600 }}>
-                <Form.Item label="Tên đăng nhập">
-                  <Input size="large" placeholder="Nhập tên đăng nhập" />
+              <Form
+                layout="vertical"
+                onFinish={onFinish}
+                form={form}
+                style={{ maxWidth: "100%" }}
+                scrollToFirstError
+              >
+                <Form.Item
+                  label="Email"
+                  name="email"
+                  requiredMark={false}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng nhập tên đăng nhập",
+                    },
+                    {
+                      type: "email",
+                      message: "* Email không đúng định dạng",
+                    },
+                  ]}
+                >
+                  <Input size="large" placeholder="Nhập email đăng nhập" />
                 </Form.Item>
                 <Form.Item
-                  label={
-                    <div>
-                      {" "}
-                      Mật khẩu <span style={{ color: "red" }}>*</span>{" "}
-                    </div>
-                  }
+                  requiredMark={false}
+                  name="password"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Nhập mật khẩu",
+                    },
+                    {
+                      min: 8,
+                      message: "Mật khẩu từ 8-20 ký tự",
+                    },
+                    {
+                      max: 20,
+                      message: "Mật khẩu từ 8-20 ký tự",
+                    },
+                    {
+                      pattern: /[!@#$%^&*()]/,
+                      message: "Ký tự đặc biệt",
+                    },
+                    {
+                      pattern: /[A-Z]/,
+                      message: "Ký tự in hoa",
+                    },
+                    {
+                      pattern: /[a-z]/,
+                      message: "Ký tự thường",
+                    },
+                  ]}
+                  label="Mật khẩu "
                 >
                   <Input.Password size="large" placeholder="Nhập mật khẩu" />
                 </Form.Item>
                 <Form.Item>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <Link className="register-now" href={"/quen-mat-khau"}>
+                      Bạn quên mật khẩu?
+                    </Link>
+                  </div>
+                </Form.Item>
+                <Form.Item>
                   <div className="group-action">
-                    <button className="ibuild-btn signin">Đăng nhập</button>
+                    <button type="submit" className="ibuild-btn signin">
+                      Đăng nhập
+                    </button>
                     <div className="register-link">
                       <span className="have-account">
                         Bạn chưa có tài khoản?
