@@ -4,35 +4,35 @@ import Script from "next/script";
 
 import Footer from "./layouts/footer";
 
-import Link from "next/link";
+// import Link from "next/link";
 import MainHeader from "./layouts/header";
 import { RootState, store } from "store/store";
 import { Provider, useSelector } from "react-redux";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+// import { useRouter } from "next/router";
+// import { useEffect } from "react";
 interface IMainLayoutProps {
   children: React.ReactNode;
 }
 
 export default function MainLayout({ children }: IMainLayoutProps) {
-  const unAuthorized = useSelector(
-    (state: RootState) => state.auth.unAuthorized
-  );
+  // const unAuthorized = useSelector(
+  //   (state: RootState) => state.auth.unAuthorized
+  // );
 
-  const router = useRouter();
+  // const router = useRouter();
 
-  useEffect(() => {
-    if (unAuthorized) {
-      const pathname = router.pathname;
-      router.push({
-        pathname: "/dang-nhap",
-        query: {
-          redirect: pathname,
-          ...router.query,
-        },
-      });
-    }
-  }, [unAuthorized, router]);
+  // useEffect(() => {
+  //   if (unAuthorized) {
+  //     const pathname = router.pathname;
+  //     router.push({
+  //       pathname: "/dang-nhap",
+  //       query: {
+  //         redirect: pathname,
+  //         ...router.query,
+  //       },
+  //     });
+  //   }
+  // }, [unAuthorized, router]);
 
   return (
     <>

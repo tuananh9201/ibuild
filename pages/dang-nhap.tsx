@@ -1,23 +1,36 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import { NextPageWithLayout } from "./_app";
 import Head from "next/head";
 import OnBoardLayout from "@/components/onboard-layout";
 import Image from "next/image";
-import {
-  backIcon,
-  facebookIcon,
-  logo,
-  unsplashLogin,
-} from "@/constants/images";
+import { backIcon, logo, unsplashLogin } from "@/constants/images";
 import Link from "next/link";
 import { Form, Input } from "antd";
 import GoogleLoginButton from "@/components/common/GoogleLoginButton";
 import FacebookLoginButton from "@/components/common/FacebookLoginButton";
+import { validateEmailExists } from "lib/api/user";
 const EmptyPage: NextPageWithLayout = () => {
   const [form] = Form.useForm();
   const onFinish = (values: any) => {
     console.log(values);
   };
+  const handleEmailValidation = async (
+    _: any,
+    email: string
+  ): Promise<boolean> => {
+    const valid = await validateEmailExists({ email });
+    if (valid) {
+      return Promise.reject(valid);
+    }
+    return Promise.resolve(true);
+  };
+  useEffect(() => {
+    const isFormValid = () =>
+      form.getFieldsError().some((item) => item.errors.length > 0);
+    const valid = isFormValid();
+    console.log(" valid ", valid);
+  }, [form]);
+
   return (
     <>
       <Head>
@@ -52,11 +65,12 @@ const EmptyPage: NextPageWithLayout = () => {
                 form={form}
                 style={{ maxWidth: "100%" }}
                 scrollToFirstError
+                requiredMark={false}
               >
                 <Form.Item
                   label="Email"
                   name="email"
-                  requiredMark={false}
+                  validateTrigger="onBlur"
                   rules={[
                     {
                       required: true,
@@ -66,12 +80,25 @@ const EmptyPage: NextPageWithLayout = () => {
                       type: "email",
                       message: "* Email không đúng định dạng",
                     },
+                    () => ({
+                      validator(rule, value) {
+                        if (value) {
+                          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                          const isValid = emailRegex.test(value);
+                          if (isValid) {
+                            return handleEmailValidation(undefined, value);
+                          }
+                          return Promise.resolve();
+                        }
+                        return Promise.resolve();
+                      },
+                      message: "Email không tồn tại",
+                    }),
                   ]}
                 >
                   <Input size="large" placeholder="Nhập email đăng nhập" />
                 </Form.Item>
                 <Form.Item
-                  requiredMark={false}
                   name="password"
                   rules={[
                     {
@@ -117,7 +144,11 @@ const EmptyPage: NextPageWithLayout = () => {
                 </Form.Item>
                 <Form.Item>
                   <div className="group-action">
-                    <button type="submit" className="ibuild-btn signin">
+                    <button
+                      disabled
+                      type="submit"
+                      className="ibuild-btn signin"
+                    >
                       Đăng nhập
                     </button>
                     <div className="register-link">

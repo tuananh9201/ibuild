@@ -9,3 +9,14 @@ export const authWithAccessToken = async (): Promise<User | undefined> => {
   }
   throw "Not authenticated";
 };
+
+export const validateEmailExists = async (data: {
+  email: string;
+}): Promise<boolean> => {
+  const resp = await api.post("/users/email", data);
+  if (resp.status === 200) {
+    const isValid = resp.data.data?.status || false;
+    return isValid;
+  }
+  throw "Error";
+};
