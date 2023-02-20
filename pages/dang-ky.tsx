@@ -68,6 +68,7 @@ const SignUpPage: NextPageWithLayout = () => {
       dispatch(login(accessToken));
     }
     setIsSuccess(true);
+    setLoadingRegister(false);
   };
   const validPassword = (password: string) => {
     if (password.length < 8 && password.length > 20) {

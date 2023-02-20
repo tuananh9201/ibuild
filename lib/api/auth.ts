@@ -6,10 +6,22 @@ export const register = async (credentials: {
   email: string;
   password: string;
 }): Promise<string | undefined> => {
-  const resp = await api.post("/auth/register", credentials);
-  if (resp.status === 200) {
-    const { access_token } = resp.data.data;
-    return access_token;
+  try {
+    const resp = await api.post("/auth/register", credentials);
+    if (resp.status === 200) {
+      const { access_token } = resp.data.data;
+      return access_token;
+    }
+  } catch (error: any) {
+    const status_code = error.response?.status;
+    if (status_code === 400) {
+      const msgText = error.response.data?.message;
+      notification.error({
+        description: msgText,
+        message: "Lỗi",
+        duration: 2,
+      });
+    }
   }
 };
 
