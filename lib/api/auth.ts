@@ -51,7 +51,7 @@ export const loginApi = async (credentials: {
     if (status_code === 400) {
       const msgText = error.response.data?.message;
       const expires = error.response.data?.expires;
-      if (expires) {
+      if (expires && expires !== "None") {
         return error.response.data;
       }
       notification.error({
