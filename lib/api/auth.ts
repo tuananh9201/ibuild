@@ -28,7 +28,9 @@ export const register = async (credentials: {
 export const loginApi = async (credentials: {
   email: string;
   password: string;
-}): Promise<string | undefined> => {
+}): Promise<
+  { message?: string; expires?: string; access_token?: string } | undefined
+> => {
   const body = new FormData();
   body.append("username", credentials.email);
   body.append("password", credentials.password);
@@ -42,12 +44,16 @@ export const loginApi = async (credentials: {
     });
     if (resp.status === 200) {
       const { access_token } = resp.data.data;
-      return access_token;
+      return { access_token };
     }
   } catch (error: any) {
     const status_code = error.response?.status;
     if (status_code === 400) {
       const msgText = error.response.data?.message;
+      const expires = error.response.data?.expires;
+      if (expires) {
+        return error.response.data;
+      }
       notification.error({
         description: msgText,
         message: "Lỗi",

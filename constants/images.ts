@@ -49,6 +49,7 @@ import useIcon from "../images/icons/User.png";
 import logoutIcon from "../images/icons/Logout.png";
 import unsplashLogin from "../images/unsplash_login.png";
 import unsplashSignUp from "../images/unsplash_signup.png";
+import lockEmail from "../images/lock.png";
 export {
   logo,
   addressIcon,
@@ -101,4 +102,5 @@ export {
   logoutIcon,
   unsplashLogin,
   unsplashSignUp,
+  lockEmail,
 };
