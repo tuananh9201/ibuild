@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { NextPageWithLayout } from "./_app";
 import Head from "next/head";
 import OnBoardLayout from "@/components/onboard-layout";
@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { login } from "store/features/auth/auth";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
+import LockWrongPassword from "@/components/common/LockWrongPassword";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -23,14 +24,18 @@ const EmptyPage: NextPageWithLayout = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
+  const [expiresTime, setExpiresTime] = useState<number>(0);
+  const [isLockEmail, setIsLockEmail] = useState(false);
   const onFinish = async (values: any) => {
     if (loading) return;
     const { email, password } = values;
     setLoading(true);
-    const accessToken = await loginApi({ email, password });
-    if (accessToken) {
-      setToken(accessToken);
-      dispatch(login(accessToken));
+    const data = await loginApi({ email, password });
+    const access_token = data?.access_token;
+    const expires = data?.expires;
+    if (access_token) {
+      setToken(access_token);
+      dispatch(login(access_token));
       setTimeout(() => {
         let redirectPath = router.query?.redirect || "/";
         if (typeof redirectPath === "object") {
@@ -43,6 +48,14 @@ const EmptyPage: NextPageWithLayout = () => {
           query: currentQuery,
         });
       }, 1000);
+    }
+    if (expires) {
+      setIsLockEmail(true);
+      console.log("expires: ", expires);
+      // expires : 2023-02-21 03:39:01.621610
+      const expireTime = parseInt(expires);
+      // countDownTime :  57277324
+      setExpiresTime(expireTime);
     }
     setTimeout(() => {
       setLoading(false);
@@ -84,129 +97,144 @@ const EmptyPage: NextPageWithLayout = () => {
               <div className="logo">
                 <Image src={logo} alt="" />
               </div>
-              <div className="welcome"></div>
+              <div className="welcome">
+                {isLockEmail ? "Sai mật khẩu quá giới hạn" : null}
+              </div>
             </div>
-            <div className="form-sign-up">
-              <Form
-                layout="vertical"
-                onFinish={onFinish}
-                form={form}
-                style={{ maxWidth: "100%" }}
-                scrollToFirstError
-                requiredMark={false}
-              >
-                <Form.Item
-                  label="Email"
-                  name="email"
-                  validateTrigger="onBlur"
-                  hasFeedback
-                  rules={[
-                    {
-                      required: true,
-                      message: "Vui lòng nhập tên email",
-                    },
-                    {
-                      type: "email",
-                      message: "Tên đăng nhập chưa chính xác",
-                    },
-                    () => ({
-                      validator(rule, value) {
-                        if (value) {
-                          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                          const isValid = emailRegex.test(value);
-                          if (isValid) {
-                            return handleEmailValidation(undefined, value);
-                          }
-                          return Promise.resolve();
-                        }
-                        return Promise.resolve();
-                      },
-                      message: "Tên đăng nhập chưa chính xác",
-                    }),
-                  ]}
-                >
-                  <Input size="large" placeholder="Nhập email đăng nhập" />
-                </Form.Item>
-                <Form.Item
-                  name="password"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Nhập mật khẩu",
-                    },
-                    {
-                      min: 8,
-                      message: "Mật khẩu từ 8-20 ký tự",
-                    },
-                    {
-                      max: 20,
-                      message: "Mật khẩu từ 8-20 ký tự",
-                    },
-                    {
-                      pattern: /[!@#$%^&*()]/,
-                      message: "Ký tự đặc biệt",
-                    },
-                    {
-                      pattern: /[A-Z]/,
-                      message: "Ký tự in hoa",
-                    },
-                    {
-                      pattern: /[a-z]/,
-                      message: "Ký tự thường",
-                    },
-                  ]}
-                  label="Mật khẩu "
-                >
-                  <Input.Password size="large" placeholder="Nhập mật khẩu" />
-                </Form.Item>
-                <Form.Item>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "flex-end",
-                    }}
+            {isLockEmail ? (
+              <LockWrongPassword expires={expiresTime} />
+            ) : (
+              <React.Fragment>
+                <div className="form-sign-up">
+                  <Form
+                    layout="vertical"
+                    onFinish={onFinish}
+                    form={form}
+                    style={{ maxWidth: "100%" }}
+                    scrollToFirstError
+                    requiredMark={false}
                   >
-                    <Link className="register-now" href={"/quen-mat-khau"}>
-                      Bạn quên mật khẩu?
-                    </Link>
-                  </div>
-                </Form.Item>
-                <Form.Item shouldUpdate>
-                  {() => (
-                    <div className="group-action">
-                      <button
-                        disabled={
-                          form
-                            .getFieldsError()
-                            .filter(({ errors }) => errors.length).length > 0 ||
-                          loading
-                        }
-                        type="submit"
-                        className="ibuild-btn signin"
+                    <Form.Item
+                      label="Email"
+                      name="email"
+                      validateTrigger="onBlur"
+                      hasFeedback
+                      rules={[
+                        {
+                          required: true,
+                          message: "Vui lòng nhập tên email",
+                        },
+                        {
+                          type: "email",
+                          message: "Tên đăng nhập chưa chính xác",
+                        },
+                        () => ({
+                          validator(rule, value) {
+                            if (value) {
+                              const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                              const isValid = emailRegex.test(value);
+                              if (isValid) {
+                                return handleEmailValidation(undefined, value);
+                              }
+                              return Promise.resolve();
+                            }
+                            return Promise.resolve();
+                          },
+                          message: "Tên đăng nhập chưa chính xác",
+                        }),
+                      ]}
+                    >
+                      <Input size="large" placeholder="Nhập email đăng nhập" />
+                    </Form.Item>
+                    <Form.Item
+                      name="password"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Nhập mật khẩu",
+                        },
+                        {
+                          min: 8,
+                          message: "Mật khẩu từ 8-20 ký tự",
+                        },
+                        {
+                          max: 20,
+                          message: "Mật khẩu từ 8-20 ký tự",
+                        },
+                        {
+                          pattern: /[!@#$%^&*()]/,
+                          message: "Ký tự đặc biệt",
+                        },
+                        {
+                          pattern: /[A-Z]/,
+                          message: "Ký tự in hoa",
+                        },
+                        {
+                          pattern: /[a-z]/,
+                          message: "Ký tự thường",
+                        },
+                      ]}
+                      label="Mật khẩu "
+                    >
+                      <Input.Password
+                        size="large"
+                        placeholder="Nhập mật khẩu"
+                      />
+                    </Form.Item>
+                    <Form.Item>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "flex-end",
+                        }}
                       >
-                        {loading ? <Spin indicator={antIcon} /> : "Đăng nhập"}
-                      </button>
-                      <div className="register-link">
-                        <span className="have-account">
-                          Bạn chưa có tài khoản?
-                        </span>
-                        <Link href="/dang-ky" className="register-now">
-                          Đăng ký ngay
+                        <Link className="register-now" href={"/quen-mat-khau"}>
+                          Bạn quên mật khẩu?
                         </Link>
                       </div>
-                    </div>
-                  )}
-                </Form.Item>
-              </Form>
-            </div>
+                    </Form.Item>
+                    <Form.Item shouldUpdate>
+                      {() => (
+                        <div className="group-action">
+                          <button
+                            disabled={
+                              form
+                                .getFieldsError()
+                                .filter(({ errors }) => errors.length).length >
+                                0 || loading
+                            }
+                            type="submit"
+                            className="ibuild-btn signin"
+                          >
+                            {loading ? (
+                              <Spin indicator={antIcon} />
+                            ) : (
+                              "Đăng nhập"
+                            )}
+                          </button>
+                          <div className="register-link">
+                            <span className="have-account">
+                              Bạn chưa có tài khoản?
+                            </span>
+                            <Link href="/dang-ky" className="register-now">
+                              Đăng ký ngay
+                            </Link>
+                          </div>
+                        </div>
+                      )}
+                    </Form.Item>
+                  </Form>
+                </div>
 
-            <div className="sign-seperator">
-              <span className="sepe-title">Đăng nhập bằng cách khác</span>
-            </div>
-            <div className="signin-other-platform">
-              <GoogleLoginButton />
-              <FacebookLoginButton />
-            </div>
+                <div className="sign-seperator">
+                  <span className="sepe-title">Đăng nhập bằng cách khác</span>
+                </div>
+                <div className="signin-other-platform">
+                  <GoogleLoginButton />
+                  <FacebookLoginButton />
+                </div>
+              </React.Fragment>
+            )}
           </div>
         </div>
       </div>
