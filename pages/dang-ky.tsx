@@ -18,7 +18,6 @@ import { register } from "lib/api/auth";
 import { setToken } from "lib/api/api";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "store/features/auth/auth";
-import { RootState } from "store/store";
 const SignUpSuccess = () => {
   return (
     <div
@@ -118,7 +117,7 @@ const SignUpPage: NextPageWithLayout = () => {
         <div className="right-signin-container">
           <div className="right-signin-container-nav">
             {isSuccess ? null : (
-              <Link href="/onboard">
+              <Link href="/">
                 <Image src={backIcon} alt="" />
               </Link>
             )}

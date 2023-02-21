@@ -74,7 +74,7 @@ const ForgetPassword: NextPageWithLayout = () => {
       <div className="right-signin">
         <div className="right-signin-container">
           <div className="right-signin-container-nav">
-            <Link href="/onboard">
+            <Link href="/">
               <Image src={backIcon} alt="" />
             </Link>
           </div>

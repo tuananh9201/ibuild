@@ -89,7 +89,9 @@ const EmptyPage: NextPageWithLayout = () => {
       <div className="right-signin">
         <div className="right-signin-container">
           <div className="right-signin-container-nav">
-            <Image src={backIcon} alt="" />
+            <Link href="/">
+              <Image src={backIcon} alt="" />
+            </Link>
           </div>
           <div className="right-signin-container-content">
             <div className="heading">
