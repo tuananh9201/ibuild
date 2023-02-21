@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next build && next start -p 4000"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@ant-design/plots": "^1.2.4",
