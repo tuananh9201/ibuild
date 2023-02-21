@@ -66,8 +66,8 @@ const SignUpPage: NextPageWithLayout = () => {
     if (accessToken) {
       setToken(accessToken);
       dispatch(login(accessToken));
+      setIsSuccess(true);
     }
-    setIsSuccess(true);
     setLoadingRegister(false);
   };
   const validPassword = (password: string) => {
