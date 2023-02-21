@@ -49,9 +49,8 @@ const EmptyPage: NextPageWithLayout = () => {
         });
       }, 1000);
     }
-    if (expires) {
+    if (expires && expires !== "None") {
       setIsLockEmail(true);
-      console.log("expires: ", expires);
       // expires : 2023-02-21 03:39:01.621610
       const expireTime = parseInt(expires);
       // countDownTime :  57277324
