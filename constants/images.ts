@@ -42,6 +42,14 @@ import newsDetail from "../images/new.png";
 import newsDetail2 from "../images/newDetail2.png";
 import rightIcon from "../images/icons/rightIcon.png";
 import breadcrumIcon from "../images/icons/arrow_forward_ios_black.png";
+import bgRootCategory from "../images/image 6.png";
+import bgRootCategoryMobile from "../images/bg_category_mobile.png";
+import signUpSuccess from "../images/SignUpSuccess.png";
+import useIcon from "../images/icons/User.png";
+import logoutIcon from "../images/icons/Logout.png";
+import unsplashLogin from "../images/unsplash_login.png";
+import unsplashSignUp from "../images/unsplash_signup.png";
+import lockEmail from "../images/lock.png";
 export {
   logo,
   addressIcon,
@@ -87,4 +95,12 @@ export {
   breadcrumIcon,
   newsDetail,
   newsDetail2,
+  bgRootCategory,
+  bgRootCategoryMobile,
+  signUpSuccess,
+  useIcon,
+  logoutIcon,
+  unsplashLogin,
+  unsplashSignUp,
+  lockEmail,
 };

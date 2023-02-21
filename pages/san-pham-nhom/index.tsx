@@ -1,11 +1,11 @@
 import { ReactElement } from "react";
-import MainLayout from "../components/main-layout";
-import { NextPageWithLayout } from "./_app";
+import MainLayout from "../../components/main-layout";
+import { NextPageWithLayout } from "../_app";
 import { Row, Col, Select, Pagination } from "antd";
 import Head from "next/head";
 import ProductFilter from "@/components/filters/product-filter";
 import ProductCard from "@/components/products/product-card";
-import suppliers from "../data/suppliers.json";
+import suppliers from "../../data/suppliers.json";
 
 const HomePage: NextPageWithLayout = () => {
   const handleChange = (value: string) => {
