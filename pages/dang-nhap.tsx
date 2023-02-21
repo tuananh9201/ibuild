@@ -40,6 +40,9 @@ const EmptyPage: NextPageWithLayout = () => {
                   }
                 >
                   <Input.Password size="large" placeholder="Nhập mật khẩu" />
+                  <div className="forgot-password">
+                    <Link href={"/quen-mat-khau"}>Bạn quên mật khẩu?</Link>
+                  </div>
                 </Form.Item>
                 <Form.Item>
                   <div className="group-action">
