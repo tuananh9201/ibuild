@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 import api from "./api";
 import { message, notification } from "antd";
+import { async } from "@firebase/util";
 
 export const register = async (credentials: {
   email: string;
@@ -62,3 +63,20 @@ export const loginApi = async (credentials: {
     }
   }
 };
+
+export const passwordRecovery = async (email: string): Promise<string> => {
+  try {
+    const res = await api.post(`password-recovery/${email}`)
+    return res.data?.data?.message
+  } catch (error: any) {
+    const statusCode = error?.response?.status
+    if (statusCode === 400) {
+      notification.error({
+        description: error?.response?.data?.message || 'Có lỗi xảy ra',
+        message: 'Lỗi',
+        duration: 2
+      })
+    }
+    return ''
+  }
+}

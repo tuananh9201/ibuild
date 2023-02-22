@@ -1,17 +1,40 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Form, Input } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+
+import { Form, Input, Spin } from "antd";
+import { validateEmailExists } from "lib/api/user";
 
 type Props = {
-  onSuccess: () => void;
+  isLoading: boolean;
+  handleSendEmailSubmit: (email: string) => void;
   onFailed: () => void;
 };
 
-const FormForgetPassword = (props: Props) => {
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
+const FormForgetPassword = ({
+  handleSendEmailSubmit,
+  onFailed,
+  isLoading,
+}: Props) => {
   const [form] = Form.useForm();
   const onFinish = (values: any) => {
-    props.onSuccess();
+    const { email } = values;
+    handleSendEmailSubmit(email);
   };
+
+  const handleEmailValidation = async (
+    _: any,
+    email: string
+  ): Promise<boolean> => {
+    const valid = await validateEmailExists({ email });
+    if (valid) {
+      return Promise.reject(valid);
+    }
+    return Promise.resolve(true);
+  };
+
   return (
     <motion.div
       animate={{ opacity: 1 }}
@@ -43,6 +66,20 @@ const FormForgetPassword = (props: Props) => {
               type: "email",
               message: "Email không hợp lệ",
             },
+            () => ({
+              validator(rule, value) {
+                if (value) {
+                  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                  const isValid = emailRegex.test(value);
+                  if (isValid) {
+                    return handleEmailValidation(undefined, value);
+                  }
+                  return Promise.resolve();
+                }
+                return Promise.resolve();
+              },
+              message: "Tên đăng nhập chưa chính xác",
+            }),
           ]}
         >
           <Input size="large" placeholder="Nhập email" />
@@ -50,7 +87,16 @@ const FormForgetPassword = (props: Props) => {
 
         <Form.Item>
           <div className="group-action">
-            <button className="ibuild-btn signin">Gửi mã xác nhận</button>
+            <button
+              className="ibuild-btn signin"
+              disabled={
+                form.getFieldsError().filter(({ errors }) => errors.length)
+                  .length > 0 || isLoading
+              }
+              type="submit"
+            >
+              {isLoading ? <Spin indicator={antIcon} /> : "Gửi mã xác nhận"}
+            </button>
           </div>
         </Form.Item>
       </Form>

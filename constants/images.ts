@@ -50,6 +50,9 @@ import logoutIcon from "../images/icons/Logout.png";
 import unsplashLogin from "../images/unsplash_login.png";
 import unsplashSignUp from "../images/unsplash_signup.png";
 import lockEmail from "../images/lock.png";
+import SendEmailSuccess from '../images/SendEmailSuccess.png'
+import Clock from '../images/clock.png'
+
 export {
   logo,
   addressIcon,
@@ -103,4 +106,6 @@ export {
   unsplashLogin,
   unsplashSignUp,
   lockEmail,
+  SendEmailSuccess,
+  Clock
 };
