@@ -6,10 +6,13 @@ import {
   searchIcon,
 } from "@/constants/images";
 import { Drawer } from "antd";
+import useUser from "lib/hooks/user";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import useWindowDimensions from "utils/dimension";
+import UserAvatar from "./avatar";
 
 const menus = [
   {
@@ -25,11 +28,16 @@ const menus = [
     href: "/thong-tin-xay-dung",
   },
 ];
+const pathsShowBackButton = ["/"];
 const MainHeader = () => {
   const router = useRouter();
+  const { user, mutate, loggedOut } = useUser();
+
   const currentPath = router.pathname;
   const [openMenu, setOpenMenu] = useState(false);
   const headerClass = currentPath === "/" ? "" : "header-border";
+  const { width } = useWindowDimensions();
+  const isHidden = pathsShowBackButton.includes(router.pathname);
   const handleClickBack = () => {
     router.back();
   };
@@ -37,9 +45,13 @@ const MainHeader = () => {
     <div className={`main-header ${headerClass}`}>
       <div className="header-nav">
         <div className="headerLeft">
-          <div onClick={() => handleClickBack()} className="nav_navigate">
-            <Image src={arrowBackIos} alt="" />
-          </div>
+          {isHidden ? null : (
+            <div onClick={() => handleClickBack()} className="nav_navigate">
+              {" "}
+              <Image src={arrowBackIos} alt="" />
+            </div>
+          )}
+
           <Link href="/" className="logo">
             <Image src={logo} alt="IBUILD" />
           </Link>
@@ -72,16 +84,20 @@ const MainHeader = () => {
                 <div className="bottom-menu"></div>
               </Link>
             ))}
-            <span className="wrap-menu">
-              <Link href="/dang-ky" className="menu-item">
-                Đăng ký <div className="bottom-menu"></div>
-              </Link>
-              /
-              <Link href="/dang-nhap" className="menu-item">
-                Đăng nhập
-                <div className="bottom-menu"></div>
-              </Link>
-            </span>
+            {user ? (
+              <UserAvatar user={user} />
+            ) : (
+              <span className="wrap-menu">
+                <Link href="/dang-ky" className="menu-item">
+                  Đăng ký <div className="bottom-menu"></div>
+                </Link>
+                /
+                <Link href="/dang-nhap" className="menu-item">
+                  Đăng nhập
+                  <div className="bottom-menu"></div>
+                </Link>
+              </span>
+            )}
           </div>
         </div>
       </div>
@@ -103,24 +119,24 @@ const MainHeader = () => {
         closable={false}
         title=""
         placement="right"
+        destroyOnClose
         open={openMenu}
+        width="100vw-44px"
       >
-        <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-          <li className="nav-item">
-            <Link className="nav-link menu-item" href="/san-pham">
-              Sản phẩm
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link menu-item" href="/van-ban-phap-ly">
-              Văn bản pháp lý
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link menu-item" href="/thong-tin-xay-dung">
-              Thông tin xây dựng
-            </Link>
-          </li>
+        <ul className="navbar-nav-mobile">
+          {menus.map((menu) => (
+            <li key={menu.href} className="nav-item">
+              <span
+                className="nav-link menu-item"
+                onClick={() => {
+                  router.push(menu.href);
+                  setOpenMenu(false);
+                }}
+              >
+                {menu.name}
+              </span>
+            </li>
+          ))}
           <li className="nav-item">
             <span className="sepec-menu">
               <Link href="/dang-ky" className="nav-link menu-item">

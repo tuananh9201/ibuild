@@ -31,16 +31,11 @@ body {
   .left {
     width: 100%;
     height: 100%;
-    background-image: url("../images/unsplash.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
     flex: 1;
   }
 
   .left-signin {
     @extend .left;
-    background-image: url("../images/unsplash_signin.png");
 
     @media screen and (max-width:$breakpoint) {
       display: none;
@@ -139,7 +134,7 @@ body {
             }
 
             .register-now {
-              font-weight: 400;
+              font-weight: 500;
               color: $primary-color;
               text-decoration: none;
             }
@@ -177,6 +172,7 @@ body {
             width: 100%;
             flex-direction: row !important;
             color: $primary-color !important;
+            font-weight: 500;
           }
         }
       }
@@ -264,7 +260,7 @@ label {
 
     .bottom-menu {
       display: block;
-      background: #C43330;
+      background: $primary-color;
       border-radius: 1px;
       width: 50%;
       width: 24px;
@@ -363,4 +359,24 @@ label {
   @media screen and (max-width: $breakpoint) {
     display: none !important;
   }
+}
+
+button:disabled,
+button[disabled] {
+  background: #D1D1D1;
+  color: #FFF;
+}
+
+a {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  color: $primary-color !important;
+}
+
+// Overrid antd css
+.ant-form-item-explain-error {
+  margin: 4px 0 !important;
 }
