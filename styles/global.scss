@@ -51,15 +51,6 @@ body {
     }
   }
 
-  .left-forgot-password {
-    @extend .left;
-    background-image: url("../images/unsplash_forgotpassword.png");
-
-    @media screen and (max-width: $breakpoint) {
-      display: none;
-    }
-  }
-
   .right {
     width: 100%;
     height: 100%;
@@ -146,11 +137,6 @@ body {
               color: $primary-color;
               text-decoration: none;
             }
-          }
-
-          .forgot-password-btn {
-            width: 100%;
-            background-color: $blue-color;
           }
         }
 
