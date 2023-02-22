@@ -1,56 +1,96 @@
-import { ReactElement } from "react";
-import MainLayout from "@/components/main-layout";
-import { NextPageWithLayout } from "./_app";
-import Head from "next/head";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import { Form, Input } from "antd";
-import OnBoardLayout from "@/components/onboard-layout";
-import Image from "next/image";
-import { backIcon, logo, unsplashSignUp } from "@/constants/images";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import SendedEmailForgetPassword from "@/components/common/forget/SendedEmailForgetPassword";
-import FormForget from "@/components/common/forget/FormForget";
+import ChangePassSuccess from "@/components/common/forget/ChangePassSuccess";
+import FormChangePass from "@/components/common/forget/FormChangePass";
 import FormForgetPassword from "@/components/common/forget/FormForget";
 import FormOtp from "@/components/common/forget/FormOtp";
-import FormChangePass from "@/components/common/forget/FormChangePass";
-import ChangePassSuccess from "@/components/common/forget/ChangePassSuccess";
+import SendedEmailForgetPassword from "@/components/common/forget/SendedEmailForgetPassword";
+import OnBoardLayout from "@/components/onboard-layout";
+import { backIcon, logo, unsplashSignUp } from "@/constants/images";
+import { passwordRecovery } from "lib/api/auth";
+import { NextPageWithLayout } from "./_app";
+
+import { motion } from "framer-motion";
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { ReactElement, useState, useEffect } from "react";
 
 const ForgetPassword: NextPageWithLayout = () => {
-  const [form] = Form.useForm();
+  const [currentStep, setCurrentStep] = useState(3);
+  const [isLoading, setIsLoading] = useState(false);
+  const [emailUser, setEmailUser] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
+
   const router = useRouter();
-  const onSuccess = () => {
-    console.log("on Success !");
+  const handleSendEmailSubmit = async (email: string) => {
+    setEmailUser(email);
+    setIsLoading(true);
+    const res = await passwordRecovery(email);
+    setIsLoading(false);
+    if (res) {
+      setCurrentStep(2);
+      setIsSuccess(true);
+    }
   };
   const onFailed = () => {};
+
+  // confirm code
+  const handleConfirmCodeSubmit = async (code: string) => {
+    console.log(code);
+  };
+
   const steps = [
     {
       step: 1,
       component: (
-        <FormForgetPassword onFailed={onFailed} onSuccess={onSuccess} />
+        <FormForgetPassword
+          handleSendEmailSubmit={handleSendEmailSubmit}
+          onFailed={onFailed}
+          isLoading={isLoading}
+        />
       ),
+      title: "Tìm lại mật khẩu",
     },
     {
       step: 2,
-      component: <SendedEmailForgetPassword />,
+      component: <SendedEmailForgetPassword email={emailUser} />,
+      title: "Gửi mã xác nhận thành công",
     },
     {
       step: 3,
-      component: <FormOtp />,
+      component: (
+        <FormOtp
+          handleConfirmCodeSubmit={handleConfirmCodeSubmit}
+          isLoading={isLoading}
+        />
+      ),
+      title: "Mã xác nhận",
     },
     {
       step: 4,
       component: <FormChangePass />,
+      title: "Nhập mã xác nhận",
     },
     {
       step: 5,
       component: <ChangePassSuccess />,
+      title: "Đổi mật khẩu",
     },
   ];
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [currentStep, setCurrentStep] = useState(1);
-  const currentComponent = steps.find((s) => s.step === currentStep)?.component;
+
+  const current = steps.find((s) => s.step === currentStep);
+  const currentComponent = current?.component;
+  const currentTitle = current?.title || "";
+
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      if (isSuccess) {
+        setCurrentStep(3);
+      }
+    }, 5000);
+
+    return () => clearTimeout(delay);
+  }, [isSuccess]);
 
   if (!currentComponent) {
     return <div>FAIL</div>;
@@ -60,30 +100,53 @@ const ForgetPassword: NextPageWithLayout = () => {
       <Head>
         <title>Tìm lại mật khẩu</title>
       </Head>
-      <div className="left-signup">
-        <Image
-          style={{
-            width: "100%",
-            height: "100%",
-          }}
-          priority={true}
-          src={unsplashSignUp}
-          alt=""
-        />
-      </div>
+      {currentStep !== 3 ? (
+        <div className="left-signup">
+          <Image
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+            priority={true}
+            src={unsplashSignUp}
+            alt=""
+          />
+        </div>
+      ) : (
+        <></>
+      )}
       <div className="right-signin">
-        <div className="right-signin-container">
-          <div className="right-signin-container-nav">
-            <Link href="/">
-              <Image src={backIcon} alt="" />
-            </Link>
-          </div>
-          <div className="right-signin-container-content">
+        <div
+          className="right-signin-container"
+          style={{ alignItems: currentStep === 3 ? "center" : "flex-start" }}
+        >
+          {currentStep !== 3 ? (
+            <div className="right-signin-container-nav">
+              <Link href="/">
+                <Image src={backIcon} alt="" />
+              </Link>
+            </div>
+          ) : (
+            <></>
+          )}
+          <div
+            className={`right-signin-container-content ${
+              currentStep == 3 ? "confirm-code" : ""
+            }`}
+          >
             <div className="heading">
-              <div className="logo">
+              <div
+                className="logo"
+                style={{ margin: currentStep === 3 ? "0 auto" : "auto" }}
+              >
                 <Image src={logo} alt="" />
               </div>
-              <div className="welcome">Tìm lại mật khẩu</div>
+              <div
+                className="welcome"
+                style={{ textAlign: currentStep === 3 ? "center" : "left" }}
+              >
+                {currentTitle}
+              </div>
             </div>
             <motion.div
               animate={{ opacity: 1 }}

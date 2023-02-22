@@ -176,6 +176,15 @@ body {
         }
       }
 
+      // css confirm code
+      .confirm-code {
+        max-width: 560px;
+        min-height: 680px;
+        padding: 80px 80px 0 80px;
+        margin-top: 0;
+        border: 1px solid #b3b3b3;
+      }
+
       @media screen and (max-width: $breakpoint) {
         margin: 60px 0px;
       }
