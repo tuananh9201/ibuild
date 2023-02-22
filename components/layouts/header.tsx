@@ -13,6 +13,8 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import useWindowDimensions from "utils/dimension";
 import UserAvatar from "./avatar";
+import { useSelector } from "react-redux";
+import { RootState } from "store/store";
 
 const menus = [
   {
@@ -31,8 +33,8 @@ const menus = [
 const pathsShowBackButton = ["/"];
 const MainHeader = () => {
   const router = useRouter();
-  const { user, mutate, loggedOut } = useUser();
-
+  const { user } = useUser();
+  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const currentPath = router.pathname;
   const [openMenu, setOpenMenu] = useState(false);
   const headerClass = currentPath === "/" ? "" : "header-border";
@@ -84,7 +86,7 @@ const MainHeader = () => {
                 <div className="bottom-menu"></div>
               </Link>
             ))}
-            {user ? (
+            {user && accessToken ? (
               <UserAvatar user={user} />
             ) : (
               <span className="wrap-menu">

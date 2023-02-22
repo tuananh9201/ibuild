@@ -7,7 +7,7 @@ import Image from "next/image";
 import { logoutIcon, useIcon } from "@/constants/images";
 import { User } from "lib/types";
 import user from "store/features/user/user";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "store/features/auth/auth";
 import { useRouter } from "next/router";
 
@@ -18,6 +18,7 @@ interface IUserAvatarProps {
 const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
+
   const handleLougout = () => {
     dispatch(logout());
     router.push({
