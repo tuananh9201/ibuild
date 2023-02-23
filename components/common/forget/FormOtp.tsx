@@ -1,10 +1,7 @@
-import React from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
-
 import { Form, Input, Typography } from "antd";
-import { Clock } from "@/constants/images";
-import { LoadingComponent } from "@/components/common";
+
+import { IbuildButton } from "@/components/common";
 
 type Props = {
   handleConfirmCodeSubmit: (email: string) => void;
@@ -40,42 +37,25 @@ export default function FormOtp({
         onFinish={onSubmit}
         style={{ maxWidth: "100%" }}
       >
-        <Form.Item>
-          <Image
-            src={Clock}
-            alt="otp"
-            priority={true}
-            style={{ margin: "0 auto" }}
-          />
-        </Form.Item>
-        <Form.Item
-          name="code"
-          label="Mã xác nhận để tìm lại mật khẩu của bạn là:"
-        >
-          <Input size="large" placeholder="Nhập mã xác nhận" />
-        </Form.Item>
-        <Form.Item>
-          <Typography>
-            <Typography.Paragraph>
-              - Thời gian tồn tại của mã xác nhận là 10p
-            </Typography.Paragraph>
-            <Typography.Paragraph>
-              - Để đảm bảo tài khoản của bạn, đừng chuyển tiếp email này hoặc
-              cung cấp mã này cho bất kì ai.
-            </Typography.Paragraph>
-          </Typography>
-        </Form.Item>
-        <Form.Item>
-          <div className="group-action">
-            <button
-              className="ibuild-btn signin"
-              disabled={form.getFieldValue("code")?.length === 0}
-              type="submit"
-            >
-              {isLoading ? <LoadingComponent /> : "Tiếp tục"}
-            </button>
-          </div>
-        </Form.Item>
+        <Typography>
+          <Typography.Paragraph>
+            Để giữ an toàn cho tài khoản của bạn, iBuild muốn đảm bảo rằng bạn
+            chính là người đang cố đăng nhập
+          </Typography.Paragraph>
+          <Typography.Paragraph>
+            iBuild vừa gửi email chứa mã xác minh đến địa chỉ email khôi phục
+            của bạn là abc@gmail.com. Vui lòng kiểm tra email này để lấy mã và
+            nhập vào bên dưới.
+          </Typography.Paragraph>
+          <Form.Item name="confirmCode">
+            <Input size="large" placeholder="Nhập mã xác nhận" />
+          </Form.Item>
+          <Form.Item>
+            <div>
+              <IbuildButton prefix={<span>Tiếp tục</span>} type="submit" />
+            </div>
+          </Form.Item>
+        </Typography>
       </Form>
     </motion.div>
   );

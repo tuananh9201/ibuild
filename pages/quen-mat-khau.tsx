@@ -16,7 +16,7 @@ import { useRouter } from "next/router";
 import { ReactElement, useState, useEffect } from "react";
 
 const ForgetPassword: NextPageWithLayout = () => {
-  const [currentStep, setCurrentStep] = useState(3);
+  const [currentStep, setCurrentStep] = useState(4);
   const [isLoading, setIsLoading] = useState(false);
   const [emailUser, setEmailUser] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
@@ -64,17 +64,17 @@ const ForgetPassword: NextPageWithLayout = () => {
           isLoading={isLoading}
         />
       ),
-      title: "Mã xác nhận",
+      title: "Nhập mã xác nhận",
     },
     {
       step: 4,
       component: <FormChangePass />,
-      title: "Nhập mã xác nhận",
+      title: "Đổi mật khẩu",
     },
     {
       step: 5,
       component: <ChangePassSuccess />,
-      title: "Đổi mật khẩu",
+      title: "Đổi mật khẩu thành công",
     },
   ];
 
@@ -100,53 +100,30 @@ const ForgetPassword: NextPageWithLayout = () => {
       <Head>
         <title>Tìm lại mật khẩu</title>
       </Head>
-      {currentStep !== 3 ? (
-        <div className="left-signup">
-          <Image
-            style={{
-              width: "100%",
-              height: "100%",
-            }}
-            priority={true}
-            src={unsplashSignUp}
-            alt=""
-          />
-        </div>
-      ) : (
-        <></>
-      )}
+      <div className="left-signup">
+        <Image
+          style={{
+            width: "100%",
+            height: "100%",
+          }}
+          priority={true}
+          src={unsplashSignUp}
+          alt=""
+        />
+      </div>
       <div className="right-signin">
-        <div
-          className="right-signin-container"
-          style={{ alignItems: currentStep === 3 ? "center" : "flex-start" }}
-        >
-          {currentStep !== 3 ? (
-            <div className="right-signin-container-nav">
-              <Link href="/">
-                <Image src={backIcon} alt="" />
-              </Link>
-            </div>
-          ) : (
-            <></>
-          )}
-          <div
-            className={`right-signin-container-content ${
-              currentStep == 3 ? "confirm-code" : ""
-            }`}
-          >
+        <div className="right-signin-container">
+          <div className="right-signin-container-nav">
+            <Link href="/">
+              <Image src={backIcon} alt="" />
+            </Link>
+          </div>
+          <div className="right-signin-container-content">
             <div className="heading">
-              <div
-                className="logo"
-                style={{ margin: currentStep === 3 ? "0 auto" : "auto" }}
-              >
+              <div className="logo">
                 <Image src={logo} alt="" />
               </div>
-              <div
-                className="welcome"
-                style={{ textAlign: currentStep === 3 ? "center" : "left" }}
-              >
-                {currentTitle}
-              </div>
+              <div className="welcome">{currentTitle}</div>
             </div>
             <motion.div
               animate={{ opacity: 1 }}
