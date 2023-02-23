@@ -3,9 +3,10 @@ import FormChangePass from "@/components/common/forget/FormChangePass";
 import FormForgetPassword from "@/components/common/forget/FormForget";
 import FormOtp from "@/components/common/forget/FormOtp";
 import SendedEmailForgetPassword from "@/components/common/forget/SendedEmailForgetPassword";
+import ChangePassFailed from "@/components/common/forget/ChangePassFailed";
 import OnBoardLayout from "@/components/onboard-layout";
 import { backIcon, logo, unsplashSignUp } from "@/constants/images";
-import { passwordRecovery } from "lib/api/auth";
+import { passwordRecovery, verifyPasswordRecoveryCode } from "lib/api/auth";
 import { NextPageWithLayout } from "./_app";
 
 import { motion } from "framer-motion";
@@ -20,9 +21,12 @@ const ForgetPassword: NextPageWithLayout = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [emailUser, setEmailUser] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+  const [timer, setTimer] = useState("10:00");
+  const [isShowResendCodeBtn, setIsShowResendCodeBtn] = useState(false);
 
   const router = useRouter();
   const handleSendEmailSubmit = async (email: string) => {
+    console.log(email);
     setEmailUser(email);
     setIsLoading(true);
     const res = await passwordRecovery(email);
@@ -32,11 +36,23 @@ const ForgetPassword: NextPageWithLayout = () => {
       setIsSuccess(true);
     }
   };
+
+  const handleResendCode = async (email: string) => {
+    await passwordRecovery(email);
+  };
+
   const onFailed = () => {};
 
   // confirm code
   const handleConfirmCodeSubmit = async (code: string) => {
-    console.log(code);
+    setIsLoading(true);
+    const res = await verifyPasswordRecoveryCode({ code, email: emailUser });
+    setIsLoading(false);
+    if (res) {
+      setCurrentStep(4);
+    } else {
+      setCurrentStep(6);
+    }
   };
 
   const steps = [
@@ -62,19 +78,27 @@ const ForgetPassword: NextPageWithLayout = () => {
         <FormOtp
           handleConfirmCodeSubmit={handleConfirmCodeSubmit}
           isLoading={isLoading}
+          email={emailUser}
+          isShowResendCodeBtn={isShowResendCodeBtn}
+          handleResendCode={handleResendCode}
         />
       ),
       title: "Nhập mã xác nhận",
     },
     {
       step: 4,
-      component: <FormChangePass />,
+      component: <FormChangePass isLoading={isLoading} />,
       title: "Đổi mật khẩu",
     },
     {
       step: 5,
       component: <ChangePassSuccess />,
       title: "Đổi mật khẩu thành công",
+    },
+    {
+      step: 6,
+      component: <ChangePassFailed />,
+      title: "Số lần xác thực đã quá giới hạn",
     },
   ];
 
@@ -91,6 +115,33 @@ const ForgetPassword: NextPageWithLayout = () => {
 
     return () => clearTimeout(delay);
   }, [isSuccess]);
+
+  useEffect(() => {
+    if (currentStep !== 3) return;
+
+    let duration = 30;
+    let minutes: number;
+    let seconds: number;
+    let minutesTime: string;
+    let secondsTime: string;
+    let interval = setInterval(() => {
+      minutes = Number.parseInt((duration / 60).toString(), 10);
+      seconds = Number.parseInt((duration % 60).toString(), 10);
+
+      minutesTime = minutes < 10 ? `0${minutes}` : `${minutes}`;
+      secondsTime = seconds < 10 ? `0${seconds}` : `${seconds}`;
+
+      setTimer(`${minutesTime}:${secondsTime}`);
+      duration--;
+
+      if (duration < 0) {
+        clearInterval(interval);
+        setIsShowResendCodeBtn(true);
+      }
+
+      return () => clearInterval(interval);
+    }, 1000);
+  }, [currentStep]);
 
   if (!currentComponent) {
     return <div>FAIL</div>;
@@ -123,7 +174,10 @@ const ForgetPassword: NextPageWithLayout = () => {
               <div className="logo">
                 <Image src={logo} alt="" />
               </div>
-              <div className="welcome">{currentTitle}</div>
+              <div className="welcome">
+                <span>{currentTitle}</span>
+                {currentStep === 3 ? <span>{timer}</span> : <></>}
+              </div>
             </div>
             <motion.div
               animate={{ opacity: 1 }}

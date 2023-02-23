@@ -85,19 +85,23 @@ const FormForgetPassword = ({
           <Input size="large" placeholder="Nhập email" />
         </Form.Item>
 
-        <Form.Item>
-          <div className="group-action">
-            <button
-              className="ibuild-btn signin"
-              disabled={
-                form.getFieldsError().filter(({ errors }) => errors.length)
-                  .length > 0 || isLoading
-              }
-              type="submit"
-            >
-              {isLoading ? <Spin indicator={antIcon} /> : "Gửi mã xác nhận"}
-            </button>
-          </div>
+        <Form.Item shouldUpdate>
+          {() => (
+            <div className="group-action">
+              <button
+                className="ibuild-btn signin"
+                disabled={
+                  form.getFieldsError().filter(({ errors }) => errors.length)
+                    .length > 0 ||
+                  isLoading ||
+                  !form.getFieldValue("email")
+                }
+                type="submit"
+              >
+                {isLoading ? <Spin indicator={antIcon} /> : "Gửi mã xác nhận"}
+              </button>
+            </div>
+          )}
         </Form.Item>
       </Form>
     </motion.div>

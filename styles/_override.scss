@@ -1,8 +1,13 @@
 @import "variables";
 
 .ant-pagination-item-active {
-    background-color: $primary-color !important;
-    color: #FFF !important;
-    font-weight: 500;
-    font-size: 16px;
+  background-color: $primary-color !important;
+  color: #fff !important;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.ant-form-item-required {
+  font-size: 16px;
+  font-weight: 500;
 }

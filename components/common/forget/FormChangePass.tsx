@@ -4,12 +4,16 @@ import { motion } from "framer-motion";
 
 import { IbuildButton } from "@/components/common";
 
-type Props = {};
+type Props = {
+  isLoading: boolean;
+};
 
-function FormChangePass({}: Props) {
+function FormChangePass({ isLoading }: Props) {
   const [form] = Form.useForm();
 
-  const onSubmit = () => {};
+  const onSubmit = (values: any) => {
+    console.log(values);
+  };
 
   return (
     <motion.div
@@ -28,13 +32,13 @@ function FormChangePass({}: Props) {
         onFinish={onSubmit}
         style={{ maxWidth: "100%" }}
       >
-        <Typography>
-          <Typography.Paragraph>
+        <div style={{ marginBottom: "24px" }}>
+          <p className="base-text">
             Việc thay đổi mật khẩu của bạn sẽ khiến đăng xuất khỏi tất cả các
             thiết bị. Bạn cần phải nhập mật khẩu mới trên tất cả các thiết bị
             khi đăng nhập lại.
-          </Typography.Paragraph>
-        </Typography>
+          </p>
+        </div>
         <Form.Item
           name="newPassword"
           label={
@@ -89,9 +93,7 @@ function FormChangePass({}: Props) {
                 if (!value || getFieldValue("newPassword") === value) {
                   return Promise.resolve();
                 }
-                return Promise.reject(
-                  new Error("The two passwords that you entered do not match!")
-                );
+                return Promise.reject(new Error("* Mật khẩu không trùng nhau"));
               },
             }),
           ]}
@@ -101,11 +103,18 @@ function FormChangePass({}: Props) {
           <Input.Password size="large" placeholder="Nhập mật khẩu" />
         </Form.Item>
         <Form.Item>
-          <IbuildButton
-            prefix={<span>Đổi mật khẩu</span>}
-            type="submit"
-            disabled={true}
-          />
+          {() => (
+            <IbuildButton
+              prefix={<span>Đổi mật khẩu</span>}
+              type="submit"
+              disabled={
+                form.getFieldsError().filter(({ errors }) => errors.length)
+                  .length > 0 ||
+                isLoading ||
+                !form.getFieldValue("email")
+              }
+            />
+          )}
         </Form.Item>
       </Form>
     </motion.div>

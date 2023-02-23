@@ -80,3 +80,39 @@ export const passwordRecovery = async (email: string): Promise<string> => {
     return ''
   }
 }
+
+export const verifyPasswordRecoveryCode = async (params: { code: string, email: string }) => {
+  try {
+    const res = await api.post('/verify-password-recovery-code', params)
+    if (res?.status === 200) {
+      return true
+    }
+  } catch (error: any) {
+    const statusCode = error?.response?.status
+    if (statusCode === 400) {
+      notification.error({
+        description: error?.response?.data?.message || 'Có lỗi xảy ra',
+        message: 'Lỗi',
+        duration: 2
+      })
+    }
+    return false
+  }
+}
+
+export const resetPassword = async (params: { token: string, new_password: string }): Promise<string | undefined> => {
+  try {
+    const res = await api.post('/reset-password', params)
+    return res.data?.data?.message
+  } catch (error: any) {
+    const statusCode = error?.response?.status
+    if (statusCode === 400) {
+      notification.error({
+        description: error?.response?.data?.message || 'Có lỗi xảy ra',
+        message: 'Lỗi',
+        duration: 2
+      })
+    }
+    return ''
+  }
+}
