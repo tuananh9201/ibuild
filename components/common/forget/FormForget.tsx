@@ -60,26 +60,12 @@ const FormForgetPassword = ({
           rules={[
             {
               required: true,
-              message: "Vui lòng nhập tên đăng nhập",
+              message: "Vui lòng nhập Email",
             },
             {
               type: "email",
-              message: "Email không hợp lệ",
+              message: "Email không đúng định dạng",
             },
-            () => ({
-              validator(rule, value) {
-                if (value) {
-                  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                  const isValid = emailRegex.test(value);
-                  if (isValid) {
-                    return handleEmailValidation(undefined, value);
-                  }
-                  return Promise.resolve();
-                }
-                return Promise.resolve();
-              },
-              message: "Tên đăng nhập chưa chính xác",
-            }),
           ]}
         >
           <Input size="large" placeholder="Nhập email" />

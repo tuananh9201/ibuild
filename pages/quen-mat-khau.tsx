@@ -30,7 +30,6 @@ const ForgetPassword: NextPageWithLayout = () => {
 
   // methods
   const handleSendEmailSubmit = async (email: string) => {
-    console.log(email);
     setEmailUser(email);
     setIsLoading(true);
     const res = await passwordRecovery(email);
@@ -124,7 +123,7 @@ const ForgetPassword: NextPageWithLayout = () => {
   useEffect(() => {
     if (currentStep !== 3) return;
 
-    let duration = 30;
+    let duration = 10 * 60;
     let minutes: number;
     let seconds: number;
     let minutesTime: string;
