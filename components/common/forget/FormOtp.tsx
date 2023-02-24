@@ -83,35 +83,29 @@ export default function FormOtp({
           <Form.Item shouldUpdate>
             {() => (
               <div>
-                <IbuildButton
-                  prefix={<span>Tiếp tục</span>}
-                  type="submit"
-                  disabled={
-                    form.getFieldsError().filter(({ errors }) => errors.length)
-                      .length > 0 ||
-                    !form.getFieldValue("confirmCode") ||
-                    isLoading
-                  }
-                  isLoading={isLoading}
-                />
-              </div>
-            )}
-          </Form.Item>
-          {isShowResendCodeBtn ? (
-            <Form.Item shouldUpdate>
-              {() => (
-                <div>
+                {isShowResendCodeBtn ? (
                   <IbuildButton
                     prefix={<span>Gửi lại mã xác nhận</span>}
                     type="button"
                     onClick={() => resendCode(email)}
                   />
-                </div>
-              )}
-            </Form.Item>
-          ) : (
-            <></>
-          )}
+                ) : (
+                  <IbuildButton
+                    prefix={<span>Tiếp tục</span>}
+                    type="submit"
+                    disabled={
+                      form
+                        .getFieldsError()
+                        .filter(({ errors }) => errors.length).length > 0 ||
+                      !form.getFieldValue("confirmCode") ||
+                      isLoading
+                    }
+                    isLoading={isLoading}
+                  />
+                )}
+              </div>
+            )}
+          </Form.Item>
         </Typography>
       </Form>
     </motion.div>
