@@ -50,6 +50,10 @@ import logoutIcon from "../images/icons/Logout.png";
 import unsplashLogin from "../images/unsplash_login.png";
 import unsplashSignUp from "../images/unsplash_signup.png";
 import lockEmail from "../images/lock.png";
+import productImage from '../images/product_image.jpg'
+import designImage from '../images/design_image.jpg'
+import bookImage from '../images/book_image.jpg'
+
 export {
   logo,
   addressIcon,
@@ -103,4 +107,7 @@ export {
   unsplashLogin,
   unsplashSignUp,
   lockEmail,
+  productImage,
+  designImage,
+  bookImage
 };
