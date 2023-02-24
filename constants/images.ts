@@ -50,10 +50,10 @@ import logoutIcon from "../images/icons/Logout.png";
 import unsplashLogin from "../images/unsplash_login.png";
 import unsplashSignUp from "../images/unsplash_signup.png";
 import lockEmail from "../images/lock.png";
-import SendEmailSuccess from '../images/SendEmailSuccess.png'
-import Clock from '../images/clock.png'
-import ChangePassSuccessImage from '../images/ChangePasswordSuccess.png'
-import OverTurn from '../images/OverTurn.png'
+import SendEmailSuccess from "../images/SendEmailSuccess.png";
+import Clock from "../images/clock.png";
+import ChangePassSuccessImage from "../images/ChangePasswordSuccess.png";
+import OverTurn from "../images/OverTurn.png";
 
 export {
   logo,
@@ -111,5 +111,5 @@ export {
   SendEmailSuccess,
   Clock,
   ChangePassSuccessImage,
-  OverTurn
+  OverTurn,
 };

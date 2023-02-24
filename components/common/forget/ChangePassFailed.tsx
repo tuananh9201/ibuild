@@ -2,10 +2,30 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 import { OverTurn } from "@/constants/images";
+import { useState, useEffect } from "react";
+type Props = {
+  expires?: number;
+};
 
-type Props = {};
+export default function ChangePassFailed(props: Props) {
+  const [timeRemaining, setTimeRemaining] = useState(props.expires || 86400);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTimeRemaining((prevTime) => {
+        if (prevTime === 0) {
+          clearInterval(intervalId);
+          return 0;
+        } else {
+          return prevTime - 1;
+        }
+      });
+    }, 1000);
 
-export default function ChangePassFailed({}: Props) {
+    return () => clearInterval(intervalId);
+  }, []);
+  const hours = Math.floor(timeRemaining / 3600);
+  const minutes = Math.floor((timeRemaining % 3600) / 60);
+  const seconds = timeRemaining % 60;
   return (
     <motion.div
       animate={{ opacity: 1 }}
@@ -21,7 +41,9 @@ export default function ChangePassFailed({}: Props) {
       </div>
       <div style={{ margin: "10px 0" }}>
         <p className="change-password-noty">Hãy quay trở lại sau...</p>
-        <p className="change-password-noty-hours">23 Giờ 59 Phút 59 Giây</p>
+        <p className="change-password-noty-hours">
+          {hours} Giờ {minutes} Phút {seconds} Giây
+        </p>
       </div>
       <p className="change-password-desc">
         Tài khoản đã thực hiện xác thực quá 3 lần với 3 mã khác nhau!Chúng tôi

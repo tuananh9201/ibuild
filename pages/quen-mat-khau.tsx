@@ -13,7 +13,6 @@ import { motion } from "framer-motion";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { ReactElement, useState, useEffect } from "react";
 
 const ForgetPassword: NextPageWithLayout = () => {
@@ -22,11 +21,9 @@ const ForgetPassword: NextPageWithLayout = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [emailUser, setEmailUser] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+  const [blockExpire, setBlockExpire] = useState(86400);
   const [timer, setTimer] = useState("10:00");
   const [isShowResendCodeBtn, setIsShowResendCodeBtn] = useState(false);
-
-  // custom hook
-  const router = useRouter();
 
   // methods
   const handleSendEmailSubmit = async (email: string) => {
@@ -34,9 +31,13 @@ const ForgetPassword: NextPageWithLayout = () => {
     setIsLoading(true);
     const res = await passwordRecovery(email);
     setIsLoading(false);
-    if (res) {
+    if (res.status) {
       setCurrentStep(2);
       setIsSuccess(true);
+    }
+    if (res?.expires) {
+      setBlockExpire(parseInt(res.expires.toString()));
+      setCurrentStep(6);
     }
   };
 
@@ -54,8 +55,6 @@ const ForgetPassword: NextPageWithLayout = () => {
     setIsLoading(false);
     if (res) {
       setCurrentStep(4);
-    } else {
-      setCurrentStep(6);
     }
   };
 
@@ -101,7 +100,7 @@ const ForgetPassword: NextPageWithLayout = () => {
     },
     {
       step: 6,
-      component: <ChangePassFailed />,
+      component: <ChangePassFailed expires={blockExpire} />,
       title: "Số lần xác thực đã quá giới hạn",
     },
   ];

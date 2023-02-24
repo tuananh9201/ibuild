@@ -64,55 +64,65 @@ export const loginApi = async (credentials: {
   }
 };
 
-export const passwordRecovery = async (email: string): Promise<string> => {
+export const passwordRecovery = async (
+  email: string
+): Promise<{ status: boolean; message?: string; expires?: number }> => {
   try {
-    const res = await api.post(`password-recovery/${email}`)
-    return res.data?.data?.message
+    const res = await api.post(`password-recovery/${email}`);
+    return {
+      message: res.data?.data?.message,
+      status: true,
+    };
   } catch (error: any) {
-    const statusCode = error?.response?.status
-    if (statusCode === 400) {
-      notification.error({
-        description: error?.response?.data?.message || 'Có lỗi xảy ra',
-        message: 'Lỗi',
-        duration: 2
-      })
+    const statusCode = error?.response?.status;
+    if (statusCode === 429) {
+      return {
+        expires: error?.response?.data?.expires,
+        status: false,
+      };
     }
-    return ''
+    return { status: false };
   }
-}
+};
 
-export const verifyPasswordRecoveryCode = async (params: { code: string, email: string }) => {
+export const verifyPasswordRecoveryCode = async (params: {
+  code: string;
+  email: string;
+}) => {
   try {
-    const res = await api.post('/verify-password-recovery-code', params)
+    const res = await api.post("/verify-password-recovery-code", params);
     if (res?.status === 200) {
-      return true
+      return true;
     }
   } catch (error: any) {
-    const statusCode = error?.response?.status
+    const statusCode = error?.response?.status;
     if (statusCode === 400) {
       notification.error({
-        description: error?.response?.data?.message || 'Có lỗi xảy ra',
-        message: 'Lỗi',
-        duration: 2
-      })
+        description: error?.response?.data?.message || "Có lỗi xảy ra",
+        message: "Lỗi",
+        duration: 2,
+      });
     }
-    return false
+    return false;
   }
-}
+};
 
-export const resetPassword = async (params: { token: string, new_password: string }): Promise<string | undefined> => {
+export const resetPassword = async (params: {
+  token: string;
+  new_password: string;
+}): Promise<string | undefined> => {
   try {
-    const res = await api.post('/reset-password', params)
-    return res.data?.data?.message
+    const res = await api.post("/reset-password", params);
+    return res.data?.data?.message;
   } catch (error: any) {
-    const statusCode = error?.response?.status
+    const statusCode = error?.response?.status;
     if (statusCode === 400) {
       notification.error({
-        description: error?.response?.data?.message || 'Có lỗi xảy ra',
-        message: 'Lỗi',
-        duration: 2
-      })
+        description: error?.response?.data?.message || "Có lỗi xảy ra",
+        message: "Lỗi",
+        duration: 2,
+      });
     }
-    return ''
+    return "";
   }
-}
+};
