@@ -17,7 +17,7 @@ import { ReactElement, useState, useEffect } from "react";
 
 const ForgetPassword: NextPageWithLayout = () => {
   // state
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(4);
   const [isLoading, setIsLoading] = useState(false);
   const [emailUser, setEmailUser] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);

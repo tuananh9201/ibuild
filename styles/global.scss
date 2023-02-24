@@ -418,6 +418,26 @@ a {
   color: $primary-color !important;
 }
 
+.password-helper {
+  margin: 8px 16px -8px 16px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+
+  li {
+    list-style-type: disc;
+    color: #999999;
+
+    &.error {
+      color: #E64545;
+    }
+
+    &.success {
+      color: #4D993D
+    }
+  }
+}
+
 // Overrid antd css
 .ant-form-item-explain-error {
   margin: 4px 0 !important;

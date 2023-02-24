@@ -7,6 +7,9 @@ import { loginApi, resetPassword } from "lib/api/auth";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../../store/features/auth/auth";
+import { validatePassword } from "utils/validate";
+import { RulePassword } from "lib/types";
+import { rulePassword } from "@/constants/rules";
 type Props = {
   onSuccess: () => void;
   email: string;
@@ -17,6 +20,12 @@ function FormChangePass({ onSuccess, email, code }: Props) {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const [isValidPassword, setIsValidPassword] = useState(false);
+  const [disabledSubmit, setDisabledSubmit] = useState(true);
+  const [rules, setRules] = useState<RulePassword[]>(rulePassword);
+  const [password, setPassword] = useState("");
+  const [cPassword, setCPassword] = useState("");
+  const [isSamePassword, setIsSamePassword] = useState(false);
   const doLogin = async (cred: { email: string; password: string }) => {
     const data = await loginApi(cred);
     const access_token = data?.access_token;
@@ -26,6 +35,10 @@ function FormChangePass({ onSuccess, email, code }: Props) {
   };
   const onSubmit = async (values: any) => {
     setLoading(true);
+    console.log(form);
+
+    // isSame = values["newPassword"] ===
+    return;
     const params = {
       new_password: values.newPassword,
       email,
@@ -40,6 +53,22 @@ function FormChangePass({ onSuccess, email, code }: Props) {
       onSuccess();
     }
     setLoading(false);
+  };
+
+  const onChangeValues = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setPassword(value);
+    const results = validatePassword(value);
+    setRules(results);
+    const isValid = results.filter((r) => r.success);
+    setIsValidPassword(isValid.length === rulePassword.length);
+  };
+  const onChangeValuesConfirmPassword = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = e.target.value;
+    setCPassword(value);
+    setDisabledSubmit(value.length === 0);
   };
 
   return (
@@ -58,6 +87,7 @@ function FormChangePass({ onSuccess, email, code }: Props) {
         requiredMark={false}
         onFinish={onSubmit}
         style={{ maxWidth: "100%" }}
+        scrollToFirstError
       >
         <div style={{ marginBottom: "24px" }}>
           <p className="base-text">
@@ -73,73 +103,55 @@ function FormChangePass({ onSuccess, email, code }: Props) {
               Mật khẩu mới <span style={{ color: "red" }}>*</span>
             </p>
           }
-          rules={[
-            {
-              required: true,
-              message: "Nhập mật khẩu mới",
-            },
-            {
-              min: 8,
-              message: "Mật khẩu từ 8-20 ký tự",
-            },
-            {
-              max: 20,
-              message: "Mật khẩu từ 8-20 ký tự",
-            },
-            {
-              pattern: /[!@#$%^&*()]/,
-              message: "Ký tự đặc biệt",
-            },
-            {
-              pattern: /[A-Z]/,
-              message: "Ký tự in hoa",
-            },
-            {
-              pattern: /[a-z]/,
-              message: "Ký tự thường",
-            },
-          ]}
-          hasFeedback
         >
-          <Input.Password size="large" placeholder="Nhập mật khẩu" />
+          <React.Fragment>
+            <Input.Password
+              onChange={onChangeValues}
+              size="large"
+              placeholder="Nhập mật khẩu"
+            />
+            <div className="password-helper">
+              <ul>
+                {rules.map((rule) => (
+                  <li
+                    key={rule.code}
+                    className={
+                      rule.init ? "" : rule.success ? "success" : "error"
+                    }
+                  >
+                    {rule.message}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </React.Fragment>
         </Form.Item>
         <Form.Item
-          name="confirmPassword"
+          shouldUpdate
+          validateStatus={isSamePassword ? "success" : "error"}
+          help={isSamePassword ? undefined : "* Mật khẩu không trùng nhau"}
           label={
             <p>
-              Nhập lại mật khẩu <span style={{ color: "red" }}>*</span>
+              Nhập lại mật khẩu <span style={{ color: "#314EAC" }}>*</span>
             </p>
           }
-          rules={[
-            {
-              required: true,
-              message: "Nhập lại mật khẩu",
-            },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue("newPassword") === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error("* Mật khẩu không trùng nhau"));
-              },
-            }),
-          ]}
-          hasFeedback
-          dependencies={["newPassword"]}
         >
-          <Input.Password size="large" placeholder="Nhập mật khẩu" />
+          {() => (
+            <Input.Password
+              disabled={!isValidPassword}
+              size="large"
+              placeholder="Nhập mật khẩu"
+              onChange={onChangeValuesConfirmPassword}
+            />
+          )}
         </Form.Item>
         <Form.Item shouldUpdate>
           {() => (
             <IbuildButton
               prefix={<span>Đổi mật khẩu</span>}
               type="submit"
-              disabled={
-                form.getFieldsError().filter(({ errors }) => errors.length)
-                  .length > 0 ||
-                loading ||
-                !form.getFieldValue("email")
-              }
+              disabled={disabledSubmit || loading}
+              isLoading={loading}
             />
           )}
         </Form.Item>
