@@ -102,7 +102,7 @@ function FormChangePass({ isLoading }: Props) {
         >
           <Input.Password size="large" placeholder="Nhập mật khẩu" />
         </Form.Item>
-        <Form.Item>
+        <Form.Item shouldUpdate>
           {() => (
             <IbuildButton
               prefix={<span>Đổi mật khẩu</span>}

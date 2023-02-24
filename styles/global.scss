@@ -406,6 +406,7 @@ button:disabled,
 button[disabled] {
   background: #d1d1d1;
   color: #fff;
+  pointer-events: none;
 }
 
 a {

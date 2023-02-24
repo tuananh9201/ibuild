@@ -72,6 +72,10 @@ export default function FormOtp({
                 min: 6,
                 message: "Mã xác nhận bao gồm 6 chữ số",
               },
+              {
+                pattern: /^([-]?[1-9][0-9]*|0)$/,
+                message: "Mã xác nhận chỉ có thể là số",
+              },
             ]}
           >
             <Input size="large" placeholder="Nhập mã xác nhận" />

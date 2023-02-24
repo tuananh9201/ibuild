@@ -17,14 +17,18 @@ import { useRouter } from "next/router";
 import { ReactElement, useState, useEffect } from "react";
 
 const ForgetPassword: NextPageWithLayout = () => {
-  const [currentStep, setCurrentStep] = useState(4);
+  // state
+  const [currentStep, setCurrentStep] = useState(3);
   const [isLoading, setIsLoading] = useState(false);
   const [emailUser, setEmailUser] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [timer, setTimer] = useState("10:00");
   const [isShowResendCodeBtn, setIsShowResendCodeBtn] = useState(false);
 
+  // custom hook
   const router = useRouter();
+
+  // methods
   const handleSendEmailSubmit = async (email: string) => {
     console.log(email);
     setEmailUser(email);
@@ -38,12 +42,13 @@ const ForgetPassword: NextPageWithLayout = () => {
   };
 
   const handleResendCode = async (email: string) => {
+    setIsLoading(true);
     await passwordRecovery(email);
+    setIsLoading(false);
   };
 
   const onFailed = () => {};
 
-  // confirm code
   const handleConfirmCodeSubmit = async (code: string) => {
     setIsLoading(true);
     const res = await verifyPasswordRecoveryCode({ code, email: emailUser });
@@ -60,9 +65,9 @@ const ForgetPassword: NextPageWithLayout = () => {
       step: 1,
       component: (
         <FormForgetPassword
+          isLoading={isLoading}
           handleSendEmailSubmit={handleSendEmailSubmit}
           onFailed={onFailed}
-          isLoading={isLoading}
         />
       ),
       title: "Tìm lại mật khẩu",
@@ -76,10 +81,10 @@ const ForgetPassword: NextPageWithLayout = () => {
       step: 3,
       component: (
         <FormOtp
-          handleConfirmCodeSubmit={handleConfirmCodeSubmit}
           isLoading={isLoading}
           email={emailUser}
           isShowResendCodeBtn={isShowResendCodeBtn}
+          handleConfirmCodeSubmit={handleConfirmCodeSubmit}
           handleResendCode={handleResendCode}
         />
       ),
