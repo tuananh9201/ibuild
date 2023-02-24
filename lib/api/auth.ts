@@ -108,7 +108,8 @@ export const verifyPasswordRecoveryCode = async (params: {
 };
 
 export const resetPassword = async (params: {
-  token: string;
+  code: string;
+  email: string;
   new_password: string;
 }): Promise<string | undefined> => {
   try {

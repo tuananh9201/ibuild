@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { LoadingOutlined } from "@ant-design/icons";
 
 import { Form, Input, Spin } from "antd";
-import { validateEmailExists } from "lib/api/user";
 
 type Props = {
   isLoading: boolean;
@@ -22,17 +21,6 @@ const FormForgetPassword = ({
   const onFinish = (values: any) => {
     const { email } = values;
     handleSendEmailSubmit(email);
-  };
-
-  const handleEmailValidation = async (
-    _: any,
-    email: string
-  ): Promise<boolean> => {
-    const valid = await validateEmailExists({ email });
-    if (valid) {
-      return Promise.reject(valid);
-    }
-    return Promise.resolve(true);
   };
 
   return (

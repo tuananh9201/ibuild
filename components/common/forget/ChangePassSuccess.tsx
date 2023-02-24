@@ -2,10 +2,21 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 import { ChangePassSuccessImage } from "@/constants/images";
-
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 type Props = {};
 
 export default function ChangePassSuccess({}: Props) {
+  const router = useRouter();
+  useEffect(() => {
+    const t = setTimeout(() => {
+      router.push("/");
+    }, 5000);
+    return () => {
+      clearTimeout(t);
+    };
+  }, [router]);
+
   return (
     <motion.div
       animate={{ opacity: 1 }}

@@ -3,16 +3,43 @@ import { Form, Input, Typography } from "antd";
 import { motion } from "framer-motion";
 
 import { IbuildButton } from "@/components/common";
-
+import { loginApi, resetPassword } from "lib/api/auth";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../../../store/features/auth/auth";
 type Props = {
-  isLoading: boolean;
+  onSuccess: () => void;
+  email: string;
+  code: string;
 };
 
-function FormChangePass({ isLoading }: Props) {
+function FormChangePass({ onSuccess, email, code }: Props) {
   const [form] = Form.useForm();
-
-  const onSubmit = (values: any) => {
-    console.log(values);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const doLogin = async (cred: { email: string; password: string }) => {
+    const data = await loginApi(cred);
+    const access_token = data?.access_token;
+    if (access_token) {
+      dispatch(login(access_token));
+    }
+  };
+  const onSubmit = async (values: any) => {
+    setLoading(true);
+    const params = {
+      new_password: values.newPassword,
+      email,
+      code,
+    };
+    const res = await resetPassword(params);
+    if (res) {
+      await doLogin({
+        email: email,
+        password: values.newPassword,
+      });
+      onSuccess();
+    }
+    setLoading(false);
   };
 
   return (
@@ -86,7 +113,7 @@ function FormChangePass({ isLoading }: Props) {
           rules={[
             {
               required: true,
-              message: "Please confirm your password!",
+              message: "Nhập lại mật khẩu",
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
@@ -110,7 +137,7 @@ function FormChangePass({ isLoading }: Props) {
               disabled={
                 form.getFieldsError().filter(({ errors }) => errors.length)
                   .length > 0 ||
-                isLoading ||
+                loading ||
                 !form.getFieldValue("email")
               }
             />

@@ -21,6 +21,7 @@ const ForgetPassword: NextPageWithLayout = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [emailUser, setEmailUser] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+  const [otpCode, setOtpCode] = useState("");
   const [blockExpire, setBlockExpire] = useState(86400);
   const [timer, setTimer] = useState("10:00");
   const [isShowResendCodeBtn, setIsShowResendCodeBtn] = useState(false);
@@ -46,6 +47,9 @@ const ForgetPassword: NextPageWithLayout = () => {
     await passwordRecovery(email);
     setIsLoading(false);
   };
+  const onChangePassSuccess = () => {
+    setCurrentStep(5);
+  };
 
   const onFailed = () => {};
 
@@ -54,6 +58,7 @@ const ForgetPassword: NextPageWithLayout = () => {
     const res = await verifyPasswordRecoveryCode({ code, email: emailUser });
     setIsLoading(false);
     if (res) {
+      setOtpCode(code);
       setCurrentStep(4);
     }
   };
@@ -90,7 +95,13 @@ const ForgetPassword: NextPageWithLayout = () => {
     },
     {
       step: 4,
-      component: <FormChangePass isLoading={isLoading} />,
+      component: (
+        <FormChangePass
+          email={emailUser}
+          code={otpCode}
+          onSuccess={onChangePassSuccess}
+        />
+      ),
       title: "Đổi mật khẩu",
     },
     {
