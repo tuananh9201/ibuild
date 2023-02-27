@@ -131,3 +131,25 @@ export const resetPassword = async (params: {
     }
   }
 };
+
+export const authWithSocialAccessToken = async (params: {
+  accessToken: string;
+  authProvider: string;
+}) => {
+  try {
+    const res = await api.post("/auth/verify-social-token", {
+      access_token: params.accessToken,
+      auth_provider: params.authProvider,
+    });
+    return res;
+  } catch (error: any) {
+    const statusCode = error?.response?.status;
+    if (statusCode === 400) {
+      notification.error({
+        description: error?.response?.data?.message || "Có lỗi xảy ra",
+        message: "Lỗi",
+        duration: 2,
+      });
+    }
+  }
+};

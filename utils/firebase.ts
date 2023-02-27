@@ -4,7 +4,10 @@ import {
   getAuth,
   GoogleAuthProvider,
   signInWithPopup,
+  UserCredential,
+  User,
 } from "firebase/auth";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -26,17 +29,25 @@ export const auth = getAuth(app);
 
 const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
-export const signInWithProvider = async (provider: "google" | "facebook") => {
+interface SignInResult {
+  user: User;
+  provider: string;
+  accessToken?: string;
+}
+
+export const signInWithProvider = async (
+  provider: "google" | "facebook"
+): Promise<string> => {
   try {
-    const res = await signInWithPopup(
+    const res: UserCredential = await signInWithPopup(
       auth,
       provider === "google" ? googleProvider : facebookProvider
     );
     const user = res.user;
-    return user;
+    return await user.getIdToken();
   } catch (err) {
     console.error(err);
+    throw err;
   }
 };
-
 export default app;
