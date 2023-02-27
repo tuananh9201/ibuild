@@ -56,7 +56,7 @@ const FormForgetPassword = ({
             },
           ]}
         >
-          <Input size="large" placeholder="Nhập email" />
+          <Input size="large" placeholder="Nhập email khôi phục" />
         </Form.Item>
 
         <Form.Item shouldUpdate>
