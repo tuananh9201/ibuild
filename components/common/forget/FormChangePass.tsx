@@ -1,17 +1,15 @@
 import React from "react";
-import { Form, Input, Typography } from "antd";
+import { Form, Input, Typography, message } from "antd";
 import { motion } from "framer-motion";
 
 import { IbuildButton } from "@/components/common";
-import { loginApi, resetPassword } from "lib/api/auth";
+import { resetPassword } from "lib/api/auth";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { login } from "../../../store/features/auth/auth";
 import { validatePassword } from "utils/validate";
 import { RulePassword } from "lib/types";
 import { rulePassword } from "@/constants/rules";
 type Props = {
-  onSuccess: () => void;
+  onSuccess: (cred: { email: string; password: string }) => void;
   email: string;
   code: string;
 };
@@ -19,39 +17,31 @@ type Props = {
 function FormChangePass({ onSuccess, email, code }: Props) {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
   const [isValidPassword, setIsValidPassword] = useState(false);
   const [disabledSubmit, setDisabledSubmit] = useState(true);
   const [rules, setRules] = useState<RulePassword[]>(rulePassword);
   const [password, setPassword] = useState("");
   const [cPassword, setCPassword] = useState("");
-  const [isSamePassword, setIsSamePassword] = useState(false);
-  const doLogin = async (cred: { email: string; password: string }) => {
-    const data = await loginApi(cred);
-    const access_token = data?.access_token;
-    if (access_token) {
-      dispatch(login(access_token));
-    }
-  };
+
   const onSubmit = async (values: any) => {
     setLoading(true);
-    console.log(form);
-
-    // isSame = values["newPassword"] ===
-    return;
+    setDisabledSubmit(true);
+    if (password !== cPassword) {
+      message.error("Mật khẩu không trùng nhau");
+      setLoading(false);
+      setDisabledSubmit(false);
+      return;
+    }
     const params = {
-      new_password: values.newPassword,
+      new_password: password,
       email,
       code,
     };
     const res = await resetPassword(params);
     if (res) {
-      await doLogin({
-        email: email,
-        password: values.newPassword,
-      });
-      onSuccess();
+      onSuccess({ email, password });
     }
+    setDisabledSubmit(false);
     setLoading(false);
   };
 
@@ -128,8 +118,6 @@ function FormChangePass({ onSuccess, email, code }: Props) {
         </Form.Item>
         <Form.Item
           shouldUpdate
-          validateStatus={isSamePassword ? "success" : "error"}
-          help={isSamePassword ? undefined : "* Mật khẩu không trùng nhau"}
           label={
             <p>
               Nhập lại mật khẩu <span style={{ color: "#314EAC" }}>*</span>
@@ -137,12 +125,14 @@ function FormChangePass({ onSuccess, email, code }: Props) {
           }
         >
           {() => (
-            <Input.Password
-              disabled={!isValidPassword}
-              size="large"
-              placeholder="Nhập mật khẩu"
-              onChange={onChangeValuesConfirmPassword}
-            />
+            <React.Fragment>
+              <Input.Password
+                disabled={!isValidPassword}
+                size="large"
+                placeholder="Nhập mật khẩu"
+                onChange={onChangeValuesConfirmPassword}
+              />
+            </React.Fragment>
           )}
         </Form.Item>
         <Form.Item shouldUpdate>

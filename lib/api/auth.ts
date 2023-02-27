@@ -1,7 +1,6 @@
 import { AxiosError } from "axios";
 import api from "./api";
 import { message, notification } from "antd";
-import { async } from "@firebase/util";
 
 export const register = async (credentials: {
   email: string;
@@ -111,10 +110,10 @@ export const resetPassword = async (params: {
   code: string;
   email: string;
   new_password: string;
-}): Promise<string | undefined> => {
+}) => {
   try {
     const res = await api.post("/reset-password", params);
-    return res.data?.data?.message;
+    return res;
   } catch (error: any) {
     const statusCode = error?.response?.status;
     if (statusCode === 400) {
@@ -124,6 +123,5 @@ export const resetPassword = async (params: {
         duration: 2,
       });
     }
-    return "";
   }
 };

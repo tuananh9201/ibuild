@@ -6,7 +6,11 @@ import SendedEmailForgetPassword from "@/components/common/forget/SendedEmailFor
 import ChangePassFailed from "@/components/common/forget/ChangePassFailed";
 import OnBoardLayout from "@/components/onboard-layout";
 import { backIcon, logo, unsplashSignUp } from "@/constants/images";
-import { passwordRecovery, verifyPasswordRecoveryCode } from "lib/api/auth";
+import {
+  loginApi,
+  passwordRecovery,
+  verifyPasswordRecoveryCode,
+} from "lib/api/auth";
 import { NextPageWithLayout } from "./_app";
 
 import { motion } from "framer-motion";
@@ -14,17 +18,22 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { ReactElement, useState, useEffect } from "react";
+import { login } from "store/features/auth/auth";
+import { useDispatch } from "react-redux";
+import { setToken } from "lib/api/api";
 
 const ForgetPassword: NextPageWithLayout = () => {
   // state
-  const [currentStep, setCurrentStep] = useState(4);
+  const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [emailUser, setEmailUser] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
   const [otpCode, setOtpCode] = useState("");
   const [blockExpire, setBlockExpire] = useState(86400);
   const [timer, setTimer] = useState("10:00");
   const [isShowResendCodeBtn, setIsShowResendCodeBtn] = useState(false);
+  const dispatch = useDispatch();
 
   // methods
   const handleSendEmailSubmit = async (email: string) => {
@@ -47,8 +56,9 @@ const ForgetPassword: NextPageWithLayout = () => {
     await passwordRecovery(email);
     setIsLoading(false);
   };
-  const onChangePassSuccess = () => {
+  const onChangePassSuccess = (cred: { email: string; password: string }) => {
     setCurrentStep(5);
+    setNewPassword(cred.password);
   };
 
   const onFailed = () => {};
@@ -60,6 +70,14 @@ const ForgetPassword: NextPageWithLayout = () => {
     if (res) {
       setOtpCode(code);
       setCurrentStep(4);
+    }
+  };
+  const doLogin = async (cred: { email: string; password: string }) => {
+    const data = await loginApi(cred);
+    const access_token = data?.access_token;
+    if (access_token) {
+      setToken(access_token);
+      dispatch(login(access_token));
     }
   };
 
@@ -131,8 +149,19 @@ const ForgetPassword: NextPageWithLayout = () => {
   }, [isSuccess]);
 
   useEffect(() => {
-    if (currentStep !== 3) return;
+    const t = setTimeout(() => {
+      if (currentStep === 5) {
+        doLogin({ email: emailUser, password: newPassword });
+      }
+    }, 5000);
 
+    return () => {
+      clearTimeout(t);
+    };
+  }, [currentStep]);
+
+  useEffect(() => {
+    if (currentStep !== 3) return;
     let duration = 10 * 60;
     let minutes: number;
     let seconds: number;
