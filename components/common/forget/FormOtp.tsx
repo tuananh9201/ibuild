@@ -73,7 +73,7 @@ export default function FormOtp({
                 message: "Mã xác nhận bao gồm 6 chữ số",
               },
               {
-                pattern: /^([-]?[1-9][0-9]*|0)$/,
+                pattern: /^[0-9]*$/,
                 message: "Mã xác nhận chỉ có thể là số",
               },
             ]}
