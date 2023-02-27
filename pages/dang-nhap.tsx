@@ -108,7 +108,6 @@ const EmptyPage: NextPageWithLayout = () => {
                       label="Email"
                       name="email"
                       validateTrigger="onBlur"
-                      hasFeedback
                       rules={[
                         {
                           required: true,
