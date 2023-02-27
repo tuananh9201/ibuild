@@ -8,7 +8,6 @@ import Link from "next/link";
 import { Form, Input, Spin } from "antd";
 import GoogleLoginButton from "@/components/common/GoogleLoginButton";
 import FacebookLoginButton from "@/components/common/FacebookLoginButton";
-import { validateEmailExists } from "lib/api/user";
 import { loginApi } from "lib/api/auth";
 import { setToken } from "lib/api/api";
 import { useDispatch } from "react-redux";
@@ -59,16 +58,6 @@ const EmptyPage: NextPageWithLayout = () => {
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-  };
-  const handleEmailValidation = async (
-    _: any,
-    email: string
-  ): Promise<boolean> => {
-    const valid = await validateEmailExists({ email });
-    if (valid) {
-      return Promise.reject(valid);
-    }
-    return Promise.resolve(true);
   };
 
   return (
@@ -129,20 +118,6 @@ const EmptyPage: NextPageWithLayout = () => {
                           type: "email",
                           message: "Tên đăng nhập chưa chính xác",
                         },
-                        () => ({
-                          validator(rule, value) {
-                            if (value) {
-                              const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                              const isValid = emailRegex.test(value);
-                              if (isValid) {
-                                return handleEmailValidation(undefined, value);
-                              }
-                              return Promise.resolve();
-                            }
-                            return Promise.resolve();
-                          },
-                          message: "Tên đăng nhập chưa chính xác",
-                        }),
                       ]}
                     >
                       <Input size="large" placeholder="Nhập email đăng nhập" />
