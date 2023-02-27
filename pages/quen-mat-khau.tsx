@@ -31,8 +31,8 @@ const ForgetPassword: NextPageWithLayout = () => {
   const [newPassword, setNewPassword] = useState("");
   const [otpCode, setOtpCode] = useState("");
   const [blockExpire, setBlockExpire] = useState(86400);
-  const [timer, setTimer] = useState("10:00");
   const [isShowResendCodeBtn, setIsShowResendCodeBtn] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(10 * 60);
   const dispatch = useDispatch();
 
   // methods
@@ -53,8 +53,14 @@ const ForgetPassword: NextPageWithLayout = () => {
 
   const handleResendCode = async (email: string) => {
     setIsLoading(true);
-    await passwordRecovery(email);
+    const res = await passwordRecovery(email);
+    if (res?.expires) {
+      setBlockExpire(parseInt(res.expires.toString()));
+      setCurrentStep(6);
+    }
+    setTimeRemaining(10 * 60);
     setIsLoading(false);
+    setIsShowResendCodeBtn(false);
   };
   const onChangePassSuccess = (cred: { email: string; password: string }) => {
     setCurrentStep(5);
@@ -159,36 +165,28 @@ const ForgetPassword: NextPageWithLayout = () => {
       clearTimeout(t);
     };
   }, [currentStep]);
-
   useEffect(() => {
-    if (currentStep !== 3) return;
-    let duration = 10 * 60;
-    let minutes: number;
-    let seconds: number;
-    let minutesTime: string;
-    let secondsTime: string;
-    let interval = setInterval(() => {
-      minutes = Number.parseInt((duration / 60).toString(), 10);
-      seconds = Number.parseInt((duration % 60).toString(), 10);
-
-      minutesTime = minutes < 10 ? `0${minutes}` : `${minutes}`;
-      secondsTime = seconds < 10 ? `0${seconds}` : `${seconds}`;
-
-      setTimer(`${minutesTime}:${secondsTime}`);
-      duration--;
-
-      if (duration < 0) {
-        clearInterval(interval);
-        setIsShowResendCodeBtn(true);
-      }
-
-      return () => clearInterval(interval);
-    }, 1000);
-  }, [currentStep]);
+    if (currentStep === 3) {
+      const intervalId = setInterval(() => {
+        setTimeRemaining((prevTime) => {
+          if (prevTime === 0) {
+            clearInterval(intervalId);
+            setIsShowResendCodeBtn(true);
+            return 0;
+          } else {
+            return prevTime - 1;
+          }
+        });
+      }, 1000);
+      return () => clearInterval(intervalId);
+    }
+  }, [currentStep, timeRemaining]);
 
   if (!currentComponent) {
     return <div>FAIL</div>;
   }
+  const minutes = Math.floor((timeRemaining % 3600) / 60);
+  const seconds = timeRemaining % 60;
   return (
     <>
       <Head>
@@ -219,7 +217,14 @@ const ForgetPassword: NextPageWithLayout = () => {
               </div>
               <div className="welcome">
                 <span>{currentTitle}</span>
-                {currentStep === 3 ? <span>{timer}</span> : <></>}
+                {currentStep === 3 ? (
+                  <span>
+                    {minutes < 10 ? `0${minutes}` : minutes}:{" "}
+                    {seconds < 10 ? `0${seconds}` : seconds}
+                  </span>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
             <motion.div

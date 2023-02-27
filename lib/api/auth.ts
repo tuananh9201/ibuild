@@ -65,7 +65,12 @@ export const loginApi = async (credentials: {
 
 export const passwordRecovery = async (
   email: string
-): Promise<{ status: boolean; message?: string; expires?: number }> => {
+): Promise<{
+  status: boolean;
+  message?: string;
+  expires?: number;
+  attemp?: number;
+}> => {
   try {
     const res = await api.post(`password-recovery/${email}`);
     return {
@@ -78,6 +83,7 @@ export const passwordRecovery = async (
       return {
         expires: error?.response?.data?.expires,
         status: false,
+        attemp: error?.response?.data?.attemp,
       };
     }
     return { status: false };
