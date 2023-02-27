@@ -86,6 +86,9 @@ export const passwordRecovery = async (
         attemp: error?.response?.data?.attemp,
       };
     }
+    if (statusCode===400) {
+      message.error(error?.response?.data?.message)
+    }
     return { status: false };
   }
 };
