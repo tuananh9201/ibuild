@@ -116,7 +116,7 @@ const EmptyPage: NextPageWithLayout = () => {
                         },
                         {
                           type: "email",
-                          message: "Tên đăng nhập chưa chính xác",
+                          message: "Email đăng nhập chưa chính xác",
                         },
                       ]}
                     >
