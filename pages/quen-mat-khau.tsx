@@ -1,60 +1,192 @@
-import { ReactElement } from "react";
-import MainLayout from "@/components/main-layout";
-import { NextPageWithLayout } from "./_app";
-import Head from "next/head";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import { Form, Input } from "antd";
-import OnBoardLayout from "@/components/onboard-layout";
-import Image from "next/image";
-import { backIcon, logo, unsplashSignUp } from "@/constants/images";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import SendedEmailForgetPassword from "@/components/common/forget/SendedEmailForgetPassword";
-import FormForget from "@/components/common/forget/FormForget";
+import ChangePassSuccess from "@/components/common/forget/ChangePassSuccess";
+import FormChangePass from "@/components/common/forget/FormChangePass";
 import FormForgetPassword from "@/components/common/forget/FormForget";
 import FormOtp from "@/components/common/forget/FormOtp";
-import FormChangePass from "@/components/common/forget/FormChangePass";
-import ChangePassSuccess from "@/components/common/forget/ChangePassSuccess";
+import SendedEmailForgetPassword from "@/components/common/forget/SendedEmailForgetPassword";
+import ChangePassFailed from "@/components/common/forget/ChangePassFailed";
+import OnBoardLayout from "@/components/onboard-layout";
+import { backIcon, logo, unsplashSignUp } from "@/constants/images";
+import {
+  loginApi,
+  passwordRecovery,
+  verifyPasswordRecoveryCode,
+} from "lib/api/auth";
+import { NextPageWithLayout } from "./_app";
+
+import { motion } from "framer-motion";
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
+import { ReactElement, useState, useEffect } from "react";
+import { login } from "store/features/auth/auth";
+import { useDispatch } from "react-redux";
+import { setToken } from "lib/api/api";
 
 const ForgetPassword: NextPageWithLayout = () => {
-  const [form] = Form.useForm();
-  const router = useRouter();
-  const onSuccess = () => {
-    console.log("on Success !");
+  // state
+  const [currentStep, setCurrentStep] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [emailUser, setEmailUser] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [otpCode, setOtpCode] = useState("");
+  const [blockExpire, setBlockExpire] = useState(86400);
+  const [isShowResendCodeBtn, setIsShowResendCodeBtn] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(10 * 60);
+  const dispatch = useDispatch();
+
+  // methods
+  const handleSendEmailSubmit = async (email: string) => {
+    setEmailUser(email);
+    setIsLoading(true);
+    const res = await passwordRecovery(email);
+    setIsLoading(false);
+    if (res.status) {
+      setCurrentStep(2);
+      setIsSuccess(true);
+    }
+    if (res?.expires) {
+      setBlockExpire(parseInt(res.expires.toString()));
+      setCurrentStep(6);
+    }
   };
+
+  const handleResendCode = async (email: string) => {
+    setIsLoading(true);
+    const res = await passwordRecovery(email);
+    if (res?.expires) {
+      setBlockExpire(parseInt(res.expires.toString()));
+      setCurrentStep(6);
+    }
+    setTimeRemaining(10 * 60);
+    setIsLoading(false);
+    setIsShowResendCodeBtn(false);
+  };
+  const onChangePassSuccess = (cred: { email: string; password: string }) => {
+    setCurrentStep(5);
+    setNewPassword(cred.password);
+  };
+
   const onFailed = () => {};
+
+  const handleConfirmCodeSubmit = async (code: string) => {
+    setIsLoading(true);
+    const res = await verifyPasswordRecoveryCode({ code, email: emailUser });
+    setIsLoading(false);
+    if (res) {
+      setOtpCode(code);
+      setCurrentStep(4);
+    }
+  };
+  const doLogin = async (cred: { email: string; password: string }) => {
+    const data = await loginApi(cred);
+    const access_token = data?.access_token;
+    if (access_token) {
+      setToken(access_token);
+      dispatch(login(access_token));
+    }
+  };
+
   const steps = [
     {
       step: 1,
       component: (
-        <FormForgetPassword onFailed={onFailed} onSuccess={onSuccess} />
+        <FormForgetPassword
+          isLoading={isLoading}
+          handleSendEmailSubmit={handleSendEmailSubmit}
+          onFailed={onFailed}
+        />
       ),
+      title: "Tìm lại mật khẩu",
     },
     {
       step: 2,
-      component: <SendedEmailForgetPassword />,
+      component: <SendedEmailForgetPassword email={emailUser} />,
+      title: "Gửi mã xác nhận thành công",
     },
     {
       step: 3,
-      component: <FormOtp />,
+      component: (
+        <FormOtp
+          isLoading={isLoading}
+          email={emailUser}
+          isShowResendCodeBtn={isShowResendCodeBtn}
+          handleConfirmCodeSubmit={handleConfirmCodeSubmit}
+          handleResendCode={handleResendCode}
+        />
+      ),
+      title: "Nhập mã xác nhận",
     },
     {
       step: 4,
-      component: <FormChangePass />,
+      component: (
+        <FormChangePass
+          email={emailUser}
+          code={otpCode}
+          onSuccess={onChangePassSuccess}
+        />
+      ),
+      title: "Đổi mật khẩu",
     },
     {
       step: 5,
       component: <ChangePassSuccess />,
+      title: "Đổi mật khẩu thành công",
+    },
+    {
+      step: 6,
+      component: <ChangePassFailed expires={blockExpire} />,
+      title: "Số lần xác thực đã quá giới hạn",
     },
   ];
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [currentStep, setCurrentStep] = useState(1);
-  const currentComponent = steps.find((s) => s.step === currentStep)?.component;
+
+  const current = steps.find((s) => s.step === currentStep);
+  const currentComponent = current?.component;
+  const currentTitle = current?.title || "";
+
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      if (isSuccess) {
+        setCurrentStep(3);
+      }
+    }, 5000);
+
+    return () => clearTimeout(delay);
+  }, [isSuccess]);
+
+  useEffect(() => {
+    const t = setTimeout(() => {
+      if (currentStep === 5) {
+        doLogin({ email: emailUser, password: newPassword });
+      }
+    }, 5000);
+
+    return () => {
+      clearTimeout(t);
+    };
+  }, [currentStep]);
+  useEffect(() => {
+    if (currentStep === 3) {
+      const intervalId = setInterval(() => {
+        setTimeRemaining((prevTime) => {
+          if (prevTime === 0) {
+            clearInterval(intervalId);
+            setIsShowResendCodeBtn(true);
+            return 0;
+          } else {
+            return prevTime - 1;
+          }
+        });
+      }, 1000);
+      return () => clearInterval(intervalId);
+    }
+  }, [currentStep, timeRemaining]);
 
   if (!currentComponent) {
     return <div>FAIL</div>;
   }
+  const minutes = Math.floor((timeRemaining % 3600) / 60);
+  const seconds = timeRemaining % 60;
   return (
     <>
       <Head>
@@ -83,7 +215,17 @@ const ForgetPassword: NextPageWithLayout = () => {
               <div className="logo">
                 <Image src={logo} alt="" />
               </div>
-              <div className="welcome">Tìm lại mật khẩu</div>
+              <div className="welcome">
+                <span>{currentTitle}</span>
+                {currentStep === 3 ? (
+                  <span>
+                    {minutes < 10 ? `0${minutes}` : minutes}:{" "}
+                    {seconds < 10 ? `0${seconds}` : seconds}
+                  </span>
+                ) : (
+                  <></>
+                )}
+              </div>
             </div>
             <motion.div
               animate={{ opacity: 1 }}

@@ -175,7 +175,7 @@ const EmptyPage: NextPageWithLayout = () => {
                           message: "Ký tự thường",
                         },
                       ]}
-                      label="Mật khẩu "
+                      label="Mật khẩu"
                     >
                       <Input.Password
                         size="large"

@@ -1,17 +1,28 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Form, Input } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+
+import { Form, Input, Spin } from "antd";
 
 type Props = {
-  onSuccess: () => void;
+  isLoading: boolean;
+  handleSendEmailSubmit: (email: string) => void;
   onFailed: () => void;
 };
 
-const FormForgetPassword = (props: Props) => {
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
+const FormForgetPassword = ({
+  handleSendEmailSubmit,
+  onFailed,
+  isLoading,
+}: Props) => {
   const [form] = Form.useForm();
   const onFinish = (values: any) => {
-    props.onSuccess();
+    const { email } = values;
+    handleSendEmailSubmit(email);
   };
+
   return (
     <motion.div
       animate={{ opacity: 1 }}
@@ -37,21 +48,34 @@ const FormForgetPassword = (props: Props) => {
           rules={[
             {
               required: true,
-              message: "Vui lòng nhập tên đăng nhập",
+              message: "Vui lòng nhập Email",
             },
             {
               type: "email",
-              message: "Email không hợp lệ",
+              message: "Email không đúng định dạng",
             },
           ]}
         >
           <Input size="large" placeholder="Nhập email" />
         </Form.Item>
 
-        <Form.Item>
-          <div className="group-action">
-            <button className="ibuild-btn signin">Gửi mã xác nhận</button>
-          </div>
+        <Form.Item shouldUpdate>
+          {() => (
+            <div className="group-action">
+              <button
+                className="ibuild-btn signin"
+                disabled={
+                  form.getFieldsError().filter(({ errors }) => errors.length)
+                    .length > 0 ||
+                  isLoading ||
+                  !form.getFieldValue("email")
+                }
+                type="submit"
+              >
+                {isLoading ? <Spin indicator={antIcon} /> : "Gửi mã xác nhận"}
+              </button>
+            </div>
+          )}
         </Form.Item>
       </Form>
     </motion.div>
