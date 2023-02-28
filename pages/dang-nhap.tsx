@@ -130,7 +130,8 @@ const EmptyPage: NextPageWithLayout = () => {
                           message: "Vui lòng nhập tên email",
                         },
                         {
-                          type: "email",
+                          pattern:
+                            /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
                           message: "Email đăng nhập chưa chính xác",
                         },
                       ]}
