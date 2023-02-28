@@ -223,11 +223,7 @@ const SignUpPage: NextPageWithLayout = () => {
                             <li
                               key={rule.code}
                               className={
-                                rule.init
-                                  ? ""
-                                  : rule.success
-                                  ? "success"
-                                  : "error"
+                                rule.init ? "" : rule.success ? "success" : ""
                               }
                             >
                               {rule.message}
@@ -246,10 +242,26 @@ const SignUpPage: NextPageWithLayout = () => {
                         <span style={{ color: colorPrimary }}>*</span>{" "}
                       </div>
                     }
-                    validateStatus={showErrorDiffPassword ? "error" : ""}
-                    help={
-                      showErrorDiffPassword ? "* Mật khẩu không trùng nhau" : ""
-                    }
+                    rules={[
+                      {
+                        required: true,
+                        message: "Vui lòng nhập mật khẩu",
+                      },
+                      ({ getFieldValue }) => ({
+                        validator(_, value) {
+                          if (!value || getFieldValue("password") === value) {
+                            return Promise.resolve();
+                          }
+                          return Promise.reject(
+                            new Error("* Mật khẩu không trùng nhau")
+                          );
+                        },
+                      }),
+                    ]}
+                    // validateStatus={showErrorDiffPassword ? "error" : ""}
+                    // help={
+                    //   showErrorDiffPassword ? "* Mật khẩu không trùng nhau" : ""
+                    // }
                   >
                     <Input.Password
                       onChange={onChangeCPassword}
@@ -269,7 +281,8 @@ const SignUpPage: NextPageWithLayout = () => {
                               0 ||
                             loadingRegister ||
                             isinitPage ||
-                            cPassword.length === 0
+                            cPassword.length === 0 ||
+                            !isValidPassword
                           }
                           className="ibuild-btn signin"
                         >
