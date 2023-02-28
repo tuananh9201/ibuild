@@ -10,15 +10,15 @@ import {
   unsplashSignUp,
 } from "@/constants/images";
 import Link from "next/link";
-import { Form, Input, message } from "antd";
+import { Form, Input } from "antd";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import { register } from "lib/api/auth";
 import { setToken } from "lib/api/api";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login } from "store/features/auth/auth";
-import { validPassword, validatePassword } from "utils/validate";
+import { validatePassword } from "utils/validate";
 import { RulePassword } from "lib/types";
 import { rulePassword } from "@/constants/rules";
 import { colorPrimary } from "@/constants/colors";
@@ -187,7 +187,7 @@ const SignUpPage: NextPageWithLayout = () => {
                     rules={[
                       {
                         required: true,
-                        message: "Vui lòng nhập tên đăng nhập",
+                        message: "Vui lòng nhập email",
                       },
                       {
                         pattern:
@@ -207,7 +207,9 @@ const SignUpPage: NextPageWithLayout = () => {
                         </span>{" "}
                       </div>
                     }
-                    validateStatus={isValidPassword ? "" : "error"}
+                    validateStatus={
+                      isinitPage ? "" : isValidPassword ? "" : "error"
+                    }
                   >
                     <React.Fragment>
                       <Input.Password
@@ -266,7 +268,8 @@ const SignUpPage: NextPageWithLayout = () => {
                               .filter(({ errors }) => errors.length).length >
                               0 ||
                             loadingRegister ||
-                            isinitPage
+                            isinitPage ||
+                            cPassword.length === 0
                           }
                           className="ibuild-btn signin"
                         >
