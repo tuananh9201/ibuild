@@ -139,6 +139,12 @@ const EmptyPage: NextPageWithLayout = () => {
                         },
                       ]}
                       label="Mật khẩu"
+                      validateStatus={isDisabledButtonLogin ? "error" : ""}
+                      help={
+                        isDisabledButtonLogin
+                          ? "Mật khẩu chưa đúng định dạng"
+                          : ""
+                      }
                     >
                       <Input.Password
                         size="large"
