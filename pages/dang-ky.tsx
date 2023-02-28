@@ -18,6 +18,7 @@ import { register } from "lib/api/auth";
 import { setToken } from "lib/api/api";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "store/features/auth/auth";
+import { validPassword } from "utils/validate";
 const SignUpSuccess = () => {
   return (
     <div
@@ -69,14 +70,7 @@ const SignUpPage: NextPageWithLayout = () => {
     }
     setLoadingRegister(false);
   };
-  const validPassword = (password: string) => {
-    if (password.length < 8 && password.length > 20) {
-      return false;
-    }
-    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}$/.test(
-      password
-    );
-  };
+
   const onChangeValues = (changedValues: any, allValues: any) => {
     if (Object.keys(changedValues).includes("password")) {
       console.log("changedValues ", changedValues);

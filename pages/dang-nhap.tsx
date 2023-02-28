@@ -8,7 +8,6 @@ import Link from "next/link";
 import { Form, Input, Spin } from "antd";
 import GoogleLoginButton from "@/components/common/GoogleLoginButton";
 import FacebookLoginButton from "@/components/common/FacebookLoginButton";
-import { validateEmailExists } from "lib/api/user";
 import { loginApi } from "lib/api/auth";
 import { setToken } from "lib/api/api";
 import { useDispatch } from "react-redux";
@@ -16,6 +15,9 @@ import { login } from "store/features/auth/auth";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import LockWrongPassword from "@/components/common/LockWrongPassword";
+import { RulePassword } from "lib/types";
+import { rulePassword } from "@/constants/rules";
+import { validPassword } from "utils/validate";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -26,6 +28,8 @@ const EmptyPage: NextPageWithLayout = () => {
   const dispatch = useDispatch();
   const [expiresTime, setExpiresTime] = useState<number>(0);
   const [isLockEmail, setIsLockEmail] = useState(false);
+  const [rules, setRules] = useState<RulePassword[]>(rulePassword);
+  const [isDisabledButtonLogin, setIsDisabledButtonLogin] = useState(true);
   const onFinish = async (values: any) => {
     if (loading) return;
     const { email, password } = values;
@@ -60,15 +64,15 @@ const EmptyPage: NextPageWithLayout = () => {
       setLoading(false);
     }, 1000);
   };
-  const handleEmailValidation = async (
-    _: any,
-    email: string
-  ): Promise<boolean> => {
-    const valid = await validateEmailExists({ email });
-    if (valid) {
-      return Promise.reject(valid);
+  const onChangeValues = (changedValues: any, allValues: any) => {
+    if (Object.keys(changedValues).includes("password")) {
+      console.log("changedValues ", changedValues);
+      // const passValue = changedValues["password"];
+      const valid = validPassword(changedValues.password);
+      setIsDisabledButtonLogin(!valid);
+      // setDisabledConfim(!valid);
     }
-    return Promise.resolve(true);
+    // setIsinitPage(false);
   };
 
   return (
@@ -114,35 +118,22 @@ const EmptyPage: NextPageWithLayout = () => {
                     style={{ maxWidth: "100%" }}
                     scrollToFirstError
                     requiredMark={false}
+                    onValuesChange={onChangeValues}
                   >
                     <Form.Item
                       label="Email"
                       name="email"
                       validateTrigger="onBlur"
-                      hasFeedback
                       rules={[
                         {
                           required: true,
                           message: "Vui lòng nhập tên email",
                         },
                         {
-                          type: "email",
-                          message: "Tên đăng nhập chưa chính xác",
+                          pattern:
+                            /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                          message: "Email đăng nhập chưa chính xác",
                         },
-                        () => ({
-                          validator(rule, value) {
-                            if (value) {
-                              const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                              const isValid = emailRegex.test(value);
-                              if (isValid) {
-                                return handleEmailValidation(undefined, value);
-                              }
-                              return Promise.resolve();
-                            }
-                            return Promise.resolve();
-                          },
-                          message: "Tên đăng nhập chưa chính xác",
-                        }),
                       ]}
                     >
                       <Input size="large" placeholder="Nhập email đăng nhập" />
@@ -153,26 +144,6 @@ const EmptyPage: NextPageWithLayout = () => {
                         {
                           required: true,
                           message: "Nhập mật khẩu",
-                        },
-                        {
-                          min: 8,
-                          message: "Mật khẩu từ 8-20 ký tự",
-                        },
-                        {
-                          max: 20,
-                          message: "Mật khẩu từ 8-20 ký tự",
-                        },
-                        {
-                          pattern: /[!@#$%^&*()]/,
-                          message: "Ký tự đặc biệt",
-                        },
-                        {
-                          pattern: /[A-Z]/,
-                          message: "Ký tự in hoa",
-                        },
-                        {
-                          pattern: /[a-z]/,
-                          message: "Ký tự thường",
                         },
                       ]}
                       label="Mật khẩu"
@@ -202,7 +173,9 @@ const EmptyPage: NextPageWithLayout = () => {
                               form
                                 .getFieldsError()
                                 .filter(({ errors }) => errors.length).length >
-                                0 || loading
+                                0 ||
+                              loading ||
+                              isDisabledButtonLogin
                             }
                             type="submit"
                             className="ibuild-btn signin"
