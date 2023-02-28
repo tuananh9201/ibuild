@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import React, { ReactElement } from "react";
 import { NextPageWithLayout } from "./_app";
 import Head from "next/head";
 import OnBoardLayout from "@/components/onboard-layout";
@@ -18,7 +18,10 @@ import { register } from "lib/api/auth";
 import { setToken } from "lib/api/api";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "store/features/auth/auth";
-import { validPassword } from "utils/validate";
+import { validPassword, validatePassword } from "utils/validate";
+import { RulePassword } from "lib/types";
+import { rulePassword } from "@/constants/rules";
+import { colorPrimary } from "@/constants/colors";
 const SignUpSuccess = () => {
   return (
     <div
@@ -54,15 +57,23 @@ const SignUpPage: NextPageWithLayout = () => {
   const [isinitPage, setIsinitPage] = useState(true);
   const [loadingRegister, setLoadingRegister] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [disabledConfim, setDisabledConfim] = useState(true);
+  const [password, setPassword] = useState("");
+  const [cPassword, setCPassword] = useState("");
+  const [showErrorDiffPassword, setShowErrorDiffPassword] = useState(false);
+  const [isValidPassword, setIsValidPassword] = useState(false);
+  const [rules, setRules] = useState<RulePassword[]>(rulePassword);
   const onFinish = async (values: any) => {
     const credential = {
       email: values.email,
-      password: values.password,
+      password,
     };
+    if (password !== cPassword) {
+      setShowErrorDiffPassword(true);
+      return;
+    }
+    setShowErrorDiffPassword(false);
     setLoadingRegister(true);
     const accessToken = await register(credential);
-    // setLoadingRegister(false);
     if (accessToken) {
       setToken(accessToken);
       dispatch(login(accessToken));
@@ -70,15 +81,23 @@ const SignUpPage: NextPageWithLayout = () => {
     }
     setLoadingRegister(false);
   };
-
-  const onChangeValues = (changedValues: any, allValues: any) => {
-    if (Object.keys(changedValues).includes("password")) {
-      console.log("changedValues ", changedValues);
-      const passValue = changedValues["password"];
-      const valid = validPassword(passValue);
-      setDisabledConfim(!valid);
-    }
+  const onChangeValues = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setPassword(value);
+    const results = validatePassword(value);
+    setRules(results);
+    const isValid = results.filter((r) => r.success);
+    setIsValidPassword(isValid.length === rulePassword.length);
     setIsinitPage(false);
+  };
+
+  const onChangeCPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setCPassword(value);
+    setIsinitPage(value.length === 0);
+    if (value.length === 0) {
+      setShowErrorDiffPassword(false);
+    }
   };
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -156,68 +175,64 @@ const SignUpPage: NextPageWithLayout = () => {
                   style={{ maxWidth: "100%" }}
                   requiredMark={false}
                   scrollToFirstError
-                  onValuesChange={onChangeValues}
                 >
                   <Form.Item
                     name="email"
-                    label="Email"
+                    label={
+                      <div>
+                        {" "}
+                        Email <span style={{ color: "red" }}>*</span>{" "}
+                      </div>
+                    }
                     rules={[
                       {
                         required: true,
                         message: "Vui lòng nhập tên đăng nhập",
                       },
                       {
-                        type: "email",
-                        message: "Email không hợp lệ",
+                        pattern:
+                          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                        message: "Email không đúng định dạng",
                       },
-                      // {
-                      //   validator: (_, value) =>
-                      //     value
-                      //       ? Promise.resolve()
-                      //       : Promise.reject(
-                      //           new Error("Should accept agreement")
-                      //         ),
-                      // },
                     ]}
                   >
-                    <Input size="large" placeholder="Nhập tên đăng nhập" />
+                    <Input size="large" placeholder="Nhập email" />
                   </Form.Item>
                   <Form.Item
-                    name="password"
                     label={
                       <div>
                         {" "}
-                        Mật khẩu <span style={{ color: "red" }}>*</span>{" "}
+                        Mật khẩu <span style={{ color: colorPrimary }}>
+                          *
+                        </span>{" "}
                       </div>
                     }
-                    rules={[
-                      {
-                        required: true,
-                        message: "Nhập mật khẩu",
-                      },
-                      {
-                        min: 8,
-                        message: "Mật khẩu từ 8-20 ký tự",
-                      },
-                      {
-                        max: 20,
-                        message: "Mật khẩu từ 8-20 ký tự",
-                      },
-                      {
-                        pattern: /[!@#$%^&*()]/,
-                        message: "Ký tự đặc biệt",
-                      },
-                      {
-                        pattern: /[A-Z]/,
-                        message: "Ký tự in hoa",
-                      },
-                      {
-                        pattern: /[a-z]/,
-                        message: "Ký tự thường",
-                      },
-                    ]}
                   >
-                    <Input.Password size="large" placeholder="Nhập mật khẩu" />
+                    <React.Fragment>
+                      <Input.Password
+                        size="large"
+                        placeholder="Nhập mật khẩu"
+                        onChange={onChangeValues}
+                      />
+                      <div className="password-helper">
+                        <ul>
+                          {rules.map((rule) => (
+                            <li
+                              key={rule.code}
+                              className={
+                                rule.init
+                                  ? ""
+                                  : rule.success
+                                  ? "success"
+                                  : "error"
+                              }
+                            >
+                              {rule.message}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </React.Fragment>
                   </Form.Item>
                   <Form.Item
                     name="confirm"
@@ -225,33 +240,17 @@ const SignUpPage: NextPageWithLayout = () => {
                       <div>
                         {" "}
                         Nhập lại mật khẩu{" "}
-                        <span style={{ color: "red" }}>*</span>{" "}
+                        <span style={{ color: colorPrimary }}>*</span>{" "}
                       </div>
                     }
-                    rules={[
-                      {
-                        required: true,
-                        message: "Vui lòng nhập mật khẩu",
-                      },
-                      ({ getFieldValue }) => ({
-                        validator(_, value) {
-                          if (!value || getFieldValue("password") === value) {
-                            return Promise.resolve();
-                          }
-                          return Promise.reject(
-                            new Error("Nhập lại mật khẩu không đúng")
-                          );
-                        },
-                      }),
-                    ]}
+                    validateStatus={showErrorDiffPassword ? "error" : ""}
+                    help={
+                      showErrorDiffPassword ? "* Mật khẩu không trùng nhau" : ""
+                    }
                   >
                     <Input.Password
-                      // disabled={
-                      //   form
-                      //     .getFieldsError(["password"])
-                      //     .filter(({ errors }) => errors.length).length > 0
-                      // }
-                      disabled={disabledConfim}
+                      onChange={onChangeCPassword}
+                      disabled={!isValidPassword}
                       size="large"
                       placeholder="Nhập mật khẩu"
                     />
@@ -270,7 +269,7 @@ const SignUpPage: NextPageWithLayout = () => {
                           }
                           className="ibuild-btn signin"
                         >
-                          Đăng ký
+                          Tạo tài khoản
                         </button>
                         <div className="register-link">
                           <span className="have-account">
