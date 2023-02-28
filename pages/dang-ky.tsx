@@ -207,6 +207,7 @@ const SignUpPage: NextPageWithLayout = () => {
                         </span>{" "}
                       </div>
                     }
+                    validateStatus={isValidPassword ? "" : "error"}
                   >
                     <React.Fragment>
                       <Input.Password
