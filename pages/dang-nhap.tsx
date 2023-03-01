@@ -16,6 +16,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import LockWrongPassword from "@/components/common/LockWrongPassword";
 import { validPassword } from "utils/validate";
+import { ERRORS } from "@/constants/msg";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -126,7 +127,7 @@ const EmptyPage: NextPageWithLayout = () => {
                       rules={[
                         {
                           required: true,
-                          message: "Vui lòng nhập tên email",
+                          message: "Vui lòng nhập email",
                         },
                         {
                           pattern:
@@ -146,16 +147,18 @@ const EmptyPage: NextPageWithLayout = () => {
                           required: true,
                           message: "Nhập mật khẩu",
                         },
+                        () => ({
+                          validator(rule, value) {
+                            if (value) {
+                              if (!validPassword(value)) {
+                                return Promise.reject(ERRORS.MSG002);
+                              }
+                            }
+                            return Promise.resolve();
+                          },
+                        }),
                       ]}
                       label="Mật khẩu"
-                      validateStatus={
-                        isDisabledButtonLogin && isInit ? "error" : ""
-                      }
-                      help={
-                        isDisabledButtonLogin && isInit
-                          ? "Mật khẩu chưa đúng định dạng"
-                          : ""
-                      }
                     >
                       <Input.Password
                         size="large"
