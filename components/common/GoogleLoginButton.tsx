@@ -35,10 +35,11 @@ const GoogleLoginButton = (props: Props) => {
     });
     const data = res?.data;
     if (!data) return;
-    const access_token = data?.access_token;
+    const access_token = data?.data?.access_token;
     if (access_token) {
       setToken(access_token);
       dispatch(login(access_token));
+
       setTimeout(() => {
         let redirectPath = router.query?.redirect || "/";
         if (typeof redirectPath === "object") {
