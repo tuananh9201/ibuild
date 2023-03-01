@@ -249,7 +249,7 @@ const SignUpPage: NextPageWithLayout = () => {
                       },
                       ({ getFieldValue }) => ({
                         validator(_, value) {
-                          if (!value || getFieldValue("password") === value) {
+                          if (!value || password === value) {
                             return Promise.resolve();
                           }
                           return Promise.reject(
