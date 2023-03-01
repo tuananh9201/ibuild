@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { logo, addressIcon, phoneIcon, sendIcon } from "@/constants/images";
 import { Row, Col, Input } from "antd";
+import Link from "next/link";
 export default function Footer() {
   return (
     <div className="main-footer">
@@ -53,6 +54,12 @@ export default function Footer() {
         <Col md={24} lg={8}>
           <div className="footer-menu">
             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
+              <li className="nav-item">
+                <Link href="/ve-chung-toi" className={`menu-item`}>
+                  Về chúng tôi
+                  <div className="bottom-menu"></div>
+                </Link>
+              </li>
               <li className="nav-item">
                 <a className="nav-link" href="#">
                   Sản phẩm
