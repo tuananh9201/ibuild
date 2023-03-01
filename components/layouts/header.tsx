@@ -10,10 +10,12 @@ import useUser from "lib/hooks/user";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserAvatar from "./avatar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
+import { setToken } from "lib/api/api";
+import { login } from "store/features/auth/auth";
 
 const menus = [
   {
@@ -33,6 +35,7 @@ const pathsShowBackButton = ["/"];
 const MainHeader = () => {
   const router = useRouter();
   const { user } = useUser();
+  const dispatch = useDispatch();
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const currentPath = router.pathname;
   const [openMenu, setOpenMenu] = useState(false);
@@ -41,6 +44,25 @@ const MainHeader = () => {
   const handleClickBack = () => {
     router.back();
   };
+  // const unAuthorized = useSelector(
+  //   (state: RootState) => state.auth.unAuthorized
+  // );
+  // useEffect(() => {
+  //   if (unAuthorized) {
+  //     console.log("unAuthorized");
+  //   }
+  // }, [unAuthorized, router]);
+  const autoLogin = () => {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      setToken(token);
+      dispatch(login(token));
+    }
+  };
+  useEffect(() => {
+    autoLogin();
+  }, []);
+
   return (
     <div className={`main-header ${headerClass}`}>
       <div className="header-nav">
