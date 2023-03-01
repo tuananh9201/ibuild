@@ -27,6 +27,9 @@ describe("Footer Component", () => {
     render(<Footer />);
     const input = screen.getByPlaceholderText("info@gmail.com");
     expect(input).toBeInTheDocument();
+
+    const label = screen.getByText("Theo dõi");
+    expect(label).toBeInTheDocument();
     fireEvent.change(input, { target: { value: "info1@gmail.com" } });
     const value = screen.getByDisplayValue("info1@gmail.com");
     expect(value).toBeInTheDocument();
