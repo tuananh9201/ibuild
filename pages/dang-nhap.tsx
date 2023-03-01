@@ -27,6 +27,7 @@ const EmptyPage: NextPageWithLayout = () => {
   const [expiresTime, setExpiresTime] = useState<number>(0);
   const [isLockEmail, setIsLockEmail] = useState(false);
   const [isDisabledButtonLogin, setIsDisabledButtonLogin] = useState(true);
+  const [isInit, setIsInit] = useState(false);
   const onFinish = async (values: any) => {
     if (loading) return;
     const { email, password } = values;
@@ -34,6 +35,7 @@ const EmptyPage: NextPageWithLayout = () => {
     const data = await loginApi({ email, password });
     const access_token = data?.access_token;
     const expires = data?.expires;
+
     if (access_token) {
       setToken(access_token);
       dispatch(login(access_token));
@@ -65,6 +67,7 @@ const EmptyPage: NextPageWithLayout = () => {
     if (Object.keys(changedValues).includes("password")) {
       const valid = validPassword(changedValues.password);
       setIsDisabledButtonLogin(!valid);
+      setIsInit(true);
     }
   };
   return (
@@ -139,9 +142,11 @@ const EmptyPage: NextPageWithLayout = () => {
                         },
                       ]}
                       label="Mật khẩu"
-                      validateStatus={isDisabledButtonLogin ? "error" : ""}
+                      validateStatus={
+                        isDisabledButtonLogin && isInit ? "error" : ""
+                      }
                       help={
-                        isDisabledButtonLogin
+                        isDisabledButtonLogin && isInit
                           ? "Mật khẩu chưa đúng định dạng"
                           : ""
                       }
