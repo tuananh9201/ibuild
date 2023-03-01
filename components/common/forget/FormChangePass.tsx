@@ -105,9 +105,7 @@ function FormChangePass({ onSuccess, email, code }: Props) {
                 {rules.map((rule) => (
                   <li
                     key={rule.code}
-                    className={
-                      rule.init ? "" : rule.success ? "success" : "error"
-                    }
+                    className={rule.init ? "" : rule.success ? "success" : ""}
                   >
                     {rule.message}
                   </li>
