@@ -62,3 +62,97 @@ export const loginApi = async (credentials: {
     }
   }
 };
+
+export const passwordRecovery = async (
+  email: string
+): Promise<{
+  status: boolean;
+  message?: string;
+  expires?: number;
+  attemp?: number;
+}> => {
+  try {
+    const res = await api.post(`password-recovery/${email}`);
+    return {
+      message: res.data?.data?.message,
+      status: true,
+    };
+  } catch (error: any) {
+    const statusCode = error?.response?.status;
+    if (statusCode === 429) {
+      return {
+        expires: error?.response?.data?.expires,
+        status: false,
+        attemp: error?.response?.data?.attemp,
+      };
+    }
+    if (statusCode===400) {
+      message.error(error?.response?.data?.message)
+    }
+    return { status: false };
+  }
+};
+
+export const verifyPasswordRecoveryCode = async (params: {
+  code: string;
+  email: string;
+}) => {
+  try {
+    const res = await api.post("/verify-password-recovery-code", params);
+    if (res?.status === 200) {
+      return true;
+    }
+  } catch (error: any) {
+    const statusCode = error?.response?.status;
+    if (statusCode === 400) {
+      notification.error({
+        description: error?.response?.data?.message || "Có lỗi xảy ra",
+        message: "Lỗi",
+        duration: 2,
+      });
+    }
+    return false;
+  }
+};
+
+export const resetPassword = async (params: {
+  code: string;
+  email: string;
+  new_password: string;
+}) => {
+  try {
+    const res = await api.post("/reset-password", params);
+    return res;
+  } catch (error: any) {
+    const statusCode = error?.response?.status;
+    if (statusCode === 400) {
+      notification.error({
+        description: error?.response?.data?.message || "Có lỗi xảy ra",
+        message: "Lỗi",
+        duration: 2,
+      });
+    }
+  }
+};
+
+export const authWithSocialAccessToken = async (params: {
+  accessToken: string;
+  authProvider: string;
+}) => {
+  try {
+    const res = await api.post("/auth/verify-social-token", {
+      access_token: params.accessToken,
+      auth_provider: params.authProvider,
+    });
+    return res;
+  } catch (error: any) {
+    const statusCode = error?.response?.status;
+    if (statusCode === 400) {
+      notification.error({
+        description: error?.response?.data?.message || "Có lỗi xảy ra",
+        message: "Lỗi",
+        duration: 2,
+      });
+    }
+  }
+};

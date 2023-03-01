@@ -2,13 +2,56 @@ import React from "react";
 import Image from "next/image";
 import { googleIcon } from "@/constants/images";
 import { signInWithProvider } from "utils/firebase";
+import { message } from "antd";
+import { authWithSocialAccessToken } from "lib/api/auth";
+import { setToken } from "lib/api/api";
+import { useDispatch } from "react-redux";
+import { login } from "store/features/auth/auth";
+import { useRouter } from "next/router";
 
 type Props = {};
 
 const GoogleLoginButton = (props: Props) => {
+  const dispatch = useDispatch();
+  const router = useRouter();
   const handleClick = async () => {
-    const user = await signInWithProvider("google");
-    console.log(user);
+    const result = await signInWithProvider("google");
+    if (!result) {
+      message.error("Lỗi");
+      return;
+    }
+    const accessToken = result;
+    if (!accessToken) return;
+    return await handleLoginWithSocialToken(accessToken, "google.com");
+  };
+
+  const handleLoginWithSocialToken = async (
+    accessToken: string,
+    authProvider: string
+  ) => {
+    const res = await authWithSocialAccessToken({
+      accessToken,
+      authProvider,
+    });
+    const data = res?.data;
+    if (!data) return;
+    const access_token = data?.access_token;
+    if (access_token) {
+      setToken(access_token);
+      dispatch(login(access_token));
+      setTimeout(() => {
+        let redirectPath = router.query?.redirect || "/";
+        if (typeof redirectPath === "object") {
+          redirectPath = "/";
+        }
+        let currentQuery = router.query;
+        delete currentQuery["redirect"];
+        router.push({
+          pathname: redirectPath,
+          query: currentQuery,
+        });
+      }, 1000);
+    }
   };
   return (
     <button

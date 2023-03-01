@@ -74,3 +74,11 @@ export type User = {
   email: string;
   access_token?: string;
 };
+
+export type RulePassword = {
+  message: string;
+  code: string;
+  success?: boolean;
+  pattern: RegExp;
+  init: boolean;
+};
