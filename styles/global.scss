@@ -138,6 +138,8 @@ body {
             .have-account {
               font-weight: 400;
               margin-right: 8px;
+              font-size: 16px;
+              line-height: 150%;
             }
 
             .register-now {
@@ -409,7 +411,7 @@ button[disabled] {
   pointer-events: none;
 }
 
-a {
+.link {
   font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
