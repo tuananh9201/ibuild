@@ -73,6 +73,8 @@ export type User = {
   full_name: string;
   email: string;
   access_token?: string;
+  picture?: string;
+  user_type?: string;
 };
 
 export type RulePassword = {

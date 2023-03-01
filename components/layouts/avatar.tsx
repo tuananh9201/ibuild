@@ -66,7 +66,7 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
           }}
         >
           <span>Chuyên gia </span>
-          <Switch checked={false} />
+          <Switch checked={props.user?.user_type === "expert"} />
         </div>
       ),
     },
