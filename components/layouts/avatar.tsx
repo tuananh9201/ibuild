@@ -31,6 +31,9 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
       },
     });
   };
+  const name = props.user.full_name || props.user.email || "Nguyễn Văn A";
+  let displayName = name.substring(0, 10);
+  if (name.length > 12) displayName += "...";
   const items: MenuProps["items"] = [
     {
       key: "1",
@@ -97,7 +100,13 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
           <div>
             <Image width={32} height={32} src={userAvata} alt="user-avatar" />
           </div>
-          {props.user.full_name || props.user.email}
+          <span
+            style={{
+              maxWidth: 100,
+            }}
+          >
+            {displayName}
+          </span>
           <Image width={24} height={24} src={keyboardArrowUp} alt="up-icon" />
         </Space>
       </Dropdown>
