@@ -23,7 +23,7 @@ const HomePage: NextPageWithLayout = () => {
         </section>
         <section className="cards">
           <Row>
-            <Col span={8}>
+            <Col lg={8} md={24}>
               <div className="card">
                 <Image
                   className="card-image"
@@ -43,9 +43,9 @@ const HomePage: NextPageWithLayout = () => {
                 </div>
               </div>
             </Col>
-            <Col span={8}>
+            <Col lg={8} md={24}>
               <div className="card">
-                <Image className="card-image" src={designImage} alt="design" />
+                <Image className="card-image" src={bookImage} alt="book" />
                 <div className="card-introduce">
                   <h2>Mẫu thiết kế</h2>
                   <div className="description">
@@ -59,9 +59,9 @@ const HomePage: NextPageWithLayout = () => {
                 </div>
               </div>
             </Col>
-            <Col span={8}>
+            <Col lg={8} md={24}>
               <div className="card">
-                <Image className="card-image" src={bookImage} alt="book" />
+                <Image className="card-image" src={designImage} alt="design" />
                 <div className="card-introduce">
                   <h2>Văn bản pháp lý</h2>
                   <div className="description">

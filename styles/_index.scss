@@ -276,6 +276,10 @@
         left: 0;
         color: #fff;
 
+        @media screen and (max-width: $breakpoint) {
+          top: 40%
+        }
+
         h2 {
           font-size: 24px;
           font-weight: 600;
