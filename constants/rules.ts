@@ -4,7 +4,7 @@ export const rulePassword: RulePassword[] = [
   {
     code: "LENGTH",
     message: "Mật khẩu từ 8-20 ký tự",
-    pattern: /^(?=.*\w).{8,20}$/,
+    pattern: /^.{8,20}$/,
     init: true,
   },
   {
