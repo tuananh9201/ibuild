@@ -10,6 +10,5 @@ export const validatePassword = (password: string): RulePassword[] => {
 
 export const validPassword = (password: string) => {
   const valids = validatePassword(password);
-  console.log("valids ", valids);
   return valids.filter((r) => r.success).length === rulePassword.length;
 };

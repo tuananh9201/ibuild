@@ -69,6 +69,10 @@ const EmptyPage: NextPageWithLayout = () => {
       setIsDisabledButtonLogin(!valid);
       setIsInit(true);
     }
+    if (Object.keys(changedValues).includes("email")) {
+      const email = changedValues.email;
+      if (email.includes(" ")) form.setFieldValue("email", email.trim());
+    }
   };
   return (
     <>
@@ -126,7 +130,9 @@ const EmptyPage: NextPageWithLayout = () => {
                         },
                         {
                           pattern:
-                            /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                            // /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                            // /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                            /^[\w\s]+([\.-]?[\w\s]+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, // allow space char
                           message: "Email đăng nhập chưa chính xác",
                         },
                       ]}
