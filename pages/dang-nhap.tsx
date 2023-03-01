@@ -169,7 +169,10 @@ const EmptyPage: NextPageWithLayout = () => {
                           justifyContent: "flex-end",
                         }}
                       >
-                        <Link className="register-now" href={"/quen-mat-khau"}>
+                        <Link
+                          className="register-now link"
+                          href={"/quen-mat-khau"}
+                        >
                           Bạn quên mật khẩu?
                         </Link>
                       </div>
@@ -199,7 +202,7 @@ const EmptyPage: NextPageWithLayout = () => {
                             <span className="have-account">
                               Bạn chưa có tài khoản?
                             </span>
-                            <Link href="/dang-ky" className="register-now">
+                            <Link href="/dang-ky" className="register-now link">
                               Đăng ký ngay
                             </Link>
                           </div>

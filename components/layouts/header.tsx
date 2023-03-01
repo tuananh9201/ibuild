@@ -11,7 +11,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import useWindowDimensions from "utils/dimension";
 import UserAvatar from "./avatar";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
@@ -22,12 +21,12 @@ const menus = [
     href: "/san-pham",
   },
   {
-    name: "Văn bản pháp lý",
-    href: "/van-ban-phap-ly",
+    name: "Mẫu thiết kế",
+    href: "/mau-thiet-ke",
   },
   {
-    name: "Thông tin xây dựng",
-    href: "/thong-tin-xay-dung",
+    name: "Văn bản pháp lý",
+    href: "/van-ban-phap-ly",
   },
 ];
 const pathsShowBackButton = ["/"];
@@ -38,7 +37,6 @@ const MainHeader = () => {
   const currentPath = router.pathname;
   const [openMenu, setOpenMenu] = useState(false);
   const headerClass = currentPath === "/" ? "" : "header-border";
-  const { width } = useWindowDimensions();
   const isHidden = pathsShowBackButton.includes(router.pathname);
   const handleClickBack = () => {
     router.back();
@@ -65,12 +63,12 @@ const MainHeader = () => {
           >
             <Image src={menuIcon} alt="" />
           </div>
-          <div className="headerSearch">
+          {/* <div className="headerSearch">
             <div className="search-icon">
               <Image src={searchIcon} alt="" />
             </div>
             <input type="text" placeholder="Bạn đang muốn tìm gì?" />
-          </div>
+          </div> */}
         </div>
         <div className="menu">
           <div className="menu-items">
