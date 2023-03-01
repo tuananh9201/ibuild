@@ -58,7 +58,8 @@ import SendEmailSuccess from "../images/SendEmailSuccess.png";
 import Clock from "../images/clock.png";
 import ChangePassSuccessImage from "../images/ChangePasswordSuccess.png";
 import OverTurn from "../images/OverTurn.png";
-
+import userAvata from "../images/userAvata.png";
+import keyboardArrowUp from "../images/icons/keyboard_arrow_up.png";
 export {
   logo,
   addressIcon,
@@ -119,4 +120,6 @@ export {
   productImage,
   designImage,
   bookImage,
+  userAvata,
+  keyboardArrowUp,
 };

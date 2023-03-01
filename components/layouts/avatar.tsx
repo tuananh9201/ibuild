@@ -1,16 +1,18 @@
 import * as React from "react";
 import style from "@/styles/modules/avartar.module.scss";
-import { Avatar, Switch, Dropdown, Space } from "antd";
-import { UserOutlined, DownOutlined } from "@ant-design/icons";
+import { Switch, Dropdown, Space } from "antd";
 import type { MenuProps } from "antd";
 import Image from "next/image";
-import { logoutIcon, useIcon } from "@/constants/images";
+import {
+  keyboardArrowUp,
+  logoutIcon,
+  useIcon,
+  userAvata,
+} from "@/constants/images";
 import { User } from "lib/types";
-import user from "store/features/user/user";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { logout } from "store/features/auth/auth";
 import { useRouter } from "next/router";
-
 interface IUserAvatarProps {
   user: User;
 }
@@ -90,11 +92,13 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
   ];
   return (
     <div className={style.Avatar_Area}>
-      <Avatar size={24} icon={<UserOutlined />} />
       <Dropdown menu={{ items }}>
         <Space>
+          <div>
+            <Image width={32} height={32} src={userAvata} alt="user-avatar" />
+          </div>
           {props.user.full_name || props.user.email}
-          <DownOutlined />
+          <Image width={24} height={24} src={keyboardArrowUp} alt="up-icon" />
         </Space>
       </Dropdown>
     </div>
