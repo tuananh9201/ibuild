@@ -21,14 +21,22 @@ const menus = [
   {
     name: "Sản phẩm",
     href: "/san-pham",
+    role: ["user", "expert"],
   },
   {
     name: "Mẫu thiết kế",
     href: "/mau-thiet-ke",
+    role: ["user"],
   },
   {
     name: "Văn bản pháp lý",
     href: "/van-ban-phap-ly",
+    role: ["user", "expert"],
+  },
+  {
+    name: "Thông tin xây dựng",
+    href: "/thong-tin-xay-dung",
+    role: ["expert"],
   },
 ];
 const pathsShowBackButton = ["/"];
@@ -62,6 +70,8 @@ const MainHeader = () => {
   useEffect(() => {
     autoLogin();
   }, []);
+  const userRole = user?.user_type || "user";
+  const menusByUser = menus.filter((m) => m.role.find((r) => r === userRole));
 
   return (
     <div className={`main-header ${headerClass}`}>
@@ -94,7 +104,7 @@ const MainHeader = () => {
         </div>
         <div className="menu">
           <div className="menu-items">
-            {menus.map((menu, idx) => (
+            {menusByUser.map((menu, idx) => (
               <Link
                 key={idx}
                 href={menu.href}
