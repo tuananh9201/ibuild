@@ -1,104 +1,104 @@
 @import "variables";
 
 .btn-search {
-    width: 144px;
-    min-width: 144px !important;
+  width: 144px;
+  min-width: 144px !important;
 }
 
 .ibuild-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    background-color: $primary-color;
-    border-radius: 8px;
-    border: 1px solid transparent;
-    color: #fff;
-    min-width: 380px;
-    min-height: 46px;
-    font-size: 16px;
-    font-weight: 500;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: $primary-color;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  color: #fff;
+  width: 100%; // trangbv more add 22/2/2023
+  min-width: 380px;
+  min-height: 46px;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
 
-    @media screen and (max-width:$breakpoint) {
-        min-width: 270px;
-    }
+  @media screen and (max-width: $breakpoint) {
+    min-width: 270px;
+  }
 }
 
 .ibuild-btn-outline {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 11px 37px;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 11px 37px;
+  gap: 10px;
 
-    min-width: 276px;
-    min-height: 46px;
-    /* Primary */
-    background: #fff;
-    border: 1px solid $primary-color;
-    border-radius: 8px;
+  min-width: 276px;
+  min-height: 46px;
+  /* Primary */
+  background: #fff;
+  border: 1px solid $primary-color;
+  border-radius: 8px;
 
-    /* Inside auto layout */
+  /* Inside auto layout */
 
-    flex: none;
-    order: 5;
-    align-self: stretch;
-    flex-grow: 0;
-    color: $primary-color;
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 150%;
+  flex: none;
+  order: 5;
+  align-self: stretch;
+  flex-grow: 0;
+  color: $primary-color;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
 
-    &:hover {
-        background: $primary-color;
-        color: #fff
-    }
+  &:hover {
+    background: $primary-color;
+    color: #fff;
+  }
 }
 
 .btn-in-card {
-    @extend .ibuild-btn;
-    min-width: 172px;
+  @extend .ibuild-btn;
+  min-width: 172px;
+  min-height: 44px;
+  border-radius: 4px;
+
+  &.view-detail {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    width: 100%;
+  }
+
+  &.outline {
     min-height: 44px;
-    border-radius: 4px;
+    min-width: 44px;
+    /* Primary */
+    background-color: #fff !important;
+    border: 1px solid $primary-color;
+    width: 100%;
+    color: $primary-color;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 4px;
 
-    &.view-detail {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        padding: 10px 20px;
-        width: 100%;
+    &:hover {
+      background-color: $primary-color !important;
+      color: #fff !important;
+
+      img {
+        color: #fff;
+        fill: #fff;
+      }
     }
-
-    &.outline {
-        min-height: 44px;
-        min-width: 44px;
-        /* Primary */
-        background-color: #fff !important;
-        border: 1px solid $primary-color;
-        width: 100%;
-        color: $primary-color;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        padding: 0px;
-        gap: 4px;
-
-
-        &:hover {
-            background-color: $primary-color !important;
-            color: #fff !important;
-
-            img {
-                color: #fff;
-                fill: #fff;
-            }
-        }
-    }
+  }
 }

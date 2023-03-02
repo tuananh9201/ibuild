@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { logo, addressIcon, phoneIcon, sendIcon } from "@/constants/images";
 import { Row, Col, Input } from "antd";
+import Link from "next/link";
 export default function Footer() {
   return (
     <div className="main-footer">
@@ -54,30 +55,32 @@ export default function Footer() {
           <div className="footer-menu">
             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link href="/ve-chung-toi" className={`nav-link`}>
+                  Về chúng tôi
+                  <div className="bottom-menu"></div>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" href="/san-pham">
                   Sản phẩm
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" href="#">
                   Văn bản pháp lý
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" href="#">
                   Thông tin xây dựng
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Đăng ký / Đăng nhập
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
         </Col>
         <Col md={24} lg={8}>
           <div className="footer-form">
+            <div className="label">Theo dõi</div>
             <div className="input-gr">
               <input placeholder="info@gmail.com" type="text" />
               <div className="icon-send">

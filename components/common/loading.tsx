@@ -9,7 +9,7 @@ const LoadingComponent = (props: ILoadingComponentProps) => {
     <LoadingOutlined style={{ fontSize: props?.fontSize || 24 }} spin />
   );
   return (
-    <div className="loading-dynamic">
+    <div>
       <Spin indicator={antIcon} />
     </div>
   );

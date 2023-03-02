@@ -8,6 +8,9 @@ export interface ICategory {
   name: string;
   logo: string;
   parentId?: string;
+  image?: string;
+  icon?: string;
+  slug?: string;
 }
 export interface ISupplier {
   id: string;
@@ -64,3 +67,20 @@ export interface IBreadcrums {
   slug: string;
   title: string;
 }
+
+export type User = {
+  id: number;
+  full_name: string;
+  email: string;
+  access_token?: string;
+  picture?: string;
+  user_type?: string;
+};
+
+export type RulePassword = {
+  message: string;
+  code: string;
+  success?: boolean;
+  pattern: RegExp;
+  init: boolean;
+};

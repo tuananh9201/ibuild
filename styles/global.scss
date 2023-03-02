@@ -31,18 +31,13 @@ body {
   .left {
     width: 100%;
     height: 100%;
-    background-image: url("../images/unsplash.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
     flex: 1;
   }
 
   .left-signin {
     @extend .left;
-    background-image: url("../images/unsplash_signin.png");
 
-    @media screen and (max-width:$breakpoint) {
+    @media screen and (max-width: $breakpoint) {
       display: none;
     }
   }
@@ -51,7 +46,7 @@ body {
     @extend .left;
     background-image: url("../images/signup-bg.png");
 
-    @media screen and (max-width:$breakpoint) {
+    @media screen and (max-width: $breakpoint) {
       display: none;
     }
   }
@@ -103,7 +98,6 @@ body {
         }
 
         .heading {
-
           .logo {
             display: flex;
             justify-content: center;
@@ -116,6 +110,14 @@ body {
             margin-top: 16px;
             margin-bottom: 32px;
             font-size: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+
+            span:nth-child(2) {
+              font-size: 20px;
+              font-weight: 500;
+            }
           }
         }
 
@@ -136,10 +138,12 @@ body {
             .have-account {
               font-weight: 400;
               margin-right: 8px;
+              font-size: 16px;
+              line-height: 150%;
             }
 
             .register-now {
-              font-weight: 400;
+              font-weight: 500;
               color: $primary-color;
               text-decoration: none;
             }
@@ -151,14 +155,14 @@ body {
           width: 100%;
           height: 24px;
           text-align: center;
-          border-top: 1px solid #7F7F7F;
+          border-top: 1px solid #7f7f7f;
 
           .sepe-title {
             font-weight: 400;
-            font-family: 'Roboto';
+            font-family: "Roboto";
             font-style: normal;
             font-size: 16px;
-            background-color: #FFF;
+            background-color: #fff;
             padding: 0 16px;
             position: relative;
             top: -16px;
@@ -177,11 +181,49 @@ body {
             width: 100%;
             flex-direction: row !important;
             color: $primary-color !important;
+            font-weight: 500;
           }
+        }
+
+        // base style for test desc
+        .base-text {
+          font-size: 16px;
+          line-height: calc(24 / 16);
+          font-weight: 400;
+          text-align: justify;
+        }
+
+        .change-password-success {
+          margin: 24px 0;
+
+          img {
+            margin: 0 auto;
+          }
+        }
+
+        .change-password-noty {
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 24px;
+          text-align: center;
+
+          &-hours {
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 30px;
+            text-align: center;
+          }
+        }
+
+        .change-password-desc {
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 24px;
+          text-align: justify;
         }
       }
 
-      @media screen and (max-width:$breakpoint) {
+      @media screen and (max-width: $breakpoint) {
         margin: 60px 0px;
       }
     }
@@ -224,17 +266,14 @@ body {
   }
 }
 
-
-
 label {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 150%;
   color: $text-color;
 }
-
 
 .sepec-menu {
   display: flex;
@@ -264,7 +303,7 @@ label {
 
     .bottom-menu {
       display: block;
-      background: #C43330;
+      background: $primary-color;
       border-radius: 1px;
       width: 50%;
       width: 24px;
@@ -273,7 +312,7 @@ label {
   }
 
   .bottom-menu {
-    display: none
+    display: none;
   }
 
   &.active {
@@ -304,11 +343,11 @@ label {
   max-height: 80px;
 
   &.active {
-    border: 2px solid $primary-color
+    border: 2px solid $primary-color;
   }
 
   &:hover {
-    border: 2px solid $primary-color
+    border: 2px solid $primary-color;
   }
 }
 
@@ -363,4 +402,45 @@ label {
   @media screen and (max-width: $breakpoint) {
     display: none !important;
   }
+}
+
+button:disabled,
+button[disabled] {
+  background: #d1d1d1;
+  color: #fff;
+  pointer-events: none;
+}
+
+.link {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  color: $primary-color !important;
+}
+
+.password-helper {
+  margin: 8px 16px -8px 16px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+
+  li {
+    list-style-type: disc;
+    color: #999999;
+
+    &.error {
+      color: #E64545;
+    }
+
+    &.success {
+      color: #4D993D
+    }
+  }
+}
+
+// Overrid antd css
+.ant-form-item-explain-error {
+  margin: 4px 0 !important;
 }
