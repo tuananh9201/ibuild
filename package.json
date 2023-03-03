@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start -p 5454",
     "lint": "next lint",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "deploy": "npm run build && npm run start"
   },
   "dependencies": {
     "@ant-design/plots": "^1.2.4",
