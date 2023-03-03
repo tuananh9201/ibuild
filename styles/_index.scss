@@ -449,7 +449,15 @@
       align-items: center;
       justify-content: center;
       border-radius: 4px;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
+  }
+
+  .helper {
+    margin-top: 8px;
   }
 
   @media screen and (max-width: $breakpoint) {

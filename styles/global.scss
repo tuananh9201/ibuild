@@ -440,6 +440,10 @@ button[disabled] {
   }
 }
 
+.error {
+  color: #E64545;
+}
+
 // Overrid antd css
 .ant-form-item-explain-error {
   margin: 4px 0 !important;

@@ -2,16 +2,38 @@ import Image from "next/image";
 import { logo, addressIcon, phoneIcon, sendIcon } from "@/constants/images";
 import { Row, Col, Input } from "antd";
 import Link from "next/link";
+import { useState } from "react";
+import { ERRORS } from "@/constants/msg";
 export default function Footer() {
+  const [emailSubcriber, setEmailSubcriber] = useState("");
+  const [emailValidateMessages, setEmailValidateMessages] = useState("");
+  const handleValidEmail = (email: string) => {
+    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+  };
+  const onSubmitSubcriber = async () => {
+    let emailValidateMessages = "";
+    if (emailSubcriber.length === 0) {
+      emailValidateMessages = ERRORS.PLEASE_INPUT_EMAIL;
+    } else if (!handleValidEmail(emailSubcriber)) {
+      emailValidateMessages = ERRORS.MSG008;
+    }
+    setEmailValidateMessages(emailValidateMessages);
+  };
+  const onChangeEmailSubcriberInput = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = e.target.value;
+    setEmailSubcriber(value);
+  };
   return (
     <div className="main-footer">
       <Row style={{ width: "100%" }}>
         <Col md={24} lg={8}>
           <div className="info">
             <div className="logo-space">
-              <a href="#" className="logo">
+              <Link href="/" className="logo">
                 <Image src={logo} alt="IBUILD" />
-              </a>
+              </Link>
               <span className="desc">
                 Lorem Ipsum has been the industry's standard dummy text ever
                 since the.
@@ -82,10 +104,20 @@ export default function Footer() {
           <div className="footer-form">
             <div className="label">Theo dõi</div>
             <div className="input-gr">
-              <input placeholder="info@gmail.com" type="text" />
-              <div className="icon-send">
+              <input
+                value={emailSubcriber}
+                onChange={onChangeEmailSubcriberInput}
+                placeholder="info@gmail.com"
+                type="text"
+              />
+              <div onClick={onSubmitSubcriber} className="icon-send">
                 <Image src={sendIcon} alt="" />
               </div>
+            </div>
+            <div className="helper">
+              {emailValidateMessages ? (
+                <span className="error">{emailValidateMessages}</span>
+              ) : null}
             </div>
           </div>
         </Col>

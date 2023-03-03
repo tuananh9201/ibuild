@@ -9,4 +9,5 @@ export enum ERRORS {
   "MSG008" = "Email không đúng định dạng",
   "MSG009" = "Email đã được sử dụng",
   "MSG010" = "Mã xác nhận hết hiệu lực",
+  "PLEASE_INPUT_EMAIL" = "Vui lòng nhập email",
 }
