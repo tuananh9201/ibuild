@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { logo, addressIcon, phoneIcon, sendIcon } from "@/constants/images";
-import { Row, Col, Input } from "antd";
+import { Row, Col, Input, message } from "antd";
 import Link from "next/link";
 import { useState } from "react";
 import { ERRORS } from "@/constants/msg";
@@ -18,6 +18,7 @@ export default function Footer() {
       emailValidateMessages = ERRORS.MSG008;
     }
     setEmailValidateMessages(emailValidateMessages);
+    message.success("Đăng ký theo dõi thành công !");
   };
   const onChangeEmailSubcriberInput = (
     e: React.ChangeEvent<HTMLInputElement>
