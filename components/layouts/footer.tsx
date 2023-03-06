@@ -18,7 +18,8 @@ export default function Footer() {
       emailValidateMessages = ERRORS.MSG008;
     }
     setEmailValidateMessages(emailValidateMessages);
-    message.success("Đăng ký theo dõi thành công !");
+    emailValidateMessages.length === 0 &&
+      message.success("Đăng ký theo dõi thành công !");
   };
   const onChangeEmailSubcriberInput = (
     e: React.ChangeEvent<HTMLInputElement>
