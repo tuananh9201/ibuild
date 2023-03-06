@@ -45,8 +45,20 @@ export const signInWithProvider = async (
     );
     const user = res.user;
     return await user.getIdToken();
-  } catch (err) {
+  } catch (err: any) {
     console.error(err);
+    if (
+      err.email &&
+      err.code === "auth/account-exists-with-different-credential"
+    ) {
+      const linkedProvider =
+        provider === "google" ? facebookProvider : googleProvider;
+      linkedProvider.setCustomParameters({ login_hint: err.email });
+
+      const result = await signInWithPopup(auth, linkedProvider);
+      const user = result.user;
+      return await user.getIdToken();
+    }
     throw err;
   }
 };
