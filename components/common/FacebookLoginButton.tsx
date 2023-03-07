@@ -22,7 +22,7 @@ const FacebookLoginButton = (props: Props) => {
     }
     const accessToken = result;
     if (!accessToken) return;
-    return await handleLoginWithSocialToken(accessToken, "google.com");
+    return await handleLoginWithSocialToken(accessToken, "facebook.com");
   };
   const handleLoginWithSocialToken = async (
     accessToken: string,
