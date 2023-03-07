@@ -6,6 +6,8 @@ import {
   signInWithPopup,
   UserCredential,
   User,
+  fetchSignInMethodsForEmail,
+  linkWithCredential,
 } from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -29,10 +31,20 @@ export const auth = getAuth(app);
 
 const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
+const supportedPopupSignInMethods = [
+  GoogleAuthProvider.PROVIDER_ID,
+  FacebookAuthProvider.PROVIDER_ID,
+];
 interface SignInResult {
   user: User;
   provider: string;
   accessToken?: string;
+}
+function getProvider(providerId: string) {
+  if (providerId === "google") {
+    return googleProvider;
+  }
+  return facebookProvider;
 }
 
 export const signInWithProvider = async (
@@ -46,18 +58,32 @@ export const signInWithProvider = async (
     const user = res.user;
     return await user.getIdToken();
   } catch (err: any) {
+    console.log("********************");
     console.error(err);
     if (
       err.email &&
       err.code === "auth/account-exists-with-different-credential"
     ) {
-      const linkedProvider =
-        provider === "google" ? facebookProvider : googleProvider;
-      linkedProvider.setCustomParameters({ login_hint: err.email });
+      // const linkedProvider =
+      //   provider === "google" ? facebookProvider : googleProvider;
+      // linkedProvider.setCustomParameters({ login_hint: err.email });
 
-      const result = await signInWithPopup(auth, linkedProvider);
-      const user = result.user;
-      return await user.getIdToken();
+      // const result = await signInWithPopup(auth, linkedProvider);
+      // const user = result.user;
+      // return await user.getIdToken();
+      if (
+        err.email &&
+        err.credential &&
+        err.code === "auth/account-exists-with-different-credential"
+      ) {
+        const linkedProvider = getProvider(provider);
+        linkedProvider.setCustomParameters({ login_hint: err.email });
+
+        const result = await signInWithPopup(auth, linkedProvider);
+        const rs = await linkWithCredential(result.user, err.credential);
+        console.log("Account linking success", rs);
+        return await rs.user.getIdToken();
+      }
     }
     throw err;
   }
