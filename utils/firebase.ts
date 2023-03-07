@@ -57,34 +57,8 @@ export const signInWithProvider = async (
     );
     const user = res.user;
     return await user.getIdToken();
-  } catch (err: any) {
-    console.log("********************");
+  } catch (err) {
     console.error(err);
-    if (
-      err.email &&
-      err.code === "auth/account-exists-with-different-credential"
-    ) {
-      // const linkedProvider =
-      //   provider === "google" ? facebookProvider : googleProvider;
-      // linkedProvider.setCustomParameters({ login_hint: err.email });
-
-      // const result = await signInWithPopup(auth, linkedProvider);
-      // const user = result.user;
-      // return await user.getIdToken();
-      if (
-        err.email &&
-        err.credential &&
-        err.code === "auth/account-exists-with-different-credential"
-      ) {
-        const linkedProvider = getProvider(provider);
-        linkedProvider.setCustomParameters({ login_hint: err.email });
-
-        const result = await signInWithPopup(auth, linkedProvider);
-        const rs = await linkWithCredential(result.user, err.credential);
-        console.log("Account linking success", rs);
-        return await rs.user.getIdToken();
-      }
-    }
     throw err;
   }
 };
