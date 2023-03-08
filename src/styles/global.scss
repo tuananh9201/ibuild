@@ -12,6 +12,11 @@
 @import "~tailwindcss/components";
 @import "~tailwindcss/utilities";
 
+:root {
+  --primary-color: #314eac;
+  --secondary-color: #000;
+}
+
 body {
   line-height: 1;
   font-family: $font !important;

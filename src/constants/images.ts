@@ -60,6 +60,9 @@ import ChangePassSuccessImage from "../images/ChangePasswordSuccess.png";
 import OverTurn from "../images/OverTurn.png";
 import userAvata from "../images/userAvata.png";
 import keyboardArrowUp from "../images/icons/keyboard_arrow_up.png";
+import sologan1 from "../images/product/sologan1.svg";
+import sologan2 from "../images/product/sologan2.svg";
+import sologan3 from "../images/product/sologan3.svg";
 export {
   logo,
   addressIcon,
@@ -122,4 +125,7 @@ export {
   bookImage,
   userAvata,
   keyboardArrowUp,
+  sologan1,
+  sologan2,
+  sologan3,
 };
