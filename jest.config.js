@@ -2,7 +2,7 @@ const nextJest = require("next/jest");
 
 const createJestConfig = nextJest({
   // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
-  dir: "./",
+  dir: "./src",
 });
 
 // Add any custom config to be passed to Jest
@@ -20,10 +20,10 @@ const customJestConfig = {
 
   moduleNameMapper: {
     // "@/(.*)$": "<rootDir>/src/$1",
-    "^@/components/(.*)$": "<rootDir>/components/$1",
-    "^@/constants/(.*)$": "<rootDir>/constants/$1",
-    "^@/styles/(.*)$": "<rootDir>/styles/$1",
-    "^@/data/(.*)$": "<rootDir>/data/$1",
+    "^@/components/(.*)$": "<rootDir>/src/components/$1",
+    "^@/constants/(.*)$": "<rootDir>/src/constants/$1",
+    "^@/styles/(.*)$": "<rootDir>/src/styles/$1",
+    "^@/data/(.*)$": "<rootDir>/src/data/$1",
   },
   testEnvironment: "jest-environment-jsdom",
 };
