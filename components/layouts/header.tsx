@@ -6,16 +6,16 @@ import {
   searchIcon,
 } from "@/constants/images";
 import { Drawer } from "antd";
+import { setToken } from "lib/api/api";
 import useUser from "lib/hooks/user";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import UserAvatar from "./avatar";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "store/store";
-import { setToken } from "lib/api/api";
 import { login } from "store/features/auth/auth";
+import { RootState } from "store/store";
+import UserAvatar from "./avatar";
 
 const menus = [
   {
@@ -75,40 +75,37 @@ const MainHeader = () => {
 
   return (
     <div className={`main-header ${headerClass}`}>
-      <div className="header-nav">
-        <div className="headerLeft">
+      <div className="flex flex-row justify-between items-center gap-4 bg-[#fff] w-full">
+        <div className="flex flex-row gap-[24px] items-center justify-between lg:w-full">
           {isHidden ? null : (
-            <div onClick={() => handleClickBack()} className="nav_navigate">
+            <div
+              onClick={() => handleClickBack()}
+              className="flex w-6 h-6 cursor-pointer lg:hidden"
+            >
               {" "}
               <Image src={arrowBackIos} alt="" />
             </div>
           )}
 
-          <Link href="/" className="logo">
+          <Link href="/" className="gap-6 max-w-[90px] max-h-6">
             <Image src={logo} alt="IBUILD" />
           </Link>
           <div
             onClick={() => {
               setOpenMenu(!openMenu);
             }}
-            className="toggle-button hidden-lg"
+            className="flex lg:hidden cursor-pointer justify-center items-center hover:cursor-pointer "
           >
             <Image src={menuIcon} alt="" />
           </div>
-          {/* <div className="headerSearch">
-            <div className="search-icon">
-              <Image src={searchIcon} alt="" />
-            </div>
-            <input type="text" placeholder="Bạn đang muốn tìm gì?" />
-          </div> */}
         </div>
-        <div className="menu">
-          <div className="menu-items">
+        <div className="flex flex-row justify-between">
+          <div className="hidden lg:flex flex-row items-center p-0 gap-8">
             {menusByUser.map((menu, idx) => (
               <Link
                 key={idx}
                 href={menu.href}
-                className={`menu-item ${
+                className={`font-roboto not-italic font-normal text-base leading-[150%] cursor-pointer text-[#343434] no-underline  ${
                   menu.href === currentPath ? "active" : ""
                 }`}
               >

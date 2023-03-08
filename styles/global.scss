@@ -1,5 +1,6 @@
 @import "reset";
 @import "variables";
+@import "tailwindcss";
 @import "product";
 @import "role";
 @import "index";
@@ -431,17 +432,17 @@ button[disabled] {
     color: #999999;
 
     &.error {
-      color: #E64545;
+      color: #e64545;
     }
 
     &.success {
-      color: #4D993D
+      color: #4d993d;
     }
   }
 }
 
 .error {
-  color: #E64545;
+  color: #e64545;
 }
 
 // Overrid antd css
