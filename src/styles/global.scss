@@ -47,7 +47,6 @@ body {
 
   .left-signup {
     @extend .left;
-    background-image: url("../images/signup-bg.png");
 
     @media screen and (max-width: $breakpoint) {
       display: none;

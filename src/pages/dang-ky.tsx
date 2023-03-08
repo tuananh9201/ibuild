@@ -121,7 +121,8 @@ const SignUpPage: NextPageWithLayout = () => {
             width: "100%",
             height: "100%",
           }}
-          priority={true}
+          priority
+          placeholder="blur"
           src={unsplashSignUp}
           alt=""
         />

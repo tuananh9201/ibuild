@@ -26,6 +26,8 @@ const HomePage: NextPageWithLayout = () => {
             <Col lg={8} md={24}>
               <div className="card">
                 <Image
+                  priority
+                  placeholder="blur"
                   className="card-image"
                   src={productImage}
                   alt="product"
@@ -45,7 +47,13 @@ const HomePage: NextPageWithLayout = () => {
             </Col>
             <Col lg={8} md={24}>
               <div className="card">
-                <Image className="card-image" src={bookImage} alt="book" />
+                <Image
+                  priority
+                  placeholder="blur"
+                  className="card-image"
+                  src={bookImage}
+                  alt="book"
+                />
                 <div className="card-introduce">
                   <h2>Mẫu thiết kế</h2>
                   <div className="description">
@@ -61,7 +69,13 @@ const HomePage: NextPageWithLayout = () => {
             </Col>
             <Col lg={8} md={24}>
               <div className="card">
-                <Image className="card-image" src={designImage} alt="design" />
+                <Image
+                  priority
+                  placeholder="blur"
+                  className="card-image"
+                  src={designImage}
+                  alt="design"
+                />
                 <div className="card-introduce">
                   <h2>Văn bản pháp lý</h2>
                   <div className="description">

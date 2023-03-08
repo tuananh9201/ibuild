@@ -82,6 +82,8 @@ const EmptyPage: NextPageWithLayout = () => {
       </Head>
       <div className="left-signin">
         <Image
+          priority
+          placeholder="blur"
           style={{
             width: "100%",
             height: "100%",
