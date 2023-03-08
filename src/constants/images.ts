@@ -64,6 +64,7 @@ import sologan1 from "../images/product/sologan1.svg";
 import sologan2 from "../images/product/sologan2.svg";
 import sologan3 from "../images/product/sologan3.svg";
 import historyIcon from "../images/icons/History.svg";
+import cate1 from "../images/product/categories/cate_1.svg";
 export {
   logo,
   addressIcon,
@@ -130,4 +131,5 @@ export {
   sologan2,
   sologan3,
   historyIcon,
+  cate1,
 };
