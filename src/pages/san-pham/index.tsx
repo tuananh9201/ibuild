@@ -6,6 +6,7 @@ import { ICategory } from "src/lib/types";
 import Image from "next/image";
 import style from "@/styles/modules/productCategories/index.module.scss";
 import { sologan1, sologan2, sologan3 } from "@/constants/images";
+import ProductSearch from "@/components/products/ProductSearch";
 type Props = {
   categories: ICategory[];
 };
@@ -54,31 +55,7 @@ const SanPham: NextPageWithLayout<Props> = (props: Props) => {
               className="w-28"
             />
           </div>
-          <div className="mt-10 flex flex-row justify-start items-center p-2 gap-2 lg:max-w-3/4 bg-white border-solid border border-[#dddddd] rounded-lg h-16">
-            <div className="icon-search w-5 h-5">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-5 h-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                />
-              </svg>
-            </div>
-            <input
-              className="input-search w-96 placeholder:text-black text-base font-normal"
-              placeholder="Bạn đang muốn tìm sản phẩm nào?"
-            />
-            <button className="btn-search flex justify-center items-center rounded-lg bg-primary-color w-36 h-12 text-white font-medium">
-              Tìm kiếm
-            </button>
-          </div>
+          <ProductSearch />
         </div>
       </div>
     </>

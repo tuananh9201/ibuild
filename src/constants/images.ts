@@ -63,6 +63,7 @@ import keyboardArrowUp from "../images/icons/keyboard_arrow_up.png";
 import sologan1 from "../images/product/sologan1.svg";
 import sologan2 from "../images/product/sologan2.svg";
 import sologan3 from "../images/product/sologan3.svg";
+import historyIcon from "../images/icons/History.svg";
 export {
   logo,
   addressIcon,
@@ -128,4 +129,5 @@ export {
   sologan1,
   sologan2,
   sologan3,
+  historyIcon,
 };
