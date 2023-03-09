@@ -14,6 +14,9 @@ module.exports = {
         "primary-color": "var(--primary-color)",
         "secondary-color": "var(--secondary-color)",
       },
+      fontFamily: {
+        roboto: "Roboto",
+      },
     },
   },
   plugins: [],
