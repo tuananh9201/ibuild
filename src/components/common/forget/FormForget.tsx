@@ -63,7 +63,7 @@ const FormForgetPassword = ({
           {() => (
             <div className="group-action">
               <button
-                className="ibuild-btn signin"
+                className="transition ease-in-out delay-150 duration-100 hover:-translate-y-1 hover:scale-110 w-full h-12 text-base font-medium flex justify-center items-center bg-primary-color rounded-lg text-white"
                 disabled={
                   form.getFieldsError().filter(({ errors }) => errors.length)
                     .length > 0 ||

@@ -10,7 +10,7 @@ import {
   unsplashSignUp,
 } from "@/constants/images";
 import Link from "next/link";
-import { Form, Input } from "antd";
+import { Form, Input, Spin } from "antd";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
@@ -22,6 +22,10 @@ import { validatePassword } from "src/utils/validate";
 import { RulePassword } from "src/lib/types";
 import { rulePassword } from "@/constants/rules";
 import { colorPrimary } from "@/constants/colors";
+import { LoadingOutlined } from "@ant-design/icons";
+
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
 const SignUpSuccess = () => {
   return (
     <div
@@ -285,9 +289,13 @@ const SignUpPage: NextPageWithLayout = () => {
                             cPassword.length === 0 ||
                             !isValidPassword
                           }
-                          className="ibuild-btn signin"
+                          className="w-full h-12 text-base font-medium flex justify-center items-center bg-primary-color rounded-lg text-white"
                         >
-                          Tạo tài khoản
+                          {loadingRegister ? (
+                            <Spin indicator={antIcon} />
+                          ) : (
+                            "Tạo tài khoản"
+                          )}
                         </button>
                         <div className="register-link">
                           <span className="have-account">
