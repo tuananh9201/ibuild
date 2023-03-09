@@ -76,7 +76,7 @@ const MainHeader = () => {
   return (
     <div className={`main-header ${headerClass}`}>
       <div className="flex flex-row justify-between items-center gap-4 bg-[#fff] w-full">
-        <div className="flex flex-row gap-[24px] items-center justify-between lg:w-full">
+        <div className="w-fll gap-[24px] items-center justify-between">
           {isHidden ? null : (
             <div
               onClick={() => handleClickBack()}

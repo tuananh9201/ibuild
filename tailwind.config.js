@@ -9,9 +9,6 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
-    fontFamily: {
-      roboto: "Roboto",
     extend: {
       colors: {
         "primary-color": "var(--primary-color)",
