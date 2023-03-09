@@ -195,7 +195,7 @@ const EmptyPage: NextPageWithLayout = () => {
                               isDisabledButtonLogin
                             }
                             type="submit"
-                            className="ibuild-btn signin"
+                            className="transition ease-in-out delay-150 duration-200 hover:-translate-y-1 hover:scale-110 w-full h-12 text-base font-medium flex justify-center items-center bg-primary-color rounded-lg text-white"
                           >
                             {loading ? (
                               <Spin indicator={antIcon} />
