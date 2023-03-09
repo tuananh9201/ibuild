@@ -12,6 +12,14 @@ module.exports = {
     extend: {},
     fontFamily: {
       roboto: "Roboto",
+    extend: {
+      colors: {
+        "primary-color": "var(--primary-color)",
+        "secondary-color": "var(--secondary-color)",
+      },
+      fontFamily: {
+        roboto: "Roboto",
+      },
     },
   },
   plugins: [],
