@@ -28,24 +28,9 @@ const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const SignUpSuccess = () => {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        width: "100%",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 24,
-      }}
-    >
+    <div className="flex flex-col w-full items-center justify-center gap-6">
       <Image alt="" src={signUpSuccess} />
-      <div
-        style={{
-          fontWeight: 400,
-          fontSize: 16,
-          lineHeight: "150%",
-        }}
-      >
+      <div className="font-normal text-base leading-normal">
         Cảm ơn bạn đã tạo tài khoản iBuild. Hãy sử dụng tài khoản này để nghiên
         cứu, tham khảo thông tin và nhiều điều thú vị về xây dựng do iBuild cung
         cấp nhé.
@@ -119,33 +104,30 @@ const SignUpPage: NextPageWithLayout = () => {
       <Head>
         <title>Đăng ký</title>
       </Head>
-      <div className="left-signup">
+      <div className="w-full h-full flex-1 hidden lg:block">
         <Image
-          style={{
-            width: "100%",
-            height: "100%",
-          }}
+          className="w-full h-full"
           priority
           placeholder="blur"
           src={unsplashSignUp}
           alt=""
         />
       </div>
-      <div className="right-signin">
-        <div className="right-signin-container">
-          <div className="right-signin-container-nav">
+      <div className="w-full h-full flex-1">
+        <div className="flex flex-col justify-start mt-20 mr-10 mb-auto ml-10 min-h-[300px]">
+          <div className="flex flex-row justify-start px-5 py-2 ">
             {isSuccess ? null : (
               <Link href="/">
                 <Image src={backIcon} alt="" />
               </Link>
             )}
           </div>
-          <div className="right-signin-container-content">
-            <div className="heading">
-              <div className="logo">
+          <div className="mx-20 my-14">
+            <div>
+              <div className="flex justify-center items-center max-w-[120px] max-h-[30px]">
                 <Image src={logo} alt="" />
               </div>
-              <div className="welcome">
+              <div className="mt-4 mb-8 text-3xl flex justify-between items-baseline">
                 {isSuccess ? "Tạo tài khoản thành công" : "Tạo tài khoản"}
               </div>
             </div>
@@ -277,7 +259,7 @@ const SignUpPage: NextPageWithLayout = () => {
                   </Form.Item>
                   <Form.Item shouldUpdate>
                     {() => (
-                      <div className="group-action">
+                      <div>
                         <button
                           disabled={
                             form
@@ -297,11 +279,14 @@ const SignUpPage: NextPageWithLayout = () => {
                             "Tạo tài khoản"
                           )}
                         </button>
-                        <div className="register-link">
-                          <span className="have-account">
+                        <div className="mt-6 flex flex-row justify-end">
+                          <span className="font-normal mr-2 text-base leading-normal">
                             Bạn đã có tài khoản?
                           </span>
-                          <Link href="/dang-nhap" className="register-now">
+                          <Link
+                            href="/dang-nhap"
+                            className="font-medium no-underline text-primary-color"
+                          >
                             Đăng nhập ngay
                           </Link>
                         </div>
