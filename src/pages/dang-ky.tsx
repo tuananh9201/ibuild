@@ -26,6 +26,21 @@ import { LoadingOutlined } from "@ant-design/icons";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
+const FormSignUpWithEmail = () => {
+  return <div>Form</div>;
+};
+const FormSignUpWithPhone = () => {
+  return <div>Form Phone</div>;
+};
+
+const tabs = [
+  {
+    name: "phone",
+    component: <FormSignUpWithPhone />,
+    displayName: "Số điện thoại",
+  },
+  { name: "email", component: <FormSignUpWithEmail />, displayName: "Email" },
+];
 const SignUpSuccess = () => {
   return (
     <div className="flex flex-col w-full items-center justify-center gap-6">
@@ -51,6 +66,7 @@ const SignUpPage: NextPageWithLayout = () => {
   const [showErrorDiffPassword, setShowErrorDiffPassword] = useState(false);
   const [isValidPassword, setIsValidPassword] = useState(false);
   const [rules, setRules] = useState<RulePassword[]>(rulePassword);
+  const [tabActivate, setTabActivate] = useState("phone");
   const onFinish = async (values: any) => {
     const credential = {
       email: values.email,
@@ -122,7 +138,7 @@ const SignUpPage: NextPageWithLayout = () => {
               </Link>
             )}
           </div>
-          <div className="mx-20 my-14">
+          <div className="mx-20 my-14 w-full">
             <div>
               <div className="flex justify-center items-center max-w-[120px] max-h-[30px]">
                 <Image src={logo} alt="" />
@@ -145,156 +161,26 @@ const SignUpPage: NextPageWithLayout = () => {
                 <SignUpSuccess />
               </motion.div>
             ) : (
-              <motion.div
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 260,
-                  damping: 20,
-                }}
-                className="form-sign-up"
-              >
-                <Form
-                  onFinish={onFinish}
-                  layout="vertical"
-                  form={form}
-                  style={{ maxWidth: "100%" }}
-                  requiredMark={false}
-                  scrollToFirstError
-                >
-                  <Form.Item
-                    name="email"
-                    label={
-                      <div>
-                        {" "}
-                        Email <span style={{ color: "red" }}>*</span>{" "}
+              <React.Fragment>
+                <ul className="tabs mt-6 w-full flex justify-between">
+                  {tabs.map((t) => (
+                    <li
+                      className={`group flex flex-col flex-1 items-center justify-center font-medium text-xl leading-normal text-[#999999] hover:text-primary-color hover:cursor-pointer hover:border-primary-color  ${
+                        tabActivate === t.name ? "active" : ""
+                      } `}
+                      key={t.name}
+                    >
+                      <div className="w-full space-x-8 text-center">
+                        {t.displayName}
                       </div>
-                    }
-                    rules={[
-                      {
-                        required: true,
-                        message: "Vui lòng nhập email",
-                      },
-                      {
-                        pattern:
-                          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                        message: "Email không đúng định dạng",
-                      },
-                    ]}
-                  >
-                    <Input size="large" placeholder="Nhập email" />
-                  </Form.Item>
-                  <Form.Item
-                    label={
-                      <div>
-                        {" "}
-                        Mật khẩu <span style={{ color: colorPrimary }}>
-                          *
-                        </span>{" "}
-                      </div>
-                    }
-                    validateStatus={
-                      isinitPage ? "" : isValidPassword ? "" : "error"
-                    }
-                  >
-                    <React.Fragment>
-                      <Input.Password
-                        size="large"
-                        placeholder="Nhập mật khẩu"
-                        onChange={onChangeValues}
-                      />
-                      <div className="password-helper">
-                        <ul>
-                          {rules.map((rule) => (
-                            <li
-                              key={rule.code}
-                              className={
-                                rule.init ? "" : rule.success ? "success" : ""
-                              }
-                            >
-                              {rule.message}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </React.Fragment>
-                  </Form.Item>
-                  <Form.Item
-                    name="confirm"
-                    label={
-                      <div>
-                        {" "}
-                        Nhập lại mật khẩu{" "}
-                        <span style={{ color: colorPrimary }}>*</span>{" "}
-                      </div>
-                    }
-                    rules={[
-                      {
-                        required: true,
-                        message: "Vui lòng nhập mật khẩu",
-                      },
-                      ({ getFieldValue }) => ({
-                        validator(_, value) {
-                          if (!value || password === value) {
-                            return Promise.resolve();
-                          }
-                          return Promise.reject(
-                            new Error("* Mật khẩu không trùng nhau")
-                          );
-                        },
-                      }),
-                    ]}
-                    // validateStatus={showErrorDiffPassword ? "error" : ""}
-                    // help={
-                    //   showErrorDiffPassword ? "* Mật khẩu không trùng nhau" : ""
-                    // }
-                  >
-                    <Input.Password
-                      onChange={onChangeCPassword}
-                      disabled={!isValidPassword}
-                      size="large"
-                      placeholder="Nhập mật khẩu"
-                    />
-                  </Form.Item>
-                  <Form.Item shouldUpdate>
-                    {() => (
-                      <div>
-                        <button
-                          disabled={
-                            form
-                              .getFieldsError()
-                              .filter(({ errors }) => errors.length).length >
-                              0 ||
-                            loadingRegister ||
-                            isinitPage ||
-                            cPassword.length === 0 ||
-                            !isValidPassword
-                          }
-                          className="w-full h-12 text-base font-medium flex justify-center items-center bg-primary-color rounded-lg text-white"
-                        >
-                          {loadingRegister ? (
-                            <Spin indicator={antIcon} />
-                          ) : (
-                            "Tạo tài khoản"
-                          )}
-                        </button>
-                        <div className="mt-6 flex flex-row justify-end">
-                          <span className="font-normal mr-2 text-base leading-normal">
-                            Bạn đã có tài khoản?
-                          </span>
-                          <Link
-                            href="/dang-nhap"
-                            className="font-medium no-underline text-primary-color"
-                          >
-                            Đăng nhập ngay
-                          </Link>
-                        </div>
-                      </div>
-                    )}
-                  </Form.Item>
-                </Form>
-              </motion.div>
+                      <div className="w-11 focus:text-primary-color focus:border-b-2 group-hover:text-primary-color group-hover:border-b-2 group-hover:border-primary-color text-center"></div>
+                    </li>
+                  ))}
+                </ul>
+                <div className="tab-content mt-5">
+                  {tabs.find((t) => t.name === tabActivate)?.component}
+                </div>
+              </React.Fragment>
             )}
           </div>
         </div>
