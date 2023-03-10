@@ -451,6 +451,43 @@ button[disabled] {
   color: #E64545;
 }
 
+.tab-item {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 150%;
+  color: #999999;
+
+  &:hover {
+    color: $primary-color !important;
+    font-weight: 500 !important;
+    margin-bottom: 0px;
+    cursor: pointer;
+
+    .bottom-menu {
+      display: block;
+      background: $primary-color;
+      border: 1px solid #314EAC;
+      width: 44px;
+      height: 0px;
+    }
+  }
+
+  .bottom-menu {
+    display: none;
+  }
+
+  &.active {
+    @extend :hover;
+  }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 // Overrid antd css
 .ant-form-item-explain-error {
   margin: 4px 0 !important;
