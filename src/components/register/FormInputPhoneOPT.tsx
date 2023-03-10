@@ -11,7 +11,6 @@ const FormInputPhoneOPT = (props: Props) => {
   const [inputRefsArray] = useState(() =>
     Array.from({ length: numerOfInputs }, () => createRef<HTMLInputElement>())
   );
-  const [currentIndex, setCurrentIndex] = useState(0);
   const onChangeOtp = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     if (value.length > 1) {
@@ -52,7 +51,7 @@ const FormInputPhoneOPT = (props: Props) => {
         ))}
       </div>
       <div className="mt-6 w-full">
-        <IbuildButton prefix="Tiếp tục" />
+        <IbuildButton disabled={otp.trim().length < 6} prefix="Tiếp tục" />
       </div>
       <div className="resend mt-4 flex justify-center w-full">
         <div className="text-primary-color font-medium text-base gap-1 flex justify-center items-center hover:cursor-pointer">
