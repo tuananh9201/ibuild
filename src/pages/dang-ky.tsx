@@ -12,17 +12,17 @@ import {
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import FormRegisterWithEmail from "@/components/register/FormRegisterWithEmail";
 import FormRegisterWithPhone from "@/components/register/FormRegisterWithPhone";
 import { RootState } from "src/store/store";
+import { showResendButton } from "src/store/features/auth/register";
 
 const SignUpPage: NextPageWithLayout = () => {
   const router = useRouter();
-  const [isSuccess, setIsSuccess] = useState(false);
   const [tabActive, setTabActive] = useState("phone");
-  const [timeRemaining, setTimeRemaining] = useState(10 * 60);
+  const dispatch = useDispatch();
+  const [timeRemaining, setTimeRemaining] = useState(30);
   const registerState = useSelector((state: RootState) => state.register);
 
   const tabs = [
@@ -46,11 +46,15 @@ const SignUpPage: NextPageWithLayout = () => {
     }
   }, [router]);
   useEffect(() => {
-    if (registerState.step === 2) {
+    if (
+      registerState.currentStep.step === 2 &&
+      !registerState.showResendButton
+    ) {
       const intervalId = setInterval(() => {
         setTimeRemaining((prevTime) => {
           if (prevTime === 0) {
             clearInterval(intervalId);
+            dispatch(showResendButton(true));
             return 0;
           } else {
             return prevTime - 1;
@@ -59,7 +63,13 @@ const SignUpPage: NextPageWithLayout = () => {
       }, 1000);
       return () => clearInterval(intervalId);
     }
-  }, [registerState, timeRemaining]);
+  }, [registerState, timeRemaining, dispatch]);
+  useEffect(() => {
+    if (!registerState.showResendButton) {
+      setTimeRemaining(30);
+    }
+  }, [registerState.showResendButton]);
+
   const minutes = Math.floor((timeRemaining % 3600) / 60);
   const seconds = timeRemaining % 60;
   return (
@@ -79,7 +89,7 @@ const SignUpPage: NextPageWithLayout = () => {
       <div className="w-full h-full flex-1">
         <div className="flex flex-col justify-start mt-20 mr-10 mb-auto ml-10 min-h-[300px]">
           <div className="flex flex-row justify-start px-5 py-2 ">
-            {registerState.step === 1 ? null : (
+            {registerState.currentStep.step === 1 ? null : (
               <Link href="/">
                 <Image src={backIcon} alt="" />
               </Link>
@@ -91,8 +101,8 @@ const SignUpPage: NextPageWithLayout = () => {
                 <Image src={logo} alt="" />
               </div>
               <div className="mt-4 mb-8 text-3xl flex justify-between items-baseline">
-                {registerState.title}
-                {registerState.step === 2 ? (
+                {registerState.currentStep.title}
+                {registerState.currentStep.step === 2 ? (
                   <div className="count-down font-medium text-lg">
                     {minutes < 10 ? `0${minutes}` : minutes}:{" "}
                     {seconds < 10 ? `0${seconds}` : seconds}
@@ -101,7 +111,7 @@ const SignUpPage: NextPageWithLayout = () => {
               </div>
             </div>
             <React.Fragment>
-              {registerState.step === 1 ? (
+              {registerState.currentStep.step === 1 ? (
                 <div className="tabs mt-6 w-full flex justify-between flex-row">
                   {tabs.map((t) => (
                     <Link

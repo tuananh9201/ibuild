@@ -3,8 +3,10 @@ import { Form, Input, Spin } from "antd";
 import React, { useState, useEffect } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import FormInputPhoneOPT from "./FormInputPhoneOPT";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { changeStep } from "src/store/features/auth/register";
+import { RootState } from "src/store/store";
+import ChangePassFailed from "../common/forget/ChangePassFailed";
 
 type Props = {};
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -14,11 +16,15 @@ function FormRegisterWithPhone(props: Props) {
   const [initForm, setInitForm] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
   const dispatch = useDispatch();
+  const registerState = useSelector((state: RootState) => state.register);
 
   const onFinish = (values: any) => {
     dispatch(changeStep(2));
     setIsSuccess(true);
   };
+  if (registerState.currentStep.step === 4) {
+    return <ChangePassFailed expires={24 * 60 * 60} />;
+  }
   return isSuccess ? (
     <FormInputPhoneOPT />
   ) : (
