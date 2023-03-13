@@ -8,7 +8,7 @@ type Props = {
   phone?: string;
 };
 const numerOfInputs = 6;
-const FormInputPhoneOPT = (props: Props) => {
+const FormInputPhoneOTP = (props: Props) => {
   const [otp, setOtp] = useState("");
   const dispath = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -121,4 +121,4 @@ const FormInputPhoneOPT = (props: Props) => {
   );
 };
 
-export default FormInputPhoneOPT;
+export default FormInputPhoneOTP;

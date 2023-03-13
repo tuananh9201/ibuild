@@ -2,7 +2,7 @@ import { ERRORS } from "@/constants/msg";
 import { Form, Input, Spin } from "antd";
 import React, { useState, useEffect } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
-import FormInputPhoneOPT from "./FormInputPhoneOPT";
+import FormInputPhoneOTP from "./FormInputPhoneOTP";
 import { useDispatch, useSelector } from "react-redux";
 import { changeStep } from "src/store/features/auth/register";
 import { RootState } from "src/store/store";
@@ -26,7 +26,7 @@ function FormRegisterWithPhone(props: Props) {
     return <ChangePassFailed expires={24 * 60 * 60} />;
   }
   return isSuccess ? (
-    <FormInputPhoneOPT />
+    <FormInputPhoneOTP />
   ) : (
     <Form
       onFinish={onFinish}
