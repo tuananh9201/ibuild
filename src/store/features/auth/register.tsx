@@ -10,6 +10,7 @@ interface RegisterState {
   steps: RegisterStep[];
   showResendButton: boolean;
   currentStep: RegisterStep;
+  expires: number;
 }
 const initialState: RegisterState = {
   steps: [
@@ -26,6 +27,7 @@ const initialState: RegisterState = {
     step: 1,
     title: "Tạo tài khoản",
   },
+  expires: 0,
 };
 export const registerSlice = createSlice({
   name: "register",
@@ -38,9 +40,17 @@ export const registerSlice = createSlice({
     showResendButton: (state, action: PayloadAction<boolean>) => {
       state.showResendButton = action.payload;
     },
+    changeExpire: (state, action: PayloadAction<number>) => {
+      state.expires = action.payload;
+    },
+    reset: (state) => {
+      state.currentStep = initialState.currentStep;
+      state.showResendButton = false;
+    },
   },
 });
 
-export const { changeStep, showResendButton } = registerSlice.actions;
+export const { changeStep, showResendButton, changeExpire, reset } =
+  registerSlice.actions;
 
 export default registerSlice.reducer;

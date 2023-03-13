@@ -86,8 +86,8 @@ export const passwordRecovery = async (
         attemp: error?.response?.data?.attemp,
       };
     }
-    if (statusCode===400) {
-      message.error(error?.response?.data?.message)
+    if (statusCode === 400) {
+      message.error(error?.response?.data?.message);
     }
     return { status: false };
   }
@@ -143,6 +143,46 @@ export const authWithSocialAccessToken = async (params: {
     const res = await api.post("/auth/verify-social-token", {
       access_token: params.accessToken,
       auth_provider: params.authProvider,
+    });
+    return res;
+  } catch (error: any) {
+    const statusCode = error?.response?.status;
+    if (statusCode === 400) {
+      notification.error({
+        description: error?.response?.data?.message || "Có lỗi xảy ra",
+        message: "Lỗi",
+        duration: 2,
+      });
+    }
+  }
+};
+
+export const registerWithPhoneNumber = async (phoneNumber: string) => {
+  try {
+    const res = await api.post("/auth/register-with-phone", {
+      phone_number: phoneNumber,
+    });
+    return res;
+  } catch (error: any) {
+    const statusCode = error?.response?.status;
+    if (statusCode === 400) {
+      notification.error({
+        description: error?.response?.data?.message || "Có lỗi xảy ra",
+        message: "Lỗi",
+        duration: 2,
+      });
+    }
+  }
+};
+
+export const verifySMSOTP = async (payload: {
+  otp: string;
+  phoneNumber: string;
+}) => {
+  try {
+    const res = await api.post("/auth/verify_sms_otp", {
+      phone_number: payload.phoneNumber,
+      otp_code: payload.otp,
     });
     return res;
   } catch (error: any) {

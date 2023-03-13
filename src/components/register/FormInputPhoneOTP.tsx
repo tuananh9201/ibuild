@@ -4,8 +4,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "src/store/store";
 import { useDispatch } from "react-redux";
 import { changeStep, showResendButton } from "src/store/features/auth/register";
+import { verifySMSOTP } from "src/lib/api/auth";
 type Props = {
-  phone?: string;
+  phone: string;
 };
 const numerOfInputs = 6;
 const FormInputPhoneOTP = (props: Props) => {
@@ -37,16 +38,19 @@ const FormInputPhoneOTP = (props: Props) => {
   const handleClickContinue = async () => {
     setLoading(true);
     setErrorMessage("");
-    const hardOTP = "999999";
+    let msg = "";
+    const result = await verifySMSOTP({ phoneNumber: props.phone, otp: otp });
+    console.log("result : ", result);
     if (registerState.showResendButton) {
-      setErrorMessage("Mã xác nhận hết hiệu lực");
-      return;
+      msg = "Mã xác nhận hết hiệu lực";
     }
-    if (otp.trim() === hardOTP) {
+    if (result) {
       dispath(changeStep(3));
     } else {
-      setErrorMessage("Mã xác nhận chưa chính xác");
+      msg = "Mã xác nhận chưa chính xác";
     }
+    setErrorMessage(msg);
+    setLoading(false);
   };
   return (
     <div>
@@ -66,6 +70,7 @@ const FormInputPhoneOTP = (props: Props) => {
             onChange={onChangeOtp}
             type="number"
             ref={ref}
+            key={idx}
           />
         ))}
       </div>
@@ -96,7 +101,7 @@ const FormInputPhoneOTP = (props: Props) => {
               viewBox="0 0 21 21"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g clip-path="url(#clip0_768_126)">
+              <g clipPath="url(#clip0_768_126)">
                 <path
                   d="M15.2086 5.89046C13.8502 4.53212 11.9252 3.74879 9.80855 3.96546C6.75022 4.27379 4.23355 6.75712 3.89189 9.81546C3.43355 13.8571 6.55855 17.2655 10.5002 17.2655C13.1586 17.2655 15.4419 15.7071 16.5086 13.4655C16.7752 12.9071 16.3752 12.2655 15.7586 12.2655C15.4502 12.2655 15.1586 12.4321 15.0252 12.7071C14.0836 14.7321 11.8252 16.0155 9.35855 15.4655C7.50855 15.0571 6.01689 13.5488 5.62522 11.6988C4.92522 8.46546 7.38355 5.59879 10.5002 5.59879C11.8836 5.59879 13.1169 6.17379 14.0169 7.08212L12.7586 8.34046C12.2336 8.86546 12.6002 9.76546 13.3419 9.76546H16.3336C16.7919 9.76546 17.1669 9.39046 17.1669 8.93212V5.94046C17.1669 5.19879 16.2669 4.82379 15.7419 5.34879L15.2086 5.89046Z"
                   fill={registerState.showResendButton ? "#4F86FF" : "#999999"}

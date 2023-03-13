@@ -1,12 +1,14 @@
 import { ERRORS } from "@/constants/msg";
-import { Form, Input, Spin } from "antd";
-import React, { useState, useEffect } from "react";
+import { Form, Spin, Input } from "antd";
+import React, { useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import FormInputPhoneOTP from "./FormInputPhoneOTP";
 import { useDispatch, useSelector } from "react-redux";
 import { changeStep } from "src/store/features/auth/register";
 import { RootState } from "src/store/store";
 import ChangePassFailed from "../common/forget/ChangePassFailed";
+import { registerWithPhoneNumber } from "src/lib/api/auth";
+import RegisterSuccess from "./RegisterSuccess";
 
 type Props = {};
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -15,18 +17,34 @@ function FormRegisterWithPhone(props: Props) {
   const [loading, setLoading] = useState(false);
   const [initForm, setInitForm] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [expireTime, setExpireTime] = useState(0);
   const dispatch = useDispatch();
   const registerState = useSelector((state: RootState) => state.register);
-
-  const onFinish = (values: any) => {
-    dispatch(changeStep(2));
-    setIsSuccess(true);
+  const onFinish = async (values: any) => {
+    setLoading(true);
+    const result = await registerWithPhoneNumber(values.phone);
+    if (result) {
+      const data = result.data.data;
+      const { remain, expires } = data;
+      if (remain < 0) {
+        dispatch(changeStep(4));
+        // dispatch(changeExpire(parseInt(expires)));
+        setExpireTime(parseInt(expires));
+      } else {
+        dispatch(changeStep(2));
+        setIsSuccess(true);
+      }
+    }
+    setLoading(false);
   };
+  if (registerState.currentStep.step === 3) {
+    return <RegisterSuccess redirectToLogin={true} />;
+  }
   if (registerState.currentStep.step === 4) {
-    return <ChangePassFailed expires={24 * 60 * 60} />;
+    return <ChangePassFailed expires={expireTime} />;
   }
   return isSuccess ? (
-    <FormInputPhoneOTP />
+    <FormInputPhoneOTP phone={form.getFieldValue("phone")} />
   ) : (
     <Form
       onFinish={onFinish}
@@ -58,8 +76,13 @@ function FormRegisterWithPhone(props: Props) {
           },
         ]}
       >
-        {/* <Input size="large" placeholder="Ví dụ: 0983..." /> */}
-        <input
+        {/* <input
+          placeholder="Ví dụ: 0983..."
+          onChange={onChangePhoneNumber}
+          value={phoneNumber}
+          className="h-12 w-full px-2 bg-white border-[#9A9A9A] border border-solid rounded-lg placeholder:text-[#717171]"
+        /> */}
+        <Input
           placeholder="Ví dụ: 0983..."
           className="h-12 w-full px-2 bg-white border-[#9A9A9A] border border-solid rounded-lg placeholder:text-[#717171]"
         />
@@ -70,7 +93,9 @@ function FormRegisterWithPhone(props: Props) {
             <button
               disabled={
                 form.getFieldsError().filter(({ errors }) => errors.length)
-                  .length > 0 || initForm
+                  .length > 0 ||
+                initForm ||
+                loading
               }
               className="w-full h-12 text-base font-medium flex justify-center items-center bg-primary-color rounded-lg text-white"
             >
