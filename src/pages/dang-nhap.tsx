@@ -123,7 +123,7 @@ const EmptyPage: NextPageWithLayout = () => {
                     onValuesChange={onChangeValues}
                   >
                     <Form.Item
-                      label="Email"
+                      label="Email hoặc số điện thoại đăng nhập"
                       name="email"
                       validateTrigger="onBlur"
                       rules={[
@@ -140,7 +140,10 @@ const EmptyPage: NextPageWithLayout = () => {
                         },
                       ]}
                     >
-                      <Input size="large" placeholder="Nhập email đăng nhập" />
+                      <Input
+                        size="large"
+                        placeholder="Ví dụ: abc@gmail.com hoặc 0983..."
+                      />
                     </Form.Item>
                     <Form.Item
                       name="password"
