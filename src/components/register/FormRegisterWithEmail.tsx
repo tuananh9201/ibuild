@@ -11,6 +11,7 @@ import { validatePassword } from "src/utils/validate";
 import { LoadingOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import RegisterSuccess from "./RegisterSuccess";
+import { changeStep } from "src/store/features/auth/register";
 type Props = {
   onSuccess: () => void;
 };
@@ -41,6 +42,7 @@ const FormRegisterWithEmail = (props: Props) => {
     if (accessToken) {
       setToken(accessToken);
       dispatch(login(accessToken));
+      dispatch(changeStep(3));
       setIsSuccess(true);
     }
     setLoadingRegister(false);
