@@ -38,6 +38,10 @@ const FormInputPhoneOPT = (props: Props) => {
     setLoading(true);
     setErrorMessage("");
     const hardOTP = "999999";
+    if (registerState.showResendButton) {
+      setErrorMessage("Mã xác nhận hết hiệu lực");
+      return;
+    }
     if (otp.trim() === hardOTP) {
       dispath(changeStep(3));
     } else {

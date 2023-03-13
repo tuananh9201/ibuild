@@ -22,7 +22,7 @@ const SignUpPage: NextPageWithLayout = () => {
   const router = useRouter();
   const [tabActive, setTabActive] = useState("phone");
   const dispatch = useDispatch();
-  const [timeRemaining, setTimeRemaining] = useState(30);
+  const [timeRemaining, setTimeRemaining] = useState(10 * 60);
   const registerState = useSelector((state: RootState) => state.register);
 
   const tabs = [
@@ -66,7 +66,7 @@ const SignUpPage: NextPageWithLayout = () => {
   }, [registerState, timeRemaining, dispatch]);
   useEffect(() => {
     if (!registerState.showResendButton) {
-      setTimeRemaining(30);
+      setTimeRemaining(10 * 60);
     }
   }, [registerState.showResendButton]);
 
