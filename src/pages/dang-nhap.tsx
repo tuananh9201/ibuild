@@ -73,7 +73,7 @@ const EmptyPage: NextPageWithLayout = () => {
       <Head>
         <title>Đăng nhập</title>
       </Head>
-      <div className="w-full h-full flex-1 hidden md:block">
+      <div className="w-full h-full flex-1 hidden lg:block">
         <Image
           priority
           placeholder="blur"
