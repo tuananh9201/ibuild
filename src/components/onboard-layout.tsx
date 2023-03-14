@@ -10,7 +10,9 @@ export default function OnBoardLayout({ children }: IOnboardLayoutProps) {
         <title>IBUILD</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <div className="onboard-wrapper">{children}</div>
+      <div className="max-w-[1440px] mx-auto my-0 flex h-screen">
+        {children}
+      </div>
     </>
   );
 }
