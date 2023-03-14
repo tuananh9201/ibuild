@@ -42,7 +42,7 @@ export default function MainLayout({ children }: IMainLayoutProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Provider store={store}>
-        <div className="wrapper">
+        <div className="max-w-[1440px] flex flex-col m-auto p-0 h-auto">
           <MainHeader />
           {children}
           <Footer />
