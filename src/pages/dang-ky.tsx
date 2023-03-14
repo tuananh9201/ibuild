@@ -3,12 +3,7 @@ import { NextPageWithLayout } from "./_app";
 import Head from "next/head";
 import OnBoardLayout from "@/components/onboard-layout";
 import Image from "next/image";
-import {
-  backIcon,
-  logo,
-  signUpSuccess,
-  unsplashSignUp2,
-} from "@/constants/images";
+import { backIcon, logo, unsplashSignUp2 } from "@/constants/images";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -72,6 +67,7 @@ const SignUpPage: NextPageWithLayout = () => {
 
   const minutes = Math.floor((timeRemaining % 3600) / 60);
   const seconds = timeRemaining % 60;
+  const selectedTab = tabs.find((t) => t.name === tabActive);
   return (
     <>
       <Head>
@@ -112,24 +108,26 @@ const SignUpPage: NextPageWithLayout = () => {
             </div>
             <React.Fragment>
               {registerState.currentStep.step === 1 ? (
-                <div className="tabs mt-6 w-full flex justify-between flex-row">
+                <ul className="mt-6 w-full flex justify-between flex-row">
                   {tabs.map((t) => (
-                    <Link
+                    <li
                       key={t.name}
-                      href={`#${t.name}`}
-                      className={`tab-item flex flex-col flex-1 justify-center items-center font-medium text-xl leading-normal text-[#999999] ${
+                      className={`group  flex flex-col flex-1 justify-center items-center hover:cursor-pointer ${
                         t.name === tabActive ? "active" : ""
                       }`}
                     >
-                      {t.displayName}
-                      <div className="bottom-menu"></div>
-                    </Link>
+                      <Link
+                        href={`#${t.name}`}
+                        className="font-medium text-xl leading-normal text-[#999999] hover:text-primary-color group-[.active]:text-primary-color"
+                      >
+                        {t.displayName}
+                      </Link>
+                      <div className="dot hidden group-[.active]:block w-12 border-b-2 border-solid border-primary-color"></div>
+                    </li>
                   ))}
-                </div>
+                </ul>
               ) : null}
-              <div className="tab-panel mt-5">
-                {tabs.find((t) => t.name === tabActive)?.component}
-              </div>
+              <div className="tab-panel mt-5">{selectedTab?.component}</div>
             </React.Fragment>
           </div>
         </div>
