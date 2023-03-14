@@ -85,11 +85,14 @@ const SignUpPage: NextPageWithLayout = () => {
       <div className="w-full h-full flex-1">
         <div className="flex flex-col justify-start mt-20 mr-10 mb-auto ml-10 min-h-[300px]">
           <div className="flex flex-row justify-start px-5 py-2 ">
-            {registerState.currentStep.step === 1 ? null : (
+            {/* {registerState.currentStep.step === 1 ? null : (
               <Link href="/">
                 <Image src={backIcon} alt="" />
               </Link>
-            )}
+            )} */}
+            <Link href="/">
+              <Image src={backIcon} alt="" />
+            </Link>
           </div>
           <div className="mx-20 my-14">
             <div>
@@ -128,17 +131,19 @@ const SignUpPage: NextPageWithLayout = () => {
                 </ul>
               ) : null}
               <div className="tab-panel mt-5">{selectedTab?.component}</div>
-              <div className="mt-6 flex flex-row justify-end items-center">
-                <span className="font-normal mr-2 text-base leading-normal">
-                  Bạn đã có tài khoản?
-                </span>
-                <Link
-                  href="/dang-nhap"
-                  className="font-medium no-underline text-primary-color"
-                >
-                  Đăng nhập ngay
-                </Link>
-              </div>
+              {registerState.currentStep.step !== 3 ? (
+                <div className="mt-6 flex flex-row justify-end items-center">
+                  <span className="font-normal mr-2 text-base leading-normal">
+                    Bạn đã có tài khoản?
+                  </span>
+                  <Link
+                    href="/dang-nhap"
+                    className="font-medium no-underline text-primary-color"
+                  >
+                    Đăng nhập ngay
+                  </Link>
+                </div>
+              ) : null}
             </React.Fragment>
           </div>
         </div>
