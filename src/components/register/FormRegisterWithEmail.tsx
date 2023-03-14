@@ -9,7 +9,6 @@ import { RulePassword } from "src/lib/types";
 import { login } from "src/store/features/auth/auth";
 import { validatePassword } from "src/utils/validate";
 import { LoadingOutlined } from "@ant-design/icons";
-import Link from "next/link";
 import RegisterSuccess from "./RegisterSuccess";
 import { changeStep } from "src/store/features/auth/register";
 type Props = {
@@ -178,17 +177,6 @@ const FormRegisterWithEmail = (props: Props) => {
             >
               {loadingRegister ? <Spin indicator={antIcon} /> : "Tạo tài khoản"}
             </button>
-            <div className="mt-6 flex flex-row justify-end">
-              <span className="font-normal mr-2 text-base leading-normal">
-                Bạn đã có tài khoản?
-              </span>
-              <Link
-                href="/dang-nhap"
-                className="font-medium no-underline text-primary-color"
-              >
-                Đăng nhập ngay
-              </Link>
-            </div>
           </div>
         )}
       </Form.Item>

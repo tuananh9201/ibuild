@@ -128,6 +128,17 @@ const SignUpPage: NextPageWithLayout = () => {
                 </ul>
               ) : null}
               <div className="tab-panel mt-5">{selectedTab?.component}</div>
+              <div className="mt-6 flex flex-row justify-end items-center">
+                <span className="font-normal mr-2 text-base leading-normal">
+                  Bạn đã có tài khoản?
+                </span>
+                <Link
+                  href="/dang-nhap"
+                  className="font-medium no-underline text-primary-color"
+                >
+                  Đăng nhập ngay
+                </Link>
+              </div>
             </React.Fragment>
           </div>
         </div>
