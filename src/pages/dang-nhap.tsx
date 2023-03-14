@@ -73,31 +73,28 @@ const EmptyPage: NextPageWithLayout = () => {
       <Head>
         <title>Đăng nhập</title>
       </Head>
-      <div className="left-signin">
+      <div className="w-full h-full flex-1 hidden md:block">
         <Image
           priority
           placeholder="blur"
-          style={{
-            width: "100%",
-            height: "100%",
-          }}
+          className="w-full h-full"
           src={unsplashLogin}
           alt=""
         />
       </div>
-      <div className="right-signin">
-        <div className="right-signin-container">
-          <div className="right-signin-container-nav">
+      <div className="w-full h-full flex-1">
+        <div className="flex flex-col justify-start mt-20 mr-10 mb-auto ml-10">
+          <div className="flex justify-start px-2 py-5 hover:cursor-pointer">
             <Link href="/">
               <Image src={backIcon} alt="" />
             </Link>
           </div>
-          <div className="right-signin-container-content">
+          <div className="my-12 mx-5 md:my-20 md:mx-14 ">
             <div className="heading">
-              <div className="logo">
+              <div className="flex justify-center items-center max-w-[120px] max-h[30px]">
                 <Image src={logo} alt="" />
               </div>
-              <div className="welcome">
+              <div className="mt-4 mb-8 flex justify-between items-baseline text-2xl">
                 {isLockEmail ? "Sai mật khẩu quá giới hạn" : null}
               </div>
             </div>
@@ -193,11 +190,14 @@ const EmptyPage: NextPageWithLayout = () => {
                               "Đăng nhập"
                             )}
                           </button>
-                          <div className="register-link">
-                            <span className="have-account">
+                          <div className="mt-6 flex justify-end">
+                            <span className="mr-2 text-base font-normal">
                               Bạn chưa có tài khoản?
                             </span>
-                            <Link href="/dang-ky" className="register-now link">
+                            <Link
+                              href="/dang-ky"
+                              className="font-medium text-primary-color text-base"
+                            >
                               Đăng ký ngay
                             </Link>
                           </div>
@@ -207,8 +207,10 @@ const EmptyPage: NextPageWithLayout = () => {
                   </Form>
                 </div>
 
-                <div className="sign-seperator">
-                  <span className="sepe-title">Đăng nhập bằng cách khác</span>
+                <div className="mt-8 w-full h-8 text-center border-t border-solid border-[#7f7f7f]">
+                  <span className="font-normal bg-white py-0 px-4 relative top-[-11px]">
+                    Đăng nhập bằng cách khác
+                  </span>
                 </div>
                 <div className="signin-other-platform">
                   <GoogleLoginButton />
