@@ -17,7 +17,6 @@ const getHeadPhone = (phoneNumber: string) => {
   for (let i = 0; i < HEADS.length; i++) {
     const head = HEADS[i];
     if (head === phoneNumber.substring(0, head.length)) {
-      console.log(" x head : ", phoneNumber.substring(0, head.length));
       return head;
     }
   }
