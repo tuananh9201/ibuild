@@ -67,6 +67,7 @@ import sologan3 from "../images/product/sologan3.svg";
 import historyIcon from "../images/icons/History.svg";
 import cate1 from "../images/product/categories/cate_1.svg";
 import refresh from "../images/icons/refresh.svg";
+import faxIcon from "../images/icons/faxIcon.svg";
 export {
   logo,
   addressIcon,
@@ -136,4 +137,5 @@ export {
   cate1,
   unsplashSignUp2,
   refresh,
+  faxIcon,
 };
