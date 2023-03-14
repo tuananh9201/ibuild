@@ -74,13 +74,19 @@ const MainHeader = () => {
   const menusByUser = menus.filter((m) => m.role.find((r) => r === userRole));
 
   return (
-    <div className={`main-header ${headerClass}`}>
+    <div
+      className={`flex flex-row justify-between gap-4 bg-[#fff] w-full pt-[56px] pr-5 pb-4 pl-5 border-solid border-[0.5px] border-[#bfbfbf] lg:px-[60px] lg:py-4 ${
+        headerClass
+          ? "flex flex-col border-solid border-[#ececec]"
+          : "border-b-0"
+      }`}
+    >
       <div className="flex flex-row justify-between items-center gap-4 bg-[#fff] w-full">
-        <div className="w-fll gap-[24px] items-center justify-between">
+        <div className="w-full lg:w-auto flex flex-row gap-6 items-center justify-between">
           {isHidden ? null : (
             <div
               onClick={() => handleClickBack()}
-              className="flex w-6 h-6 cursor-pointer lg:hidden"
+              className="block lg:hidden w-8 h-8 cursor-pointer"
             >
               {" "}
               <Image src={arrowBackIos} alt="" />
@@ -94,7 +100,7 @@ const MainHeader = () => {
             onClick={() => {
               setOpenMenu(!openMenu);
             }}
-            className="flex lg:hidden cursor-pointer justify-center items-center hover:cursor-pointer "
+            className="flex justify-center items-center cursor-pointer lg:hidden hover:cursor-pointer"
           >
             <Image src={menuIcon} alt="" />
           </div>
@@ -105,7 +111,7 @@ const MainHeader = () => {
               <Link
                 key={idx}
                 href={menu.href}
-                className={`font-roboto not-italic font-normal text-base leading-[150%] cursor-pointer text-[#343434] no-underline  ${
+                className={`font-roboto not-italic font-normal text-base leading-[150%] cursor-pointer text-[#343434] no-underline hover:text-primary-color hover:font-medium hover:mb-0 menu-item ${
                   menu.href === currentPath ? "active" : ""
                 }`}
               >
@@ -116,12 +122,18 @@ const MainHeader = () => {
             {user && accessToken ? (
               <UserAvatar user={user} />
             ) : (
-              <span className="wrap-menu">
-                <Link href="/dang-ky" className="menu-item">
+              <span className="flex flex-row items-center gap-2">
+                <Link
+                  href="/dang-ky"
+                  className="font-roboto not-italic font-normal text-base leading-[150%] cursor-pointer text-[#343434] no-underline hover:text-primary-color hover:font-medium hover:mb-0 menu-item"
+                >
                   Đăng ký <div className="bottom-menu"></div>
                 </Link>
                 /
-                <Link href="/dang-nhap" className="menu-item">
+                <Link
+                  href="/dang-nhap"
+                  className="font-roboto not-italic font-normal text-base leading-[150%] cursor-pointer text-[#343434] no-underline hover:text-primary-color hover:font-medium hover:mb-0 menu-item"
+                >
                   Đăng nhập
                   <div className="bottom-menu"></div>
                 </Link>
@@ -130,14 +142,22 @@ const MainHeader = () => {
           </div>
         </div>
       </div>
-      <div className="search-mobile">
-        <div className="header-search-mobile">
-          <div className="search-icon">
+      <div
+        className={`${
+          headerClass ? "" : "hidden"
+        } flex justify-between items-center lg:hidden`}
+      >
+        <div className="flex items-center py-[10px] pl-[111px] pr-4 gap-2 bg-[#ffffff] border-solid border-[#dddddd] rounder-[4px] w-full max-w-[80%]">
+          <div className="min-w-[30px]">
             <Image src={searchIcon} alt="" />
           </div>
-          <input type="text" placeholder="Bạn đang muốn tìm gì?" />
+          <input
+            className="border-none outline-none w-full"
+            type="text"
+            placeholder="Bạn đang muốn tìm gì?"
+          />
         </div>
-        <div className="icon-filter">
+        <div className="w-[30px] h-[30px] ml-6">
           <Image src={filterIcon} alt="" />
         </div>
       </div>
@@ -152,11 +172,11 @@ const MainHeader = () => {
         open={openMenu}
         width="100vw-44px"
       >
-        <ul className="navbar-nav-mobile">
+        <ul className="min-w-[276px] pl-7">
           {menus.map((menu) => (
-            <li key={menu.href} className="nav-item">
+            <li key={menu.href} className="mb-6 last:mb-0">
               <span
-                className="nav-link menu-item"
+                className="text-text-color font-normal text-base leading-[150%] items-center"
                 onClick={() => {
                   router.push(menu.href);
                   setOpenMenu(false);
@@ -166,13 +186,19 @@ const MainHeader = () => {
               </span>
             </li>
           ))}
-          <li className="nav-item">
-            <span className="sepec-menu">
-              <Link href="/dang-ky" className="nav-link menu-item">
+          <li className="mb-6 last:mb-0">
+            <span className="flex items-center">
+              <Link
+                href="/dang-ky"
+                className="text-text-color font-normal text-base leading-[150%] items-center"
+              >
                 Đăng ký{" "}
               </Link>
-              <span className="spece"> / </span>
-              <Link href="/dang-nhap" className="nav-link menu-item">
+              <span className="px-2 py-0"> / </span>
+              <Link
+                href="/dang-nhap"
+                className="text-text-color font-normal text-base leading-[150%] items-center"
+              >
                 Đăng nhập
               </Link>
             </span>

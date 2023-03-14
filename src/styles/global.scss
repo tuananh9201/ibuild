@@ -88,8 +88,8 @@ body {
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      margin: 80px 40px auto 40px;
       min-height: 300px;
+      margin: 80px 40px auto 40px;
 
       &-nav {
         display: flex;
@@ -455,4 +455,31 @@ button[disabled] {
 // Overrid antd css
 .ant-form-item-explain-error {
   margin: 4px 0 !important;
+}
+
+// all css (can't not using )
+.menu-item {
+  &:hover {
+    color: $primary-color !important;
+    font-weight: 500 !important;
+    margin-bottom: 0px;
+    cursor: pointer;
+
+    .bottom-menu {
+      display: block;
+      background: $primary-color;
+      border-radius: 1px;
+      width: 50%;
+      width: 24px;
+      height: 2px;
+    }
+  }
+
+  .bottom-menu {
+    display: none;
+  }
+
+  &.active {
+    @extend :hover;
+  }
 }

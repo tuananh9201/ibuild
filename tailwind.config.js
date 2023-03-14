@@ -13,6 +13,7 @@ module.exports = {
       colors: {
         "primary-color": "var(--primary-color)",
         "secondary-color": "var(--secondary-color)",
+        "text-color": "var(--text-color)",
       },
       fontFamily: {
         roboto: "Roboto",

@@ -1,27 +1,26 @@
-import React, { ReactElement } from "react";
-import { NextPageWithLayout } from "./_app";
-import Head from "next/head";
 import OnBoardLayout from "@/components/onboard-layout";
-import Image from "next/image";
+import { colorPrimary } from "@/constants/colors";
 import {
   backIcon,
   logo,
   signUpSuccess,
   unsplashSignUp,
 } from "@/constants/images";
-import Link from "next/link";
+import { rulePassword } from "@/constants/rules";
 import { Form, Input } from "antd";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import { motion } from "framer-motion";
-import { register } from "src/lib/api/auth";
-import { setToken } from "src/lib/api/api";
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React, { ReactElement, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { setToken } from "src/lib/api/api";
+import { register } from "src/lib/api/auth";
+import { RulePassword } from "src/lib/types";
 import { login } from "src/store/features/auth/auth";
 import { validatePassword } from "src/utils/validate";
-import { RulePassword } from "src/lib/types";
-import { rulePassword } from "@/constants/rules";
-import { colorPrimary } from "@/constants/colors";
+import { NextPageWithLayout } from "./_app";
 const SignUpSuccess = () => {
   return (
     <div
@@ -115,7 +114,7 @@ const SignUpPage: NextPageWithLayout = () => {
       <Head>
         <title>Đăng ký</title>
       </Head>
-      <div className="left-signup">
+      <div className="w-full h-full hidden lg:block flex-1">
         <Image
           style={{
             width: "100%",
@@ -127,21 +126,21 @@ const SignUpPage: NextPageWithLayout = () => {
           alt=""
         />
       </div>
-      <div className="right-signin">
-        <div className="right-signin-container">
-          <div className="right-signin-container-nav">
+      <div className="w-full h-full flex-1">
+        <div className="flex flex-col justify-start min-h-[300px] mx-0 my-[60px] lg:mx-10 lg:mt-[80px] lg:mb-auto">
+          <div className="flex justify-start px-[10px] py-[21px] cursor-pointer">
             {isSuccess ? null : (
               <Link href="/">
                 <Image src={backIcon} alt="" />
               </Link>
             )}
           </div>
-          <div className="right-signin-container-content">
-            <div className="heading">
-              <div className="logo">
+          <div className="mx-5 my-[48px] lg:mx-[60px] lg:my-20">
+            <div>
+              <div className="flex justify-center items-center max-w-[120px] max-h-[30px]">
                 <Image src={logo} alt="" />
               </div>
-              <div className="welcome">
+              <div className="mt-4 mb-8 text-[32px] flex justify-between items-baseline">
                 {isSuccess ? "Tạo tài khoản thành công" : "Tạo tài khoản"}
               </div>
             </div>
@@ -167,7 +166,6 @@ const SignUpPage: NextPageWithLayout = () => {
                   stiffness: 260,
                   damping: 20,
                 }}
-                className="form-sign-up"
               >
                 <Form
                   onFinish={onFinish}
