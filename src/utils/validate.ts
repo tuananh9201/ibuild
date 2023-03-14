@@ -1,6 +1,10 @@
 import { RulePassword } from "src/lib/types";
 import { rulePassword } from "../constants/rules";
 
+export const validateEmail = (email: string) => {
+  const pattern = /^[\w\s]+([\.-]?[\w\s]+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  return pattern.test(email.trim());
+};
 export const validatePassword = (password: string): RulePassword[] => {
   return rulePassword.map((rule) => {
     const result = rule.pattern.test(password);
@@ -32,4 +36,9 @@ export const validatePhoneNumber = (phoneInput: string): boolean => {
   );
   if (phoneNumber.length !== 9) return false;
   return pattern.test(phoneNumber);
+};
+export const validateEmailOrPhoneNumber = (emailOrPhoneNumber: string) => {
+  const rs = validateEmail(emailOrPhoneNumber);
+  if (rs) return rs;
+  return validatePhoneNumber(emailOrPhoneNumber);
 };

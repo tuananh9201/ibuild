@@ -15,7 +15,7 @@ import { login } from "src/store/features/auth/auth";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import LockWrongPassword from "@/components/common/LockWrongPassword";
-import { validPassword } from "src/utils/validate";
+import { validateEmailOrPhoneNumber } from "src/utils/validate";
 import { ERRORS } from "@/constants/msg";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -27,8 +27,6 @@ const EmptyPage: NextPageWithLayout = () => {
   const dispatch = useDispatch();
   const [expiresTime, setExpiresTime] = useState<number>(0);
   const [isLockEmail, setIsLockEmail] = useState(false);
-  const [isDisabledButtonLogin, setIsDisabledButtonLogin] = useState(true);
-  const [isInit, setIsInit] = useState(false);
   const onFinish = async (values: any) => {
     if (loading) return;
     const { email, password } = values;
@@ -65,11 +63,6 @@ const EmptyPage: NextPageWithLayout = () => {
     }, 1000);
   };
   const onChangeValues = (changedValues: any, allValues: any) => {
-    if (Object.keys(changedValues).includes("password")) {
-      const valid = validPassword(changedValues.password);
-      setIsDisabledButtonLogin(!valid);
-      setIsInit(true);
-    }
     if (Object.keys(changedValues).includes("email")) {
       const email = changedValues.email;
       if (email.includes(" ")) form.setFieldValue("email", email.trim());
@@ -129,15 +122,18 @@ const EmptyPage: NextPageWithLayout = () => {
                       rules={[
                         {
                           required: true,
-                          message: "Vui lòng nhập email",
+                          message: "Nhập email hoặc số điện thoại đăng nhập",
                         },
-                        {
-                          pattern:
-                            // /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                            // /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                            /^[\w\s]+([\.-]?[\w\s]+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, // allow space char
-                          message: "Email đăng nhập chưa chính xác",
-                        },
+                        () => ({
+                          validator(rule, value) {
+                            if (value) {
+                              if (!validateEmailOrPhoneNumber(value)) {
+                                return Promise.reject(ERRORS.MSG012);
+                              }
+                            }
+                            return Promise.resolve();
+                          },
+                        }),
                       ]}
                     >
                       <Input
@@ -152,16 +148,6 @@ const EmptyPage: NextPageWithLayout = () => {
                           required: true,
                           message: "Nhập mật khẩu",
                         },
-                        () => ({
-                          validator(rule, value) {
-                            if (value) {
-                              if (!validPassword(value)) {
-                                return Promise.reject(ERRORS.MSG002);
-                              }
-                            }
-                            return Promise.resolve();
-                          },
-                        }),
                       ]}
                       label="Mật khẩu"
                     >
@@ -194,8 +180,9 @@ const EmptyPage: NextPageWithLayout = () => {
                                 .getFieldsError()
                                 .filter(({ errors }) => errors.length).length >
                                 0 ||
-                              loading ||
-                              isDisabledButtonLogin
+                              !form.getFieldValue("email") ||
+                              !form.getFieldValue("password") ||
+                              loading
                             }
                             type="submit"
                             className="transition ease-in-out delay-150 duration-200 hover:-translate-y-1 hover:scale-110 w-full h-12 text-base font-medium flex justify-center items-center bg-primary-color rounded-lg text-white"

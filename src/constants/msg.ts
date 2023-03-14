@@ -11,4 +11,5 @@ export enum ERRORS {
   "MSG010" = "Mã xác nhận hết hiệu lực",
   "PLEASE_INPUT_EMAIL" = "Vui lòng nhập email",
   "MSG011" = "Số điện thoại không chính xác",
+  "MSG012" = "Email hoặc số điện thoại không chính xác",
 }
