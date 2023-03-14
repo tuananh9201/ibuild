@@ -13,7 +13,7 @@ export const validPassword = (password: string) => {
   return valids.filter((r) => r.success).length === rulePassword.length;
 };
 const getHeadPhone = (phoneNumber: string) => {
-  const HEADS = ["(+84)", "840", "+840", "84", "+84", "0"];
+  const HEADS = ["840", "+840", "84", "+84", "0"];
   for (let i = 0; i < HEADS.length; i++) {
     const head = HEADS[i];
     if (head === phoneNumber.substring(0, head.length)) {
