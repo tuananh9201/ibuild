@@ -1,10 +1,11 @@
-import React, { createRef, useEffect, useState } from "react";
+import React, { createRef, useState } from "react";
 import { IbuildButton } from "../common";
 import { useSelector } from "react-redux";
 import { RootState } from "src/store/store";
 import { useDispatch } from "react-redux";
 import { changeStep, showResendButton } from "src/store/features/auth/register";
 import { verifySMSOTP } from "src/lib/api/auth";
+import { message } from "antd";
 type Props = {
   phone: string;
 };
@@ -13,7 +14,6 @@ const FormInputPhoneOTP = (props: Props) => {
   const [otp, setOtp] = useState("");
   const dispath = useDispatch();
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
   const registerState = useSelector((state: RootState) => state.register);
   const [inputRefsArray] = useState(() =>
     Array.from({ length: numerOfInputs }, () => createRef<HTMLInputElement>())
@@ -37,19 +37,13 @@ const FormInputPhoneOTP = (props: Props) => {
   };
   const handleClickContinue = async () => {
     setLoading(true);
-    setErrorMessage("");
-    let msg = "";
     const result = await verifySMSOTP({ phoneNumber: props.phone, otp: otp });
-    console.log("result : ", result);
     if (registerState.showResendButton) {
-      msg = "Mã xác nhận hết hiệu lực";
+      message.error("Mã xác nhận hết hiệu lực");
     }
     if (result) {
       dispath(changeStep(3));
-    } else {
-      msg = "Mã xác nhận chưa chính xác";
     }
-    setErrorMessage(msg);
     setLoading(false);
   };
   return (
@@ -74,11 +68,6 @@ const FormInputPhoneOTP = (props: Props) => {
           />
         ))}
       </div>
-      {errorMessage ? (
-        <div className="text-red-500 font-normal text-base my-2">
-          {errorMessage}
-        </div>
-      ) : null}
       <div className="mt-6 w-full">
         <IbuildButton
           onClick={handleClickContinue}
