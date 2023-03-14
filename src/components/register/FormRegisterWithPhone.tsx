@@ -1,5 +1,5 @@
 import { ERRORS } from "@/constants/msg";
-import { Form, Spin, Input } from "antd";
+import { Form, Spin, Input, message } from "antd";
 import React, { useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import FormInputPhoneOTP from "./FormInputPhoneOTP";
@@ -9,6 +9,7 @@ import { RootState } from "src/store/store";
 import ChangePassFailed from "../common/forget/ChangePassFailed";
 import { registerWithPhoneNumber } from "src/lib/api/auth";
 import RegisterSuccess from "./RegisterSuccess";
+import { validatePhoneNumber } from "src/utils/validate";
 
 type Props = {};
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -20,8 +21,17 @@ function FormRegisterWithPhone(props: Props) {
   const [expireTime, setExpireTime] = useState(0);
   const dispatch = useDispatch();
   const registerState = useSelector((state: RootState) => state.register);
+
   const onFinish = async (values: any) => {
     setLoading(true);
+    console.log("values.phone : ", values.phone);
+
+    const valid = validatePhoneNumber(values.phone);
+    if (!valid) {
+      message.error(ERRORS.MSG011);
+      setLoading(false);
+      return;
+    }
     const result = await registerWithPhoneNumber(values.phone);
     if (result) {
       const data = result.data.data;
@@ -66,10 +76,10 @@ function FormRegisterWithPhone(props: Props) {
           </div>
         }
         rules={[
-          {
-            pattern: /(84|840|0)+([0-9]{9})\b/,
-            message: ERRORS.MSG011,
-          },
+          // {
+          //   pattern: /(84|840|0)+([0-9]{9})\b/,
+          //   message: ERRORS.MSG011,
+          // },
           {
             required: true,
             message: "Nhập số điện thoại",

@@ -12,3 +12,25 @@ export const validPassword = (password: string) => {
   const valids = validatePassword(password);
   return valids.filter((r) => r.success).length === rulePassword.length;
 };
+const getHeadPhone = (phoneNumber: string) => {
+  const HEADS = ["(+84)", "840", "+840", "84", "+84", "0"];
+  for (let i = 0; i < HEADS.length; i++) {
+    const head = HEADS[i];
+    if (head === phoneNumber.substring(0, head.length)) {
+      console.log(" x head : ", phoneNumber.substring(0, head.length));
+      return head;
+    }
+  }
+};
+export const validatePhoneNumber = (phoneInput: string): boolean => {
+  if (phoneInput.length < 10) return false;
+  const pattern = /^(?:\+?1|2|3|4|5|6|7|8|9)(\d{8})$/;
+  const headNumber = getHeadPhone(phoneInput);
+  if (!headNumber) return false;
+  const phoneNumber = phoneInput.substring(
+    headNumber.length,
+    phoneInput.length
+  );
+  if (phoneNumber.length !== 9) return false;
+  return pattern.test(phoneNumber);
+};
