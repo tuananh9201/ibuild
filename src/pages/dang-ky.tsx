@@ -83,7 +83,7 @@ const SignUpPage: NextPageWithLayout = () => {
         />
       </div>
       <div className="w-full h-full flex-1">
-        <div className="flex flex-col justify-start mt-20 mr-10 mb-auto ml-10 min-h-[300px]">
+        <div className="flex flex-col justify-start mt-2 lg:mt-20 lg:mr-10 lg:mb-auto lg:ml-10 min-h-[300px]">
           <div className="flex flex-row justify-start px-5 py-2 ">
             {/* {registerState.currentStep.step === 1 ? null : (
               <Link href="/">
@@ -94,7 +94,7 @@ const SignUpPage: NextPageWithLayout = () => {
               <Image src={backIcon} alt="" />
             </Link>
           </div>
-          <div className="mx-20 my-14">
+          <div className="mx-4 my-8 lg:mx-20 lg:my-14">
             <div>
               <div className="flex justify-center items-center max-w-[120px] max-h-[30px]">
                 <Image src={logo} alt="" />
