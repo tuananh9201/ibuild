@@ -73,7 +73,7 @@ const MainHeader = () => {
   const menusByUser = menus.filter((m) => m.role.find((r) => r === userRole));
 
   return (
-    <div className="flex flex-row justify-between pt-14 pr-5 pb-4 pl-5 lg:py-4 lg:px-14 gap-4 bg-white w-full border-b border-solid border-[#bfbfbf] lg:border-none">
+    <div className="flex flex-row justify-between p-4 sticky top-0 right-0 left-0 z-10 lg:static lg:shadow-none lg:pt-4 lg:pr-5 lg:pb-4 lg:pl-5 lg:py-4 lg:px-14 gap-4 bg-white w-full border-b shadow lg:border-none">
       <div className="flex flex-row justify-between items-center gap-4 bg-white w-full">
         <div className="flex flex-row gap-4 items-center justify-between w-full lg:w-fit">
           {isHidden ? null : (
