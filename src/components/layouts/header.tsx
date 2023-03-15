@@ -1,22 +1,15 @@
-import {
-  arrowBackIos,
-  filterIcon,
-  logo,
-  menuIcon,
-  searchIcon,
-} from "@/constants/images";
+import { arrowBackIos, logo, menuIcon } from "@/constants/images";
 import { Drawer } from "antd";
 import useUser from "src/lib/hooks/user";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserAvatar from "./avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "src/store/store";
 import { setToken } from "src/lib/api/api";
 import { login } from "src/store/features/auth/auth";
-
 const menus = [
   {
     name: "Sản phẩm",
@@ -116,29 +109,35 @@ const MainHeader = () => {
                 <div className="dot bg-transparent h-[2px] group-hover:bg-primary-color group-[.active]:bg-primary-color w-6 group-hover:rounded"></div>
               </li>
             ))}
-            <li
-              className={`flex flex-col items-center group font-roboto font-normal text-base text-[#343434]`}
-            >
-              <Link
-                href="/dang-ky"
-                className="font-normal hover:font-medium hover:text-primary-color group-[.active]:text-primary-color group-[.active]:font-medium"
-              >
-                Đăng ký
-              </Link>
-              <div className="dot bg-transparent h-[2px] group-hover:bg-primary-color group-[.active]:bg-primary-color w-6 group-hover:rounded"></div>
-            </li>
-            <li className="-mr-7 -ml-8">/</li>
-            <li
-              className={`flex flex-col items-center group font-roboto font-normal text-base text-[#343434]`}
-            >
-              <Link
-                href="/dang-nhap"
-                className="font-normal hover:font-medium hover:text-primary-color group-[.active]:text-primary-color group-[.active]:font-medium"
-              >
-                Đăng nhập
-              </Link>
-              <div className="dot bg-transparent h-[2px] group-hover:bg-primary-color group-[.active]:bg-primary-color w-6 group-hover:rounded"></div>
-            </li>
+            {user && accessToken ? (
+              <UserAvatar user={user} />
+            ) : (
+              <React.Fragment>
+                <li
+                  className={`flex flex-col items-center group font-roboto font-normal text-base text-[#343434]`}
+                >
+                  <Link
+                    href="/dang-ky"
+                    className="font-normal hover:font-medium hover:text-primary-color group-[.active]:text-primary-color group-[.active]:font-medium"
+                  >
+                    Đăng ký
+                  </Link>
+                  <div className="dot bg-transparent h-[2px] group-hover:bg-primary-color group-[.active]:bg-primary-color w-6 group-hover:rounded"></div>
+                </li>
+                <li className="-mr-7 -ml-8">/</li>
+                <li
+                  className={`flex flex-col items-center group font-roboto font-normal text-base text-[#343434]`}
+                >
+                  <Link
+                    href="/dang-nhap"
+                    className="font-normal hover:font-medium hover:text-primary-color group-[.active]:text-primary-color group-[.active]:font-medium"
+                  >
+                    Đăng nhập
+                  </Link>
+                  <div className="dot bg-transparent h-[2px] group-hover:bg-primary-color group-[.active]:bg-primary-color w-6 group-hover:rounded"></div>
+                </li>
+              </React.Fragment>
+            )}
           </ul>
         </nav>
       </div>
