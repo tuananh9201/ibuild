@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "src/store/store";
 import { useDispatch } from "react-redux";
 import { changeStep, showResendButton } from "src/store/features/auth/register";
-import { verifySMSOTP } from "src/lib/api/auth";
+import { registerWithPhoneNumber, verifySMSOTP } from "src/lib/api/auth";
 import { message } from "antd";
 import { ERRORS } from "@/constants/msg";
 type Props = {
@@ -13,14 +13,24 @@ type Props = {
 const numerOfInputs = 6;
 const FormInputPhoneOTP = (props: Props) => {
   const [otp, setOtp] = useState("");
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const registerState = useSelector((state: RootState) => state.register);
   const [inputRefsArray] = useState(() =>
     Array.from({ length: numerOfInputs }, () => createRef<HTMLInputElement>())
   );
-  const handleClickResendOtp = () => {
-    dispath(showResendButton(false));
+  const handleClickResendOtp = async () => {
+    const result = await registerWithPhoneNumber(props.phone);
+    if (result) {
+      const data = result.data.data;
+      const { remain } = data;
+      if (remain < 0) {
+        dispatch(changeStep(4));
+      } else {
+        dispatch(changeStep(2));
+      }
+    }
+    dispatch(showResendButton(false));
   };
   const onChangeOtp = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -43,7 +53,7 @@ const FormInputPhoneOTP = (props: Props) => {
       setLoading(false);
       return;
     } else {
-      dispath(changeStep(3));
+      dispatch(changeStep(3));
     }
     if (registerState.showResendButton) {
       message.error(ERRORS.MSG010);
@@ -51,7 +61,7 @@ const FormInputPhoneOTP = (props: Props) => {
     setLoading(false);
   };
   return (
-    <div>
+    <div className="">
       <div className="font-normal text-base">
         Mã OTP đã được gửi đến số điện thoại {props?.phone || "0123456789"}, để
         giữ an toàn cho tài khoản vui lòng không cung cấp mã OTP cho bất kì ai.

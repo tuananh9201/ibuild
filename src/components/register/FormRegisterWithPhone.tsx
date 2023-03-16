@@ -24,8 +24,6 @@ function FormRegisterWithPhone(props: Props) {
 
   const onFinish = async (values: any) => {
     setLoading(true);
-    console.log("values.phone : ", values.phone);
-
     const valid = validatePhoneNumber(values.phone);
     if (!valid) {
       message.error(ERRORS.MSG011);
@@ -38,7 +36,6 @@ function FormRegisterWithPhone(props: Props) {
       const { remain, expires } = data;
       if (remain < 0) {
         dispatch(changeStep(4));
-        // dispatch(changeExpire(parseInt(expires)));
         setExpireTime(parseInt(expires));
       } else {
         dispatch(changeStep(2));
