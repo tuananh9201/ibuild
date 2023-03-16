@@ -14,11 +14,6 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
           rel="stylesheet"
         />
-        <title>
-          IBUILD | Báo giá xây dựng, danh bạ xây dựng, văn bản xây dựng, tin tức
-          xây dựng
-        </title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
           name="description"
           content="Báo giá xây dựng, danh bạ xây dựng, văn bản xây dựng, tin tức xây dựng"

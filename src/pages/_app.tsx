@@ -12,6 +12,7 @@ import app from "src/utils/firebase";
 import { AnimatePresence } from "framer-motion";
 import { store } from "../store/store";
 import { Provider } from "react-redux";
+import Head from "next/head";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -54,6 +55,12 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
               },
             }}
           >
+            <Head>
+              <meta
+                name="viewport"
+                content="width=device-width, initial-scale=1"
+              />
+            </Head>
             <Component {...pageProps} />
           </SWRConfig>
         </AnimatePresence>

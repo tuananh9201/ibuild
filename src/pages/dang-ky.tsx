@@ -17,7 +17,7 @@ const SignUpPage: NextPageWithLayout = () => {
   const router = useRouter();
   const [tabActive, setTabActive] = useState("phone");
   const dispatch = useDispatch();
-  const [timeRemaining, setTimeRemaining] = useState(10 * 60);
+  const [timeRemaining, setTimeRemaining] = useState(30);
   const registerState = useSelector((state: RootState) => state.register);
 
   const tabs = [
@@ -61,7 +61,7 @@ const SignUpPage: NextPageWithLayout = () => {
   }, [registerState, timeRemaining, dispatch]);
   useEffect(() => {
     if (!registerState.showResendButton) {
-      setTimeRemaining(10 * 60);
+      setTimeRemaining(30);
     }
   }, [registerState.showResendButton]);
 
@@ -85,14 +85,11 @@ const SignUpPage: NextPageWithLayout = () => {
       <div className="w-full h-full flex-1">
         <div className="flex flex-col justify-start mt-2 lg:mt-20 lg:mr-10 lg:mb-auto lg:ml-10 min-h-[300px]">
           <div className="flex flex-row justify-start px-5 py-2 ">
-            {/* {registerState.currentStep.step === 1 ? null : (
+            {registerState.currentStep.step > 2 ? null : (
               <Link href="/">
                 <Image src={backIcon} alt="" />
               </Link>
-            )} */}
-            <Link href="/">
-              <Image src={backIcon} alt="" />
-            </Link>
+            )}
           </div>
           <div className="mx-4 my-8 lg:mx-20 lg:my-14">
             <div>
@@ -131,7 +128,7 @@ const SignUpPage: NextPageWithLayout = () => {
                 </ul>
               ) : null}
               <div className="tab-panel mt-5">{selectedTab?.component}</div>
-              {registerState.currentStep.step !== 3 ? (
+              {registerState.currentStep.step === 1 ? (
                 <div className="mt-6 flex flex-row justify-end items-center">
                   <span className="font-normal mr-2 text-base leading-normal">
                     Bạn đã có tài khoản?

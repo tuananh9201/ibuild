@@ -60,7 +60,7 @@ function FormRegisterWithPhone(props: Props) {
       onFinish={onFinish}
       layout="vertical"
       form={form}
-      style={{ maxWidth: "100%" }}
+      className="w-full"
       requiredMark={false}
       scrollToFirstError
       onValuesChange={() => {
@@ -76,22 +76,12 @@ function FormRegisterWithPhone(props: Props) {
           </div>
         }
         rules={[
-          // {
-          //   pattern: /(84|840|0)+([0-9]{9})\b/,
-          //   message: ERRORS.MSG011,
-          // },
           {
             required: true,
             message: "Nhập số điện thoại",
           },
         ]}
       >
-        {/* <input
-          placeholder="Ví dụ: 0983..."
-          onChange={onChangePhoneNumber}
-          value={phoneNumber}
-          className="h-12 w-full px-2 bg-white border-[#9A9A9A] border border-solid rounded-lg placeholder:text-[#717171]"
-        /> */}
         <Input
           placeholder="Ví dụ: 0983..."
           className="h-12 w-full px-2 bg-white border-[#9A9A9A] border border-solid rounded-lg placeholder:text-[#717171]"

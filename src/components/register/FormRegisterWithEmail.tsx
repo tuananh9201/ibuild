@@ -71,7 +71,7 @@ const FormRegisterWithEmail = (props: Props) => {
       onFinish={onFinish}
       layout="vertical"
       form={form}
-      style={{ maxWidth: "100%" }}
+      className="w-full"
       requiredMark={false}
       scrollToFirstError
     >
@@ -80,7 +80,7 @@ const FormRegisterWithEmail = (props: Props) => {
         label={
           <div>
             {" "}
-            Email <span style={{ color: "red" }}>*</span>{" "}
+            Email <span className="text-red-500">*</span>{" "}
           </div>
         }
         rules={[
@@ -100,7 +100,7 @@ const FormRegisterWithEmail = (props: Props) => {
         label={
           <div>
             {" "}
-            Mật khẩu <span style={{ color: colorPrimary }}>*</span>{" "}
+            Mật khẩu <span className="text-red-500">*</span>{" "}
           </div>
         }
         validateStatus={isinitPage ? "" : isValidPassword ? "" : "error"}
@@ -130,9 +130,7 @@ const FormRegisterWithEmail = (props: Props) => {
         label={
           <div>
             {" "}
-            Nhập lại mật khẩu <span style={{ color: colorPrimary }}>
-              *
-            </span>{" "}
+            Nhập lại mật khẩu <span className="text-red-500">*</span>{" "}
           </div>
         }
         rules={[
@@ -171,7 +169,8 @@ const FormRegisterWithEmail = (props: Props) => {
                 loadingRegister ||
                 isinitPage ||
                 cPassword.length === 0 ||
-                !isValidPassword
+                !isValidPassword ||
+                !form.getFieldValue("email")
               }
               className="w-full h-12 text-base font-medium flex justify-center items-center bg-primary-color rounded-lg text-white"
             >

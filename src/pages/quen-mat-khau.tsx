@@ -13,7 +13,7 @@ import {
 } from "src/lib/api/auth";
 import { NextPageWithLayout } from "./_app";
 
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -47,7 +47,7 @@ const ForgetPassword: NextPageWithLayout = () => {
     }
     if (res?.expires) {
       setBlockExpire(parseInt(res.expires.toString()));
-      setCurrentStep(6);
+      setCurrentStep(5);
     }
   };
 
@@ -63,7 +63,7 @@ const ForgetPassword: NextPageWithLayout = () => {
     setIsShowResendCodeBtn(false);
   };
   const onChangePassSuccess = (cred: { email: string; password: string }) => {
-    setCurrentStep(5);
+    setCurrentStep(4);
     setNewPassword(cred.password);
   };
 
@@ -75,7 +75,7 @@ const ForgetPassword: NextPageWithLayout = () => {
     setIsLoading(false);
     if (res) {
       setOtpCode(code);
-      setCurrentStep(4);
+      setCurrentStep(3);
     }
   };
   const doLogin = async (cred: { email: string; password: string }) => {
@@ -101,11 +101,6 @@ const ForgetPassword: NextPageWithLayout = () => {
     },
     {
       step: 2,
-      component: <SendedEmailForgetPassword email={emailUser} />,
-      title: "Gửi mã xác nhận thành công",
-    },
-    {
-      step: 3,
       component: (
         <FormOtp
           isLoading={isLoading}
@@ -118,7 +113,7 @@ const ForgetPassword: NextPageWithLayout = () => {
       title: "Nhập mã xác nhận",
     },
     {
-      step: 4,
+      step: 3,
       component: (
         <FormChangePass
           email={emailUser}
@@ -129,12 +124,12 @@ const ForgetPassword: NextPageWithLayout = () => {
       title: "Đổi mật khẩu",
     },
     {
-      step: 5,
+      step: 4,
       component: <ChangePassSuccess />,
       title: "Đổi mật khẩu thành công",
     },
     {
-      step: 6,
+      step: 5,
       component: <ChangePassFailed expires={blockExpire} />,
       title: "Số lần xác thực đã quá giới hạn",
     },
@@ -147,7 +142,7 @@ const ForgetPassword: NextPageWithLayout = () => {
   useEffect(() => {
     const delay = setTimeout(() => {
       if (isSuccess) {
-        setCurrentStep(3);
+        setCurrentStep(2);
       }
     }, 5000);
 
@@ -156,7 +151,7 @@ const ForgetPassword: NextPageWithLayout = () => {
 
   useEffect(() => {
     const t = setTimeout(() => {
-      if (currentStep === 5) {
+      if (currentStep === 4) {
         doLogin({ email: emailUser, password: newPassword });
       }
     }, 5000);
@@ -166,7 +161,7 @@ const ForgetPassword: NextPageWithLayout = () => {
     };
   }, [currentStep]);
   useEffect(() => {
-    if (currentStep === 3) {
+    if (currentStep === 2) {
       const intervalId = setInterval(() => {
         setTimeRemaining((prevTime) => {
           if (prevTime === 0) {
@@ -192,32 +187,31 @@ const ForgetPassword: NextPageWithLayout = () => {
       <Head>
         <title>Tìm lại mật khẩu</title>
       </Head>
-      <div className="left-signup">
+      <div className="w-full h-full flex-1 hidden lg:block">
         <Image
-          style={{
-            width: "100%",
-            height: "100%",
-          }}
+          className="w-full h-full"
           priority={true}
           src={unsplashSignUp}
           alt=""
         />
       </div>
-      <div className="right-signin">
-        <div className="right-signin-container">
-          <div className="right-signin-container-nav">
-            <Link href="/">
-              <Image src={backIcon} alt="" />
-            </Link>
+      <div className="w-full h-full flex-1">
+        <div className="flex flex-col justify-start mt-2 lg:mt-20 lg:mr-10 lg:mb-auto lg:ml-10">
+          <div className="flex justify-start px-5 lg:px-2 lg:py-5">
+            {currentStep === 1 ? (
+              <Link href="/">
+                <Image src={backIcon} alt="" />
+              </Link>
+            ) : null}
           </div>
-          <div className="right-signin-container-content">
+          <div className="my-12 mx-5 md:my-20 md:mx-14 ">
             <div className="heading">
-              <div className="logo">
+              <div className="flex justify-center items-center max-w-[120px] max-h[30px]">
                 <Image src={logo} alt="" />
               </div>
-              <div className="welcome">
+              <div className="mt-4 mb-8 flex justify-between items-baseline text-2xl">
                 <span>{currentTitle}</span>
-                {currentStep === 3 ? (
+                {currentStep === 2 ? (
                   <span>
                     {minutes < 10 ? `0${minutes}` : minutes}:{" "}
                     {seconds < 10 ? `0${seconds}` : seconds}
@@ -227,17 +221,7 @@ const ForgetPassword: NextPageWithLayout = () => {
                 )}
               </div>
             </div>
-            <motion.div
-              animate={{ opacity: 1 }}
-              initial={{ opacity: 0.5 }}
-              transition={{
-                type: "spring",
-                stiffness: 260,
-                damping: 20,
-              }}
-            >
-              {currentComponent}
-            </motion.div>
+            <AnimatePresence>{currentComponent}</AnimatePresence>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import api from "./api";
-import { message, notification } from "antd";
+import { message } from "antd";
 
 export const register = async (credentials: {
   email: string;
@@ -16,11 +16,7 @@ export const register = async (credentials: {
     const status_code = error.response?.status;
     if (status_code === 400) {
       const msgText = error.response.data?.message;
-      notification.error({
-        description: msgText,
-        message: "Lỗi",
-        duration: 2,
-      });
+      message.error(msgText);
     }
   }
 };
@@ -54,11 +50,7 @@ export const loginApi = async (credentials: {
       if (expires && expires !== "None") {
         return error.response.data;
       }
-      notification.error({
-        description: msgText,
-        message: "Lỗi",
-        duration: 2,
-      });
+      message.error(msgText);
     }
   }
 };
@@ -105,11 +97,7 @@ export const verifyPasswordRecoveryCode = async (params: {
   } catch (error: any) {
     const statusCode = error?.response?.status;
     if (statusCode === 400) {
-      notification.error({
-        description: error?.response?.data?.message || "Có lỗi xảy ra",
-        message: "Lỗi",
-        duration: 2,
-      });
+      message.error(error?.response?.data?.message || "Có lỗi xảy ra");
     }
     return false;
   }
@@ -126,11 +114,7 @@ export const resetPassword = async (params: {
   } catch (error: any) {
     const statusCode = error?.response?.status;
     if (statusCode === 400) {
-      notification.error({
-        description: error?.response?.data?.message || "Có lỗi xảy ra",
-        message: "Lỗi",
-        duration: 2,
-      });
+      message.error(error?.response?.data?.message || "Có lỗi xảy ra");
     }
   }
 };
@@ -148,11 +132,7 @@ export const authWithSocialAccessToken = async (params: {
   } catch (error: any) {
     const statusCode = error?.response?.status;
     if (statusCode === 400) {
-      notification.error({
-        description: error?.response?.data?.message || "Có lỗi xảy ra",
-        message: "Lỗi",
-        duration: 2,
-      });
+      message.error(error?.response?.data?.message || "Có lỗi xảy ra");
     }
   }
 };
@@ -166,11 +146,7 @@ export const registerWithPhoneNumber = async (phoneNumber: string) => {
   } catch (error: any) {
     const statusCode = error?.response?.status;
     if (statusCode === 400) {
-      notification.error({
-        description: error?.response?.data?.message || "Có lỗi xảy ra",
-        message: "Lỗi",
-        duration: 2,
-      });
+      message.error(error?.response?.data?.message || "Có lỗi xảy ra");
     }
   }
 };
@@ -188,11 +164,7 @@ export const verifySMSOTP = async (payload: {
   } catch (error: any) {
     const statusCode = error?.response?.status;
     if (statusCode === 400) {
-      notification.error({
-        description: error?.response?.data?.message || "Có lỗi xảy ra",
-        message: "Lỗi",
-        duration: 2,
-      });
+      message.error(error?.response?.data?.message || "Có lỗi xảy ra");
     }
   }
 };

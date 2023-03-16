@@ -84,7 +84,7 @@ const EmptyPage: NextPageWithLayout = () => {
       </div>
       <div className="w-full h-full flex-1">
         <div className="flex flex-col justify-start mt-2 lg:mt-20 lg:mr-10 lg:mb-auto lg:ml-10">
-          <div className="flex justify-start px-5 lg:px-2 lg:py-5  hover:cursor-pointer">
+          <div className="flex justify-start px-5 lg:px-2 lg:py-5">
             <Link href="/">
               <Image src={backIcon} alt="" />
             </Link>
