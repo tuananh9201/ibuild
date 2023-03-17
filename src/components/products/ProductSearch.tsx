@@ -76,7 +76,7 @@ const ProductSearch = (props: Props) => {
         </div>
         <input
           ref={inputRef}
-          className="input-search w-96 placeholder:text-black text-base font-normal"
+          className="input-search w-full placeholder:text-black text-base font-normal"
           placeholder="Bạn đang muốn tìm sản phẩm nào?"
           onFocus={onFocusInput}
         />
