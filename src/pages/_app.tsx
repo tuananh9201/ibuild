@@ -50,7 +50,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
                 if (error.status !== 403 && error.status !== 404) {
                   // We can send the error to Sentry,
                   // or show a notification UI.
-                  console.log("SHIT");
                 }
               },
             }}

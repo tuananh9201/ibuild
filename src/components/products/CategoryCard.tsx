@@ -9,7 +9,7 @@ type Props = {
 };
 
 const CategoryCard = (props: Props) => {
-  return <div>CategoryCard</div>;
+  return <div className="h-[500px]">CategoryCard</div>;
 };
 
 export default CategoryCard;
