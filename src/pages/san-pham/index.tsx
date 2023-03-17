@@ -83,8 +83,10 @@ const SanPham: NextPageWithLayout<Props> = (props: Props) => {
               className="w-28"
             />
           </div>
-          <ProductSearch />
         </div>
+      </div>
+      <div className="p-4 lg:p-0 flex justify-center">
+        <ProductSearch />
       </div>
       <div className="px-8 grid grid-cols-1 md:grid-cols-3  gap-8">
         {categories.map((cate) => (

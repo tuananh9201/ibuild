@@ -53,7 +53,7 @@ export default function MainLayout({ children }: IMainLayoutProps) {
         <meta http-equiv="content-language" content="vi" />
       </Head>
       <Provider store={store}>
-        <div className="max-w-[1440px] flex flex-col m-auto p-0 h-auto">
+        <div className="max-w-[1440px] flex flex-col m-auto p-0 h-auto dark:bg-black dark:text-white">
           <MainHeader />
           {children}
           <Footer />

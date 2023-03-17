@@ -24,7 +24,7 @@ export default function Document() {
         />
         <meta http-equiv="content-language" content="vi" />
       </Head>
-      <body>
+      <body className="dark:bg-black dark:text-white">
         <Main />
         <NextScript />
       </body>
