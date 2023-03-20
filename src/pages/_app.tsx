@@ -20,8 +20,13 @@ export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
-export default function App({ Component, pageProps }: AppPropsWithLayout) {
+export default function App({
+  Component,
+  pageProps,
+  router,
+}: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
+  console.log("xxx ");
 
   useEffect(() => {
     const analytics = getAnalytics(app);
@@ -43,26 +48,30 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
       }}
     >
       <Provider store={store}>
-        <AnimatePresence mode="wait" initial={false}>
-          <SWRConfig
-            value={{
-              onError: (error, key) => {
-                if (error.status !== 403 && error.status !== 404) {
-                  // We can send the error to Sentry,
-                  // or show a notification UI.
-                }
-              },
-            }}
+        <SWRConfig
+          value={{
+            onError: (error, key) => {
+              if (error.status !== 403 && error.status !== 404) {
+                // We can send the error to Sentry,
+                // or show a notification UI.
+              }
+            },
+          }}
+        >
+          <Head>
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1"
+            />
+          </Head>
+          <AnimatePresence
+            mode="wait"
+            initial={false}
+            onExitComplete={() => window.scrollTo(0, 0)}
           >
-            <Head>
-              <meta
-                name="viewport"
-                content="width=device-width, initial-scale=1"
-              />
-            </Head>
-            <Component {...pageProps} />
-          </SWRConfig>
-        </AnimatePresence>
+            <Component {...pageProps} key={router.asPath} />
+          </AnimatePresence>
+        </SWRConfig>
       </Provider>
       {/* <Analytics /> */}
     </ConfigProvider>
