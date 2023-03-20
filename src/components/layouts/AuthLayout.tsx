@@ -1,9 +1,9 @@
 import Head from "next/head";
 
-interface IOnboardLayoutProps {
+interface Props {
   children: React.ReactNode;
 }
-export default function OnBoardLayout({ children }: IOnboardLayoutProps) {
+export default function AuthLayout({ children }: Props) {
   return (
     <>
       <Head>

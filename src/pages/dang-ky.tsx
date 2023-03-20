@@ -1,7 +1,6 @@
 import React, { ReactElement } from "react";
 import { NextPageWithLayout } from "./_app";
 import Head from "next/head";
-import OnBoardLayout from "@/components/onboard-layout";
 import Image from "next/image";
 import { backIcon, logo, unsplashSignUp2 } from "@/constants/images";
 import Link from "next/link";
@@ -12,6 +11,7 @@ import FormRegisterWithEmail from "@/components/register/FormRegisterWithEmail";
 import FormRegisterWithPhone from "@/components/register/FormRegisterWithPhone";
 import { RootState } from "src/store/store";
 import { showResendButton } from "src/store/features/auth/register";
+import AuthLayout from "@/components/layouts/AuthLayout";
 
 const SignUpPage: NextPageWithLayout = () => {
   const router = useRouter();
@@ -151,7 +151,7 @@ const SignUpPage: NextPageWithLayout = () => {
 SignUpPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <>
-      <OnBoardLayout>{page}</OnBoardLayout>
+      <AuthLayout>{page}</AuthLayout>
     </>
   );
 };

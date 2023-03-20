@@ -1,7 +1,6 @@
 import React, { ReactElement, useState } from "react";
 import { NextPageWithLayout } from "./_app";
 import Head from "next/head";
-import OnBoardLayout from "@/components/onboard-layout";
 import Image from "next/image";
 import { backIcon, logo, unsplashLogin } from "@/constants/images";
 import Link from "next/link";
@@ -17,10 +16,11 @@ import { useRouter } from "next/router";
 import LockWrongPassword from "@/components/common/LockWrongPassword";
 import { validateEmailOrPhoneNumber } from "src/utils/validate";
 import { ERRORS } from "@/constants/msg";
+import AuthLayout from "@/components/layouts/AuthLayout";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-const EmptyPage: NextPageWithLayout = () => {
+const SignInPage: NextPageWithLayout = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -224,11 +224,11 @@ const EmptyPage: NextPageWithLayout = () => {
     </>
   );
 };
-EmptyPage.getLayout = function getLayout(page: ReactElement) {
+SignInPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <>
-      <OnBoardLayout>{page}</OnBoardLayout>
+      <AuthLayout>{page}</AuthLayout>
     </>
   );
 };
-export default EmptyPage;
+export default SignInPage;

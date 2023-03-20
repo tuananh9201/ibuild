@@ -2,9 +2,7 @@ import ChangePassSuccess from "@/components/common/forget/ChangePassSuccess";
 import FormChangePass from "@/components/common/forget/FormChangePass";
 import FormForgetPassword from "@/components/common/forget/FormForget";
 import FormOtp from "@/components/common/forget/FormOtp";
-import SendedEmailForgetPassword from "@/components/common/forget/SendedEmailForgetPassword";
 import ChangePassFailed from "@/components/common/forget/ChangePassFailed";
-import OnBoardLayout from "@/components/onboard-layout";
 import { backIcon, logo, unsplashSignUp } from "@/constants/images";
 import {
   loginApi,
@@ -13,7 +11,7 @@ import {
 } from "src/lib/api/auth";
 import { NextPageWithLayout } from "./_app";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,6 +19,7 @@ import { ReactElement, useState, useEffect } from "react";
 import { login } from "src/store/features/auth/auth";
 import { useDispatch } from "react-redux";
 import { setToken } from "src/lib/api/api";
+import AuthLayout from "@/components/layouts/AuthLayout";
 
 const ForgetPassword: NextPageWithLayout = () => {
   // state
@@ -231,7 +230,7 @@ const ForgetPassword: NextPageWithLayout = () => {
 ForgetPassword.getLayout = function getLayout(page: ReactElement) {
   return (
     <>
-      <OnBoardLayout>{page}</OnBoardLayout>
+      <AuthLayout>{page}</AuthLayout>
     </>
   );
 };
