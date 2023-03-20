@@ -26,7 +26,6 @@ export default function App({
   router,
 }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
-  console.log("xxx ");
 
   useEffect(() => {
     const analytics = getAnalytics(app);
@@ -70,6 +69,7 @@ export default function App({
             onExitComplete={() => window.scrollTo(0, 0)}
           >
             <Component {...pageProps} key={router.asPath} />
+            <Analytics />
           </AnimatePresence>
         </SWRConfig>
       </Provider>
