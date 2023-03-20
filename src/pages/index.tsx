@@ -17,14 +17,14 @@ const HomePage: NextPageWithLayout = () => {
         </title>
       </Head>
       <motion.div
-        // initial={{ y: 300, opacity: 0 }}
-        // animate={{ y: 0, opacity: 1 }}
-        // exit={{ x: 300, opacity: 0 }}
-        // transition={{
-        //   type: "spring",
-        //   stiffness: 260,
-        //   damping: 20,
-        // }}
+        initial={{ y: 300, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ x: 300, opacity: 0 }}
+        transition={{
+          type: "spring",
+          stiffness: 260,
+          damping: 20,
+        }}
         className="flex flex-col justify-start py-4 lg:py-0 px-8 lg:pt-14 lg:pr-0 lg:pb-0 lg:pl-0"
       >
         <section className="slogan-page mb-10">
@@ -91,6 +91,7 @@ const HomePage: NextPageWithLayout = () => {
                   initial={{ y: 200, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ x: 300, opacity: 0 }}
+                  layout
                   transition={{
                     type: "spring",
                     stiffness: 260,

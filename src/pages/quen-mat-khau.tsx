@@ -11,7 +11,6 @@ import {
 } from "src/lib/api/auth";
 import { NextPageWithLayout } from "./_app";
 
-import { AnimatePresence } from "framer-motion";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -220,7 +219,7 @@ const ForgetPassword: NextPageWithLayout = () => {
                 )}
               </div>
             </div>
-            <AnimatePresence>{currentComponent}</AnimatePresence>
+            {currentComponent}
           </div>
         </div>
       </div>
