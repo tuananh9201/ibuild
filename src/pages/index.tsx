@@ -4,6 +4,7 @@ import MainLayout from "../components/main-layout";
 import Image from "next/image";
 import { ReactElement } from "react";
 import Head from "next/head";
+import { motion } from "framer-motion";
 
 const HomePage: NextPageWithLayout = () => {
   return (
@@ -14,7 +15,17 @@ const HomePage: NextPageWithLayout = () => {
           xây dựng
         </title>
       </Head>
-      <div className="flex flex-col justify-start py-4 lg:py-0 px-8 lg:pt-14 lg:pr-0 lg:pb-0 lg:pl-0">
+      <motion.div
+        initial={{ y: 300, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ x: 300, opacity: 0 }}
+        transition={{
+          type: "spring",
+          stiffness: 260,
+          damping: 20,
+        }}
+        className="flex flex-col justify-start py-4 lg:py-0 px-8 lg:pt-14 lg:pr-0 lg:pb-0 lg:pl-0"
+      >
         <section className="slogan-page mb-10">
           <h1 className="text-3xl font-semibold text-center">
             Trao quyền cho thế giới để xây dựng
@@ -96,7 +107,7 @@ const HomePage: NextPageWithLayout = () => {
             </div>
           </div>
         </section>
-      </div>
+      </motion.div>
     </>
   );
 };
