@@ -47,7 +47,7 @@ const HomePage: NextPageWithLayout = () => {
                 <Image
                   priority
                   placeholder="blur"
-                  className="card-image"
+                  className="card-image w-full h-full"
                   src={productImage}
                   alt="product"
                 />
@@ -61,7 +61,7 @@ const HomePage: NextPageWithLayout = () => {
                     damping: 20,
                     duration: 2,
                   }}
-                  className="absolute w-full top-[40%] lg:top-[418px] left-0 text-white"
+                  className="absolute w-full bottom-24 lg:top-[418px] left-0 text-white"
                 >
                   <h2 className="text-2xl font-semibold text-center">
                     Sản phẩm
@@ -83,7 +83,7 @@ const HomePage: NextPageWithLayout = () => {
                 <Image
                   priority
                   placeholder="blur"
-                  className="card-image"
+                  className="card-image w-full h-full"
                   src={bookImage}
                   alt="book"
                 />
@@ -98,7 +98,7 @@ const HomePage: NextPageWithLayout = () => {
                     damping: 20,
                     duration: 2,
                   }}
-                  className="absolute w-full top-[40%] lg:top-[418px] left-0 text-white"
+                  className="absolute w-full bottom-24 lg:top-[418px] left-0 text-white"
                 >
                   <h2 className="text-2xl font-semibold text-center">
                     Mẫu thiết kế
@@ -119,7 +119,7 @@ const HomePage: NextPageWithLayout = () => {
                 <Image
                   priority
                   placeholder="blur"
-                  className="card-image"
+                  className="card-image w-full h-full"
                   src={designImage}
                   alt="design"
                 />
@@ -133,7 +133,7 @@ const HomePage: NextPageWithLayout = () => {
                     damping: 20,
                     duration: 2,
                   }}
-                  className="absolute w-full top-[40%] lg:top-[418px] left-0 text-white"
+                  className="absolute w-full bottom-24 lg:top-[418px] left-0 text-white"
                 >
                   <h2 className="text-2xl font-semibold text-center">
                     Văn bản pháp lý
