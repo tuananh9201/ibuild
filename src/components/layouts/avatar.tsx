@@ -32,9 +32,8 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
     });
   };
   const name = props.user.full_name || props.user.email || "Nguyễn Văn A";
-  let displayName = name.substring(0, 10);
-  if (name.length > 12) displayName += "...";
-
+  let displayName = name.substring(0, 13);
+  if (name.length > 13) displayName += "...";
   const items: MenuProps["items"] = [
     {
       key: "1",

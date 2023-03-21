@@ -1,22 +1,15 @@
-import {
-  arrowBackIos,
-  filterIcon,
-  logo,
-  menuIcon,
-  searchIcon,
-} from "@/constants/images";
+import { arrowBackIos, logo, menuIcon } from "@/constants/images";
 import { Drawer } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import UserAvatar from "./avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "src/lib/api/api";
 import useUser from "src/lib/hooks/user";
 import { login } from "src/store/features/auth/auth";
 import { RootState } from "src/store/store";
-import UserAvatar from "./avatar";
-
 const menus = [
   {
     name: "Sản phẩm",
@@ -47,7 +40,6 @@ const MainHeader = () => {
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const currentPath = router.pathname;
   const [openMenu, setOpenMenu] = useState(false);
-  const headerClass = currentPath === "/" ? "" : "header-border";
   const isHidden = pathsShowBackButton.includes(router.pathname);
   const handleClickBack = () => {
     router.back();
@@ -74,92 +66,80 @@ const MainHeader = () => {
   const menusByUser = menus.filter((m) => m.role.find((r) => r === userRole));
 
   return (
-    <div
-      className={`flex flex-row justify-between gap-4 bg-[#fff] w-full pt-[56px] pr-5 pb-4 pl-5 border-solid border-[#bfbfbf] border-b lg:px-[60px] lg:py-4 ${
-        headerClass
-          ? "flex flex-col border-solid border-[#ececec]"
-          : "border-b-0"
-      }`}
-    >
-      <div className="flex flex-row justify-between items-center gap-4 bg-[#fff] w-full">
-        <div className="w-full lg:w-auto flex flex-row gap-6 items-center justify-between">
+    <div className="flex flex-row justify-between p-4 sticky top-0 right-0 left-0 z-10 lg:static lg:shadow-none lg:pt-4 lg:pr-5 lg:pb-4 lg:pl-5 lg:py-4 lg:px-14 gap-4 bg-white w-full border-b shadow lg:border-none">
+      <div className="flex flex-row justify-between items-center gap-4 bg-white w-full">
+        <div className="flex flex-row gap-4 items-center justify-between w-full lg:w-fit">
           {isHidden ? null : (
             <div
               onClick={() => handleClickBack()}
-              className="block lg:hidden w-8 h-8 cursor-pointer"
+              className="hidden w-4 h-4 hover:cursor-pointer"
             >
               {" "}
               <Image src={arrowBackIos} alt="" />
             </div>
           )}
 
-          <Link href="/" className="gap-6 max-w-[90px] max-h-6">
+          <Link href="/" className="max-w-[90px] max-h-[24px]">
             <Image src={logo} alt="IBUILD" />
           </Link>
           <div
             onClick={() => {
               setOpenMenu(!openMenu);
             }}
-            className="flex justify-center items-center cursor-pointer lg:hidden hover:cursor-pointer"
+            className="lg:hidden hover:cursor-pointer flex justify-center items-center"
           >
             <Image src={menuIcon} alt="" />
           </div>
         </div>
-        <div className="flex flex-row justify-between">
-          <div className="hidden lg:flex flex-row items-center p-0 gap-8">
+        <nav className="hidden lg:block">
+          <ul className="w-full flex gap-8 items-center">
             {menusByUser.map((menu, idx) => (
-              <Link
+              <li
                 key={idx}
-                href={menu.href}
-                className={`font-roboto not-italic font-normal text-base leading-[150%] cursor-pointer text-[#343434] no-underline hover:text-primary-color hover:font-medium hover:mb-0 menu-item ${
+                className={`flex flex-col items-center group font-roboto font-normal text-base text-[#343434] ${
                   menu.href === currentPath ? "active" : ""
                 }`}
               >
-                {menu.name}
-                <div className="bottom-menu"></div>
-              </Link>
+                <Link
+                  className="font-normal hover:font-medium hover:text-primary-color group-[.active]:text-primary-color group-[.active]:font-medium"
+                  href={menu.href}
+                >
+                  {menu.name}
+                </Link>
+                <div className="dot bg-transparent h-[2px] group-hover:bg-primary-color group-[.active]:bg-primary-color w-6 group-hover:rounded"></div>
+              </li>
             ))}
             {user && accessToken ? (
               <UserAvatar user={user} />
             ) : (
-              <span className="flex flex-row items-center gap-2">
-                <Link
-                  href="/dang-ky"
-                  className="font-roboto not-italic font-normal text-base leading-[150%] cursor-pointer text-[#343434] no-underline hover:text-primary-color hover:font-medium hover:mb-0 menu-item"
+              <React.Fragment>
+                <li
+                  className={`flex flex-col items-center group font-roboto font-normal text-base text-[#343434]`}
                 >
-                  Đăng ký <div className="bottom-menu"></div>
-                </Link>
-                /
-                <Link
-                  href="/dang-nhap"
-                  className="font-roboto not-italic font-normal text-base leading-[150%] cursor-pointer text-[#343434] no-underline hover:text-primary-color hover:font-medium hover:mb-0 menu-item"
+                  <Link
+                    href="/dang-ky"
+                    className="font-normal hover:font-medium hover:text-primary-color group-[.active]:text-primary-color group-[.active]:font-medium"
+                  >
+                    Đăng ký
+                  </Link>
+                  <div className="dot bg-transparent h-[2px] group-hover:bg-primary-color group-[.active]:bg-primary-color w-6 group-hover:rounded"></div>
+                </li>
+                <li className="-mr-7 -ml-8">/</li>
+                <li
+                  className={`flex flex-col items-center group font-roboto font-normal text-base text-[#343434]`}
                 >
-                  Đăng nhập
-                  <div className="bottom-menu"></div>
-                </Link>
-              </span>
+                  <Link
+                    href="/dang-nhap"
+                    className="font-normal hover:font-medium hover:text-primary-color group-[.active]:text-primary-color group-[.active]:font-medium"
+                  >
+                    Đăng nhập
+                  </Link>
+                  <div className="dot bg-transparent h-[2px] group-hover:bg-primary-color group-[.active]:bg-primary-color w-6 group-hover:rounded"></div>
+                </li>
+              </React.Fragment>
             )}
-          </div>
-        </div>
-      </div>
-      <div
-        className={`${
-          headerClass ? "" : "hidden"
-        } flex justify-between items-center lg:hidden`}
-      >
-        <div className="flex items-center py-[10px] pl-[111px] pr-4 gap-2 bg-[#ffffff] border-solid border-[#dddddd] rounder-[4px] w-full max-w-[80%]">
-          <div className="min-w-[30px]">
-            <Image src={searchIcon} alt="" />
-          </div>
-          <input
-            className="border-none outline-none w-full"
-            type="text"
-            placeholder="Bạn đang muốn tìm gì?"
-          />
-        </div>
-        <div className="w-[30px] h-[30px] ml-6">
-          <Image src={filterIcon} alt="" />
-        </div>
+          </ul>
+        </nav>
       </div>
       <Drawer
         onClose={() => {

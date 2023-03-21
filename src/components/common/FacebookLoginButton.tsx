@@ -55,7 +55,7 @@ const FacebookLoginButton = (props: Props) => {
   return (
     <button
       onClick={() => handleClick()}
-      className="mb-6 ibuild-btn bg-[#fff] border border-solid border-[#314eac] w-full flex-row text-primary-color font-medium"
+      className="flex justify-center items-center gap-2 h-12 w-full bg-white rounded-lg border border-solid border-[#314EAC] hover:bg-primary-color hover:text-white font-medium text-base text-primary-color"
     >
       <Image src={facebookIcon} alt="" /> Đăng nhập bằng tài khoản Facebook
     </button>

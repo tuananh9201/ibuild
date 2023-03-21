@@ -19,23 +19,26 @@ export default function ChangePassSuccess() {
 
   return (
     <motion.div
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 1 }}
+      key="form-success"
+      initial={{ opacity: 0, x: -100 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 100 }}
       transition={{
         type: "spring",
         stiffness: 260,
         damping: 20,
+        duration: 0.5,
       }}
     >
-      <div className="mx-0 my-6">
+      <div className="w-full text-center flex justify-center items-center">
         <Image
           src={ChangePassSuccessImage}
           alt="thay doi mat khau thanh cong"
           priority={true}
-          className="mx-auto my-0"
+          className="w-fit"
         />
       </div>
-      <p className="text-base font-normal leading-6 text-justify">
+      <p className="mt-6 font-normal text-base text-[#333333] leading-6">
         Tài khoản đã thành công đổi mật khẩu hiện tại, do đó bạn có thể tiếp tục
         vào Tài khoản iBuild của bạn. Để đảm bảo an toàn vui lòng không cung cấp
         mật khẩu này cho bất kì ai.

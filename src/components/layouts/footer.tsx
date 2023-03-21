@@ -1,6 +1,6 @@
-import { addressIcon, logo, phoneIcon, sendIcon } from "@/constants/images";
+import { addressIcon, faxIcon, logo, sendIcon } from "@/constants/images";
 import { ERRORS } from "@/constants/msg";
-import { Col, message, Row } from "antd";
+import { message } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -11,7 +11,8 @@ export default function Footer() {
   const handleValidEmail = (email: string) => {
     return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
   };
-  const onSubmitSubcriber = async () => {
+  const onSubmitSubcriber = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     let emailValidateMessages = "";
     if (emailSubcriber.length === 0) {
       emailValidateMessages = ERRORS.PLEASE_INPUT_EMAIL;
@@ -29,59 +30,126 @@ export default function Footer() {
     setEmailSubcriber(value);
   };
   return (
-    <div className="flex flex-col items-start p-0 gap-4">
-      <Row style={{ width: "100%" }}>
-        <Col md={24} lg={8}>
-          <div className="lg:pt-[56px] lg:pr-6 lg:pb-4 lg:pl-[120px] px-6 py-4">
-            <div className="flex flex-col">
-              <Link href="/" className="logo">
-                <Image src={logo} alt="IBUILD" />
+    <div className="flex flex-col justify-start py-4 px-6 lg:py-6 gap-4">
+      <div className="logo-space flex flex-col">
+        <Image className="ml-2 lg:ml-32" src={logo} alt="IBUILD" />
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 w-full mt-4">
+        <div className="info pr-6 ml-2 lg:pl-32">
+          <div>
+            <div className="address flex justify-start py-0 gap-2 mb-4 last:mb-0">
+              <div className="address-icon w-6 h-6">
+                <Image src={addressIcon} alt="" />
+              </div>
+              <div className="address-info">
+                <p className="mb-2 font-normal text-sm last:mb-0">
+                  Trụ sở Hà Nội: Tầng 25, Tòa tháp B, 173 Xuân Thủy, Cầu Giấy,
+                  Hà Nội, Việt Nam.
+                </p>
+                <p className="mb-2 font-normal text-sm last:mb-0">
+                  Liên hệ: (84-4) 3.768.9696
+                </p>
+              </div>
+            </div>
+            <div className="address flex justify-start py-0 gap-2 mb-4 last:mb-0">
+              <div className="address-icon w-6 h-6">
+                <Image src={addressIcon} alt="" />
+              </div>
+              <div className="address-info">
+                <p className="mb-2 font-normal text-sm last:mb-0">
+                  Trụ sở HCM: Tầng 3, Số 293 Điện Biên Phủ, Phường 15, Quận Bình
+                  Thạnh, TP.HCM
+                </p>
+                <p className="mb-2 font-normal text-sm last:mb-0">
+                  Liên hệ: (84-8) 5.404.2168
+                </p>
+              </div>
+            </div>
+            <div className="address flex justify-start py-0 gap-2 mb-4 last:mb-0">
+              <div className="address-icon w-6 h-6">
+                <Image src={faxIcon} alt="" />
+              </div>
+              <div className="address-info">
+                <p className="mb-2 font-normal text-sm last:mb-0">
+                  Fax: (84-8) 5.404.2188
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="footer-menus mt-4 px-2 lg:px-16 lg:mt-0">
+          <ul className="font-normal font-roboto">
+            <li className="mb-4 last:mb-0">
+              <Link
+                className="text-base text-[#343434] hover:text-primary-color"
+                href="/ve-chung-toi"
+              >
+                Về chúng tôi
               </Link>
-              <span className="mt-2 font-normal text-[14px] leading-[calc(21/14)]">
-                Lorem Ipsum has been the industry's standard dummy text ever
-                since the.
-              </span>
-            </div>
-          </div>
-          <div className="flex items-start px-6 py-0 lg:pl-[120px] gap-2">
-            <div className="w-6 h-6">
-              <Image src={addressIcon} alt="" />
-            </div>
-            <div>
-              <div className="mb-2 font-normal text-[14px] leading-[calc(21/14)] last:mb-0">
-                Trụ sở Hà Nội: Tầng 25, Tòa tháp B, 173 Xuân Thủy, Cầu Giấy, Hà
-                Nội, Việt Nam.
+            </li>
+            <li className="mb-4 last:mb-0">
+              <Link
+                className="text-base text-[#343434] hover:text-primary-color"
+                href="/san-pham"
+              >
+                Sản phẩm
+              </Link>
+            </li>
+            <li className="mb-4 last:mb-0">
+              <Link
+                className="text-base text-[#343434] hover:text-primary-color"
+                href="/van-ban-phap-ly"
+              >
+                Văn bản pháp lý
+              </Link>
+            </li>
+            <li className="mb-4 last:mb-0">
+              <Link
+                className="text-base text-[#343434] hover:text-primary-color"
+                href="/thong-tin-xay-dung"
+              >
+                Thông tin xây dựng
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div className="subcribers">
+          <form
+            onSubmit={onSubmitSubcriber}
+            className="mt-4 lg:mt-2 p-2 lg:pr-12 "
+          >
+            <label htmlFor="email" className="font-normal text-base">
+              Theo dõi thông tin
+            </label>
+            <div className="mt-2 w-full h-11 flex justify-between bg-white border border-solid border-[#999999] rounded-lg">
+              <div className="p-1">
+                <input
+                  value={emailSubcriber}
+                  onChange={onChangeEmailSubcriberInput}
+                  placeholder="info@gmail.com"
+                  type="text"
+                  className="w-full border-none h-full p-2 placeholder:font-normal placeholder:text-sm placeholder:text-[#717171]"
+                />
               </div>
-              <div className="mb-2 font-normal text-[14px] leading-[calc(21/14)] last:mb-0">
-                Trụ sở HCM: Tầng 3, Số 293 Điện Biên Phủ, Phường 15, Quận Bình
-                Thạnh, TP.HCM
-              </div>
+              <button
+                type="submit"
+                className="icon w-14 h-11 bg-primary-color flex items-center justify-center rounded hover:cursor-pointer"
+              >
+                <Image src={sendIcon} alt="" />
+              </button>
             </div>
-          </div>
-          <div className="flex items-start px-6 py-0 lg:pl-[120px] gap-2">
-            <div className="w-6 h-6">
-              <Image src={addressIcon} alt="" />
+            <div className="helper mt-2">
+              {emailValidateMessages ? (
+                <span className="text-red-500 font-normal text-base">
+                  {emailValidateMessages}
+                </span>
+              ) : null}
             </div>
-            <div>
-              <div className="mb-2 font-normal text-[14px] leading-[calc(21/14)] last:mb-0">
-                Trụ sở Hà Nội: (84-4) 3.768.9696
-              </div>
-              <div className="mb-2 font-normal text-[14px] leading-[calc(21/14)] last:mb-0">
-                Trụ sở HCM: (84-8) 5.404.2168
-              </div>
-            </div>
-          </div>
-          <div className="flex items-start px-6 py-0 lg:pl-[120px] gap-2">
-            <div className="w-6 h-6">
-              <Image src={phoneIcon} alt="" />
-            </div>
-            <div>
-              <div className="mb-2 font-normal text-[14px] leading-[calc(21/14)] last:mb-0">
-                Fax: (84-8) 5.404.2188
-              </div>
-            </div>
-          </div>
-        </Col>
+          </form>
+        </div>
+      </div>
+
+      {/* <Row style={{ width: "100%" }}>
         <Col md={24} lg={8}>
           <div className="px-6 py-4 lg:pt-[115px] lg:pr-0 lg:pb-0 lg:pl-[50px]">
             <ul>
@@ -134,9 +202,9 @@ export default function Footer() {
             </div>
           </div>
         </Col>
-      </Row>
-      <div className="px-6 py-4 lg:px-0 lg:pt-0 lg:pb-4 w-full flex items-start justify-center gap-4">
-        <div className="flex flex-row justify-center items-start p-0 not-italic font-normal text-[12px] leading-[150%]">
+      </Row> */}
+      <div className="w-full flex items-center py-4 px-6 lg:pb-4 gap-4">
+        <div className="w-full flex flex-row justify-center items-start p-0 font-normal text-xs text-center">
           Bản quyền thuộc về VDI - Giấy phép số: 134/CP-CBC - Cục báo chí, Bộ
           Thông tin và Truyền thông.
         </div>

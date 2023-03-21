@@ -64,12 +64,15 @@ function FormChangePass({ onSuccess, email, code }: Props) {
 
   return (
     <motion.div
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 1 }}
+      key="form-change-pass"
+      initial={{ opacity: 0, x: -100 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 100 }}
       transition={{
         type: "spring",
         stiffness: 260,
         damping: 20,
+        duration: 0.5,
       }}
     >
       <Form
@@ -77,11 +80,12 @@ function FormChangePass({ onSuccess, email, code }: Props) {
         form={form}
         requiredMark={false}
         onFinish={onSubmit}
-        className="max-w-full"
+        // style={{ maxWidth: "100%" }}
+        className="w-full"
         scrollToFirstError
       >
         <div className="mb-6">
-          <p className="text-base font-normal leading-[calc(24 / 16)] text-justify">
+          <p className="text-base font-normal leading-6">
             Việc thay đổi mật khẩu của bạn sẽ khiến đăng xuất khỏi tất cả các
             thiết bị. Bạn cần phải nhập mật khẩu mới trên tất cả các thiết bị
             khi đăng nhập lại.
@@ -91,7 +95,7 @@ function FormChangePass({ onSuccess, email, code }: Props) {
           name="newPassword"
           label={
             <p>
-              Mật khẩu mới <span className="text-red-600">*</span>
+              Mật khẩu mới <span className="text-red-500">*</span>
             </p>
           }
         >
@@ -119,7 +123,7 @@ function FormChangePass({ onSuccess, email, code }: Props) {
           shouldUpdate
           label={
             <p>
-              Nhập lại mật khẩu <span style={{ color: "#314EAC" }}>*</span>
+              Nhập lại mật khẩu <span className="text-red-500">*</span>
             </p>
           }
         >

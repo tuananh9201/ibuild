@@ -19,7 +19,9 @@ const IbuildButton: React.FunctionComponent<IIbuildButtonProps> = ({
 }) => {
   return (
     <button
-      className="w-full h-12 text-base font-medium flex justify-center items-center bg-primary-color rounded-lg text-white"
+      className={`w-full h-12 text-base font-medium flex justify-center items-center bg-primary-color rounded-lg text-white disabled:hover:cursor-not-allowed  ${
+        isLoading ? "bg-[#d4d1d1]" : ""
+      }`}
       disabled={disabled}
       type={type}
       onClick={onClick}

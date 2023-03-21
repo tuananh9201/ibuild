@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { LoadingOutlined } from "@ant-design/icons";
 
 import { Form, Input, Spin } from "antd";
+import { validateEmailOrPhoneNumber } from "src/utils/validate";
+import { ERRORS } from "@/constants/msg";
 
 type Props = {
   isLoading: boolean;
@@ -12,11 +14,7 @@ type Props = {
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-const FormForgetPassword = ({
-  handleSendEmailSubmit,
-  onFailed,
-  isLoading,
-}: Props) => {
+const FormForgetPassword = ({ handleSendEmailSubmit, isLoading }: Props) => {
   const [form] = Form.useForm();
   const onFinish = (values: any) => {
     const { email } = values;
@@ -25,38 +23,47 @@ const FormForgetPassword = ({
 
   return (
     <motion.div
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      key="form-forgot"
+      initial={{ opacity: 0, x: -100 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 100 }}
       transition={{
         type: "spring",
         stiffness: 260,
         damping: 20,
+        duration: 0.5,
       }}
-      className="form-sign-up"
+      className="w-full"
     >
       <Form
         onFinish={onFinish}
         layout="vertical"
         form={form}
-        style={{ maxWidth: "100%" }}
+        className="w-full"
         requiredMark={false}
         scrollToFirstError
       >
         <Form.Item
           name="email"
-          label="Nhập email khôi phục"
+          label="Nhập email hoặc số điện thoại khôi phục"
           rules={[
             {
               required: true,
-              message: "Vui lòng nhập Email",
+              message: "Nhập email hoặc số điện thoại khôi phục",
             },
-            {
-              type: "email",
-              message: "Email không đúng định dạng",
-            },
+            () => ({
+              validator(rule, value) {
+                if (value) {
+                  if (!validateEmailOrPhoneNumber(value)) {
+                    return Promise.reject(ERRORS.MSG012);
+                  }
+                }
+                return Promise.resolve();
+              },
+            }),
           ]}
         >
-          <Input size="large" placeholder="Nhập email khôi phục" />
+          <Input size="large" placeholder="Ví dụ: abc@gmail.com hoặc 0983..." />
         </Form.Item>
 
         <Form.Item shouldUpdate>
