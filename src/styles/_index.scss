@@ -277,7 +277,7 @@
         color: #fff;
 
         @media screen and (max-width: $breakpoint) {
-          top: 40%
+          top: 40%;
         }
 
         h2 {
@@ -479,4 +479,25 @@
 
 li {
   list-style-type: none;
+}
+
+// khong duoc xoa
+.text-ellipsis-clip-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: $text-color;
+
+  &:hover {
+    color: $primary-color;
+  }
+}
+
+.text-ellipsis-clip-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
 }

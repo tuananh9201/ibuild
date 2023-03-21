@@ -1,13 +1,14 @@
-import React from "react";
-import { Form, Input, Typography, message } from "antd";
+import { Form, Input, message } from "antd";
 import { motion } from "framer-motion";
+import React from "react";
 
 import { IbuildButton } from "@/components/common";
-import { resetPassword } from "src/lib/api/auth";
-import { useState } from "react";
-import { validatePassword } from "src/utils/validate";
-import { RulePassword } from "src/lib/types";
 import { rulePassword } from "@/constants/rules";
+import { useState } from "react";
+import { resetPassword } from "src/lib/api/auth";
+import { RulePassword } from "src/lib/types";
+import { validatePassword } from "src/utils/validate";
+
 type Props = {
   onSuccess: (cred: { email: string; password: string }) => void;
   email: string;
@@ -76,11 +77,11 @@ function FormChangePass({ onSuccess, email, code }: Props) {
         form={form}
         requiredMark={false}
         onFinish={onSubmit}
-        style={{ maxWidth: "100%" }}
+        className="max-w-full"
         scrollToFirstError
       >
-        <div style={{ marginBottom: "24px" }}>
-          <p className="base-text">
+        <div className="mb-6">
+          <p className="text-base font-normal leading-[calc(24 / 16)] text-justify">
             Việc thay đổi mật khẩu của bạn sẽ khiến đăng xuất khỏi tất cả các
             thiết bị. Bạn cần phải nhập mật khẩu mới trên tất cả các thiết bị
             khi đăng nhập lại.
@@ -90,7 +91,7 @@ function FormChangePass({ onSuccess, email, code }: Props) {
           name="newPassword"
           label={
             <p>
-              Mật khẩu mới <span style={{ color: "red" }}>*</span>
+              Mật khẩu mới <span className="text-red-600">*</span>
             </p>
           }
         >

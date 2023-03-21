@@ -1,6 +1,5 @@
-import React from "react";
-import Image from "next/image";
 import { Typography } from "antd";
+import Image from "next/image";
 
 import { SendEmailSuccess } from "@/constants/images";
 
@@ -17,15 +16,12 @@ const SendedEmailForgetPassword = ({ email }: Props) => {
         Để giữ an toàn cho tài khoản của bạn, iBuild muốn đảm bảo rằng bạn chính
         là người đang cố đăng nhập
       </Paragraph>
-      <div
-        style={{
-          margin: "24px auto",
-        }}
-      >
+      <div className="mx-auto my-6">
         <Image
           style={{
             margin: "0 auto",
           }}
+          className="mx-auto my-0"
           src={SendEmailSuccess}
           priority={true}
           alt="Gửi email thành công"

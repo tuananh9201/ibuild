@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
-import Image from "next/image";
 import { historyIcon } from "@/constants/images";
+import Image from "next/image";
+import React, { useEffect, useRef, useState } from "react";
 type Props = {};
 
 const histories = [
@@ -85,7 +85,7 @@ const ProductSearch = (props: Props) => {
         </button>
       </div>
       {isActivateSearch ? (
-        <div className="search-histories px-4 min-w-full bg-white flex flex-col">
+        <div className="px-4 min-w-full bg-white flex flex-col">
           <div className="line h-px w-full border-solid border border-gray-100"></div>
           {histories.map((h, idx) => (
             <SearchHistoryItem item={h} key={idx} />

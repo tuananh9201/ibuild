@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import { lockEmail } from "@/constants/images";
+import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 type Props = {
   expires: number;
@@ -9,10 +9,6 @@ type Props = {
 
 const LockWrongPassword = (props: Props) => {
   const [timeRemaining, setTimeRemaining] = useState(props.expires || 86400);
-  // props.expires = 2023-02-21 03:39:01.621610
-  // const expireTime = Date.parse(props.expires);
-  // const now = new Date();
-  // const countDownTime = expireTime - now.getTime();
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -32,48 +28,17 @@ const LockWrongPassword = (props: Props) => {
   const minutes = Math.floor((timeRemaining % 3600) / 60);
   const seconds = timeRemaining % 60;
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    <div className="flex flex-col">
       <Image alt="" src={lockEmail} />
-      <div
-        style={{
-          textAlign: "center",
-          marginTop: 24,
-          fontSize: 16,
-          fontWeight: 400,
-        }}
-      >
+      <div className="text-center mt-6 text-base font-normal">
         Hãy quay trở lại sau...
       </div>
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-          gap: "24px",
-          fontWeight: 500,
-          fontSize: 20,
-          color: "#333333",
-          margin: "8px 0",
-          lineHeight: "150%",
-        }}
-      >
+      <div className="w-full flex justify-center gap-6 font-medium text-xl text-[#333333] mx-0 my-2 leading-[150%]">
         <span>{hours} Giờ</span>
         <span>{minutes} Phút</span>
         <span>{seconds} Giây</span>
       </div>
-      <div
-        style={{
-          fontWeight: 400,
-          fontSize: 16,
-          color: "#333333",
-          lineHeight: "150%",
-        }}
-      >
+      <div className="font-normal text-base text-[#333333] leading-[150%]">
         Tài khoản đã sai mật khẩu quá 5 lần! Tài khoản tạm khóa trong 24 giờ,
         nếu không thể nhớ được mật khẩu của tài khoản vui lòng sử dụng tính năng{" "}
         <Link href="/quen-mat-khau">Quên mật khẩu</Link>

@@ -45,19 +45,19 @@ export default function FormOtp({
         form={form}
         requiredMark={false}
         onFinish={onSubmit}
-        style={{ maxWidth: "100%" }}
+        className="max-w-full"
       >
         <Typography>
-          <Typography.Paragraph className="base-text">
+          <Typography.Paragraph className="text-base font-normal leading-[calc(24 / 16)] text-justify">
             Để giữ an toàn cho tài khoản của bạn, iBuild muốn đảm bảo rằng bạn
             chính là người đang cố đăng nhập
           </Typography.Paragraph>
-          <Typography.Paragraph className="base-text">
+          <Typography.Paragraph className="text-base font-normal leading-[calc(24 / 16)] text-justify">
             iBuild vừa gửi email chứa mã xác minh đến địa chỉ email khôi phục
             của bạn là {email || "abc@gmail.com"}. Vui lòng kiểm tra email này
             để lấy mã và nhập vào bên dưới.
           </Typography.Paragraph>
-          <Typography.Paragraph className="base-text">
+          <Typography.Paragraph className="text-base font-normal leading-[calc(24 / 16)] text-justify">
             Thời gian tồn tại của mã xác nhận là 10 phút, khi hết thời gian đếm
             ngược xin vui lòng lấy lại mã xác nhận mới
           </Typography.Paragraph>

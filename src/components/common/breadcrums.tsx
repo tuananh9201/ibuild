@@ -1,9 +1,9 @@
 import { breadcrumIcon } from "@/constants/images";
 import style from "@/styles/modules/build-info.module.scss";
-import { IBreadcrums } from "src/lib/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { IBreadcrums } from "src/lib/types";
 interface Props {
   breadcrumbs: IBreadcrums[];
 }
@@ -37,15 +37,23 @@ const Breadcrums = ({ breadcrumbs }: Props) => {
   console.log("crumsHref : ", crumsHref);
 
   return (
-    <div className={style.Breadcrums}>
+    <div className="flex flex-row items-center p-5 lg:p-0 w-full mt-10">
       {breadcrumbs.map((breadcrumb, idx) => {
         return (
-          <div key={idx} className={style.Breadcrums_Text}>
-            <span>
-              <Link href={`${crumsHref[idx].href}`}>{breadcrumb.title}</Link>
+          <div
+            key={idx}
+            className="first:hidden lg:first:block not-italic font-normal text-base leading-[150%] gap-4 text-primary-color hover:cursor-pointer hover:last:cursor-default peer last:w-[calc(100% - 158px)] last:overflow-hidden last:text-ellipsis"
+          >
+            <span className="whitespace-nowrap">
+              <Link
+                href={`${crumsHref[idx].href}`}
+                className="peer-hover:text-primary-color peer-hover:peer-last:text-black visited:text-[#343434]"
+              >
+                {breadcrumb.title}
+              </Link>
             </span>
             {idx === breadcrumbs.length - 1 ? null : (
-              <div className={style.Breadcrums_Text_Icon}>
+              <div className="w-6 h-6">
                 <Image src={breadcrumIcon} alt="" />
               </div>
             )}

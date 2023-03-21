@@ -1,9 +1,9 @@
+import ChangePassFailed from "@/components/common/forget/ChangePassFailed";
 import ChangePassSuccess from "@/components/common/forget/ChangePassSuccess";
 import FormChangePass from "@/components/common/forget/FormChangePass";
 import FormForgetPassword from "@/components/common/forget/FormForget";
 import FormOtp from "@/components/common/forget/FormOtp";
 import SendedEmailForgetPassword from "@/components/common/forget/SendedEmailForgetPassword";
-import ChangePassFailed from "@/components/common/forget/ChangePassFailed";
 import OnBoardLayout from "@/components/onboard-layout";
 import { backIcon, logo, unsplashSignUp } from "@/constants/images";
 import {
@@ -17,10 +17,10 @@ import { motion } from "framer-motion";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { ReactElement, useState, useEffect } from "react";
-import { login } from "src/store/features/auth/auth";
+import { ReactElement, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setToken } from "src/lib/api/api";
+import { login } from "src/store/features/auth/auth";
 
 const ForgetPassword: NextPageWithLayout = () => {
   // state
@@ -192,33 +192,30 @@ const ForgetPassword: NextPageWithLayout = () => {
       <Head>
         <title>Tìm lại mật khẩu</title>
       </Head>
-      <div className="left-signup">
+      <div className="hidden lg:block w-full h-full flex-1">
         <Image
-          style={{
-            width: "100%",
-            height: "100%",
-          }}
+          className="w-full h-full"
           priority={true}
           src={unsplashSignUp}
           alt=""
         />
       </div>
-      <div className="right-signin">
-        <div className="right-signin-container">
-          <div className="right-signin-container-nav">
+      <div className="w-full h-full flex-1">
+        <div className="mx-0 my-[60px] lg:mt-[80px] lg:mx-10 lg:mb-auto">
+          <div className="flex justify-start px-[10px] py-[21px] cursor-pointer">
             <Link href="/">
               <Image src={backIcon} alt="" />
             </Link>
           </div>
-          <div className="right-signin-container-content">
-            <div className="heading">
-              <div className="logo">
+          <div className="mx-5 my-12 lg:mx-[60px] lg:my-20">
+            <div>
+              <div className="flex justify-center items-center max-w-[120px] max-h-[30px]">
                 <Image src={logo} alt="" />
               </div>
-              <div className="welcome">
+              <div className="mt-4 mb-8 text-[32px] flex justify-between items-baseline">
                 <span>{currentTitle}</span>
                 {currentStep === 3 ? (
-                  <span>
+                  <span className="text-xl font-medium">
                     {minutes < 10 ? `0${minutes}` : minutes}:{" "}
                     {seconds < 10 ? `0${seconds}` : seconds}
                   </span>

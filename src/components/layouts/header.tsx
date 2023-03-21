@@ -75,7 +75,7 @@ const MainHeader = () => {
 
   return (
     <div
-      className={`flex flex-row justify-between gap-4 bg-[#fff] w-full pt-[56px] pr-5 pb-4 pl-5 border-solid border-[0.5px] border-[#bfbfbf] lg:px-[60px] lg:py-4 ${
+      className={`flex flex-row justify-between gap-4 bg-[#fff] w-full pt-[56px] pr-5 pb-4 pl-5 border-solid border-[#bfbfbf] border-b lg:px-[60px] lg:py-4 ${
         headerClass
           ? "flex flex-col border-solid border-[#ececec]"
           : "border-b-0"

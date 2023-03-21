@@ -14,19 +14,8 @@ const PrivacyPolicyPage: NextPageWithLayout = () => {
       </Head>
       <div className="main-content">
         <h1>Chính sách và quyền riêng tư </h1>
-        <div
-          style={{
-            marginTop: 80,
-          }}
-        >
-          <div
-            style={{
-              margin: "24px 0",
-              fontSize: 16,
-              fontWeight: 400,
-              lineHeight: "150%",
-            }}
-          >
+        <div className="mt-20">
+          <div className="text-base font-normal leading-[150%] mx-0 my-6">
             Chào mừng bạn đến với trang web của chúng tôi. Chúng tôi cam kết bảo
             vệ quyền riêng tư của bạn và đảm bảo rằng thông tin cá nhân của bạn
             được bảo vệ tốt nhất có thể. Bằng cách sử dụng trang web của chúng
@@ -35,14 +24,7 @@ const PrivacyPolicyPage: NextPageWithLayout = () => {
           </div>
 
           <h3>Thu thập thông tin cá nhân</h3>
-          <div
-            style={{
-              margin: "24px 0",
-              fontSize: 16,
-              fontWeight: 400,
-              lineHeight: "150%",
-            }}
-          >
+          <div className="text-base font-normal leading-[150%] mx-0 my-6">
             Khi bạn đăng nhập vào trang web của chúng tôi bằng tài khoản Google
             hoặc Facebook, chúng tôi thu thập thông tin cá nhân của bạn như tên,
             địa chỉ email và hình ảnh đại diện. Chúng tôi sử dụng thông tin này
@@ -51,14 +33,7 @@ const PrivacyPolicyPage: NextPageWithLayout = () => {
           </div>
 
           <h3>Sử dụng thông tin cá nhân</h3>
-          <div
-            style={{
-              margin: "24px 0",
-              fontSize: 16,
-              fontWeight: 400,
-              lineHeight: "150%",
-            }}
-          >
+          <div className="text-base font-normal leading-[150%] mx-0 my-6">
             Chúng tôi sử dụng thông tin cá nhân của bạn để cung cấp các dịch vụ
             trên trang web của chúng tôi và để liên lạc với bạn về các thông tin
             liên quan đến trang web của chúng tôi. Chúng tôi không chia sẻ thông
@@ -66,14 +41,7 @@ const PrivacyPolicyPage: NextPageWithLayout = () => {
           </div>
 
           <h3>Bảo vệ thông tin cá nhân</h3>
-          <div
-            style={{
-              margin: "24px 0",
-              fontSize: 16,
-              fontWeight: 400,
-              lineHeight: "150%",
-            }}
-          >
+          <div className="text-base font-normal leading-[150%] mx-0 my-6">
             Chúng tôi cam kết bảo vệ thông tin cá nhân của bạn bằng cách sử dụng
             các biện pháp an ninh phù hợp. Chúng tôi chỉ cho phép các nhân viên
             có nhu cầu truy cập thông tin cá nhân của bạn và đảm bảo rằng các
@@ -81,14 +49,7 @@ const PrivacyPolicyPage: NextPageWithLayout = () => {
           </div>
 
           <h3>Điều chỉnh thông tin cá nhân</h3>
-          <div
-            style={{
-              margin: "24px 0",
-              fontSize: 16,
-              fontWeight: 400,
-              lineHeight: "150%",
-            }}
-          >
+          <div className="text-base font-normal leading-[150%] mx-0 my-6">
             Nếu bạn muốn xem hoặc chỉnh sửa thông tin cá nhân của mình, bạn có
             thể làm điều đó bằng cách truy cập vào tài khoản của mình trên trang
             web của chúng tôi

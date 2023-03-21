@@ -1,187 +1,39 @@
 @import "variables";
 
 .NewsMain {
-    margin: 20px;
+  margin: 20px;
 }
 
 .NewsCategoryMain {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 40px 120px 60px;
+  gap: 60px;
+
+  &_List {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding: 40px 120px 60px;
-    gap: 60px;
-
-    &_List {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 0px;
-        gap: 32px;
-    }
+    align-items: center;
+    padding: 0px;
+    gap: 32px;
+  }
 }
 
 .Build_Features {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 0px;
-    gap: 32px;
-    width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 32px;
+  width: 100%;
 
-    @media screen and (max-width:$breakpoint) {
-        flex-direction: column;
-    }
+  @media screen and (max-width: $breakpoint) {
+    flex-direction: column;
+  }
 
-    &_Top1 {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 0px;
-        gap: 24px;
-
-        &_Image {
-            border-radius: 4px;
-            width: 100%;
-        }
-
-        &_Title {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            padding: 0px;
-
-            &_Date {
-                font-weight: 400;
-                font-size: 14px;
-                line-height: 150%;
-                color: #717171;
-            }
-
-            &_Title {
-                font-style: normal;
-                font-weight: 500;
-                font-size: 24px;
-                line-height: 150%;
-            }
-        }
-
-        &_Desc {
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 150%;
-            color: #717171;
-        }
-    }
-
-    &_Top25 {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 0px;
-        gap: 32px;
-    }
-}
-
-.Build_News {
-    margin-top: 60px;
-}
-
-.Build_Administrative {
-    margin-top: 60px;
-}
-
-.Build_Card_Feature {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0px;
-    gap: 24px;
-
-    &_Image {
-        flex: 1;
-        border-radius: 4px;
-
-        &:hover {
-            cursor: pointer;
-        }
-    }
-
-    &_Desc {
-        flex: 2;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 0px;
-
-        @media screen and (max-width:$breakpoint) {
-            flex: 1
-        }
-
-        &_Date {
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 150%;
-            color: #717171;
-        }
-
-        &_Title {
-            font-weight: 500;
-            font-size: 20px;
-            line-height: 150%;
-            color: $text-color;
-
-            &:hover {
-                cursor: pointer;
-            }
-        }
-    }
-}
-
-.New_Section_Title {
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-    align-items: center;
-    margin-bottom: 32px;
-
-    &_Title {
-        font-weight: 500;
-        font-size: 24px;
-        line-height: 150%;
-    }
-
-    &_ViewMore {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 5px;
-
-        &:hover {
-            cursor: pointer;
-        }
-
-        &_Text {
-            font-weight: 500;
-            font-size: 16px;
-            line-height: 150%;
-            color: $primary-color;
-        }
-
-        &_Image {
-            // background: $primary-color;
-            width: 16px;
-            height: 16px;
-
-            &:hover {
-                cursor: pointer;
-            }
-        }
-    }
-}
-
-.Build_Card_Normal {
+  &_Top1 {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -189,161 +41,307 @@
     gap: 24px;
 
     &_Image {
-        border-radius: 4px;
-        min-height: 187px;
-        width: 100%;
+      border-radius: 4px;
+      width: 100%;
+    }
 
-        &:hover {
-            cursor: pointer;
-        }
+    &_Title {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0px;
+
+      &_Date {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 150%;
+        color: #717171;
+      }
+
+      &_Title {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 150%;
+      }
     }
 
     &_Desc {
-        &_Date {
-            font-style: normal;
-            font-weight: 400;
-            font-size: 14px;
-        }
-
-        &_Title {
-            a {
-                font-weight: 500;
-                font-size: 20px;
-                line-height: 150%;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 3;
-                line-clamp: 3;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-                color: $text-color;
-
-                &:hover {
-                    color: $primary-color;
-                }
-            }
-
-
-        }
-
-        &_Desc {
-            margin-top: 16px;
-            font-style: normal;
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 150%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            line-clamp: 3;
-            -webkit-box-orient: vertical;
-        }
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 150%;
+      color: #717171;
     }
-}
+  }
 
-.Breadcrums {
+  &_Top25 {
+    flex: 1;
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     padding: 0px;
-    gap: 8px;
-    width: 100%;
-    margin-top: 40px;
-
-    @media screen and (max-width:$breakpoint) {
-        padding: 20px;
-    }
-
-    &_Text {
-        display: flex;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 150%;
-        gap: 16px;
-        color: $text-color;
-
-        @media screen and (max-width: $breakpoint) {
-            &:first-child {
-                display: none;
-            }
-        }
-
-        &:hover {
-            &:not(:last-child) {
-                cursor: pointer;
-
-                a {
-                    color: $primary-color;
-                }
-            }
-        }
-
-        &:last-child {
-            width: calc(100% - 158px);
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        span {
-            white-space: nowrap;
-
-            a {
-                &:visited {
-                    color: $text-color
-                }
-            }
-        }
-
-        &_Icon {
-            width: 24px;
-            height: 24px;
-        }
-    }
+    gap: 32px;
+  }
 }
 
-.Build_News_Content {
-    margin-top: 60px;
-    width: 100%;
+.Build_News {
+  margin-top: 60px;
+}
 
-    &_Title {
-        font-weight: 600;
-        font-size: 28px;
-        line-height: 125%;
-        text-align: center;
-        margin-bottom: 16px;
+.Build_Administrative {
+  margin-top: 60px;
+}
+
+.Build_Card_Feature {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 24px;
+
+  &_Image {
+    flex: 1;
+    border-radius: 4px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &_Desc {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+
+    @media screen and (max-width: $breakpoint) {
+      flex: 1;
     }
 
     &_Date {
-        font-weight: 400;
-        font-size: 16px;
-        text-align: center;
-        margin-bottom: 32px;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 150%;
+      color: #717171;
     }
 
-    &_Content {
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 200%;
+    &_Title {
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 150%;
+      color: $text-color;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
+  }
+}
+
+.New_Section_Title {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 32px;
+
+  &_Title {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 150%;
+  }
+
+  &_ViewMore {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &_Text {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 150%;
+      color: $primary-color;
+    }
+
+    &_Image {
+      // background: $primary-color;
+      width: 16px;
+      height: 16px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.Build_Card_Normal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 24px;
+
+  &_Image {
+    border-radius: 4px;
+    min-height: 187px;
+    width: 100%;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &_Desc {
+    &_Date {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+    }
+
+    &_Title {
+      a {
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 150%;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        color: $text-color;
+
+        &:hover {
+          color: $primary-color;
+        }
+      }
+    }
+
+    &_Desc {
+      margin-top: 16px;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 150%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      -webkit-box-orient: vertical;
+    }
+  }
+}
+
+.Breadcrums {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 8px;
+  width: 100%;
+  margin-top: 40px;
+
+  @media screen and (max-width: $breakpoint) {
+    padding: 20px;
+  }
+
+  &_Text {
+    // display: flex;
+    // font-style: normal;
+    // font-weight: 400;
+    // font-size: 16px;
+    // line-height: 150%;
+    // gap: 16px;
+    // color: $text-color;
+
+    // @media screen and (max-width: $breakpoint) {
+    //     &:first-child {
+    //         display: none;
+    //     }
+    // }
+
+    // &:hover {
+    //     &:not(:last-child) {
+    //         cursor: pointer;
+
+    //         a {
+    //             color: $primary-color;
+    //         }
+    //     }
+    // }
+
+    // &:last-child {
+    //     width: calc(100% - 158px);
+    //     overflow: hidden;
+    //     text-overflow: ellipsis;
+    // }
+
+    span {
+      white-space: nowrap;
+
+      a {
+        &:visited {
+          color: $text-color;
+        }
+      }
+    }
+
+    &_Icon {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+.Build_News_Content {
+  margin-top: 60px;
+  width: 100%;
+
+  &_Title {
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 125%;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  &_Date {
+    font-weight: 400;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  &_Content {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 200%;
+  }
 }
 
 .News_Related {
-    margin-bottom: 40px;
-    margin-top: 60px;
+  margin-bottom: 40px;
+  margin-top: 60px;
 
-    &_Title {
-        font-weight: 600;
-        font-size: 24px;
-        line-height: 125%;
-        margin-bottom: 32px;
-    }
+  &_Title {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 125%;
+    margin-bottom: 32px;
+  }
 }
 
 .NewsPagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 32px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 32px 0px;
 }

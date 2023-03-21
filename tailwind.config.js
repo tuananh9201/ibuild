@@ -18,6 +18,10 @@ module.exports = {
       fontFamily: {
         roboto: "Roboto",
       },
+      flex: {
+        "2": "2",
+        "base": '1'
+      }
     },
   },
   plugins: [],

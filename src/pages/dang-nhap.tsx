@@ -1,22 +1,22 @@
-import React, { ReactElement, useState } from "react";
-import { NextPageWithLayout } from "./_app";
-import Head from "next/head";
-import OnBoardLayout from "@/components/onboard-layout";
-import Image from "next/image";
-import { backIcon, logo, unsplashLogin } from "@/constants/images";
-import Link from "next/link";
-import { Form, Input, Spin } from "antd";
-import GoogleLoginButton from "@/components/common/GoogleLoginButton";
 import FacebookLoginButton from "@/components/common/FacebookLoginButton";
-import { loginApi } from "src/lib/api/auth";
-import { setToken } from "src/lib/api/api";
-import { useDispatch } from "react-redux";
-import { login } from "src/store/features/auth/auth";
-import { LoadingOutlined } from "@ant-design/icons";
-import { useRouter } from "next/router";
+import GoogleLoginButton from "@/components/common/GoogleLoginButton";
 import LockWrongPassword from "@/components/common/LockWrongPassword";
-import { validPassword } from "src/utils/validate";
+import OnBoardLayout from "@/components/onboard-layout";
+import { backIcon, logo, unsplashLogin } from "@/constants/images";
 import { ERRORS } from "@/constants/msg";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Form, Input, Spin } from "antd";
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React, { ReactElement, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setToken } from "src/lib/api/api";
+import { loginApi } from "src/lib/api/auth";
+import { login } from "src/store/features/auth/auth";
+import { validPassword } from "src/utils/validate";
+import { NextPageWithLayout } from "./_app";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -80,31 +80,28 @@ const EmptyPage: NextPageWithLayout = () => {
       <Head>
         <title>Đăng nhập</title>
       </Head>
-      <div className="left-signin">
+      <div className="hidden lg:flex flex-1 w-full h-full">
         <Image
-          priority
-          placeholder="blur"
-          style={{
-            width: "100%",
-            height: "100%",
-          }}
           src={unsplashLogin}
           alt=""
+          priority
+          placeholder="blur"
+          className="w-full h-full"
         />
       </div>
-      <div className="right-signin">
-        <div className="right-signin-container">
-          <div className="right-signin-container-nav">
+      <div className="w-full h-full flex-1">
+        <div className="mx-0 my-[60px] lg:mx-20 lg:mt-20 lg:mb-10 flex flex-col justify-start min-h-[300px]">
+          <div className="flex justify-start px-[10px] py-[21px] cursor-pointer">
             <Link href="/">
               <Image src={backIcon} alt="" />
             </Link>
           </div>
-          <div className="right-signin-container-content">
-            <div className="heading">
-              <div className="logo">
+          <div className="mx-5 my-12 lg:mx-[60px] lg:my-20">
+            <div>
+              <div className="flex justify-center items-center max-w-[120px] max-h-[30px]">
                 <Image src={logo} alt="" />
               </div>
-              <div className="welcome">
+              <div className="flex justify-between items-baseline text-[32px] mt-4 mb-8">
                 {isLockEmail ? "Sai mật khẩu quá giới hạn" : null}
               </div>
             </div>
@@ -112,15 +109,15 @@ const EmptyPage: NextPageWithLayout = () => {
               <LockWrongPassword expires={expiresTime} />
             ) : (
               <React.Fragment>
-                <div className="form-sign-up">
+                <div>
                   <Form
                     layout="vertical"
                     onFinish={onFinish}
                     form={form}
-                    style={{ maxWidth: "100%" }}
                     scrollToFirstError
                     requiredMark={false}
                     onValuesChange={onChangeValues}
+                    className="max-w-full"
                   >
                     <Form.Item
                       label="Email"
@@ -168,14 +165,9 @@ const EmptyPage: NextPageWithLayout = () => {
                       />
                     </Form.Item>
                     <Form.Item>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "flex-end",
-                        }}
-                      >
+                      <div className="flex justify-end">
                         <Link
-                          className="register-now link"
+                          className="font-roboto not-italic font-medium text-base leading-[150%] text-primary-color"
                           href={"/quen-mat-khau"}
                         >
                           Bạn quên mật khẩu?
@@ -184,7 +176,7 @@ const EmptyPage: NextPageWithLayout = () => {
                     </Form.Item>
                     <Form.Item shouldUpdate>
                       {() => (
-                        <div className="group-action">
+                        <div>
                           <button
                             disabled={
                               form
@@ -203,11 +195,14 @@ const EmptyPage: NextPageWithLayout = () => {
                               "Đăng nhập"
                             )}
                           </button>
-                          <div className="register-link">
-                            <span className="have-account">
+                          <div className="flex justify-end mt-6">
+                            <span className="text-base font-normal leading-[150%] mr-2">
                               Bạn chưa có tài khoản?
                             </span>
-                            <Link href="/dang-ky" className="register-now link">
+                            <Link
+                              href="/dang-ky"
+                              className="no-underline font-medium text-primary-color font-roboto text-base leading-[150%] not-italic"
+                            >
                               Đăng ký ngay
                             </Link>
                           </div>
@@ -217,10 +212,12 @@ const EmptyPage: NextPageWithLayout = () => {
                   </Form>
                 </div>
 
-                <div className="sign-seperator">
-                  <span className="sepe-title">Đăng nhập bằng cách khác</span>
+                <div className="w-full h-6 mt-8 text-center border-solid border-t-[#7f7f7f] border-t-[1px]">
+                  <span className="font-normal font-roboto not-italic text-base bg-[#fff] px-8 py-0 relative top-[-16px]">
+                    Đăng nhập bằng cách khác
+                  </span>
                 </div>
-                <div className="signin-other-platform">
+                <div>
                   <GoogleLoginButton />
                   <FacebookLoginButton />
                 </div>
