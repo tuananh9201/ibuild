@@ -1,6 +1,7 @@
 import { historyIcon } from "@/constants/images";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 type Props = {};
 
 const histories = [
@@ -15,7 +16,7 @@ type HistoryItem = {
 };
 const SearchHistoryItem = (props: HistoryItem) => {
   return (
-    <div className="flex flex-row items-center gap-4 w-full bg-white p-4  hover:border-b  hover:cursor-pointer">
+    <div className="flex flex-row items-center gap-4 w-full bg-white p-4  hover:bg-zinc-100  hover:cursor-pointer">
       <div className="icon w-5 h-5">
         <Image src={historyIcon} alt="" />
       </div>
@@ -50,11 +51,18 @@ const ProductSearch = (props: Props) => {
     "flex flex-row justify-start items-center p-2 gap-2 lg:max-w-3/4 bg-white rounded-lg h-16 ";
   const classNameActivate = `${className} border-solid border border-[#dddddd]`;
   return (
-    <div
+    <motion.div
+      animate={isActivateSearch ? "active" : "deactive"}
+      variants={
+        {
+          // active: { position: "absolute", zIndex: 20, x: 0, y: 0 },
+          // deactive: { position: "static", x: 0, y: 0 },
+        }
+      }
       className={
         isActivateSearch
-          ? "mt-10 flex flex-col items-start gap-2 shadow-[0_0.5px_15px_1px_rgba(0,0,0,0.1)] rounded-lg h-fit z-10"
-          : "mt-10 flex flex-col gap-2"
+          ? "mt-10 lg:max-w-3/4 flex flex-col bg-white items-start gap-2 shadow-[0_0.5px_15px_1px_rgba(0,0,0,0.1)] rounded-lg"
+          : "mt-10 lg:max-w-3/4 flex flex-col gap-2"
       }
     >
       <div className={isActivateSearch ? className : classNameActivate}>
@@ -76,7 +84,7 @@ const ProductSearch = (props: Props) => {
         </div>
         <input
           ref={inputRef}
-          className="input-search w-96 placeholder:text-black text-base font-normal"
+          className="input-search w-full lg:w-96 placeholder:text-black text-base font-normal"
           placeholder="Bạn đang muốn tìm sản phẩm nào?"
           onFocus={onFocusInput}
         />
@@ -92,7 +100,7 @@ const ProductSearch = (props: Props) => {
           ))}
         </div>
       ) : null}
-    </div>
+    </motion.div>
   );
 };
 

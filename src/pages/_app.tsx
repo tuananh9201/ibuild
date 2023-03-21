@@ -20,7 +20,11 @@ export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
-export default function App({ Component, pageProps }: AppPropsWithLayout) {
+export default function App({
+  Component,
+  pageProps,
+  router,
+}: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   useEffect(() => {
@@ -33,7 +37,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
       analytics;
     }
   }, []);
-
   return getLayout(
     <ConfigProvider
       theme={{
@@ -43,27 +46,25 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
       }}
     >
       <Provider store={store}>
-        <AnimatePresence mode="wait" initial={false}>
-          <SWRConfig
-            value={{
-              onError: (error, key) => {
-                if (error.status !== 403 && error.status !== 404) {
-                  // We can send the error to Sentry,
-                  // or show a notification UI.
-                  console.log("SHIT");
-                }
-              },
-            }}
-          >
-            <Head>
-              <meta
-                name="viewport"
-                content="width=device-width, initial-scale=1"
-              />
-            </Head>
-            <Component {...pageProps} />
-          </SWRConfig>
-        </AnimatePresence>
+        <SWRConfig
+          value={{
+            onError: (error, key) => {
+              if (error.status !== 403 && error.status !== 404) {
+                // We can send the error to Sentry,
+                // or show a notification UI.
+              }
+            },
+          }}
+        >
+          <Head>
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1"
+            />
+          </Head>
+          <Component {...pageProps} key={router.asPath} />
+          <Analytics />
+        </SWRConfig>
       </Provider>
       {/* <Analytics /> */}
     </ConfigProvider>

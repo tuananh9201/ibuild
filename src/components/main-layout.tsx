@@ -3,6 +3,7 @@ import Head from "next/head";
 import Footer from "./layouts/footer";
 
 // import Link from "next/link";
+import { motion } from "framer-motion";
 import { Provider } from "react-redux";
 import { store } from "src/store/store";
 import MainHeader from "./layouts/header";
@@ -51,11 +52,21 @@ export default function MainLayout({ children }: IMainLayoutProps) {
         <meta httpEquiv="content-language" content="vi" />
       </Head>
       <Provider store={store}>
-        <div className="max-w-[1440px] flex flex-col m-auto p-0 h-auto">
+        <motion.div
+          initial={{ x: 300, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: 300, opacity: 0 }}
+          transition={{
+            type: "spring",
+            stiffness: 260,
+            damping: 20,
+          }}
+          className="max-w-[1440px] flex flex-col m-auto p-0 h-auto dark:bg-black dark:text-white"
+        >
           <MainHeader />
           {children}
           <Footer />
-        </div>
+        </motion.div>
       </Provider>
     </>
   );

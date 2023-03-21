@@ -1,11 +1,10 @@
-import OnBoardLayout from "@/components/onboard-layout";
+import AuthLayout from "@/components/layouts/AuthLayout";
 import FormRegisterWithEmail from "@/components/register/FormRegisterWithEmail";
 import FormRegisterWithPhone from "@/components/register/FormRegisterWithPhone";
 import { backIcon, logo, unsplashSignUp2 } from "@/constants/images";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import React, { ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showResendButton } from "src/store/features/auth/register";
@@ -13,7 +12,6 @@ import { RootState } from "src/store/store";
 import { NextPageWithLayout } from "./_app";
 
 const SignUpPage: NextPageWithLayout = () => {
-  const router = useRouter();
   const [tabActive, setTabActive] = useState("phone");
   const dispatch = useDispatch();
   const [timeRemaining, setTimeRemaining] = useState(10 * 60);
@@ -31,14 +29,6 @@ const SignUpPage: NextPageWithLayout = () => {
       displayName: "Email",
     },
   ];
-  useEffect(() => {
-    const tabInUrl = router.asPath.split("#");
-    if (tabInUrl.length === 2) {
-      const tabStr = tabInUrl[1];
-      const tab = tabs.find((t) => t.name === tabStr);
-      tab && setTabActive(tab.name);
-    }
-  }, [router]);
   useEffect(() => {
     if (
       registerState.currentStep.step === 2 &&
@@ -115,12 +105,12 @@ const SignUpPage: NextPageWithLayout = () => {
                         t.name === tabActive ? "active" : ""
                       }`}
                     >
-                      <Link
-                        href={`#${t.name}`}
+                      <div
+                        onClick={() => setTabActive(t.name)}
                         className="font-medium text-xl leading-normal text-[#999999] hover:text-primary-color group-[.active]:text-primary-color"
                       >
                         {t.displayName}
-                      </Link>
+                      </div>
                       <div className="dot hidden group-[.active]:block w-12 border-b-2 border-solid border-primary-color"></div>
                     </li>
                   ))}
@@ -150,7 +140,7 @@ const SignUpPage: NextPageWithLayout = () => {
 SignUpPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <>
-      <OnBoardLayout>{page}</OnBoardLayout>
+      <AuthLayout>{page}</AuthLayout>
     </>
   );
 };

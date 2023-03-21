@@ -1,7 +1,7 @@
 import FacebookLoginButton from "@/components/common/FacebookLoginButton";
 import GoogleLoginButton from "@/components/common/GoogleLoginButton";
 import LockWrongPassword from "@/components/common/LockWrongPassword";
-import OnBoardLayout from "@/components/onboard-layout";
+import AuthLayout from "@/components/layouts/AuthLayout";
 import { backIcon, logo, unsplashLogin } from "@/constants/images";
 import { ERRORS } from "@/constants/msg";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -20,7 +20,7 @@ import { NextPageWithLayout } from "./_app";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-const EmptyPage: NextPageWithLayout = () => {
+const SignInPage: NextPageWithLayout = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -219,11 +219,11 @@ const EmptyPage: NextPageWithLayout = () => {
     </>
   );
 };
-EmptyPage.getLayout = function getLayout(page: ReactElement) {
+SignInPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <>
-      <OnBoardLayout>{page}</OnBoardLayout>
+      <AuthLayout>{page}</AuthLayout>
     </>
   );
 };
-export default EmptyPage;
+export default SignInPage;
