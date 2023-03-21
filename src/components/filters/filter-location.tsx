@@ -15,8 +15,8 @@ const FilterLocation = (props: Props) => {
   ];
   return (
     <>
-      <span className="filter-title">Khu vực</span>
-      <div className="checkbox-group">
+      <span className="not-italic font-medium text-xl leading-[150%] text-text-color mb-4">Khu vực</span>
+      <div className="flex flex-col">
         {options.map((o) => (
           <Checkbox className="item" key={o.value} onChange={onChange}>
             {o.label}

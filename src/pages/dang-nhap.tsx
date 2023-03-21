@@ -1,22 +1,22 @@
-import React, { ReactElement, useState } from "react";
-import { NextPageWithLayout } from "./_app";
+import FacebookLoginButton from "@/components/common/FacebookLoginButton";
+import GoogleLoginButton from "@/components/common/GoogleLoginButton";
+import LockWrongPassword from "@/components/common/LockWrongPassword";
+import AuthLayout from "@/components/layouts/AuthLayout";
+import { backIcon, logo, unsplashLogin } from "@/constants/images";
+import { ERRORS } from "@/constants/msg";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Form, Input, Spin } from "antd";
 import Head from "next/head";
 import Image from "next/image";
-import { backIcon, logo, unsplashLogin } from "@/constants/images";
 import Link from "next/link";
-import { Form, Input, Spin } from "antd";
-import GoogleLoginButton from "@/components/common/GoogleLoginButton";
-import FacebookLoginButton from "@/components/common/FacebookLoginButton";
-import { loginApi } from "src/lib/api/auth";
-import { setToken } from "src/lib/api/api";
-import { useDispatch } from "react-redux";
-import { login } from "src/store/features/auth/auth";
-import { LoadingOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
-import LockWrongPassword from "@/components/common/LockWrongPassword";
+import React, { ReactElement, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setToken } from "src/lib/api/api";
+import { loginApi } from "src/lib/api/auth";
+import { login } from "src/store/features/auth/auth";
 import { validateEmailOrPhoneNumber } from "src/utils/validate";
-import { ERRORS } from "@/constants/msg";
-import AuthLayout from "@/components/layouts/AuthLayout";
+import { NextPageWithLayout } from "./_app";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -102,15 +102,15 @@ const SignInPage: NextPageWithLayout = () => {
               <LockWrongPassword expires={expiresTime} />
             ) : (
               <React.Fragment>
-                <div className="form-sign-up">
+                <div>
                   <Form
                     layout="vertical"
                     onFinish={onFinish}
                     form={form}
-                    style={{ maxWidth: "100%" }}
                     scrollToFirstError
                     requiredMark={false}
                     onValuesChange={onChangeValues}
+                    className="max-w-full"
                   >
                     <Form.Item
                       label="Email hoặc số điện thoại đăng nhập"
@@ -154,14 +154,9 @@ const SignInPage: NextPageWithLayout = () => {
                       />
                     </Form.Item>
                     <Form.Item>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "flex-end",
-                        }}
-                      >
+                      <div className="flex justify-end">
                         <Link
-                          className="register-now link"
+                          className="font-roboto not-italic font-medium text-base leading-[150%] text-primary-color"
                           href={"/quen-mat-khau"}
                         >
                           Bạn quên mật khẩu?
@@ -170,7 +165,7 @@ const SignInPage: NextPageWithLayout = () => {
                     </Form.Item>
                     <Form.Item shouldUpdate>
                       {() => (
-                        <div className="group-action">
+                        <div>
                           <button
                             disabled={
                               form
@@ -212,7 +207,7 @@ const SignInPage: NextPageWithLayout = () => {
                     Đăng nhập bằng cách khác
                   </span>
                 </div>
-                <div className="signin-other-platform">
+                <div>
                   <GoogleLoginButton />
                   <FacebookLoginButton />
                 </div>

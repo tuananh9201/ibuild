@@ -2,12 +2,12 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 import { ChangePassSuccessImage } from "@/constants/images";
-import { useEffect } from "react";
 import { useRouter } from "next/router";
-type Props = {};
+import { useEffect } from "react";
 
-export default function ChangePassSuccess({}: Props) {
+export default function ChangePassSuccess() {
   const router = useRouter();
+
   useEffect(() => {
     const t = setTimeout(() => {
       router.push("/");

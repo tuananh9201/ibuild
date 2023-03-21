@@ -1,13 +1,14 @@
-import React from "react";
-import { Form, Input, Typography, message } from "antd";
+import { Form, Input, message } from "antd";
 import { motion } from "framer-motion";
+import React from "react";
 
 import { IbuildButton } from "@/components/common";
-import { resetPassword } from "src/lib/api/auth";
-import { useState } from "react";
-import { validatePassword } from "src/utils/validate";
-import { RulePassword } from "src/lib/types";
 import { rulePassword } from "@/constants/rules";
+import { useState } from "react";
+import { resetPassword } from "src/lib/api/auth";
+import { RulePassword } from "src/lib/types";
+import { validatePassword } from "src/utils/validate";
+
 type Props = {
   onSuccess: (cred: { email: string; password: string }) => void;
   email: string;
@@ -104,12 +105,12 @@ function FormChangePass({ onSuccess, email, code }: Props) {
               size="large"
               placeholder="Nhập mật khẩu"
             />
-            <div className="password-helper">
+            <div className="mx-4 mt-2 -mb-2 font-normal text-sm leading-[150%]">
               <ul>
                 {rules.map((rule) => (
                   <li
                     key={rule.code}
-                    className={rule.init ? "" : rule.success ? "success" : ""}
+                    className={`list-disc ${rule.init ? "" : rule.success ? "text-[#4d993d]" : ""}`}
                   >
                     {rule.message}
                   </li>

@@ -1,16 +1,15 @@
-import React, { ReactElement } from "react";
-import { NextPageWithLayout } from "./_app";
-import Head from "next/head";
-import Image from "next/image";
-import { backIcon, logo, unsplashSignUp2 } from "@/constants/images";
-import Link from "next/link";
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import AuthLayout from "@/components/layouts/AuthLayout";
 import FormRegisterWithEmail from "@/components/register/FormRegisterWithEmail";
 import FormRegisterWithPhone from "@/components/register/FormRegisterWithPhone";
-import { RootState } from "src/store/store";
+import { backIcon, logo, unsplashSignUp2 } from "@/constants/images";
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
+import React, { ReactElement, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { showResendButton } from "src/store/features/auth/register";
-import AuthLayout from "@/components/layouts/AuthLayout";
+import { RootState } from "src/store/store";
+import { NextPageWithLayout } from "./_app";
 
 const SignUpPage: NextPageWithLayout = () => {
   const [tabActive, setTabActive] = useState("phone");

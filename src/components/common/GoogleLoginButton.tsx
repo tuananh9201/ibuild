@@ -1,13 +1,13 @@
-import React from "react";
-import Image from "next/image";
 import { googleIcon } from "@/constants/images";
-import { signInWithProvider } from "src/utils/firebase";
 import { message } from "antd";
-import { authWithSocialAccessToken } from "src/lib/api/auth";
-import { setToken } from "src/lib/api/api";
-import { useDispatch } from "react-redux";
-import { login } from "src/store/features/auth/auth";
+import Image from "next/image";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+
+import { setToken } from "src/lib/api/api";
+import { authWithSocialAccessToken } from "src/lib/api/auth";
+import { login } from "src/store/features/auth/auth";
+import { signInWithProvider } from "src/utils/firebase";
 
 type Props = {};
 

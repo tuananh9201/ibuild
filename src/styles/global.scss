@@ -1,16 +1,9 @@
 @import "reset";
 @import "variables";
-@import "product";
-@import "role";
-@import "index";
+@import "tailwindcss";
 @import "button";
-@import "product";
 @import "override";
-@import "header";
 @import "~react-image-gallery/styles/scss/image-gallery.scss";
-@import "~tailwindcss/base";
-@import "~tailwindcss/components";
-@import "~tailwindcss/utilities";
 
 :root {
   --primary-color: #314eac;
@@ -26,10 +19,6 @@ body {
   height: 100%;
 }
 
-.field-required {
-  color: red;
-}
-
 label {
   font-family: "Roboto";
   font-style: normal;
@@ -37,15 +26,6 @@ label {
   font-size: 16px;
   line-height: 150%;
   color: $text-color;
-}
-
-.sepec-menu {
-  display: flex;
-  align-items: center !important;
-
-  .spece {
-    padding: 0 8px;
-  }
 }
 
 .menu-item {
@@ -84,168 +64,22 @@ label {
   }
 }
 
-.checkbox-group {
-  display: flex;
-  flex-direction: column;
-
-  .item {
-    margin-left: 0px;
-    margin-top: 16px;
-  }
-}
-
-.wrap-menu {
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-  align-items: center;
-}
-
-// overrid .image-gallery-thumbnail
-.image-gallery-thumbnail {
-  max-width: 80px;
-  max-height: 80px;
-
-  &.active {
-    border: 2px solid $primary-color;
-  }
+.text-ellipsis-clip-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: $text-color;
 
   &:hover {
-    border: 2px solid $primary-color;
+    color: $primary-color;
   }
 }
 
-.loading-dynamic {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  min-height: 200px;
-  min-width: 200px;
-}
-
-.ant-col,
-.ant-row {
-  width: 100% !important;
-}
-
-.supplier-categories {
-  width: 100%;
-
-  &_title {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 150%;
-  }
-
-  &_list {
-    &_item {
-      margin-top: 24px;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 150%;
-      padding-left: 4px;
-
-      &.active {
-        color: $primary-color;
-        border-left: 2px solid $primary-color;
-        font-weight: 500;
-      }
-
-      &:hover {
-        cursor: pointer;
-        color: $primary-color;
-        border-left: 2px solid $primary-color;
-        font-weight: 500;
-      }
-    }
-  }
-
-  @media screen and (max-width: $breakpoint) {
-    display: none !important;
-  }
-}
-
-button:disabled,
-button[disabled] {
-  background: #d1d1d1;
-  color: #fff;
-  pointer-events: none;
-}
-
-.link {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 150%;
-  color: $primary-color !important;
-}
-
-.password-helper {
-  margin: 8px 16px -8px 16px;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 150%;
-
-  li {
-    list-style-type: disc;
-    color: #999999;
-
-    &.error {
-      color: #E64545;
-    }
-
-    &.success {
-      color: #4D993D
-    }
-  }
-}
-
-.error {
-  color: #E64545;
-}
-
-.tab-item {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 150%;
-  color: #999999;
-
-  &:hover {
-    color: $primary-color !important;
-    font-weight: 500 !important;
-    margin-bottom: 0px;
-    cursor: pointer;
-
-    .bottom-menu {
-      display: block;
-      background: $primary-color;
-      border: 1px solid #314EAC;
-      width: 44px;
-      height: 0px;
-    }
-  }
-
-  .bottom-menu {
-    display: none;
-  }
-
-  &.active {
-    @extend :hover;
-  }
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-// Overrid antd css
-.ant-form-item-explain-error {
-  margin: 4px 0 !important;
+.text-ellipsis-clip-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
 }

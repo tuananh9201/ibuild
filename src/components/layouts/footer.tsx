@@ -1,15 +1,10 @@
+import { addressIcon, faxIcon, logo, sendIcon } from "@/constants/images";
+import { ERRORS } from "@/constants/msg";
+import { message } from "antd";
 import Image from "next/image";
-import {
-  logo,
-  addressIcon,
-  phoneIcon,
-  sendIcon,
-  faxIcon,
-} from "@/constants/images";
-import { Row, Col, Input, message } from "antd";
 import Link from "next/link";
 import { useState } from "react";
-import { ERRORS } from "@/constants/msg";
+
 export default function Footer() {
   const [emailSubcriber, setEmailSubcriber] = useState("");
   const [emailValidateMessages, setEmailValidateMessages] = useState("");
@@ -156,25 +151,25 @@ export default function Footer() {
 
       {/* <Row style={{ width: "100%" }}>
         <Col md={24} lg={8}>
-          <div className="footer-menu">
-            <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-              <li className="nav-item">
+          <div className="px-6 py-4 lg:pt-[115px] lg:pr-0 lg:pb-0 lg:pl-[50px]">
+            <ul>
+              <li className="mb-4">
                 <Link href="/ve-chung-toi" className={`nav-link`}>
                   Về chúng tôi
                   <div className="bottom-menu"></div>
                 </Link>
               </li>
-              <li className="nav-item">
+              <li className="mb-4">
                 <Link className="nav-link" href="/san-pham">
                   Sản phẩm
                 </Link>
               </li>
-              <li className="nav-item">
+              <li className="mb-4">
                 <Link className="nav-link" href="#">
                   Văn bản pháp lý
                 </Link>
               </li>
-              <li className="nav-item">
+              <li className="mb-4 mb-0">
                 <Link className="nav-link" href="#">
                   Thông tin xây dựng
                 </Link>
@@ -183,20 +178,24 @@ export default function Footer() {
           </div>
         </Col>
         <Col md={24} lg={8}>
-          <div className="footer-form">
-            <div className="label">Theo dõi</div>
-            <div className="input-gr">
+          <div className="mx-6 my-0 lg:mx-[50px] lg:my-[115px] p-0">
+            <div className="mb-2">Theo dõi</div>
+            <div className="w-full max-w-[278px] flex flex-row items-center justify-between gap-[10px] bg-[#ffffff] border-solid border-[#dddddd] border-[1px] rounded-[4px]">
               <input
                 value={emailSubcriber}
                 onChange={onChangeEmailSubcriberInput}
                 placeholder="info@gmail.com"
                 type="text"
+                className="border-none ml-4"
               />
-              <div onClick={onSubmitSubcriber} className="icon-send">
+              <div
+                onClick={onSubmitSubcriber}
+                className="w-[60px] h-[43px] bg-primary-color flex flex-row items-center justify-center rounded-[4px] hover:cursor-pointer"
+              >
                 <Image src={sendIcon} alt="" />
               </div>
             </div>
-            <div className="helper">
+            <div className="mb-2">
               {emailValidateMessages ? (
                 <span className="error">{emailValidateMessages}</span>
               ) : null}

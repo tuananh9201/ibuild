@@ -111,12 +111,12 @@ const FormRegisterWithEmail = (props: Props) => {
             placeholder="Nhập mật khẩu"
             onChange={onChangeValues}
           />
-          <div className="password-helper">
+          <div className="mx-4 mt-2 -mb-2 font-normal text-sm leading-[150%]">
             <ul>
               {rules.map((rule) => (
                 <li
                   key={rule.code}
-                  className={rule.init ? "" : rule.success ? "success" : ""}
+                  className={`list-disc ${rule.init ? "" : rule.success ? "text-[#4d993d]" : ""}`}
                 >
                   {rule.message}
                 </li>

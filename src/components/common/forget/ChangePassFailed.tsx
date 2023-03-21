@@ -1,8 +1,7 @@
-import { motion } from "framer-motion";
 import Image from "next/image";
 
 import { OverTurn } from "@/constants/images";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 type Props = {
   expires?: number;
 };

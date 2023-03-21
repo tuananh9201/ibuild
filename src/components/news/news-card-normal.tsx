@@ -1,16 +1,15 @@
 import { news2 } from "@/constants/images";
-import style from "@/styles/modules/build-info.module.scss";
 import Image from "next/image";
-import { INews } from "src/lib/types";
 import Link from "next/link";
+import { INews } from "src/lib/types";
 interface NewsProps {
   news: INews;
   hideDescription?: boolean;
 }
 const NewCardNormal = (props: NewsProps) => {
   return (
-    <div className={style.Build_Card_Normal}>
-      <div className={style.Build_Card_Normal_Image}>
+    <div className="flex flex-col items-start px-0 gap-6">
+      <div className="rounded-[4px] min-h-[187px] w-full hover:cursor-pointer">
         <Link
           href={{
             pathname: `/thong-tin-xay-dung`,
@@ -20,26 +19,23 @@ const NewCardNormal = (props: NewsProps) => {
             },
           }}
         >
-          <Image
-            style={{ width: "100%", minHeight: "187px" }}
-            src={news2}
-            alt=""
-          />
+          <Image className="w-full min-h-[187px]" src={news2} alt="" />
         </Link>
       </div>
-      <div className={style.Build_Card_Normal_Desc}>
-        <div className={style.Build_Card_Normal_Desc_Date}>
+      <div>
+        <div className="text-[14px] font-normal not-italic">
           {props.news.date}
         </div>
-        <div className={style.Build_Card_Normal_Desc_Title}>
+        <div>
           <Link
             href={`/thong-tin-xay-dung/${props.news.category.slug}/${props.news.slug}`}
+            className="font-medium text-xl leading-[150%] text-ellipsis text-ellipsis-clip-title"
           >
             {props.news.title}
           </Link>
         </div>
         {props?.hideDescription ? null : (
-          <div className={style.Build_Card_Normal_Desc_Desc}>
+          <div className="mt-4 not-italic font-normal text-base leading-[150%] overflow-hidden text-ellipsis text-ellipsis-clip-desc">
             {props.news.des}
           </div>
         )}

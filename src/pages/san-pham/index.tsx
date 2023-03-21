@@ -1,13 +1,13 @@
-import { ReactElement } from "react";
 import MainLayout from "@/components/main-layout";
-import { NextPageWithLayout } from "../_app";
-import Head from "next/head";
-import { ICategory } from "src/lib/types";
-import Image from "next/image";
-import { cate1, sologan1, sologan2, sologan3 } from "@/constants/images";
-import ProductSearch from "@/components/products/ProductSearch";
 import CategoryCard from "@/components/products/CategoryCard";
+import ProductSearch from "@/components/products/ProductSearch";
+import { cate1, sologan1, sologan2, sologan3 } from "@/constants/images";
 import { motion } from "framer-motion";
+import Head from "next/head";
+import Image from "next/image";
+import { ReactElement } from "react";
+import { ICategory } from "src/lib/types";
+import { NextPageWithLayout } from "../_app";
 type Props = {
   categories: ICategory[];
 };

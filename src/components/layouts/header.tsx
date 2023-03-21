@@ -1,15 +1,15 @@
 import { arrowBackIos, logo, menuIcon } from "@/constants/images";
 import { Drawer } from "antd";
-import useUser from "src/lib/hooks/user";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import UserAvatar from "./avatar";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "src/store/store";
 import { setToken } from "src/lib/api/api";
+import useUser from "src/lib/hooks/user";
 import { login } from "src/store/features/auth/auth";
+import { RootState } from "src/store/store";
 const menus = [
   {
     name: "Sản phẩm",
@@ -152,11 +152,11 @@ const MainHeader = () => {
         open={openMenu}
         width="100vw-44px"
       >
-        <ul className="navbar-nav-mobile">
+        <ul className="min-w-[276px] pl-7">
           {menus.map((menu) => (
-            <li key={menu.href} className="nav-item">
+            <li key={menu.href} className="mb-6 last:mb-0">
               <span
-                className="nav-link menu-item"
+                className="text-text-color font-normal text-base leading-[150%] items-center"
                 onClick={() => {
                   router.push(menu.href);
                   setOpenMenu(false);
@@ -166,13 +166,19 @@ const MainHeader = () => {
               </span>
             </li>
           ))}
-          <li className="nav-item">
-            <span className="sepec-menu">
-              <Link href="/dang-ky" className="nav-link menu-item">
+          <li className="mb-6 last:mb-0">
+            <span className="flex items-center">
+              <Link
+                href="/dang-ky"
+                className="text-text-color font-normal text-base leading-[150%] items-center"
+              >
                 Đăng ký{" "}
               </Link>
-              <span className="spece"> / </span>
-              <Link href="/dang-nhap" className="nav-link menu-item">
+              <span className="px-2 py-0"> / </span>
+              <Link
+                href="/dang-nhap"
+                className="text-text-color font-normal text-base leading-[150%] items-center"
+              >
                 Đăng nhập
               </Link>
             </span>

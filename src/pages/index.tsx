@@ -1,11 +1,11 @@
-import { NextPageWithLayout } from "./_app";
-import { productImage, designImage, bookImage } from "@/constants/images";
-import MainLayout from "../components/main-layout";
-import Image from "next/image";
-import { ReactElement } from "react";
-import Head from "next/head";
+import { bookImage, designImage, productImage } from "@/constants/images";
 import { motion } from "framer-motion";
+import Head from "next/head";
+import Image from "next/image";
 import Link from "next/link";
+import { ReactElement } from "react";
+import MainLayout from "../components/main-layout";
+import { NextPageWithLayout } from "./_app";
 
 const HomePage: NextPageWithLayout = () => {
   return (
@@ -40,7 +40,7 @@ const HomePage: NextPageWithLayout = () => {
             </p>
           </div>
         </section>
-        <section className="cards">
+        <section className="mt-[10px] mb-10">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-0 ">
             <div className="w-full h-full relative">
               <Link href="/san-pham">

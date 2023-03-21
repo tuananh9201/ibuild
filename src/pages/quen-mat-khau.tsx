@@ -1,24 +1,24 @@
+import ChangePassFailed from "@/components/common/forget/ChangePassFailed";
 import ChangePassSuccess from "@/components/common/forget/ChangePassSuccess";
 import FormChangePass from "@/components/common/forget/FormChangePass";
 import FormForgetPassword from "@/components/common/forget/FormForget";
 import FormOtp from "@/components/common/forget/FormOtp";
-import ChangePassFailed from "@/components/common/forget/ChangePassFailed";
 import { backIcon, logo, unsplashSignUp } from "@/constants/images";
 import {
   loginApi,
   passwordRecovery,
-  verifyPasswordRecoveryCode,
+  verifyPasswordRecoveryCode
 } from "src/lib/api/auth";
 import { NextPageWithLayout } from "./_app";
 
+import AuthLayout from "@/components/layouts/AuthLayout";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { ReactElement, useState, useEffect } from "react";
-import { login } from "src/store/features/auth/auth";
+import { ReactElement, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setToken } from "src/lib/api/api";
-import AuthLayout from "@/components/layouts/AuthLayout";
+import { login } from "src/store/features/auth/auth";
 
 const ForgetPassword: NextPageWithLayout = () => {
   // state

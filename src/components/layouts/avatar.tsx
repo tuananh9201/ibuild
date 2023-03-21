@@ -1,18 +1,17 @@
-import * as React from "react";
-import style from "@/styles/modules/avartar.module.scss";
-import { Switch, Dropdown, Space } from "antd";
-import type { MenuProps } from "antd";
-import Image from "next/image";
 import {
   keyboardArrowUp,
   logoutIcon,
   useIcon,
   userAvata,
 } from "@/constants/images";
-import { User } from "src/lib/types";
-import { useDispatch } from "react-redux";
-import { logout } from "src/store/features/auth/auth";
+import type { MenuProps } from "antd";
+import { Dropdown, Space, Switch } from "antd";
+import Image from "next/image";
 import { useRouter } from "next/router";
+import * as React from "react";
+import { useDispatch } from "react-redux";
+import { User } from "src/lib/types";
+import { logout } from "src/store/features/auth/auth";
 interface IUserAvatarProps {
   user: User;
 }
@@ -38,14 +37,7 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
     {
       key: "1",
       label: (
-        <div
-          style={{
-            display: "flex",
-            gap: 8,
-            width: "100%",
-            padding: 8,
-          }}
-        >
+        <div className="flex gap-2 w-full p-2">
           <Image width={20} height={20} src={useIcon} alt="" />
           <span>Thông tin tài khoản</span>
         </div>
@@ -57,14 +49,7 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
     {
       key: "2",
       label: (
-        <div
-          style={{
-            display: "flex",
-            gap: 16,
-            width: "100%",
-            padding: 8,
-          }}
-        >
+        <div className="flex gap-4 w-full p-2">
           <span>Chuyên gia </span>
           <Switch checked={props.user?.user_type === "expert"} />
         </div>
@@ -79,14 +64,7 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
         handleLougout();
       },
       label: (
-        <div
-          style={{
-            display: "flex",
-            gap: 8,
-            width: "100%",
-            padding: 8,
-          }}
-        >
+        <div className="flex gap-2 w-full p-2">
           <Image width={20} height={20} src={logoutIcon} alt="" />
           <span>Đăng xuất</span>
         </div>
@@ -94,19 +72,13 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
     },
   ];
   return (
-    <div className={style.Avatar_Area}>
+    <div className="min-w-[172px] min-h-[32px] flex flex-row items-center p-0 gap-2 mb-[6px]">
       <Dropdown menu={{ items }}>
         <Space>
           <div>
             <Image width={32} height={32} src={userAvata} alt="user-avatar" />
           </div>
-          <span
-            style={{
-              maxWidth: 100,
-            }}
-          >
-            {displayName}
-          </span>
+          <span className="max-w-full">{displayName}</span>
           <Image width={24} height={24} src={keyboardArrowUp} alt="up-icon" />
         </Space>
       </Dropdown>

@@ -11,3 +11,36 @@
   font-size: 16px;
   font-weight: 500;
 }
+
+.ant-form-item-explain-error {
+  margin: 4px 0 !important;
+}
+
+// overrid .image-gallery-thumbnail
+.image-gallery-thumbnail {
+  max-width: 80px;
+  max-height: 80px;
+
+  &.active {
+    border: 2px solid $primary-color;
+  }
+
+  &:hover {
+    border: 2px solid $primary-color;
+  }
+}
+
+.loading-dynamic {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  min-height: 200px;
+  min-width: 200px;
+}
+
+.ant-col,
+.ant-row {
+  width: 100% !important;
+}

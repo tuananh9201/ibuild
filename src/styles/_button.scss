@@ -1,5 +1,12 @@
 @import "variables";
 
+button:disabled,
+button[disabled] {
+  background: #d1d1d1;
+  color: #fff;
+  pointer-events: none;
+}
+
 .btn-search {
   width: 144px;
   min-width: 144px !important;

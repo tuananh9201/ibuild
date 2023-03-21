@@ -5,9 +5,9 @@ type Props = {};
 
 const FilterPrice = (props: Props) => {
   return (
-    <div className="filter-item">
-      <span className="filter-title">Khoảng giá</span>
-      <div className="input-group-range">
+    <div>
+      <span className="not-italic font-medium text-xl leading-[150%] text-text-color mb-4">Khoảng giá</span>
+      <div className="flex justify-between gap-2 items-center mx-0 my-4">
         <Input placeholder="đ  Từ" /> - <Input placeholder="đ  Đến" />
       </div>
       <button className="ibuild-btn-outline">Áp dụng</button>
