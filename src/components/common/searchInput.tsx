@@ -1,5 +1,4 @@
 import { searchIcon } from "@/constants/images";
-import style from "@/styles/modules/common/searchInput.module.scss";
 import Image from "next/image";
 type Props = {};
 

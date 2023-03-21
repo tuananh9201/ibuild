@@ -5,7 +5,6 @@ import {
   btnPhoneIconPri,
   btnPhoneIconTranf, Supp2, toiletIcon
 } from "@/constants/images";
-import style from "@/styles/modules/product-card.module.scss";
 import { ISupplier } from "src/lib/types";
 
 import { Tooltip } from "antd";
@@ -129,9 +128,9 @@ const ProductCard = (props: ICard) => {
 
           <Tooltip
             title={
-              <div className="tooltip-container">
+              <div className="flex flex-row items-center p-[10px] gap-1 isolate text-text-color">
                 <Image src={btnPhoneIconBlack} alt="" />
-                <span>{supplier.phoneNumber}</span>
+                <span className="ml-2">{supplier.phoneNumber}</span>
               </div>
             }
             color="white"

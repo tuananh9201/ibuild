@@ -1,5 +1,4 @@
 import { news2 } from "@/constants/images";
-import style from "@/styles/modules/build-info.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 import { INews } from "src/lib/types";

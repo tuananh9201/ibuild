@@ -20,7 +20,10 @@ module.exports = {
       },
       flex: {
         "2": "2",
-        "base": '1'
+        "base": "1"
+      },
+      boxShadow: {
+        "normal": "0 0 11px rgba(33, 33, 33, .1)"
       }
     },
   },

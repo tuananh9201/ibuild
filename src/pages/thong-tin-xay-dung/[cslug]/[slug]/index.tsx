@@ -2,7 +2,6 @@ import Breadcrums from "@/components/common/breadcrums";
 import MainLayout from "@/components/main-layout";
 import NewRelated from "@/components/news/news-related";
 import { newsDetail, newsDetail2 } from "@/constants/images";
-import style from "@/styles/modules/build-info.module.scss";
 
 import { GetStaticPaths, GetStaticPropsContext } from "next";
 import Head from "next/head";

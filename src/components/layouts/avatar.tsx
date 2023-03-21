@@ -4,7 +4,6 @@ import {
   useIcon,
   userAvata,
 } from "@/constants/images";
-import style from "@/styles/modules/avartar.module.scss";
 import type { MenuProps } from "antd";
 import { Dropdown, Space, Switch } from "antd";
 import Image from "next/image";

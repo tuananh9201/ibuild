@@ -1,5 +1,4 @@
 import { breadcrumIcon } from "@/constants/images";
-import style from "@/styles/modules/build-info.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";

@@ -2,7 +2,6 @@ import MainLayout from "@/components/main-layout";
 import NewCardFeature from "@/components/news/new-card-feature";
 import NewCardNormal from "@/components/news/news-card-normal";
 import { news1, rightIcon } from "@/constants/images";
-import style from "@/styles/modules/build-info.module.scss";
 
 import { Col, Row } from "antd";
 import Head from "next/head";

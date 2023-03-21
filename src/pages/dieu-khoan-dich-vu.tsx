@@ -9,7 +9,7 @@ const TermsOfServicePage: NextPageWithLayout = () => {
         <title>Điều khoản Dịch vụ | IBUILD</title>
         <meta name="description" content="Điều khoản Dịch vụ | IBUILD" />
       </Head>
-      <div className="main-content">
+      <div className="flex flex-col justify-start px-4 pt-[60px] pb-4">
         <h1>Điều khoản Dịch vụ </h1>
         <div
           style={{

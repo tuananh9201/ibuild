@@ -2,7 +2,6 @@ import Breadcrums from "@/components/common/breadcrums";
 import MainLayout from "@/components/main-layout";
 import NewCardNormal from "@/components/news/news-card-normal";
 import newss from "@/data/news1.json";
-import style from "@/styles/modules/build-info.module.scss";
 import { Col, Pagination, Row } from "antd";
 import { GetServerSidePropsContext } from "next";
 import Head from "next/head";

@@ -22,7 +22,7 @@ export default function Document() {
           name="keywords"
           content="xây dựng việt nam, xdvn, vlxd, xây dựng,  thiết bị xây dựng, vật liệu xây dựng, báo giá xây dựng, tin tức xây dựng, văn bản xây dựng,  tiêu chuẩn xây dựng (tcxdvn), định mức xây dựng, giá thiết bị, nhà cung cấp, cửa hàng, tư vấn xây dựng, doanh nghiệp xây dựng, công ty xây dựng, xây lắp, build.vn,, mẫu nhà đẹp, mẫu nội thất, mẫu phòng ngủ, mẫu phòng khách, tp hcm, hà nội, Việt Nam"
         />
-        <meta http-equiv="content-language" content="vi" />
+        <meta httpEquiv="content-language" content="vi" />
       </Head>
       <body>
         <Main />

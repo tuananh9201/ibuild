@@ -1,6 +1,5 @@
 import SearchInput from "@/components/common/searchInput";
 import MainLayout from "@/components/main-layout";
-import style from "@/styles/modules/legal.module.scss";
 import Head from "next/head";
 import { ReactElement } from "react";
 import { NextPageWithLayout } from "../_app";

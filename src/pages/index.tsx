@@ -15,7 +15,7 @@ const HomePage: NextPageWithLayout = () => {
         </title>
       </Head>
       <div className="flex flex-col justify-start py-4 lg:py-0 px-8 lg:pt-14 lg:pr-0 lg:pb-0 lg:pl-0">
-        <section className="slogan-page mb-10">
+        <section className="mb-10">
           <h1 className="text-3xl font-semibold text-center">
             Trao quyền cho thế giới để xây dựng
           </h1>
@@ -28,7 +28,7 @@ const HomePage: NextPageWithLayout = () => {
             </p>
           </div>
         </section>
-        <section className="cards">
+        <section className="mt-[10px] mb-10">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-0 ">
             <div className="w-full h-full relative">
               <Image

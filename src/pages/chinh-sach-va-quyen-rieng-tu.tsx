@@ -12,7 +12,7 @@ const PrivacyPolicyPage: NextPageWithLayout = () => {
           content="Chính xác và quyền riêng tư | IBUILD"
         />
       </Head>
-      <div className="main-content">
+      <div className="flex flex-col justify-start px-4 pt-[60px] pb-4">
         <h1>Chính sách và quyền riêng tư </h1>
         <div className="mt-20">
           <div className="text-base font-normal leading-[150%] mx-0 my-6">
