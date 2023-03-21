@@ -37,7 +37,6 @@ export default function App({
       analytics;
     }
   }, []);
-
   return getLayout(
     <ConfigProvider
       theme={{
@@ -63,14 +62,8 @@ export default function App({
               content="width=device-width, initial-scale=1"
             />
           </Head>
-          <AnimatePresence
-            mode="wait"
-            initial={false}
-            onExitComplete={() => window.scrollTo(0, 0)}
-          >
-            <Component {...pageProps} key={router.asPath} />
-            <Analytics />
-          </AnimatePresence>
+          <Component {...pageProps} key={router.asPath} />
+          <Analytics />
         </SWRConfig>
       </Provider>
       {/* <Analytics /> */}
