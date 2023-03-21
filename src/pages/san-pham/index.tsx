@@ -16,31 +16,37 @@ const categories = [
     id: 1,
     name: "An ninh & an toàn",
     image: cate1,
+    slug: "an-ninh-an-toan",
   },
   {
     id: 2,
     name: "Cơ - Điện - Lạnh",
     image: cate1,
+    slug: "co-dien-lanh",
   },
   {
     id: 3,
     name: "Thiết bị công nghệ",
     image: cate1,
+    slug: "thiet-bi-cong-nghe",
   },
   {
     id: 4,
     name: "Đồ nội & ngoại thất",
     image: cate1,
+    slug: "do-noi-ngoai-that",
   },
   {
     id: 5,
     name: "Máy - Công cụ xây dựng",
     image: cate1,
+    slug: "may-cong-cu-xay-dung",
   },
   {
     id: 6,
     name: "Vật liệu xây dựng",
     image: cate1,
+    slug: "vat-lieu-xay-dung",
   },
 ];
 const SanPham: NextPageWithLayout<Props> = (props: Props) => {
@@ -60,7 +66,7 @@ const SanPham: NextPageWithLayout<Props> = (props: Props) => {
           damping: 20,
         }}
       >
-        <div className="my-20 p-4 lg:p-0">
+        <section className="my-20 p-4 lg:p-0">
           <div className="flex flex-col items-center p-0 gap-6 max-w-max min-w-full">
             <div className="flex flex-row justify-center items-center gap-4 h-54 max-w-max min-w-full">
               <Image
@@ -95,15 +101,15 @@ const SanPham: NextPageWithLayout<Props> = (props: Props) => {
               />
             </div>
           </div>
-        </div>
-        <div className="p-4 lg:p-0 flex justify-center">
+        </section>
+        <section className="p-4 lg:p-0 flex justify-center">
           <ProductSearch />
-        </div>
-        <div className="px-8 grid grid-cols-1 md:grid-cols-3  gap-8">
+        </section>
+        <section className="mt-20 px-8 grid grid-cols-1 md:grid-cols-3  gap-8">
           {categories.map((cate) => (
             <CategoryCard category={cate} key={cate.id} />
           ))}
-        </div>
+        </section>
       </motion.div>
     </>
   );
