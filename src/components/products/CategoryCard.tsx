@@ -14,9 +14,9 @@ type Props = {
 const CategoryCard = (props: Props) => {
   return (
     <motion.div
-      whileHover={{ scale: 1.06 }}
+      whileHover={{ scale: 1.01 }}
       whileInView={{ rotate: 0 }}
-      initial={{ scale: 0.95 }}
+      initial={{ scale: 0.98 }}
       transition={{
         type: "spring",
         stiffness: 260,
@@ -35,7 +35,6 @@ const CategoryCard = (props: Props) => {
         <div className="name absolute top-7 left-10 right-7 w-5/6">
           <div className="flex flex-row justify-between items-center">
             <motion.h3
-              // animate={{ opacity: 1, y: 0 }}
               whileInView={{ opacity: 1, y: 0 }}
               initial={{ opacity: 0, y: -30 }}
               className="text-white font-medium text-2xl font-roboto"

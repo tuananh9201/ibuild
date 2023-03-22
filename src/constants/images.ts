@@ -68,6 +68,11 @@ import historyIcon from "../images/icons/History.svg";
 import cate1 from "../images/product/categories/cate_1.svg";
 import refresh from "../images/icons/refresh.svg";
 import faxIcon from "../images/icons/faxIcon.svg";
+import cateCoDienLanh from "../images/product/categories/co-dien-lanh.png";
+import cateDoNoiNgoaiThat from "../images/product/categories/do-noi-ngoai-that.png";
+import cateMayCongCuXD from "../images/product/categories/may-cong-cu-xd.png";
+import cateThietBiCongNghe from "../images/product/categories/thiet-bi-cong-nghe.png";
+import cateVatLieuXayDung from "../images/product/categories/vat-lieu-xay-dung.png";
 export {
   logo,
   addressIcon,
@@ -138,4 +143,9 @@ export {
   unsplashSignUp2,
   refresh,
   faxIcon,
+  cateCoDienLanh,
+  cateDoNoiNgoaiThat,
+  cateMayCongCuXD,
+  cateThietBiCongNghe,
+  cateVatLieuXayDung,
 };

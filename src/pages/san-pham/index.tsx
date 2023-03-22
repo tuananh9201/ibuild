@@ -1,7 +1,17 @@
 import MainLayout from "@/components/main-layout";
 import CategoryCard from "@/components/products/CategoryCard";
 import ProductSearch from "@/components/products/ProductSearch";
-import { cate1, sologan1, sologan2, sologan3 } from "@/constants/images";
+import {
+  cate1,
+  sologan1,
+  sologan2,
+  sologan3,
+  cateCoDienLanh,
+  cateDoNoiNgoaiThat,
+  cateMayCongCuXD,
+  cateThietBiCongNghe,
+  cateVatLieuXayDung,
+} from "@/constants/images";
 import { motion } from "framer-motion";
 import Head from "next/head";
 import Image from "next/image";
@@ -21,31 +31,31 @@ const categories = [
   {
     id: 2,
     name: "Cơ - Điện - Lạnh",
-    image: cate1,
+    image: cateCoDienLanh,
     slug: "co-dien-lanh",
   },
   {
     id: 3,
     name: "Thiết bị công nghệ",
-    image: cate1,
+    image: cateThietBiCongNghe,
     slug: "thiet-bi-cong-nghe",
   },
   {
     id: 4,
     name: "Đồ nội & ngoại thất",
-    image: cate1,
+    image: cateDoNoiNgoaiThat,
     slug: "do-noi-ngoai-that",
   },
   {
     id: 5,
     name: "Máy - Công cụ xây dựng",
-    image: cate1,
+    image: cateMayCongCuXD,
     slug: "may-cong-cu-xay-dung",
   },
   {
     id: 6,
     name: "Vật liệu xây dựng",
-    image: cate1,
+    image: cateVatLieuXayDung,
     slug: "vat-lieu-xay-dung",
   },
 ];
