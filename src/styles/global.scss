@@ -83,3 +83,8 @@ label {
   line-clamp: 3;
   -webkit-box-orient: vertical;
 }
+
+.filter-black {
+  filter: invert(100%) sepia(63%) saturate(6234%) hue-rotate(246deg)
+    brightness(87%) contrast(156%);
+}

@@ -1,24 +1,76 @@
-import React from "react";
-
-import { ReactElement } from "react";
-import MainLayout from "@/components/main-layout";
-import { NextPageWithLayout } from "../../_app";
+import React, { useState } from "react";
 import Head from "next/head";
-import { GetStaticPaths, GetStaticPropsContext } from "next";
+import useSWR from "swr";
+import Image from "next/image";
+import { ReactElement } from "react";
+import { useRouter } from "next/router";
+
+import MainLayout from "@/components/main-layout";
+import Breadcrums from "@/components/common/breadcrums";
+import { NextPageWithLayout } from "../../_app";
 import { ParsedUrlQuery } from "querystring";
+import { GetStaticPaths, GetStaticPropsContext } from "next";
 import { fetchCategorySlug, fetchChildsCategories } from "src/lib/api/category";
 import { ICategory } from "src/lib/types";
-import { useRouter } from "next/router";
-import useSWR from "swr";
-import Breadcrums from "@/components/common/breadcrums";
+import {
+  ProductTypes,
+  FilterRelated,
+  FilterCategories,
+} from "@/components/common";
+import { filterIcon, filterIconWhite } from "@/images/index";
+
+import {
+  allProduct,
+  camera,
+  clockSafe,
+  focusSystem,
+  windowSystem,
+  fire,
+} from "src/images";
 
 type Props = {
   category: ICategory;
 };
 
+const PRODUCT_TYPES = [
+  {
+    id: 1,
+    name: "Tất cả sản phẩm",
+    icon: allProduct,
+  },
+  {
+    id: 2,
+    name: "Hệ thống camera giám sát",
+    icon: camera,
+  },
+  {
+    id: 3,
+    name: "Hệ thống chỉ dẫn",
+    icon: windowSystem,
+  },
+  {
+    id: 4,
+    name: "Hệ thống giám sát truy nhập",
+    icon: focusSystem,
+  },
+  {
+    id: 5,
+    name: "Hệ thống phòng cháy chữa cháy",
+    icon: fire,
+  },
+  {
+    id: 6,
+    name: "Khóa an toàn & Két",
+    icon: clockSafe,
+  },
+];
+
 const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
+  const [isActiveFilterIcon, setIsActiveFilterIcon] = useState(false);
+
   const { query } = useRouter();
   const { slug } = query;
+
   // const {
   //   data: category,
   //   error,
@@ -31,9 +83,17 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
     },
     {
       slug: "an-ninh-an-toan" || "",
-      title: "An ninh & An Toan" || "",
+      title: "An ninh & An toàn" || "",
     },
   ];
+
+  const title = breadcrumbs.filter((bread) => bread.slug === slug)[0]?.title;
+
+  const handleShowFilter = () => {
+    console.log("click");
+    setIsActiveFilterIcon((prev) => !prev);
+  };
+
   return (
     <>
       <Head>
@@ -42,10 +102,40 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
       </Head>
       <div className="flex flex-col items-start px-20 pt-8 pb-[60px]">
         <Breadcrums breadcrumbs={breadcrumbs} />
+        <div className="mt-8">
+          <h1 className="font-roboto not-italic font-medium text-2xl leading-[calc(36 / 24)] text-text-color">
+            {title}
+          </h1>
+        </div>
+        {/* <ProductTypes productTypes={PRODUCT_TYPES} /> */}
+        <div className="w-full flex flex-col sm:flex-row justify-between mt-8">
+          <FilterRelated />
+          <div
+            className={`flex flex-row items-center px-4 py-3 rounded-t border border-[#e6e6e6] cursor-pointer group active:bg-[#eb7a01] transition ${
+              isActiveFilterIcon ? "bg-[#eb7a01]" : ""
+            }`}
+            onClick={handleShowFilter}
+          >
+            <Image
+              src={isActiveFilterIcon ? filterIconWhite : filterIcon}
+              alt="filter icon"
+              className="w-3 h-3"
+            />
+            <span
+              className={`font-roboto not-italic font-medium text-base leading-[150%] text-[#333333] ml-3 group-active:text-white ${
+                isActiveFilterIcon ? "text-white" : ""
+              }`}
+            >
+              Bộ lọc
+            </span>
+          </div>
+        </div>
+        {isActiveFilterIcon && <FilterCategories />}
       </div>
     </>
   );
 };
+
 // interface IParams extends ParsedUrlQuery {
 //   slug: string;
 // }

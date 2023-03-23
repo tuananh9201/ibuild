@@ -9,7 +9,6 @@ interface Props {
 
 const Breadcrums = ({ breadcrumbs }: Props) => {
   const router = useRouter();
-  console.log("router : ", router);
   function generateBreadcrumbs() {
     // Remove any query parameters, as those aren't included in breadcrumbs
     const asPathWithoutQuery = router.asPath.split("?")[0];
@@ -33,7 +32,6 @@ const Breadcrums = ({ breadcrumbs }: Props) => {
     return crumblist;
   }
   const crumsHref = generateBreadcrumbs();
-  console.log("crumsHref : ", crumsHref);
 
   return (
     <div className="flex flex-row items-center p-5 lg:p-0 w-full mt-10">
@@ -41,9 +39,9 @@ const Breadcrums = ({ breadcrumbs }: Props) => {
         return (
           <div
             key={idx}
-            className="first:hidden lg:first:block not-italic font-normal text-base leading-[150%] gap-4 text-primary-color hover:cursor-pointer hover:last:cursor-default peer last:w-[calc(100% - 158px)] last:overflow-hidden last:text-ellipsis"
+            className={`first:hidden lg:first:flex lg:first:items-center not-italic font-normal text-base leading-[150%] gap-4 text-primary-color hover:cursor-pointer hover:last:cursor-default peer last:w-[calc(100% - 158px)] last:overflow-hidden last:text-ellipsis last:ml-3`}
           >
-            <span className="whitespace-nowrap">
+            <span className="whitespace-nowrap inline-block">
               <Link
                 href={`${crumsHref[idx].href}`}
                 className="peer-hover:text-primary-color peer-hover:peer-last:text-black visited:text-[#343434]"
@@ -52,7 +50,7 @@ const Breadcrums = ({ breadcrumbs }: Props) => {
               </Link>
             </span>
             {idx === breadcrumbs.length - 1 ? null : (
-              <div className="w-6 h-6">
+              <div className="w-6 h-6 inline-block">
                 <Image src={breadcrumIcon} alt="" />
               </div>
             )}
