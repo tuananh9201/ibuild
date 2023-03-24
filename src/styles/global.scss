@@ -85,6 +85,14 @@ label {
 }
 
 .filter-black {
-  filter: invert(100%) sepia(63%) saturate(6234%) hue-rotate(246deg)
-    brightness(87%) contrast(156%);
+  filter: invert(100%) sepia(63%) saturate(6234%) hue-rotate(246deg) brightness(87%) contrast(156%);
+}
+
+.ant-pagination .ant-pagination-item-active {
+
+  a {
+    color: #FFFFFF !important;
+  }
+
+  border-color: $primary-color;
 }
