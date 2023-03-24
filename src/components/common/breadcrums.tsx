@@ -34,12 +34,12 @@ const Breadcrums = ({ breadcrumbs }: Props) => {
   const crumsHref = generateBreadcrumbs();
 
   return (
-    <div className="flex flex-row items-center p-5 lg:p-0 w-full mt-10">
+    <div className="flex flex-row items-center lg:p-0 w-full lg:mt-10">
       {breadcrumbs.map((breadcrumb, idx) => {
         return (
           <div
             key={idx}
-            className={`first:hidden lg:first:flex lg:first:items-center not-italic font-normal text-base leading-[150%] gap-4 text-primary-color hover:cursor-pointer hover:last:cursor-default peer last:w-[calc(100% - 158px)] last:overflow-hidden last:text-ellipsis last:ml-3`}
+            className={`flex items-center lg:first:flex lg:first:items-center not-italic font-normal text-base leading-[150%] gap-4 text-primary-color hover:cursor-pointer hover:last:cursor-default peer last:w-[calc(100% - 158px)] last:overflow-hidden last:text-ellipsis last:ml-3`}
           >
             <span className="whitespace-nowrap inline-block">
               <Link
@@ -50,7 +50,7 @@ const Breadcrums = ({ breadcrumbs }: Props) => {
               </Link>
             </span>
             {idx === breadcrumbs.length - 1 ? null : (
-              <div className="w-6 h-6 inline-block">
+              <div className="w-4 h-4 lg:w-6 lg:h-6 inline-block">
                 <Image src={breadcrumIcon} alt="" />
               </div>
             )}
