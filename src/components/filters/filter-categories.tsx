@@ -3,30 +3,55 @@ import { Input } from "@/components/common/index";
 
 interface FilterCategoriesProps {}
 
+const PRODUCT_CATEGORIES = [
+  {
+    id: 1,
+    value: "Camera",
+  },
+];
+
 const FilterCategories = () => {
   return (
-    <div className="mt-4">
-      <div>
-        <span>Danh mục sản phẩm</span>
-        <FilterRelated />
+    <div className="mt-4 flex gap-4">
+      <div className="w-[25%]">
+        <span className="inline-block font-roboto font-medium text-base leading-[calc(24 / 16)] mb-2">
+          Danh mục sản phẩm
+        </span>
+        <FilterRelated
+          placeHolder="Chọn danh mục sản phẩm"
+          options={PRODUCT_CATEGORIES}
+        />
       </div>
-      <div>
-        <span>Số lượng</span>
-        <Input placeHolder="Từ" />
-        <Input placeHolder="Đến" />
+      <div className="w-[25%]">
+        <span className="inline-block font-roboto font-medium text-base leading-[calc(24 / 16)] mb-2">
+          Số lượng
+        </span>
+        <div className="flex flex-row gap-2 items-center">
+          <Input placeHolder="Từ" />
+          <div className="bg-[#333333] w-4 h-[1px]"></div>
+          <Input placeHolder="Đến" />
+        </div>
       </div>
-      <div>
-        <span>Khoảng giá</span>
-        <Input placeHolder="đ  Từ" />
-        <Input placeHolder="đ  Đến" />
+      <div className="w-[25%]">
+        <span className="inline-block font-roboto font-medium text-base leading-[calc(24 / 16)] mb-2">
+          Khoảng giá
+        </span>
+        <div className="flex flex-row gap-2 items-center">
+          <Input placeHolder="đ  Từ" />
+          <div className="bg-[#333333] w-4 h-[1px]"></div>
+          <Input placeHolder="đ  Đến" />
+        </div>
       </div>
-      <div>
+      <div className="w-[25%]">
+        <span className="inline-block font-roboto font-medium text-base leading-[calc(24 / 16)] mb-2">
+          Khu vực
+        </span>
         <FilterLocation />
       </div>
-      <div>
+      {/* <div className="w-[15%]">
         <button>Áp dụng</button>
         <button>Xóa lọc</button>
-      </div>
+      </div> */}
     </div>
   );
 };

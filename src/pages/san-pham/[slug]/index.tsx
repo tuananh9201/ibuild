@@ -18,6 +18,8 @@ import {
   FilterCategories,
 } from "@/components/common";
 import { filterIcon, filterIconWhite } from "@/images/index";
+import ListProduct from "@/components/products/ListProduct";
+import { PaginationElement } from "@/components/common/index";
 
 import {
   allProduct,
@@ -150,6 +152,12 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
           </div>
         </div>
         {isActiveFilterIcon && <FilterCategories />}
+        <div className="mt-4 mb-4">
+          <ListProduct />
+        </div>
+        <div className="w-full text-center">
+          <PaginationElement />
+        </div>
       </div>
     </>
   );

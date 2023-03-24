@@ -12,20 +12,21 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "primary-color": "var(--primary-color)",
+        "primary-color": "#eb7a01",
         "secondary-color": "var(--secondary-color)",
         "text-color": "var(--text-color)",
+        "text-secondary-color": "#333333",
       },
       fontFamily: {
         roboto: "Roboto",
       },
       flex: {
-        "2": "2",
-        "base": "1"
+        2: "2",
+        base: "1",
       },
       boxShadow: {
-        "normal": "0 0 11px rgba(33, 33, 33, .1)"
-      }
+        normal: "0 0 11px rgba(33, 33, 33, .1)",
+      },
     },
   },
   plugins: [],

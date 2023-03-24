@@ -81,3 +81,36 @@
   line-height: 150% !important;
   color: #333333 !important;
 }
+
+// custom pagination
+.ant-pagination-item-active {
+  background-color: #eb7a01 !important;
+}
+
+:where(.css-dev-only-do-not-override-rxinl6).ant-pagination
+  .ant-pagination-item-active
+  a {
+  color: #fff !important;
+  border: none !important;
+}
+
+:where(.css-dev-only-do-not-override-rxinl6).ant-pagination
+  .ant-pagination-item-active {
+  border-color: transparent !important;
+}
+
+:where(.css-dev-only-do-not-override-rxinl6).ant-pagination
+  .ant-pagination-item-active:hover {
+  border-color: transparent !important;
+}
+
+.ant-pagination-item-link {
+  color: $primary-color !important;
+}
+
+:where(.css-dev-only-do-not-override-rxinl6).ant-pagination
+  .ant-pagination-disabled
+  .ant-pagination-item-link {
+  color: rgba(0, 0, 0, 0.25) !important;
+  display: none !important;
+}

@@ -23,6 +23,8 @@ const FilterRelated = ({
   const [valueSelected, setValueSelected] = useState(() => {
     return options && defaultValue
       ? options.find((option) => option.id === defaultValue)?.value
+      : placeHolder
+      ? placeHolder
       : "Lựa chọn";
   });
 
@@ -30,7 +32,7 @@ const FilterRelated = ({
 
   useEffect(() => {
     window.addEventListener("click", (e: any) => {
-      if (!selectElement.current?.contains(e.target) && isOpenMenu) {
+      if (!selectElement.current?.contains(e.target)) {
         setIsOpenMenu(false);
       }
     });
