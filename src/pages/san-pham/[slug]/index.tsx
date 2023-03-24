@@ -65,6 +65,25 @@ const PRODUCT_TYPES = [
   },
 ];
 
+const RELATED_LIST = [
+  {
+    id: 1,
+    value: "Liên quan nhất",
+  },
+  {
+    id: 2,
+    value: "Sản phẩm mới",
+  },
+  {
+    id: 3,
+    value: "Lượt xem nhiều nhất",
+  },
+  {
+    id: 4,
+    value: "Lượt thích nhiều nhất",
+  },
+];
+
 const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   const [isActiveFilterIcon, setIsActiveFilterIcon] = useState(false);
 
@@ -109,7 +128,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
         </div>
         {/* <ProductTypes productTypes={PRODUCT_TYPES} /> */}
         <div className="w-full flex flex-col sm:flex-row justify-between mt-8">
-          <FilterRelated />
+          <FilterRelated defaultValue={1} options={RELATED_LIST} />
           <div
             className={`flex flex-row items-center px-4 py-3 rounded-t border border-[#e6e6e6] cursor-pointer group active:bg-[#eb7a01] transition ${
               isActiveFilterIcon ? "bg-[#eb7a01]" : ""
