@@ -64,34 +64,34 @@ const ListProduct = () => {
           className="w-full h-auto"
         />
       </div>
-      <div className="flex flex-row gap-3">
+      <div className="flex flex-row justify-between h-[44px]">
         <button className="px-9 py-[10px] bg-primary-color text-white font-roboto not-italic font-medium text-base leading-[150%] rounded whitespace-nowrap">
           Xem chi tiết
         </button>
         <button
           className={`px-3 rounded border border-solid border-[#999999] ${
             isPhoneHover ? "bg-primary-color" : ""
-          }`}
+          } w-[44px]`}
           onMouseEnter={() => setIsPhoneHover(true)}
           onMouseLeave={() => setIsPhoneHover(false)}
         >
           <Image
             src={isPhoneHover ? phoneWhiteIcon : phoneIcon}
             alt="phone number"
-            className="w-4 h-4"
+            className="w-5 h-5"
           />
         </button>
         <button
           className={`px-3 rounded border border-solid border-[#999999] ${
             isHeartHover ? "bg-primary-color" : ""
-          }`}
+          } w-[44px]`}
           onMouseEnter={() => setIsHeartHover(true)}
           onMouseLeave={() => setIsHeartHover(false)}
         >
           <Image
             src={isHeartHover ? heartWhiteIcon : heartIcon}
             alt="heart"
-            className="w-4 h-4"
+            className="w-5 h-5"
           />
         </button>
       </div>
