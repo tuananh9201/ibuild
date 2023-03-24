@@ -71,7 +71,7 @@ const FilterRelated = ({
         </span>
       </div>
       {isOpenMenu && (
-        <div className="absolute transition z-10 w-full bg-white border border-solid border-[#ff4d14] rounded-b-lg">
+        <div className="absolute transition z-10 w-full bg-white border border-solid border-primary-color rounded-b-lg">
           <ul className="font-roboto font-normal text-base leading-[calc(24 / 16)] text-text-color cursor-pointer">
             {options &&
               options.map((option) => (

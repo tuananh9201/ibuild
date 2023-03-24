@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Image from "next/image";
 
 import {
@@ -6,10 +7,15 @@ import {
   companyLogo,
   exampleProduct,
   heartIcon,
+  heartWhiteIcon,
   phoneIcon,
+  phoneWhiteIcon,
 } from "@/images/index";
 
 const ListProduct = () => {
+  const [isPhoneHover, setIsPhoneHover] = useState(false);
+  const [isHeartHover, setIsHeartHover] = useState(false);
+
   return (
     <div className="bg-[#f8f9ff] rounded p-4">
       <div className="flex justify-start items-center gap-2 mb-[9px] cursor-pointer">
@@ -58,15 +64,35 @@ const ListProduct = () => {
           className="w-full h-auto"
         />
       </div>
-      <div className="flex flex-row gap-6">
-        <button className="px-3 py-[10px] bg-primary-color text-white font-roboto not-italic font-medium text-base leading-[150%] rounded">
+      <div className="flex flex-row gap-3">
+        <button className="px-9 py-[10px] bg-primary-color text-white font-roboto not-italic font-medium text-base leading-[150%] rounded whitespace-nowrap">
           Xem chi tiết
         </button>
-        <button className="px-3 rounded border border-solid border-[#999999]">
-          <Image src={phoneIcon} alt="phone number" />
+        <button
+          className={`px-3 rounded border border-solid border-[#999999] ${
+            isPhoneHover ? "bg-primary-color" : ""
+          }`}
+          onMouseEnter={() => setIsPhoneHover(true)}
+          onMouseLeave={() => setIsPhoneHover(false)}
+        >
+          <Image
+            src={isPhoneHover ? phoneWhiteIcon : phoneIcon}
+            alt="phone number"
+            className="w-4 h-4"
+          />
         </button>
-        <button className="px-3 rounded border border-solid border-[#999999]">
-          <Image src={heartIcon} alt="heart" />
+        <button
+          className={`px-3 rounded border border-solid border-[#999999] ${
+            isHeartHover ? "bg-primary-color" : ""
+          }`}
+          onMouseEnter={() => setIsHeartHover(true)}
+          onMouseLeave={() => setIsHeartHover(false)}
+        >
+          <Image
+            src={isHeartHover ? heartWhiteIcon : heartIcon}
+            alt="heart"
+            className="w-4 h-4"
+          />
         </button>
       </div>
     </div>
