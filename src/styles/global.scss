@@ -2,6 +2,7 @@
 @import "variables";
 @import "tailwindcss";
 @import "button";
+@import "flickity";
 @import "override";
 @import "~react-image-gallery/styles/scss/image-gallery.scss";
 
@@ -85,13 +86,13 @@ label {
 }
 
 .filter-black {
-  filter: invert(100%) sepia(63%) saturate(6234%) hue-rotate(246deg) brightness(87%) contrast(156%);
+  filter: invert(100%) sepia(63%) saturate(6234%) hue-rotate(246deg)
+    brightness(87%) contrast(156%);
 }
 
 .ant-pagination .ant-pagination-item-active {
-
   a {
-    color: #FFFFFF !important;
+    color: #ffffff !important;
   }
 
   border-color: $primary-color;

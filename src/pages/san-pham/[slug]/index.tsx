@@ -30,6 +30,15 @@ import {
   fire,
 } from "src/images";
 
+import {
+  AllProductIcon,
+  CameraSystemIcon,
+  GuidanceSystemIcon,
+  AccessSystemIcon,
+  FireProtectionSystemIcon,
+  SafetyLockIcon,
+} from "@/images/icons/product_types/icon_wrapper";
+
 type Props = {
   category: ICategory;
 };
@@ -38,32 +47,32 @@ const PRODUCT_TYPES = [
   {
     id: 1,
     name: "Tất cả sản phẩm",
-    icon: allProduct,
+    icon: AllProductIcon,
   },
   {
     id: 2,
     name: "Hệ thống camera giám sát",
-    icon: camera,
+    icon: CameraSystemIcon,
   },
   {
     id: 3,
     name: "Hệ thống chỉ dẫn",
-    icon: windowSystem,
+    icon: GuidanceSystemIcon,
   },
   {
     id: 4,
     name: "Hệ thống giám sát truy nhập",
-    icon: focusSystem,
+    icon: AccessSystemIcon,
   },
   {
     id: 5,
     name: "Hệ thống phòng cháy chữa cháy",
-    icon: fire,
+    icon: FireProtectionSystemIcon,
   },
   {
     id: 6,
     name: "Khóa an toàn & Két",
-    icon: clockSafe,
+    icon: SafetyLockIcon,
   },
 ];
 
@@ -128,11 +137,11 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
             {title}
           </h1>
         </div>
-        {/* <ProductTypes productTypes={PRODUCT_TYPES} /> */}
+        <ProductTypes productTypes={PRODUCT_TYPES} />
         <div className="w-full flex flex-col sm:flex-row justify-between mt-8">
           <FilterRelated defaultValue={1} options={RELATED_LIST} />
           <div
-            className={`flex flex-row items-center px-4 py-3 rounded-t border border-[#e6e6e6] cursor-pointer group active:bg-[#eb7a01] transition ${
+            className={`flex flex-row items-center px-4 py-3 rounded border border-[#e6e6e6] cursor-pointer group active:bg-[#eb7a01] transition ${
               isActiveFilterIcon ? "bg-[#eb7a01]" : ""
             }`}
             onClick={handleShowFilter}
