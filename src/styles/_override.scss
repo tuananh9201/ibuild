@@ -114,3 +114,17 @@
   color: rgba(0, 0, 0, 0.25) !important;
   display: none !important;
 }
+
+.ant-pagination-disabled {
+  display: none !important;
+}
+
+:where(.css-dev-only-do-not-override-75u3cy).ant-pagination
+  .ant-pagination-item-active:hover {
+  border-color: $primary-color !important;
+}
+
+.ant-select-selector,
+.ant-pagination-options {
+  display: none !important;
+}
