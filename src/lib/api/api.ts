@@ -22,13 +22,15 @@ export const setToken = (access_token: string) => {
 
 const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
   // add something configs
-  const token = localStorage.getItem("access_token");
-  if (token) {
-    const mHeaders = AxiosHeaders.from({
-      Authorization: `Bearer ${token}`,
-    }) as AxiosRequestHeaders;
-    config.headers = mHeaders;
-  }
+  try {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      const mHeaders = AxiosHeaders.from({
+        Authorization: `Bearer ${token}`,
+      }) as AxiosRequestHeaders;
+      config.headers = mHeaders;
+    }
+  } catch (error) {}
   return config;
 };
 
@@ -53,4 +55,5 @@ const onRequestError = (error: AxiosError): Promise<AxiosError> => {
 };
 api.interceptors.request.use(onRequest);
 // api.interceptors.response.use((response) => response, onRequestError);
+
 export default api;

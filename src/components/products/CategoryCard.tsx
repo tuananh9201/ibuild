@@ -2,13 +2,9 @@ import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { ICategory } from "src/lib/types";
 type Props = {
-  category: {
-    id: number;
-    image: any;
-    name: string;
-    slug: string;
-  };
+  category: ICategory;
 };
 
 const CategoryCard = (props: Props) => {
@@ -26,10 +22,9 @@ const CategoryCard = (props: Props) => {
       className="isolate relative hover:cursor-pointer"
     >
       <Link href={`/san-pham/${props.category.slug}`}>
-        <Image
-          src={props.category.image}
-          alt={props.category.name}
-          priority
+        <img
+          src={props.category?.image || ""}
+          alt={props.category.name_vi}
           className="w-full h-full rounded-lg lg:rounded-2xl"
         />
         <div className="name absolute top-7 left-10 right-7 w-5/6">
@@ -39,7 +34,7 @@ const CategoryCard = (props: Props) => {
               initial={{ opacity: 0, y: -30 }}
               className="text-white font-medium text-2xl font-roboto"
             >
-              {props.category.name}
+              {props.category.name_vi}
             </motion.h3>
             <div className="icon w-10 h-10 bg-white rounded-full flex justify-center items-center">
               <svg
@@ -62,4 +57,14 @@ const CategoryCard = (props: Props) => {
   );
 };
 
+export const CategoryCardLoading = () => {
+  return (
+    <div className="w-min-[320px] h-min-[320px] border border-blue-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">
+      <div className="animate-pulse flex p-4">
+        <div className="h-6 w-3/4"></div>
+        <div className="w-6 h-6 bg-white rounded-full"></div>
+      </div>
+    </div>
+  );
+};
 export default CategoryCard;

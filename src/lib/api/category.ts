@@ -2,16 +2,12 @@ import { ICategory } from "src/lib/types";
 import axios from "./api";
 import categories from "@/data/categories.json";
 
-export const fetchCategories = (url: string): Promise<ICategory[]> => {
-  return axios
-    .get("/api/fake/categories")
-    .then((res) => {
-      return res.data;
-    })
-    .catch((err) => {
-      console.log("**** ERR ", err);
-      return [];
-    });
+export const fetchRootCategories = async (): Promise<ICategory[]> => {
+  const res = await axios.get("/product-category/by-parent-id/0");
+  const data = res?.data;
+  console.log("**** data", data);
+
+  return data?.data || [];
 };
 
 export const fetchCategorySlug = async (slug: string) => {

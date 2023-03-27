@@ -5,9 +5,8 @@ export interface IBrand {
 }
 export interface ICategory {
   id: string;
-  name: string;
-  logo: string;
-  parentId?: string;
+  name_vi: string;
+  parent_id?: string;
   image?: string;
   icon?: string;
   slug?: string;
