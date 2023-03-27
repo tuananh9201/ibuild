@@ -113,3 +113,8 @@
 .flickity-page-dots .dot.is-selected {
   opacity: 1;
 }
+
+.flickity-vertical {
+  transform: rotate(90deg) translate(0, -100%);
+  transform-origin: left top;
+}

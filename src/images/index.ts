@@ -17,3 +17,6 @@ export { default as phoneIcon } from './icons/phone.svg'
 export { default as phoneWhiteIcon } from './icons/phone_white.svg'
 export { default as heartIcon } from './icons/heart.svg'
 export { default as heartWhiteIcon } from './icons/heart_white.svg'
+
+export { default as exampleProductDetail } from './product/example_product_detail.png'
+export { default as miniExampleProductDetail } from './product/mini_example_product_detail.png'
