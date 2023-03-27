@@ -94,6 +94,10 @@
   border: none !important;
 }
 
+.pagination .ant-pagination-item-active a {
+  color: #fff !important;
+}
+
 :where(.css-dev-only-do-not-override-rxinl6).ant-pagination
   .ant-pagination-item-active {
   border-color: transparent !important;
