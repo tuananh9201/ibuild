@@ -1,65 +1,25 @@
 import MainLayout from "@/components/main-layout";
-import CategoryCard from "@/components/products/CategoryCard";
+import CategoryCard, {
+  CategoryCardLoading,
+} from "@/components/products/CategoryCard";
 import ProductSearch from "@/components/products/ProductSearch";
-import {
-  cate1,
-  sologan1,
-  sologan2,
-  sologan3,
-  cateCoDienLanh,
-  cateDoNoiNgoaiThat,
-  cateMayCongCuXD,
-  cateThietBiCongNghe,
-  cateVatLieuXayDung,
-} from "@/constants/images";
+import { sologan1, sologan2, sologan3 } from "@/constants/images";
 import { motion } from "framer-motion";
 import Head from "next/head";
 import Image from "next/image";
 import { ReactElement } from "react";
 import { ICategory } from "src/lib/types";
 import { NextPageWithLayout } from "../_app";
+import { fetchRootCategories } from "src/lib/api/category";
+import useSWR from "swr";
+
 type Props = {
   categories: ICategory[];
 };
-const categories = [
-  {
-    id: 1,
-    name: "An ninh & an toàn",
-    image: cate1,
-    slug: "an-ninh-an-toan",
-  },
-  {
-    id: 2,
-    name: "Cơ - Điện - Lạnh",
-    image: cateCoDienLanh,
-    slug: "co-dien-lanh",
-  },
-  {
-    id: 3,
-    name: "Thiết bị công nghệ",
-    image: cateThietBiCongNghe,
-    slug: "thiet-bi-cong-nghe",
-  },
-  {
-    id: 4,
-    name: "Đồ nội & ngoại thất",
-    image: cateDoNoiNgoaiThat,
-    slug: "do-noi-ngoai-that",
-  },
-  {
-    id: 5,
-    name: "Máy - Công cụ xây dựng",
-    image: cateMayCongCuXD,
-    slug: "may-cong-cu-xay-dung",
-  },
-  {
-    id: 6,
-    name: "Vật liệu xây dựng",
-    image: cateVatLieuXayDung,
-    slug: "vat-lieu-xay-dung",
-  },
-];
-const SanPham: NextPageWithLayout<Props> = (props: Props) => {
+const SanPham: NextPageWithLayout<Props> = ({ categories }: Props) => {
+  const { data, error, isLoading } = useSWR("", fetchRootCategories, {
+    fallbackData: categories,
+  });
   return (
     <>
       <Head>
@@ -116,14 +76,25 @@ const SanPham: NextPageWithLayout<Props> = (props: Props) => {
           <ProductSearch />
         </section>
         <section className="mt-20 px-8 grid grid-cols-1 md:grid-cols-3  gap-8">
-          {categories.map((cate) => (
-            <CategoryCard category={cate} key={cate.id} />
-          ))}
+          {isLoading
+            ? Array(5).map((idx) => <CategoryCardLoading key={idx} />)
+            : data?.map((cate: ICategory) => (
+                <CategoryCard category={cate} key={cate.id} />
+              ))}
         </section>
       </motion.div>
     </>
   );
 };
+export async function getStaticProps() {
+  // `getStaticProps` is executed on the server side.
+  const categories = await fetchRootCategories();
+  return {
+    props: {
+      categories,
+    },
+  };
+}
 
 SanPham.getLayout = function getLayout(page: ReactElement) {
   return (

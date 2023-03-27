@@ -16,9 +16,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**.amazonaws.com",
+        // hostname: "firebasestorage.googleapis.com",
+        hostname: "*",
       },
     ],
+    domains: ["googleapis.com", "amazonaws.com"],
   },
 };
 
