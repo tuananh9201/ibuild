@@ -3,17 +3,7 @@ import CategoryCard, {
   CategoryCardLoading,
 } from "@/components/products/CategoryCard";
 import ProductSearch from "@/components/products/ProductSearch";
-import {
-  cate1,
-  sologan1,
-  sologan2,
-  sologan3,
-  cateCoDienLanh,
-  cateDoNoiNgoaiThat,
-  cateMayCongCuXD,
-  cateThietBiCongNghe,
-  cateVatLieuXayDung,
-} from "@/constants/images";
+import { sologan1, sologan2, sologan3 } from "@/constants/images";
 import { motion } from "framer-motion";
 import Head from "next/head";
 import Image from "next/image";
@@ -26,44 +16,6 @@ import useSWR from "swr";
 type Props = {
   categories: ICategory[];
 };
-// const categories = [
-//   {
-//     id: 1,
-//     name: "An ninh & an toàn",
-//     image: cate1,
-//     slug: "an-ninh-an-toan",
-//   },
-//   {
-//     id: 2,
-//     name: "Cơ - Điện - Lạnh",
-//     image: cateCoDienLanh,
-//     slug: "co-dien-lanh",
-//   },
-//   {
-//     id: 3,
-//     name: "Thiết bị công nghệ",
-//     image: cateThietBiCongNghe,
-//     slug: "thiet-bi-cong-nghe",
-//   },
-//   {
-//     id: 4,
-//     name: "Đồ nội & ngoại thất",
-//     image: cateDoNoiNgoaiThat,
-//     slug: "do-noi-ngoai-that",
-//   },
-//   {
-//     id: 5,
-//     name: "Máy - Công cụ xây dựng",
-//     image: cateMayCongCuXD,
-//     slug: "may-cong-cu-xay-dung",
-//   },
-//   {
-//     id: 6,
-//     name: "Vật liệu xây dựng",
-//     image: cateVatLieuXayDung,
-//     slug: "vat-lieu-xay-dung",
-//   },
-// ];
 const SanPham: NextPageWithLayout<Props> = ({ categories }: Props) => {
   const { data, error, isLoading } = useSWR("", fetchRootCategories, {
     fallbackData: categories,
