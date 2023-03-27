@@ -20,8 +20,6 @@ const SanPham: NextPageWithLayout<Props> = ({ categories }: Props) => {
   const { data, error, isLoading } = useSWR("", fetchRootCategories, {
     fallbackData: categories,
   });
-  console.log(" data : ", data);
-  console.log(" error : ", error);
   return (
     <>
       <Head>

@@ -3,11 +3,14 @@ import axios from "./api";
 import categories from "@/data/categories.json";
 
 export const fetchRootCategories = async (): Promise<ICategory[]> => {
-  const res = await axios.get("/product-category/by-parent-id/0");
-  const data = res?.data;
-  console.log("**** data", data);
-
-  return data?.data || [];
+  try {
+    const res = await axios.get("/product-category/roots/");
+    const data = res?.data;
+    return data?.data || [];
+  } catch (error) {
+    console.log(error);
+  }
+  return [];
 };
 
 export const fetchCategorySlug = async (slug: string) => {
