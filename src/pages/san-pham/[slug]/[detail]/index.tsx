@@ -1,4 +1,4 @@
-import { ReactElement, useState, useRef, useEffect } from "react";
+import { ReactElement, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
@@ -91,32 +91,12 @@ const ProductDetail: NextPageWithLayout = () => {
   console.log(query);
 
   const [isHidden, setIsHidden] = useState(true);
-  const [heightCarousel, setHeightCarousel] = useState("");
-
-  const carouselWrapper = useRef<HTMLDivElement>(null);
-
-  const handleHeight = () => {
-    const height = carouselWrapper.current?.clientHeight;
-    console.log(height);
-    setHeightCarousel(`w-[${height}px]`);
-  };
-
-  const handleSeeMore = () => {
-    setIsHidden((prev) => !prev);
-    handleHeight();
-  };
-
-  useEffect(() => {
-    handleHeight();
-  }, []);
 
   return (
     <div className="w-full mt-[60px]">
-      <div className="max-w-[1280px] mx-auto my-0 flex flex-row">
-        <div className="mr-[26px] w-[80px]" ref={carouselWrapper}>
-          {heightCarousel && (
-            <ProductCarouselVertical className={heightCarousel} />
-          )}
+      <div className="max-w-[1280px] mx-auto my-0 flex flex-row min-h-[615px]">
+        <div className="mr-[26px] w-[84px]">
+          <ProductCarouselVertical />
         </div>
         <div className="mr-8">
           <Image
@@ -211,7 +191,7 @@ const ProductDetail: NextPageWithLayout = () => {
               className={`w-full flex gap-[5px] items-center justify-center h-[70px] bottom-0 left-0 ${
                 isHidden ? "bg-gradient-white-to-transparent absolute" : ""
               }`}
-              onClick={handleSeeMore}
+              onClick={() => setIsHidden((prev) => !prev)}
             >
               <span className="font-roboto not-italic font-medium text-primary-color leading-[150%]">
                 {isHidden ? "Xem thêm" : "Thu gọn"}
