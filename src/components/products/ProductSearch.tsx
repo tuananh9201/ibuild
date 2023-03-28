@@ -61,8 +61,8 @@ const ProductSearch = (props: Props) => {
       }
       className={
         isActivateSearch
-          ? "mt-10 lg:max-w-3/4 flex flex-col bg-white items-start gap-2 shadow-[0_0.5px_15px_1px_rgba(0,0,0,0.1)] rounded-lg"
-          : "mt-10 lg:max-w-3/4 flex flex-col gap-2"
+          ? "mt-2 lg:mt-10 lg:max-w-3/4 flex flex-col bg-white items-start gap-2 shadow-[0_0.5px_15px_1px_rgba(0,0,0,0.1)] rounded-lg"
+          : "mt-2 lg:mt-10 lg:max-w-3/4 flex flex-col gap-2"
       }
     >
       <div className={isActivateSearch ? className : classNameActivate}>
