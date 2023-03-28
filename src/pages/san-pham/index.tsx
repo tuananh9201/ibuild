@@ -36,7 +36,7 @@ const SanPham: NextPageWithLayout<Props> = ({ categories }: Props) => {
           damping: 20,
         }}
       >
-        <section className="my-20 p-4 lg:p-0">
+        <section className="my-6 lg:my-20 p-4 lg:p-0">
           <div className="flex flex-col items-center p-0 gap-6 max-w-max min-w-full">
             <div className="flex flex-row justify-center items-center gap-4 h-54 max-w-max min-w-full">
               <Image
@@ -75,7 +75,7 @@ const SanPham: NextPageWithLayout<Props> = ({ categories }: Props) => {
         <section className="p-4 lg:p-0 flex justify-center">
           <ProductSearch />
         </section>
-        <section className="mt-20 px-8 grid grid-cols-1 md:grid-cols-3  gap-8">
+        <section className="mt-6 lg:mt-20 px-8 grid grid-cols-1 md:grid-cols-3  gap-8">
           {isLoading
             ? Array(5).map((idx) => <CategoryCardLoading key={idx} />)
             : data?.map((cate: ICategory) => (

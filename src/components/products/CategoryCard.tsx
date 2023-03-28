@@ -22,9 +22,12 @@ const CategoryCard = (props: Props) => {
       className="isolate relative hover:cursor-pointer"
     >
       <Link href={`/san-pham/${props.category.slug}`}>
-        <img
+        <Image
           src={props.category?.image || ""}
           alt={props.category.name_vi}
+          width={430}
+          height={330}
+          priority
           className="w-full h-full rounded-lg lg:rounded-2xl"
         />
         <div className="name absolute top-7 left-10 right-7 w-5/6">
