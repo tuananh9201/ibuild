@@ -20,3 +20,5 @@ export { default as heartWhiteIcon } from './icons/heart_white.svg'
 
 export { default as exampleProductDetail } from './product/example_product_detail.png'
 export { default as miniExampleProductDetail } from './product/mini_example_product_detail.png'
+
+export { default as searchIcon } from "./icons/SearchIcon.svg"

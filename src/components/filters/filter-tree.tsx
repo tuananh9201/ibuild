@@ -1,13 +1,19 @@
 import { useState, useRef, useEffect } from "react";
+import { Checkbox } from "antd";
 import Image from "next/image";
 
 import { arrowDown } from "@/images/index";
-import Input from "@/components/common/form/Input";
+import { SearchInput } from "@/components/common/index";
+import { UpDownIcon } from "@/images/icons/product_types/icon_wrapper";
 
 interface TreeOption {
   id: number;
   value: string;
   childrenList?: TreeOption[];
+}
+
+interface FilterTreeProps {
+  childrenList: TreeOption[];
 }
 
 const LIST: TreeOption[] = [
@@ -36,36 +42,32 @@ const LIST: TreeOption[] = [
   {
     id: 2,
     value: "May bay",
-    childrenList: [],
   },
   {
     id: 3,
     value: "O to",
-    childrenList: [],
   },
   {
     id: 4,
     value: "Xe may",
-    childrenList: [],
   },
 ];
 
-const MakeTreeOption = ({ id, value, childrenList }: TreeOption) => {
+const MakeTreeOption = ({ childrenList }: FilterTreeProps) => {
   return (
     <>
-      <li>{value}</li>
-      {childrenList &&
-        childrenList.map((child) => {
-          return (
-            <li key={child.id}>
-              <MakeTreeOption
-                id={child.id}
-                value={child.value}
-                childrenList={child.childrenList}
-              />
-            </li>
-          );
-        })}
+      {childrenList.map((item) => {
+        return (
+          <li key={item.id}>
+            <span>{item.value}</span>
+            {item.childrenList && (
+              <ul className="px-3">
+                <MakeTreeOption childrenList={item.childrenList} />
+              </ul>
+            )}
+          </li>
+        );
+      })}
     </>
   );
 };
@@ -111,19 +113,26 @@ const FilterTree = () => {
       </div>
       {isOpenMenu && (
         <div className="absolute transition z-10 w-full bg-white border border-solid border-primary-color rounded-b-lg px-4 py-6">
-          <Input placeHolder="Bạn muốn tìm khu vực nào?" />
+          <SearchInput placeHolder="Bạn muốn tìm sản phẩm nào?" />
 
-          <div className="mt-[35px]">
+          <ul className="mt-[35px] font-roboto not-italic font-normal text-base leading-[150%] text-text-color flex flex-col gap-2">
             {LIST.map((l) => (
-              <div key={l.id}>
-                <MakeTreeOption
-                  id={l.id}
-                  value={l.value}
-                  childrenList={l.childrenList}
-                />
-              </div>
+              <li key={l.id}>
+                <div className="flex flex-row justify-between">
+                  <div className="flex flex-row items-center">
+                    <Checkbox />
+                    <span className="pl-3">{l.value}</span>
+                  </div>
+                  {l.childrenList && <UpDownIcon className="" />}
+                </div>
+                {l.childrenList && (
+                  <ul className="pl-3">
+                    <MakeTreeOption childrenList={l.childrenList} />
+                  </ul>
+                )}
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       )}
     </div>
