@@ -20,6 +20,9 @@ const SanPham: NextPageWithLayout<Props> = ({ categories }: Props) => {
   const { data, error, isLoading } = useSWR("", fetchRootCategories, {
     fallbackData: categories,
   });
+
+  console.log(data);
+
   return (
     <>
       <Head>
@@ -75,7 +78,7 @@ const SanPham: NextPageWithLayout<Props> = ({ categories }: Props) => {
         <section className="p-4 lg:p-0 flex justify-center">
           <ProductSearch />
         </section>
-        <section className="mt-6 lg:mt-20 px-8 grid grid-cols-1 md:grid-cols-3  gap-8">
+        <section className="mt-6 lg:mt-20 px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
           {isLoading
             ? Array(5).map((idx) => <CategoryCardLoading key={idx} />)
             : data?.map((cate: ICategory) => (

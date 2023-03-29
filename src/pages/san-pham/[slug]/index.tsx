@@ -101,11 +101,14 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   const { query } = useRouter();
   const { slug } = query;
 
-  // const {
-  //   data: category,
-  //   error,
-  //   isLoading,
-  // } = useSWR<ICategory | undefined>(slug, fetchCategorySlug);
+  const {
+    data: category,
+    error,
+    isLoading,
+  } = useSWR<ICategory[] | undefined>(slug, fetchCategorySlug);
+
+  console.log(category);
+
   const breadcrumbs = [
     {
       title: "Sản phẩm",

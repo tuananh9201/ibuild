@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Checkbox } from "antd";
 import Image from "next/image";
+import type { CheckboxChangeEvent } from "antd/es/checkbox";
 
 import { arrowDown } from "@/images/index";
 import { SearchInput } from "@/components/common/index";
@@ -10,71 +11,158 @@ interface TreeOption {
   id: number;
   value: string;
   childrenList?: TreeOption[];
+  checked: boolean;
+}
+
+interface MakeTreeProps extends TreeOption {
+  isParent?: boolean;
+  handleGetNewOptions: ({
+    id,
+    status,
+  }: {
+    id: number;
+    status: boolean;
+  }) => void;
 }
 
 interface FilterTreeProps {
-  childrenList: TreeOption[];
+  childrenList: TreeOption;
 }
 
 const LIST: TreeOption[] = [
   {
     id: 1,
-    value: "Nha may",
+    value: "Nhà máy",
     childrenList: [
       {
         id: 5,
-        value: "Test may",
+        value: "Sản xuất đồ gia dụng",
         childrenList: [
           {
             id: 6,
-            value: "Di bo",
+            value: "Đồ trẻ em",
             childrenList: [
               {
                 id: 7,
-                value: "Bay",
+                value: "Trẻ em sơ sinh",
+                checked: false,
               },
             ],
+            checked: false,
           },
         ],
+        checked: false,
       },
     ],
+    checked: false,
   },
   {
     id: 2,
-    value: "May bay",
+    value: "Máy bay",
+    checked: false,
   },
   {
     id: 3,
-    value: "O to",
+    value: "Ô tô",
+    childrenList: [
+      {
+        id: 8,
+        value: "Labo",
+        checked: false,
+      },
+      {
+        id: 9,
+        value: "Mec",
+        checked: false,
+      },
+      {
+        id: 10,
+        value: "Kia",
+        checked: false,
+      },
+    ],
+    checked: false,
   },
   {
     id: 4,
-    value: "Xe may",
+    value: "Xe máy",
+    checked: false,
   },
 ];
 
-const MakeTreeOption = ({ childrenList }: FilterTreeProps) => {
+const MakeTreeOption = ({
+  id,
+  value,
+  childrenList = [],
+  checked,
+  isParent,
+  handleGetNewOptions,
+}: MakeTreeProps) => {
+  const [isOpenMenuLevel, setIsOpenMenuLevel] = useState(false);
+  const [listOption, setListOption] = useState(childrenList);
+  const [isChecked, setIsChecked] = useState(checked);
+
+  const handleSetStatusOption = (options: TreeOption[], status: boolean) => {
+    options.forEach((option) => {
+      option.checked = status;
+      if (option.childrenList) {
+        handleSetStatusOption(option.childrenList, status);
+      }
+    });
+  };
+
+  const handleChangeCheckbox = (e: CheckboxChangeEvent) => {
+    handleGetNewOptions({ id: e.target.value, status: e.target.checked });
+    console.log();
+    setIsChecked(e.target.checked);
+  };
+
   return (
-    <>
-      {childrenList.map((item) => {
-        return (
-          <li key={item.id}>
-            <span>{item.value}</span>
-            {item.childrenList && (
-              <ul className="px-3">
-                <MakeTreeOption childrenList={item.childrenList} />
-              </ul>
-            )}
-          </li>
-        );
-      })}
-    </>
+    <li className={`${isParent ? "" : "pl-8"}`}>
+      <div className="flex flex-row justify-between items-center">
+        <div>
+          <Checkbox
+            onChange={handleChangeCheckbox}
+            value={id}
+            name={id.toString()}
+            defaultChecked={isChecked}
+            checked={isChecked}
+          />
+          <span className="pl-3">{value}</span>
+        </div>
+        {listOption.length > 0 && (
+          <div onClick={() => setIsOpenMenuLevel((prev) => !prev)}>
+            <UpDownIcon
+              className={`cursor-pointer transition ${
+                isOpenMenuLevel ? "rotate-180" : ""
+              }`}
+            />
+          </div>
+        )}
+      </div>
+      {listOption && isOpenMenuLevel && (
+        <ul className="pt-7 transition-all">
+          {listOption.map((item) => (
+            <MakeTreeOption
+              id={item.id}
+              value={item.value}
+              childrenList={item.childrenList}
+              handleGetNewOptions={handleGetNewOptions}
+              key={item.id}
+              checked={item.checked}
+            />
+          ))}
+        </ul>
+      )}
+    </li>
   );
 };
 
 const FilterTree = () => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [valueSelected, setValueSelected] = useState("Chọn danh mục sản phẩm");
+  const [isOpenMenuFirstLevel, setIsOpenMenuFirstLevel] = useState(false);
+  const [listCheckBox, setListCheckBox] = useState(LIST);
 
   const selectElement = useRef<HTMLDivElement>(null);
 
@@ -87,6 +175,37 @@ const FilterTree = () => {
 
     () => window.removeEventListener("click", () => {});
   }, []);
+
+  const handleSetStatusOption = (options: TreeOption[], status: boolean) => {
+    options.forEach((option) => {
+      option.checked = status;
+      if (option.childrenList) {
+        handleSetStatusOption(option.childrenList, status);
+      }
+    });
+  };
+
+  function handleGetNewOptions({
+    id,
+    status,
+  }: {
+    id: number;
+    status: boolean;
+  }) {
+    console.log(id, status);
+    const oldList = [...LIST];
+    const oldOptionIndex = oldList.findIndex((item) => item.id === id);
+    if (oldOptionIndex > -1) {
+      oldList[oldOptionIndex].checked = status;
+      if (oldList[oldOptionIndex].childrenList) {
+        handleSetStatusOption(
+          oldList[oldOptionIndex].childrenList || [],
+          status
+        );
+      }
+    }
+    setListCheckBox(oldList);
+  }
 
   return (
     <div className="relative min-w-[205px]" ref={selectElement}>
@@ -115,22 +234,17 @@ const FilterTree = () => {
         <div className="absolute transition z-10 w-full bg-white border border-solid border-primary-color rounded-b-lg px-4 py-6">
           <SearchInput placeHolder="Bạn muốn tìm sản phẩm nào?" />
 
-          <ul className="mt-[35px] font-roboto not-italic font-normal text-base leading-[150%] text-text-color flex flex-col gap-2">
-            {LIST.map((l) => (
-              <li key={l.id}>
-                <div className="flex flex-row justify-between">
-                  <div className="flex flex-row items-center">
-                    <Checkbox />
-                    <span className="pl-3">{l.value}</span>
-                  </div>
-                  {l.childrenList && <UpDownIcon className="" />}
-                </div>
-                {l.childrenList && (
-                  <ul className="pl-3">
-                    <MakeTreeOption childrenList={l.childrenList} />
-                  </ul>
-                )}
-              </li>
+          <ul className="mt-[35px] font-roboto not-italic font-normal text-base leading-[150%] text-text-color flex flex-col gap-7">
+            {listCheckBox.map((l) => (
+              <MakeTreeOption
+                id={l.id}
+                value={l.value}
+                childrenList={l.childrenList}
+                checked={l.checked}
+                isParent
+                handleGetNewOptions={handleGetNewOptions}
+                key={l.id}
+              />
             ))}
           </ul>
         </div>

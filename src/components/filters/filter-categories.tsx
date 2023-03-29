@@ -1,6 +1,7 @@
 import { FilterLocation } from "@/components/common/index";
-import FilterTree from "./filter-tree";
 import { Input } from "@/components/common/index";
+import FilterTree from "./filter-tree";
+import SelectTree from "./select-tree";
 
 interface FilterCategoriesProps {}
 
@@ -18,7 +19,7 @@ const FilterCategories = () => {
         <span className="inline-block font-roboto font-medium text-base leading-[calc(24 / 16)] mb-2">
           Danh mục sản phẩm
         </span>
-        <FilterTree />
+        <SelectTree />
       </div>
       <div className="w-[25%]">
         <span className="inline-block font-roboto font-medium text-base leading-[calc(24 / 16)] mb-2">

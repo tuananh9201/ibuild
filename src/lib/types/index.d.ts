@@ -10,6 +10,7 @@ export interface ICategory {
   image?: string;
   icon?: string;
   slug?: string;
+  level?: number;
 }
 export interface ISupplier {
   id: string;

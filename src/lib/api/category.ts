@@ -13,12 +13,15 @@ export const fetchRootCategories = async (): Promise<ICategory[]> => {
   return [];
 };
 
-export const fetchCategorySlug = async (slug: string) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
-  })
-    .then(() => categories.find((c) => c.slug === slug))
-    .catch(() => categories.find((c) => c.slug === slug));
+export const fetchCategorySlug = async (slug: string): Promise<ICategory[]> => {
+  try {
+    const res = await axios.get(`/product-category/by-parent-id/${slug}`)
+    const data = res?.data || [];
+    return data
+  } catch (error) {
+    console.warn(error)
+  }
+  return []
 };
 
 export const fetchChildsCategories = async (parentId: string) => {
