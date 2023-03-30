@@ -128,38 +128,6 @@
   border-color: $primary-color !important;
 }
 
-.ant-select-selector,
 .ant-pagination-options {
   display: none !important;
-}
-
-// custom checkbox
-.ant-checkbox-inner {
-  width: 22px !important;
-  height: 22px !important;
-  border-radius: 3px !important;
-}
-
-:where(.css-dev-only-do-not-override-75u3cy).ant-checkbox-wrapper:not(
-    .ant-checkbox-wrapper-disabled
-  ):hover
-  .ant-checkbox-inner,
-:where(.css-dev-only-do-not-override-75u3cy).ant-checkbox:not(
-    .ant-checkbox-disabled
-  ):hover
-  .ant-checkbox-inner {
-  border-color: #d9d9d9 !important;
-}
-
-:where(.css-dev-only-do-not-override-75u3cy).ant-checkbox-wrapper:not(
-    .ant-checkbox-wrapper-disabled
-  ):hover
-  .ant-checkbox-checked:not(.ant-checkbox-disabled)
-  .ant-checkbox-inner {
-  background-color: $primary-color !important;
-}
-
-.ant-checkbox-checked .ant-checkbox-inner {
-  border-color: $primary-color !important;
-  background-color: $primary-color !important;
 }

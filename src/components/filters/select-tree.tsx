@@ -6,7 +6,6 @@ interface TreeOption {
   label?: string;
   checked?: boolean;
   childrenNodes?: TreeOption[];
-  parent?: TreeOption;
 }
 
 interface NestedCheckboxHelperProps {
@@ -37,11 +36,6 @@ const LIST: TreeOption[] = [
             checked: false,
           },
         ],
-        parent: {
-          id: "1",
-          label: "An ninh & an toàn",
-          checked: false,
-        },
       },
     ],
   },
@@ -81,28 +75,11 @@ const LIST: TreeOption[] = [
   },
 ];
 
-const updateAncestors = (node: TreeOption) => {
-  console.log(node);
-  if (!node.parent) {
-    return;
-  }
-
-  const parent = node.parent;
-  if (parent.checked && !node.checked) {
-    parent.checked = false;
-    updateAncestors(parent);
-    return;
-  }
-
-  if (!parent.checked && node.checked) {
-    if (parent?.childrenNodes?.every((node) => node.checked)) {
-      parent.checked = true;
-      updateAncestors(parent);
-      return;
-    }
-  }
-
-  return;
+const updateAncestors = (node: TreeOption, nodes: TreeOption[]) => {
+  const idNode = node.id
+  nodes.forEach((item) => {
+    
+  })
 };
 
 const toggleDescendants = (node: TreeOption) => {
@@ -146,7 +123,7 @@ const SelectTree = () => {
     if (node) {
       node.checked = checked;
       toggleDescendants(node);
-      updateAncestors(node);
+      updateAncestors(node, nodes);
       setNodes(cloneDeep(nodes));
     }
   };
