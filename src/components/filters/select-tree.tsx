@@ -1,173 +1,153 @@
-import React, { useState } from "react";
+import { useState, ChangeEvent } from "react";
+import { cloneDeep } from "lodash";
 
 interface TreeOption {
-  id?: number;
-  value?: string;
-  childrenList?: TreeOption[];
+  id?: string;
+  label?: string;
   checked?: boolean;
+  childrenNodes?: TreeOption[];
+  parent?: TreeOption;
 }
 
 interface NestedCheckboxHelperProps {
   nodes: TreeOption[];
-  ancestors: Array<any>;
-  onBoxChecked: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    ancestors: Array<any>
-  ) => void;
+  ancestors: string[];
+  onBoxChecked: (e: ChangeEvent<HTMLInputElement>, ancestors: string[]) => void;
 }
 
 const LIST: TreeOption[] = [
   {
-    id: 1,
-    value: "Nhà máy",
-    childrenList: [
+    id: "1",
+    label: "An ninh & an toàn",
+    checked: false,
+    childrenNodes: [
       {
-        id: 5,
-        value: "Sản xuất đồ gia dụng",
-        childrenList: [
+        id: "6",
+        label: "Hệ thống phòng cháy chữa cháy",
+        checked: false,
+        childrenNodes: [
           {
-            id: 6,
-            value: "Đồ trẻ em",
-            childrenList: [
-              {
-                id: 7,
-                value: "Trẻ em sơ sinh",
-                checked: false,
-              },
-            ],
+            id: "7",
+            label: "Cảnh báo",
+            checked: false,
+          },
+          {
+            id: "8",
+            label: "Thiết bị chống cháy",
             checked: false,
           },
         ],
+        parent: {
+          id: "1",
+          label: "An ninh & an toàn",
+          checked: false,
+        },
+      },
+    ],
+  },
+  {
+    id: "2",
+    label: "Đồ nội & ngoại thất",
+    checked: false,
+  },
+  {
+    id: "3",
+    label: "Xây dựng",
+    checked: false,
+    childrenNodes: [
+      {
+        id: "9",
+        label: "Xi măng",
         checked: false,
       },
     ],
+  },
+  {
+    id: "4",
+    label: "Trông trọt",
     checked: false,
   },
   {
-    id: 2,
-    value: "Máy bay",
+    id: "5",
+    label: "Giáo dục",
     checked: false,
-  },
-  {
-    id: 3,
-    value: "Ô tô",
-    childrenList: [
+    childrenNodes: [
       {
-        id: 8,
-        value: "Labo",
-        checked: false,
-      },
-      {
-        id: 9,
-        value: "Mec",
-        checked: false,
-      },
-      {
-        id: 10,
-        value: "Kia",
+        id: "10",
+        label: "Cấp 1",
         checked: false,
       },
     ],
-    checked: false,
-  },
-  {
-    id: 4,
-    value: "Xe máy",
-    checked: false,
   },
 ];
 
-const NestedCheckboxHelper = ({
-  nodes,
-  ancestors,
-  onBoxChecked,
-}: NestedCheckboxHelperProps) => {
-  return (
-    <ul>
-      {nodes.map((node) => {
-        return (
-          <li key={node.id}>
-            <input
-              type="checkbox"
-              name={node.value}
-              checked={node.checked}
-              onChange={(e) => onBoxChecked(e, ancestors)}
-            />
-            <label htmlFor={node.value}>{node.value}</label>
-            {node && node.childrenList?.length && (
-              <NestedCheckboxHelper
-                nodes={node.childrenList}
-                ancestors={[]}
-                onBoxChecked={onBoxChecked}
-              />
-            )}
-          </li>
-        );
-      })}
-    </ul>
-  );
+const updateAncestors = (node: TreeOption) => {
+  console.log(node);
+  if (!node.parent) {
+    return;
+  }
+
+  const parent = node.parent;
+  if (parent.checked && !node.checked) {
+    parent.checked = false;
+    updateAncestors(parent);
+    return;
+  }
+
+  if (!parent.checked && node.checked) {
+    if (parent?.childrenNodes?.every((node) => node.checked)) {
+      parent.checked = true;
+      updateAncestors(parent);
+      return;
+    }
+  }
+
+  return;
+};
+
+const toggleDescendants = (node: TreeOption) => {
+  const checked = node.checked;
+
+  if (node) {
+    node?.childrenNodes?.forEach((node) => {
+      node.checked = checked;
+      toggleDescendants(node);
+    });
+  }
+};
+
+const findNode = (options: TreeOption[], id: string, ancestors: string[]) => {
+  let node: TreeOption = {};
+
+  if (ancestors.length === 0) {
+    return options.filter((option) => option.id === id)[0];
+  }
+
+  for (let ancestor of ancestors) {
+    const candidates =
+      Object.keys(node).length > 0 ? node.childrenNodes : options;
+    if (candidates) {
+      node = candidates.filter((item) => item.id === ancestor)[0];
+    }
+  }
+
+  return node.childrenNodes?.filter((child) => child.id === id)[0];
 };
 
 const SelectTree = () => {
   const [nodes, setNodes] = useState(LIST);
 
-  const toggleDescendants = (node: TreeOption) => {
-    if (!node) return;
-
-    const checked = node.checked;
-
-    node.childrenList?.forEach((child) => {
-      child.checked = checked;
-      toggleDescendants(child);
-    });
-  };
-
-  const updateAncestors = (node: TreeOption) => {
-    return;
-  };
-
-  const findNode = (
-    nodes: TreeOption[],
-    label: string,
-    ancestors: Array<any>
-  ) => {
-    console.log(nodes, label);
-    let node: TreeOption | undefined = {};
-
-    if (ancestors.length === 0) {
-      return nodes.filter((node) => node.value === label)[0];
-    }
-
-    for (let ancestor of ancestors) {
-      const candidates: TreeOption[] | undefined = node
-        ? node.childrenList
-        : nodes;
-      node = candidates?.filter((node) => node.value === ancestor)[0];
-    }
-
-    return node?.childrenList?.filter((node) => node.value === label)[0];
-  };
-
   const handleBoxChecked = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    ancestors: Array<any>
+    e: ChangeEvent<HTMLInputElement>,
+    ancestors: string[]
   ) => {
-    // console.log(e);
-    const checked = e.target.checked;
-    // console.log(checked);
-    const node: TreeOption | undefined = findNode(
-      nodes,
-      e.target.value,
-      ancestors
-    );
-    console.log(node);
+    const checked = e.currentTarget.checked;
+    const node = findNode(nodes, e.currentTarget.value, ancestors);
     if (node) {
       node.checked = checked;
       toggleDescendants(node);
       updateAncestors(node);
-      if (node.checked && node.childrenList && node.id && node.value) {
-        setNodes([...nodes]);
-      }
+      setNodes(cloneDeep(nodes));
     }
   };
 
@@ -177,6 +157,42 @@ const SelectTree = () => {
       ancestors={[]}
       onBoxChecked={handleBoxChecked}
     />
+  );
+};
+
+const NestedCheckboxHelper = ({
+  nodes,
+  ancestors,
+  onBoxChecked,
+}: NestedCheckboxHelperProps) => {
+  const prefix = ancestors.join(".");
+
+  return (
+    <ul>
+      {nodes.map((node) => {
+        const key = `${prefix}.${node.id}`;
+
+        return (
+          <li key={key}>
+            <input
+              type="checkbox"
+              name={key}
+              value={node.id}
+              checked={node.checked}
+              onChange={(e) => onBoxChecked(e, ancestors)}
+            />
+            <label htmlFor={key}>{node.label}</label>
+            {node.childrenNodes?.length && (
+              <NestedCheckboxHelper
+                nodes={node.childrenNodes}
+                ancestors={[...ancestors, node.id || ""]}
+                onBoxChecked={onBoxChecked}
+              />
+            )}
+          </li>
+        );
+      })}
+    </ul>
   );
 };
 
