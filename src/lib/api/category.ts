@@ -13,15 +13,16 @@ export const fetchRootCategories = async (): Promise<ICategory[]> => {
   return [];
 };
 
-export const fetchCategorySlug = async (slug: string): Promise<ICategory[]> => {
+export const fetchCategorySlug = async (
+  slug: string
+): Promise<ICategory | undefined> => {
   try {
-    const res = await axios.get(`/product-category/by-parent-id/${slug}`)
-    const data = res?.data || [];
-    return data
+    const res = await axios.get(`/product-category/by-slug/${slug}`);
+    const data = res?.data?.data || [];
+    return data;
   } catch (error) {
-    console.warn(error)
+    console.warn(error);
   }
-  return []
 };
 
 export const fetchChildsCategories = async (parentId: string) => {

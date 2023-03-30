@@ -10,7 +10,11 @@ import Breadcrums from "@/components/common/breadcrums";
 import { NextPageWithLayout } from "../../_app";
 import { ParsedUrlQuery } from "querystring";
 import { GetStaticPaths, GetStaticPropsContext } from "next";
-import { fetchCategorySlug, fetchChildsCategories } from "src/lib/api/category";
+import {
+  fetchCategorySlug,
+  fetchChildsCategories,
+  fetchRootCategories,
+} from "src/lib/api/category";
 import { ICategory } from "src/lib/types";
 import {
   ProductTypes,
@@ -105,18 +109,15 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
     data: category,
     error,
     isLoading,
-  } = useSWR<ICategory[] | undefined>(slug, fetchCategorySlug);
-
-  console.log(category);
-
+  } = useSWR<ICategory | undefined>(slug, fetchCategorySlug);
   const breadcrumbs = [
     {
       title: "Sản phẩm",
       slug: "san-pham",
     },
     {
-      slug: "an-ninh-an-toan" || "",
-      title: "An ninh & An toàn" || "",
+      slug: category?.slug || "",
+      title: category?.name_vi || "",
     },
   ];
 
@@ -175,34 +176,32 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   );
 };
 
-// interface IParams extends ParsedUrlQuery {
-//   slug: string;
-// }
-// export const getStaticPaths: GetStaticPaths<{ id: string }> = async () => {
-//   const rootCategories = await fetchChildsCategories("0");
+interface IParams extends ParsedUrlQuery {
+  slug: string;
+}
+export const getStaticPaths: GetStaticPaths = async () => {
+  const rootsCategories = await fetchRootCategories();
+  const paths = rootsCategories.map((cate: ICategory) => ({
+    params: { slug: cate.slug },
+  }));
 
-//   // Get the paths we want to pre-render based on posts
-//   const paths = rootCategories.map((cate: ICategory) => ({
-//     params: { slug: cate.slug },
-//   }));
+  return {
+    paths: paths, //indicates that no page needs be created at build time
+    fallback: "blocking", //indicates the type of fallback
+  };
+};
 
-//   return {
-//     paths: paths, //indicates that no page needs be created at build time
-//     fallback: "blocking", //indicates the type of fallback
-//   };
-// };
+export async function getStaticProps(context: GetStaticPropsContext) {
+  // `getStaticProps` is executed on the server side.
+  const { slug } = context.params as IParams;
 
-// export async function getStaticProps(context: GetStaticPropsContext) {
-//   // `getStaticProps` is executed on the server side.
-//   const { slug } = context.params as IParams;
-
-//   const category = await fetchCategorySlug(slug);
-//   return {
-//     props: {
-//       category,
-//     },
-//   };
-// }
+  const category = await fetchCategorySlug(slug);
+  return {
+    props: {
+      category,
+    },
+  };
+}
 
 ListCategoriesBySlug.getLayout = function getLayout(page: ReactElement) {
   return (
