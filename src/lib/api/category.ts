@@ -18,11 +18,24 @@ export const fetchCategorySlug = async (
 ): Promise<ICategory | undefined> => {
   try {
     const res = await axios.get(`/product-category/by-slug/${slug}`);
+    const data = res?.data?.data;
+    return data;
+  } catch (error) {
+    console.warn(error);
+  }
+};
+
+export const fetchChildCategories = async (
+  parentId: string
+): Promise<ICategory[]> => {
+  try {
+    const res = await axios.get(`/product-category/by-parent-id/${parentId}`);
     const data = res?.data?.data || [];
     return data;
   } catch (error) {
     console.warn(error);
   }
+  return [];
 };
 
 export const fetchChildsCategories = async (parentId: string) => {

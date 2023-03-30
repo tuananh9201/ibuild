@@ -42,6 +42,7 @@ import {
   FireProtectionSystemIcon,
   SafetyLockIcon,
 } from "@/images/icons/product_types/icon_wrapper";
+import SubCategoryBar from "@/components/products/SubCategoryBar";
 
 type Props = {
   category: ICategory;
@@ -141,6 +142,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
             {title}
           </h1>
         </div>
+        <SubCategoryBar parentId={category?.id || ""} />
         <ProductTypes productTypes={PRODUCT_TYPES} />
         <div className="w-full flex flex-col sm:flex-row justify-between mt-8">
           <FilterRelated defaultValue={1} options={RELATED_LIST} />
