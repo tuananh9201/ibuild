@@ -19,7 +19,7 @@ const FilterCategories = () => {
         <span className="inline-block font-roboto font-medium text-base leading-[calc(24 / 16)] mb-2">
           Danh mục sản phẩm
         </span>
-        <SelectTree />
+        <FilterTree />
       </div>
       <div className="w-[25%]">
         <span className="inline-block font-roboto font-medium text-base leading-[calc(24 / 16)] mb-2">
