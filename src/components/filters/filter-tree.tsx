@@ -38,6 +38,13 @@ const treeData = [
         title: "Child Node5",
         value: "0-1-2",
         key: "0-1-2",
+        children: [
+          {
+            title: "Child Node6",
+            value: "0-2-0",
+            key: "0-2-0",
+          },
+        ],
       },
     ],
   },
@@ -56,22 +63,30 @@ export default function FilterTree() {
     setIsExpand((prev) => !prev);
   };
 
+  const handleSearch = () => {
+    console.log("ssss");
+  };
+
   return (
     <div id="selectTreeElement" className="relative">
       <TreeSelect
         treeData={treeData}
         value={value}
         onChange={onChange}
-        treeCheckable={false}
-        multiple={false}
+        treeCheckable={true}
         showCheckedStrategy={SHOW_PARENT}
         placeholder="Chọn danh mục sản phẩm"
+        showArrow
+        showSearch
+        filterTreeNode={true}
+        dropdownStyle={{
+          top: "100%",
+          transition: "all",
+        }}
         style={{
           width: "100%",
-          height: 46,
+          minHeight: "46px",
         }}
-        popupClassName=""
-        showArrow
         suffixIcon={
           <UpDownIcon
             className={`fill-[#343434] transition ${
@@ -79,16 +94,18 @@ export default function FilterTree() {
             }`}
           />
         }
+        switcherIcon={<UpDownIcon className="fill-[#343434] transition" />}
         getPopupContainer={() =>
           document.getElementById("selectTreeElement") as HTMLElement
         }
-        dropdownRender={(item) => (
-          <div className="text-red-500">
+        dropdownRender={(tree) => (
+          <div className="flex flex-col gap-[22px]">
             <SearchInput />
-            <span>{item}</span>
+            {tree}
           </div>
         )}
         onDropdownVisibleChange={handleExpand}
+        onSearch={handleSearch}
       />
     </div>
   );
