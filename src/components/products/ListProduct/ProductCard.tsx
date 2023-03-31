@@ -31,7 +31,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <div className="flex justify-start items-center gap-2 mb-[9px] cursor-pointer">
         <Image src={locationIcon} alt="location product" />
         <span className="font-roboto not-italic text-xs leading-[calc(18 / 12) text-text-color]">
-          Bắc Từ Liêm, Hà Nội
+          {product?.supplier?.district}, {product?.supplier?.city}
         </span>
       </div>
       <div className="flex flex-row mb-4">

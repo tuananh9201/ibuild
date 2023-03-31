@@ -123,6 +123,15 @@ type ProductImage = {
   s3_image_url: string;
   web_image_code: string;
 };
+type Supplier = {
+  id: string;
+  name: string;
+  cname?: string;
+  description?: string;
+  feature_image?: string;
+  city?: string;
+  district?: string;
+};
 export type Product = {
   id: string;
   data: ProductData;
@@ -132,6 +141,7 @@ export type Product = {
   created_at: string;
   updated_at: string;
   score?: number;
+  supplier?: Supplier;
 };
 type Paging = {
   limit: number;
