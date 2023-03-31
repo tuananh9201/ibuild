@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import useSWR from "swr";
 import Image from "next/image";
@@ -15,7 +15,7 @@ import {
   fetchChildsCategories,
   fetchRootCategories,
 } from "src/lib/api/category";
-import { ICategory } from "src/lib/types";
+import { ICategory, Product } from "src/lib/types";
 import {
   ProductTypes,
   FilterRelated,
@@ -24,6 +24,8 @@ import {
 import { filterIcon, filterIconWhite } from "@/images/index";
 import ListProduct from "@/components/products/ListProduct";
 import { PaginationElement } from "@/components/common/index";
+import { searchProduct } from "src/lib/api/product";
+import { Pagination } from "antd";
 
 type Props = {
   category: ICategory;
@@ -50,7 +52,14 @@ const RELATED_LIST = [
 
 const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   const [isActiveFilterIcon, setIsActiveFilterIcon] = useState(false);
-
+  const [products, setProducts] = useState<Product[]>([]);
+  const [keywordSearch, setKeywordSearch] = useState(
+    props.category?.name_vi || "all"
+  );
+  const [paging, setPaging] = useState({
+    current: 0,
+    total: 0,
+  });
   const { query } = useRouter();
   const { slug } = query;
 
@@ -76,9 +85,38 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
     console.log("click");
     setIsActiveFilterIcon((prev) => !prev);
   };
-  const onClickFilterCategory = (name: string) => {
-    console.log("ok");
+  const onClickFilterCategory = async (name: string) => {
+    let keyword: string | undefined = name;
+    if (name === "all") {
+      keyword = category?.name_vi;
+    }
+    setKeywordSearch(keyword || "all");
   };
+
+  const loadProduct = async () => {
+    const data = await searchProduct({
+      keyword: keywordSearch,
+      limit: 12,
+      skip: paging.current !== 1 ? paging.current * 12 : 0,
+      sort_by: "LIEN_QUAN_NHAT",
+      max_price: 0,
+      min_price: 0,
+      max_quantity: 0,
+      min_quantity: 0,
+    });
+    setProducts(data.data);
+    setPaging({
+      ...paging,
+      total: data.paging.total,
+    });
+  };
+  useEffect(() => {
+    loadProduct();
+  }, [paging.current, keywordSearch]);
+
+  // useEffect(() => {
+  //   console.log("change");
+  // }, [paging.current, keywordSearch]);
 
   return (
     <>
@@ -121,10 +159,15 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
         </div>
         {isActiveFilterIcon && <FilterCategories />}
         <div className="mt-4 mb-4">
-          <ListProduct />
+          <ListProduct products={products} />
         </div>
         <div className="w-full text-center">
-          <PaginationElement />
+          <Pagination
+            onChange={(page) => setPaging({ ...paging, current: page })}
+            current={paging.current}
+            pageSize={12}
+            total={paging.total}
+          />
         </div>
       </div>
     </>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Image from "next/image";
+import Image, { ImageLoaderProps } from "next/image";
 
 import {
   locationIcon,
@@ -11,11 +11,21 @@ import {
   phoneIcon,
   phoneWhiteIcon,
 } from "@/images/index";
+import { Product } from "src/lib/types";
+import axios from "axios";
+interface ProductCardProps {
+  product: Product;
+}
+const placeholdImageSrc = "https://placehold.co/270x140";
 
-const ListProduct = () => {
+const ProductCard = ({ product }: ProductCardProps) => {
   const [isPhoneHover, setIsPhoneHover] = useState(false);
   const [isHeartHover, setIsHeartHover] = useState(false);
-
+  const prodImageSrc =
+    product.data?.product_image_s3 ||
+    product.data?.product_image ||
+    placeholdImageSrc;
+  const [featureImageSrc, setFeatureImageSrc] = useState(prodImageSrc);
   return (
     <div className="bg-[#f8f9ff] rounded p-4">
       <div className="flex justify-start items-center gap-2 mb-[9px] cursor-pointer">
@@ -30,24 +40,27 @@ const ListProduct = () => {
           Trung Tâm Vlxl Đồng Tâm
         </h3>
       </div>
-      <p className="text-secondary-color font-roboto not-italic text-sm leading-[150%] font-normal mb-1">
-        Camera Wifi không dây Yoosee HD 3 râu 1080p
+      <p className="text-secondary-color font-roboto not-italic text-sm leading-[150%] font-normal mb-1 line-clamp-2">
+        {product.data.product_name}
       </p>
       <div className="px-3 py-[3px] bg-[#0000001a] inline-block rounded mb-3">
         <span className="text-xs font-robot not-italic font-normal leading-[150%]">
-          Mã: G1236
+          Mã: {product.data.model_num}
         </span>
       </div>
       <div className="mb-[13.5px]">
         <span className="font-roboto not-italic font-semibold text-lg leading-[150%] text-secondary-color">
-          590.000 VND
+          {product.data?.original_price || "Liên hệ"}
         </span>
       </div>
       <div className="flex flex-row justify-between items-center mb-3">
         <span className="font-roboto not-italic text-sm leading-[150%] text-text-color font-normal">
           Hãng
         </span>
-        <Image src={companyLogo} alt="company logo" />
+        {/* <Image src={companyLogo} alt="company logo" /> */}
+        <span className="text-sm dark:text-white font-normal">
+          {product.data?.brand_name}
+        </span>
       </div>
       <div className="flex flex-row justify-between items-center mb-3">
         <span className="font-roboto not-italic text-sm leading-[150%] text-text-color font-normal">
@@ -59,9 +72,14 @@ const ListProduct = () => {
       </div>
       <div className="mb-3">
         <Image
-          src={exampleProduct}
-          alt="example product"
-          className="w-full h-auto"
+          src={featureImageSrc}
+          width={270}
+          height={140}
+          onError={() => setFeatureImageSrc(placeholdImageSrc)}
+          placeholder="blur"
+          blurDataURL="https://placehold.co/270x140"
+          alt={product.data.product_name}
+          className="w-full h-[140px] rounded-lg"
         />
       </div>
       <div className="flex flex-row justify-between h-[44px]">
@@ -99,4 +117,4 @@ const ListProduct = () => {
   );
 };
 
-export default ListProduct;
+export default ProductCard;

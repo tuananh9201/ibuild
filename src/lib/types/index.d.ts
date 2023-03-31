@@ -84,3 +84,61 @@ export type RulePassword = {
   pattern: RegExp;
   init: boolean;
 };
+export enum SORT_BY {
+  "LIEN_QUAN_NHAT" = "LIEN_QUAN_NHAT",
+  "SAN_PHAM_MOI" = "SAN_PHAM_MOI",
+}
+export type SearchProduct = {
+  keyword?: string;
+  limit: number;
+  skip: number;
+  sort_by: string;
+  max_quantity: number;
+  min_quantity: number;
+  max_price: number;
+  min_price: number;
+};
+type ProductData = {
+  category?: string[];
+  model_num?: string;
+  demensions?: string;
+  product_name: string;
+  product_image?: string;
+  scrape_datetime?: string;
+  available: string;
+  weight?: string;
+  product_id: string;
+  original_price?: string;
+  brand_name?: string;
+  product_image_s3: string;
+  technical_details?: string;
+  description?: string;
+  sale_price?: string;
+  source_name?: string;
+  source_url?: string;
+};
+type ProductImage = {
+  url: string;
+  image_id: string;
+  s3_image_url: string;
+  web_image_code: string;
+};
+export type Product = {
+  id: string;
+  data: ProductData;
+  images: ProductImage[];
+  website_id: string;
+  verified: string;
+  created_at: string;
+  updated_at: string;
+  score?: number;
+};
+type Paging = {
+  limit: number;
+  skip: number;
+  total: number;
+};
+export type ResponseSearchProduct = {
+  paging: Paging;
+  data: Product[];
+};
