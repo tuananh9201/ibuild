@@ -40,7 +40,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           Trung Tâm Vlxl Đồng Tâm
         </h3>
       </div>
-      <p className="text-secondary-color font-roboto not-italic text-sm leading-[150%] font-normal mb-1 line-clamp-2">
+      <p className="text-secondary-color font-roboto not-italic text-sm leading-[150%] font-normal mb-1 line-clamp-2 min-h-[42px]">
         {product.data.product_name}
       </p>
       <div className="px-3 py-[3px] bg-[#0000001a] inline-block rounded mb-3">
