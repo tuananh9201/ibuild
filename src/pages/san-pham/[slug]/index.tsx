@@ -134,29 +134,29 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
 interface IParams extends ParsedUrlQuery {
   slug: string;
 }
-export const getStaticPaths: GetStaticPaths = async () => {
-  const rootsCategories = await fetchRootCategories();
-  const paths = rootsCategories.map((cate: ICategory) => ({
-    params: { slug: cate.slug },
-  }));
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const rootsCategories = await fetchRootCategories();
+//   const paths = rootsCategories.map((cate: ICategory) => ({
+//     params: { slug: cate.slug },
+//   }));
 
-  return {
-    paths: paths, //indicates that no page needs be created at build time
-    fallback: "blocking", //indicates the type of fallback
-  };
-};
+//   return {
+//     paths: paths, //indicates that no page needs be created at build time
+//     fallback: "blocking", //indicates the type of fallback
+//   };
+// };
 
-export async function getStaticProps(context: GetStaticPropsContext) {
-  // `getStaticProps` is executed on the server side.
-  const { slug } = context.params as IParams;
+// export async function getStaticProps(context: GetStaticPropsContext) {
+//   // `getStaticProps` is executed on the server side.
+//   const { slug } = context.params as IParams;
 
-  const category = await fetchCategorySlug(slug);
-  return {
-    props: {
-      category,
-    },
-  };
-}
+//   const category = await fetchCategorySlug(slug);
+//   return {
+//     props: {
+//       category: category || [],
+//     },
+//   };
+// }
 
 ListCategoriesBySlug.getLayout = function getLayout(page: ReactElement) {
   return (
