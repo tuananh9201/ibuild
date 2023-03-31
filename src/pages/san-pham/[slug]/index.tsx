@@ -25,61 +25,9 @@ import { filterIcon, filterIconWhite } from "@/images/index";
 import ListProduct from "@/components/products/ListProduct";
 import { PaginationElement } from "@/components/common/index";
 
-import {
-  allProduct,
-  camera,
-  clockSafe,
-  focusSystem,
-  windowSystem,
-  fire,
-} from "src/images";
-
-import {
-  AllProductIcon,
-  CameraSystemIcon,
-  GuidanceSystemIcon,
-  AccessSystemIcon,
-  FireProtectionSystemIcon,
-  SafetyLockIcon,
-} from "@/images/icons/product_types/icon_wrapper";
-import SubCategoryBar from "@/components/products/SubCategoryBar";
-
 type Props = {
   category: ICategory;
 };
-
-const PRODUCT_TYPES = [
-  {
-    id: 1,
-    name: "Tất cả sản phẩm",
-    icon: AllProductIcon,
-  },
-  {
-    id: 2,
-    name: "Hệ thống camera giám sát",
-    icon: CameraSystemIcon,
-  },
-  {
-    id: 3,
-    name: "Hệ thống chỉ dẫn",
-    icon: GuidanceSystemIcon,
-  },
-  {
-    id: 4,
-    name: "Hệ thống giám sát truy nhập",
-    icon: AccessSystemIcon,
-  },
-  {
-    id: 5,
-    name: "Hệ thống phòng cháy chữa cháy",
-    icon: FireProtectionSystemIcon,
-  },
-  {
-    id: 6,
-    name: "Khóa an toàn & Két",
-    icon: SafetyLockIcon,
-  },
-];
 
 const RELATED_LIST = [
   {
@@ -128,6 +76,9 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
     console.log("click");
     setIsActiveFilterIcon((prev) => !prev);
   };
+  const onClickFilterCategory = (name: string) => {
+    console.log("ok");
+  };
 
   return (
     <>
@@ -142,8 +93,10 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
             {title}
           </h1>
         </div>
-        <SubCategoryBar parentId={category?.id || ""} />
-        <ProductTypes productTypes={PRODUCT_TYPES} />
+        <ProductTypes
+          onClickItem={onClickFilterCategory}
+          parentId={category?.id || ""}
+        />
         <div className="w-full flex flex-col sm:flex-row justify-between mt-8">
           <FilterRelated defaultValue={1} options={RELATED_LIST} />
           <div
