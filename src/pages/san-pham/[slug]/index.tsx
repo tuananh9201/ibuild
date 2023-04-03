@@ -74,8 +74,6 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
     isLoading,
   } = useSWR<ICategory | undefined>(slug, fetchCategorySlug);
 
-  console.log(category);
-
   const breadcrumbs = [
     {
       title: "Sản phẩm",
@@ -90,7 +88,6 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   const title = breadcrumbs.filter((bread) => bread.slug === slug)[0]?.title;
 
   const handleShowFilter = () => {
-    console.log("click");
     setIsActiveFilterIcon((prev) => !prev);
   };
   const onClickFilterCategory = async (name: string) => {
@@ -121,10 +118,6 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   useEffect(() => {
     loadProduct();
   }, [paging.current, keywordSearch]);
-
-  // useEffect(() => {
-  //   console.log("change");
-  // }, [paging.current, keywordSearch]);
 
   return (
     <>
@@ -165,7 +158,9 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
             </span>
           </div>
         </div>
-        {isActiveFilterIcon && <FilterCategories />}
+        {isActiveFilterIcon && (
+          <FilterCategories productId={category?.id || ""} />
+        )}
         <div className="mt-4 mb-4">
           <ListProduct products={products} />
         </div>

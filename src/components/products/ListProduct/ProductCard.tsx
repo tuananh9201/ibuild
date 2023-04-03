@@ -24,7 +24,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const token = useSelector((state: RootState) => state.auth.accessToken);
   const router = useRouter();
   const isAddedFavorite = product.is_bookmark;
-  console.log(product);
 
   const prodImageSrc =
     product.data?.product_image_s3 ||

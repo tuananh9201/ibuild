@@ -53,11 +53,16 @@ const treeData: DataNode[] = [
   },
 ];
 
+interface TreeOption extends DataNode {
+  id: string;
+  parent_id?: string;
+}
 interface TreeViewProps {
   setSelectedValue: (value: any[]) => void;
+  options: TreeOption[];
 }
 
-const TreeView = ({ setSelectedValue }: TreeViewProps) => {
+const TreeView = ({ options, setSelectedValue }: TreeViewProps) => {
   const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([
     "0-0-0",
     "0-0-1",
@@ -94,7 +99,7 @@ const TreeView = ({ setSelectedValue }: TreeViewProps) => {
       checkedKeys={checkedKeys}
       onSelect={onSelect}
       selectedKeys={selectedKeys}
-      treeData={treeData}
+      treeData={options}
       switcherIcon={<UpDownIcon className="transition" />}
     />
   );

@@ -3,7 +3,11 @@ import { useState, useRef, useEffect } from "react";
 import { TreeView, TreeViewWrapper, SearchInput } from "@/components/common";
 import { UpDownIcon } from "@/images/icons/product_types/icon_wrapper";
 
-const FilterTree = () => {
+interface FilterTreeProps {
+  options: any[];
+}
+
+const FilterTree = ({ options }: FilterTreeProps) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [outputValue, setOutputValue] = useState("Chọn danh mục sản phẩm");
 
@@ -50,7 +54,7 @@ const FilterTree = () => {
           isOpenMenu ? "block" : "hidden"
         } absolute z-10 bg-white border border-solid border-primary-color border-t-0 w-full rounded-b px-4 pt-[22px] pb-[14px]`}
       >
-        <TreeView setSelectedValue={setSelectedValue} />
+        <TreeView setSelectedValue={setSelectedValue} options={options} />
       </div>
     </div>
   );
