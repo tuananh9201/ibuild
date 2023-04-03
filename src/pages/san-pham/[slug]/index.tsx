@@ -73,6 +73,9 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
     error,
     isLoading,
   } = useSWR<ICategory | undefined>(slug, fetchCategorySlug);
+
+  console.log(category);
+
   const breadcrumbs = [
     {
       title: "Sản phẩm",

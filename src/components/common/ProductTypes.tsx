@@ -1,8 +1,9 @@
 import { AllProductIcon } from "@/images/icons/product_types/icon_wrapper";
+import { ICategory } from "src/lib/types";
+import { fetchChildCategories } from "src/lib/api/category";
+
 import { useState } from "react";
 import Flickity from "react-flickity-component";
-import { fetchChildCategories } from "src/lib/api/category";
-import { ICategory } from "src/lib/types";
 import useSWR from "swr";
 interface ProductTypesProps {
   parentId: string;
@@ -44,6 +45,7 @@ const ProductTypes = ({ parentId, onClickItem }: ProductTypesProps) => {
     };
   });
   const menus = [firstItem].concat(childs);
+
   const handleCurrentActive = (id: string) => {
     setCurrentActive(id);
   };

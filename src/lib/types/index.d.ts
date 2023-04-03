@@ -116,6 +116,7 @@ type ProductData = {
   sale_price?: string;
   source_name?: string;
   source_url?: string;
+  phone_number?: string;
 };
 type ProductImage = {
   url: string;
@@ -142,6 +143,7 @@ export type Product = {
   updated_at: string;
   score?: number;
   supplier?: Supplier;
+  is_bookmark?: boolean;
 };
 type Paging = {
   limit: number;

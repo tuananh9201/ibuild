@@ -211,3 +211,34 @@
 .ant-select-tree-list-holder-inner {
   gap: 28px !important;
 }
+
+// custom tree view
+.ant-tree-list-holder-inner {
+  .ant-tree-treenode {
+    width: 100% !important;
+    position: relative;
+
+    .ant-tree-switcher {
+      position: absolute;
+      right: 0;
+    }
+
+    .ant-tree-switcher_close {
+      transform: rotate(180deg);
+      transition: all 0.5s;
+    }
+
+    .ant-tree-switcher_close {
+      transition: all 0.5s;
+    }
+  }
+
+  .ant-tree-title {
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 150%;
+    color: $text-color;
+  }
+}

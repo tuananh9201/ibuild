@@ -234,7 +234,7 @@ const ProductDetail: NextPageWithLayout = () => {
         <h3 className="font-roboto not-italic font-medium text-xl leading-[150%] text-text-color mb-6">
           Cùng nhà cung cấp
         </h3>
-        <ListProduct />
+        {/* <ListProduct /> */}
       </div>
     </div>
   );

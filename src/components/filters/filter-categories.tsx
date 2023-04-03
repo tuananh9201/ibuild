@@ -1,7 +1,5 @@
-import { FilterLocation } from "@/components/common/index";
-import { Input } from "@/components/common/index";
+import { FilterLocation, Input } from "@/components/common";
 import FilterTree from "./filter-tree";
-import SelectTree from "./select-tree";
 
 interface FilterCategoriesProps {}
 

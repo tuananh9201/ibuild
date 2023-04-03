@@ -20,7 +20,8 @@
       "@/constants/*": ["src/constants/*"],
       "@/styles/*": ["src/styles/*"],
       "@/data/*": ["src/data/*"],
-      "@/images/*": ["src/images/*"]
+      "@/images/*": ["src/images/*"],
+      "@/*": ["src/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
