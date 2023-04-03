@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Image, { ImageLoaderProps } from "next/image";
+import axios from "axios";
 
 import {
   locationIcon,
@@ -12,7 +13,10 @@ import {
   phoneWhiteIcon,
 } from "@/images/index";
 import { Product } from "src/lib/types";
-import axios from "axios";
+import {
+  HeartIcon,
+  PhoneIcon,
+} from "@/images/icons/product_types/icon_wrapper";
 interface ProductCardProps {
   product: Product;
 }
@@ -93,10 +97,15 @@ const ProductCard = ({ product }: ProductCardProps) => {
           onMouseEnter={() => setIsPhoneHover(true)}
           onMouseLeave={() => setIsPhoneHover(false)}
         >
-          <Image
+          {/* <Image
             src={isPhoneHover ? phoneWhiteIcon : phoneIcon}
             alt="phone number"
             className="w-5 h-5"
+          /> */}
+          <PhoneIcon
+            className={`w-5 h-5 ${
+              isPhoneHover ? "fill-white" : "fill-primary-color"
+            }`}
           />
         </button>
         <button
@@ -106,10 +115,15 @@ const ProductCard = ({ product }: ProductCardProps) => {
           onMouseEnter={() => setIsHeartHover(true)}
           onMouseLeave={() => setIsHeartHover(false)}
         >
-          <Image
+          {/* <Image
             src={isHeartHover ? heartWhiteIcon : heartIcon}
             alt="heart"
             className="w-5 h-5"
+          /> */}
+          <HeartIcon
+            className={`w-5 h-5 ${
+              isHeartHover ? "fill-white" : "fill-primary-color"
+            }`}
           />
         </button>
       </div>

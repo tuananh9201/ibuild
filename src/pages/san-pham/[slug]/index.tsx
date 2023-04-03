@@ -4,6 +4,7 @@ import useSWR from "swr";
 import Image from "next/image";
 import { ReactElement } from "react";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 
 import MainLayout from "@/components/main-layout";
 import Breadcrums from "@/components/common/breadcrums";
@@ -26,6 +27,10 @@ import ListProduct from "@/components/products/ListProduct";
 import { PaginationElement } from "@/components/common/index";
 import { searchProduct } from "src/lib/api/product";
 import { Pagination } from "antd";
+
+const ProductTypesDynamic = dynamic(
+  () => import("@/components/common/ProductTypes")
+);
 
 type Props = {
   category: ICategory;
@@ -131,7 +136,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
             {title}
           </h1>
         </div>
-        <ProductTypes
+        <ProductTypesDynamic
           onClickItem={onClickFilterCategory}
           parentId={category?.id || ""}
         />
