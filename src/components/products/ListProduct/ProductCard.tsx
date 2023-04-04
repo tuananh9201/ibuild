@@ -122,7 +122,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </Link>
         </button>
         <Tooltip
-          title={product.data.phone_number || "0354587459"}
+          title={product.data.phone_number || "01234567"}
           trigger="click"
         >
           <button
