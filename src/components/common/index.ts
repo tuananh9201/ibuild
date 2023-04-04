@@ -14,3 +14,4 @@ export { default as PaginationElement } from './PaginationElement'
 export { default as SearchInput } from './form/SearchInput'
 export { default as TreeView } from "./form/TreeView"
 export { default as TreeViewWrapper } from "./form/TreeViewWrapper"
+export { default as LitsProductLoading } from "./ListProductLoading"

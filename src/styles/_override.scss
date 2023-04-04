@@ -214,9 +214,12 @@
 
 // custom tree view
 .ant-tree-list-holder-inner {
+  gap: 28px !important;
+
   .ant-tree-treenode {
     width: 100% !important;
     position: relative;
+    padding-right: 20px !important;
 
     .ant-tree-switcher {
       position: absolute;

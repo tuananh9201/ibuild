@@ -22,6 +22,7 @@ const nextConfig = {
     ],
     domains: ["googleapis.com", "amazonaws.com"],
   },
+  staticPageGenerationTimeout: 90,
 };
 
 module.exports = withBundleAnalyzer(nextConfig);

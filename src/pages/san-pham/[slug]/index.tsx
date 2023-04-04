@@ -1,32 +1,22 @@
-import React, { useState, useEffect } from "react";
-import Head from "next/head";
-import useSWR from "swr";
-import Image from "next/image";
-import { ReactElement } from "react";
-import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
+import Head from "next/head";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { ReactElement, useEffect, useState } from "react";
+import useSWR from "swr";
 
-import MainLayout from "@/components/main-layout";
+import { FilterCategories, FilterRelated } from "@/components/common";
 import Breadcrums from "@/components/common/breadcrums";
-import { NextPageWithLayout } from "../../_app";
-import { ParsedUrlQuery } from "querystring";
-import { GetStaticPaths, GetStaticPropsContext } from "next";
-import {
-  fetchCategorySlug,
-  fetchChildsCategories,
-  fetchRootCategories,
-} from "src/lib/api/category";
-import { ICategory, Product } from "src/lib/types";
-import {
-  ProductTypes,
-  FilterRelated,
-  FilterCategories,
-} from "@/components/common";
-import { filterIcon, filterIconWhite } from "@/images/index";
+import MainLayout from "@/components/main-layout";
 import ListProduct from "@/components/products/ListProduct";
-import { PaginationElement } from "@/components/common/index";
-import { searchProduct } from "src/lib/api/product";
+import { filterIcon, filterIconWhite } from "@/images/index";
 import { Pagination } from "antd";
+import { ParsedUrlQuery } from "querystring";
+import { fetchCategorySlug } from "src/lib/api/category";
+import { searchProduct } from "src/lib/api/product";
+import { ICategory, Product } from "src/lib/types";
+import { NextPageWithLayout } from "../../_app";
+import { LitsProductLoading } from "@/components/common";
 
 const ProductTypesDynamic = dynamic(
   () => import("@/components/common/ProductTypes")
@@ -61,6 +51,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   const [keywordSearch, setKeywordSearch] = useState(
     props.category?.name_vi || "all"
   );
+  const [isLoadingData, setIsLoadingData] = useState(false);
   const [paging, setPaging] = useState({
     current: 0,
     total: 0,
@@ -99,6 +90,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   };
 
   const loadProduct = async () => {
+    setIsLoadingData(true);
     const data = await searchProduct({
       keyword: keywordSearch,
       limit: 12,
@@ -114,6 +106,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
       ...paging,
       total: data.paging.total,
     });
+    setIsLoadingData(false);
   };
   useEffect(() => {
     loadProduct();
@@ -161,8 +154,12 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
         {isActiveFilterIcon && (
           <FilterCategories productId={category?.id || ""} />
         )}
-        <div className="mt-4 mb-4">
-          <ListProduct products={products} />
+        <div className="mt-4 mb-4 w-full">
+          {isLoading || isLoadingData ? (
+            <LitsProductLoading />
+          ) : (
+            <ListProduct products={products} />
+          )}
         </div>
         <div className="w-full text-center">
           <Pagination
