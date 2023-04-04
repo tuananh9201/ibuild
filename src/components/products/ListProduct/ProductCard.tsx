@@ -37,7 +37,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const handleAddFavorite = async () => {
     if (!token) {
       router.push({
-        pathname: "/login",
+        pathname: "/dang-nhap",
       });
       return;
     }
@@ -52,11 +52,23 @@ const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <div className="bg-[#f8f9ff] rounded p-4 h-full flex flex-col justify-between">
       <div>
-        <div className="flex justify-start items-center gap-2 mb-[9px] cursor-pointer">
-          <Image src={locationIcon} alt="location product" />
-          <span className="font-roboto not-italic text-xs leading-[calc(18 / 12) text-text-color]">
-            {product?.supplier?.district}, {product?.supplier?.city}
-          </span>
+        <div
+          className={
+            product?.supplier?.district || product?.supplier?.city ? "" : "h-4"
+          }
+        >
+          {product?.supplier?.district || product?.supplier?.city ? (
+            <div className="flex justify-start items-center gap-2 mb-[9px] cursor-pointer">
+              <Image src={locationIcon} alt="location product" />
+              <span className="font-roboto not-italic text-xs leading-[calc(18 / 12) text-text-color]">
+                {product?.supplier?.district}{" "}
+                {product?.supplier?.district ? "," : ""}{" "}
+                {product?.supplier?.city}
+              </span>
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
         <div
           className="flex flex-row mb-4 cursor-pointer"
@@ -73,7 +85,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             {product.supplier?.cname || product.supplier?.name}
           </h3>
         </div>
-        <p className="text-secondary-color font-roboto not-italic text-sm leading-[150%] font-normal mb-1 line-clamp-2">
+        <p className="text-secondary-color font-roboto not-italic text-sm leading-[150%] font-normal mb-1 line-clamp-2 min-h-[42px]">
           {product.data.product_name}
         </p>
         <div className="px-3 py-[3px] bg-[#0000001a] inline-block rounded mb-3">
@@ -91,7 +103,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             Hãng
           </span>
           <span className="text-sm dark:text-white font-normal">
-            {product.data?.brand_name}
+            {product.data?.brand_name || "NO BRAND"}
           </span>
         </div>
         <div className="flex flex-row justify-between items-center mb-3">
@@ -111,7 +123,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             placeholder="blur"
             blurDataURL="https://placehold.co/270x140"
             alt={product.data.product_name}
-            className="w-full h-[140px] rounded-lg"
+            className="w-full h-[140px] rounded-lg object-cover"
           />
         </div>
       </div>
@@ -121,10 +133,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             Xem chi tiết
           </Link>
         </button>
-        <Tooltip
-          title={product.data.phone_number || "01234567"}
-          trigger="click"
-        >
+        <Tooltip title={product.supplier?.phone || "01234567"} trigger="click">
           <button
             className={`px-3 rounded border border-solid border-[#999999] ${
               isPhoneHover ? "bg-primary-color" : ""

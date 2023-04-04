@@ -132,6 +132,7 @@ type Supplier = {
   feature_image?: string;
   city?: string;
   district?: string;
+  phone?: string
 };
 export type Product = {
   id: string;
