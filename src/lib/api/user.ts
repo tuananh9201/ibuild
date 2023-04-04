@@ -20,3 +20,13 @@ export const validateEmailExists = async (data: {
   }
   throw "Error";
 };
+
+export const addProductFavorite = async (productId: string) => {
+  try {
+    const res = await api.post('/bookmark', { product_id: productId })
+    return res
+  } catch (err) {
+    console.log(err)
+    return false
+  }
+}

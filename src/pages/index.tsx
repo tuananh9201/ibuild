@@ -61,7 +61,7 @@ const HomePage: NextPageWithLayout = () => {
                     damping: 20,
                     duration: 2,
                   }}
-                  className="absolute w-full bottom-24 lg:top-[418px] left-0 text-white"
+                  className="absolute w-full bottom-24 left-0 text-white"
                 >
                   <h2 className="text-2xl font-semibold text-center">
                     Sản phẩm
@@ -98,7 +98,7 @@ const HomePage: NextPageWithLayout = () => {
                     damping: 20,
                     duration: 2,
                   }}
-                  className="absolute w-full bottom-24 lg:top-[418px] left-0 text-white"
+                  className="absolute w-full bottom-24 left-0 text-white"
                 >
                   <h2 className="text-2xl font-semibold text-center">
                     Mẫu thiết kế
@@ -133,7 +133,7 @@ const HomePage: NextPageWithLayout = () => {
                     damping: 20,
                     duration: 2,
                   }}
-                  className="absolute w-full bottom-24 lg:top-[418px] left-0 text-white"
+                  className="absolute w-full bottom-24 left-0 text-white"
                 >
                   <h2 className="text-2xl font-semibold text-center">
                     Văn bản pháp lý

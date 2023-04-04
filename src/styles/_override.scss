@@ -151,14 +151,16 @@
   color: #333333 !important;
 }
 
-.ant-select:not(.ant-select-customize-input) .ant-select-selector {
-  border-color: #999999;
+.ant-select-tree-title {
+  font-family: "Roboto" !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  font-size: 16px !important;
+  line-height: 150% !important;
+  color: #343434 !important;
 }
 
-.ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(
-    .ant-pagination-size-changer
-  ):hover
-  .ant-select-selector {
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
   border-color: #999999;
 }
 
@@ -169,16 +171,77 @@
   outline: none !important;
   box-shadow: none !important;
 }
+
+.ant-select-selector {
+  border-radius: 4px !important;
+  height: 100% !important;
+}
+
+.ant-select-open {
+  .ant-select-selector {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+}
+
 .ant-tree-select-dropdown {
-  background-color: #eb7a01 !important;
-  margin-top: -4px;
-  // position: absolute !important;
-  // top: 100% !important;
-  // left: 0 !important;
-  // width: 100% !important;
-  // height: 100% !important;
-  // border-top-left-radius: 0 !important;
-  // border-top-right-radius: 0 !important;
-  // padding: 0 !important;
-  // min-height: 340px !important;
+  border: 1px solid #eb7a01 !important;
+  border-top: none !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  padding: 22px 16px !important;
+}
+
+.ant-select-tree-treenode {
+  position: relative !important;
+  width: 100% !important;
+
+  .ant-select-tree-switcher {
+    position: absolute !important;
+    right: 0 !important;
+    z-index: 10 !important;
+  }
+
+  .ant-select-tree-switcher_open {
+    transform: rotate(180deg);
+    transition: all 0.5s;
+  }
+}
+
+.ant-select-tree-list-holder-inner {
+  gap: 28px !important;
+}
+
+// custom tree view
+.ant-tree-list-holder-inner {
+  gap: 28px !important;
+
+  .ant-tree-treenode {
+    width: 100% !important;
+    position: relative;
+    padding-right: 20px !important;
+
+    .ant-tree-switcher {
+      position: absolute;
+      right: 0;
+    }
+
+    .ant-tree-switcher_close {
+      transform: rotate(180deg);
+      transition: all 0.5s;
+    }
+
+    .ant-tree-switcher_close {
+      transition: all 0.5s;
+    }
+  }
+
+  .ant-tree-title {
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 150%;
+    color: $text-color;
+  }
 }

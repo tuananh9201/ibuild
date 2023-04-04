@@ -116,12 +116,23 @@ type ProductData = {
   sale_price?: string;
   source_name?: string;
   source_url?: string;
+  phone_number?: string;
 };
 type ProductImage = {
   url: string;
   image_id: string;
   s3_image_url: string;
   web_image_code: string;
+};
+type Supplier = {
+  id: string;
+  name: string;
+  cname?: string;
+  description?: string;
+  feature_image?: string;
+  city?: string;
+  district?: string;
+  phone?: string
 };
 export type Product = {
   id: string;
@@ -132,6 +143,8 @@ export type Product = {
   created_at: string;
   updated_at: string;
   score?: number;
+  supplier?: Supplier;
+  is_bookmark?: boolean;
 };
 type Paging = {
   limit: number;

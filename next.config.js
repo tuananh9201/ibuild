@@ -15,13 +15,14 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
+        // protocol: "https",
         // hostname: "firebasestorage.googleapis.com",
         hostname: "*",
       },
     ],
     domains: ["googleapis.com", "amazonaws.com"],
   },
+  staticPageGenerationTimeout: 90,
 };
 
 module.exports = withBundleAnalyzer(nextConfig);

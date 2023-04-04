@@ -1,95 +1,64 @@
-import { useState } from "react";
-import { TreeSelect, Checkbox } from "antd";
+import { useState, useRef, useEffect } from "react";
 
+import { TreeView, TreeViewWrapper, SearchInput } from "@/components/common";
 import { UpDownIcon } from "@/images/icons/product_types/icon_wrapper";
-import { SearchInput } from "../common";
+// import {} from "@/lib"
 
-const { SHOW_PARENT } = TreeSelect;
+interface FilterTreeProps {
+  options: any[];
+}
 
-const treeData = [
-  {
-    title: "Node1",
-    value: "0-0",
-    key: "0-0",
-    children: [
-      {
-        title: "Child Node1",
-        value: "0-0-0",
-        key: "0-0-0",
-      },
-    ],
-  },
-  {
-    title: "Node2",
-    value: "0-1",
-    key: "0-1",
-    children: [
-      {
-        title: "Child Node3",
-        value: "0-1-0",
-        key: "0-1-0",
-      },
-      {
-        title: "Child Node4",
-        value: "0-1-1",
-        key: "0-1-1",
-      },
-      {
-        title: "Child Node5",
-        value: "0-1-2",
-        key: "0-1-2",
-      },
-    ],
-  },
-];
+const FilterTree = ({ options }: FilterTreeProps) => {
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const [outputValue, setOutputValue] = useState("Chọn danh mục sản phẩm");
 
-export default function FilterTree() {
-  const [value, setValue] = useState(["0-0-0"]);
-  const [isExpand, setIsExpand] = useState(false);
+  const selectElement = useRef<HTMLDivElement>(null);
 
-  const onChange = (newValue: string[]) => {
-    console.log("onChange ", value);
-    setValue(newValue);
-  };
+  useEffect(() => {
+    window.addEventListener("click", (e: any) => {
+      if (!selectElement.current?.contains(e.target)) {
+        setIsOpenMenu(false);
+      }
+    });
 
-  const handleExpand = () => {
-    setIsExpand((prev) => !prev);
+    () => window.removeEventListener("click", () => {});
+  }, []);
+
+  const setSelectedValue = (value: any[]) => {
+    console.log(value);
+    if (value.length > 1) {
+      setOutputValue("Nhiều danh mục");
+    } else {
+      setOutputValue(value[0] as string);
+    }
   };
 
   return (
-    <div id="selectTreeElement" className="relative">
-      <TreeSelect
-        treeData={treeData}
-        value={value}
-        onChange={onChange}
-        treeCheckable={false}
-        multiple={false}
-        showCheckedStrategy={SHOW_PARENT}
-        placeholder="Chọn danh mục sản phẩm"
-        style={{
-          width: "100%",
-          height: 46,
-        }}
-        popupClassName=""
-        showArrow
-        suffixIcon={
-          <UpDownIcon
-            className={`fill-[#343434] transition ${
-              isExpand ? "rotate-180" : ""
-            }`}
-          />
-        }
-        getPopupContainer={() =>
-          document.getElementById("selectTreeElement") as HTMLElement
-        }
-        dropdownRender={(item) => (
-          <div className="text-red-500">
-            <SearchInput />
-            <span>{item}</span>
-          </div>
-        )}
-        onDropdownVisibleChange={handleExpand}
-      />
+    <div className="w-full relative" ref={selectElement}>
+      <div
+        className={`w-full h-[46px] rounded border border-solid flex flex-row items-center justify-between px-4 ${
+          isOpenMenu ? "border-[#ff4d14] rounded-b-none" : "border-[#e6e6e6]"
+        }`}
+        onClick={() => setIsOpenMenu((prev) => !prev)}
+      >
+        <span className="font-roboto font-normal text-base leading-[calc(24 / 16)] text-text-color">
+          {outputValue}
+        </span>
+        <UpDownIcon
+          className={`cursor-pointer transition ${
+            isOpenMenu ? "rotate-180" : ""
+          }`}
+        />
+      </div>
+      <div
+        className={`${
+          isOpenMenu ? "block" : "hidden"
+        } absolute z-10 bg-white border border-solid border-primary-color border-t-0 w-full rounded-b px-4 pt-[22px] pb-[14px]`}
+      >
+        <TreeView setSelectedValue={setSelectedValue} options={options} />
+      </div>
     </div>
   );
-}
+};
+
+export default FilterTree;
