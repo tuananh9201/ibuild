@@ -12,12 +12,14 @@ interface FilterRelatedProps {
   placeHolder?: string;
   defaultValue?: number;
   options?: ItemFilter[];
+  onSelect: (value: number) => void;
 }
 
 const FilterRelated = ({
   placeHolder,
   defaultValue,
   options,
+  onSelect,
 }: FilterRelatedProps) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [valueSelected, setValueSelected] = useState(() => {
@@ -44,6 +46,7 @@ const FilterRelated = ({
     setIsOpenMenu(false);
     const value = options?.find((option) => option.id === id)?.value;
     setValueSelected(value);
+    onSelect(id);
   };
 
   return (

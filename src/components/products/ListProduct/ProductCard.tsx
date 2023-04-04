@@ -42,7 +42,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
       return;
     }
     const res = await addProductFavorite(product.data.product_id);
-    console.log(res);
   };
 
   const handleToSupplier = () => {

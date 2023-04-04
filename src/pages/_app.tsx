@@ -1,18 +1,18 @@
-import { useEffect } from "react";
-import { NextPage } from "next";
-import "../styles/global.scss";
-import type { AppProps } from "next/app";
-import { ReactElement, ReactNode } from "react";
-import { ConfigProvider } from "antd";
-import { SWRConfig } from "swr";
-import { Analytics } from "@vercel/analytics/react";
 import { colorPrimary } from "@/constants/colors";
+import { Analytics } from "@vercel/analytics/react";
+import { ConfigProvider } from "antd";
 import { getAnalytics } from "firebase/analytics";
-import app from "src/utils/firebase";
-import { AnimatePresence } from "framer-motion";
-import { store } from "../store/store";
-import { Provider } from "react-redux";
+import { NextPage } from "next";
+import type { AppProps } from "next/app";
 import Head from "next/head";
+import { ReactElement, ReactNode, useEffect } from "react";
+import { Provider } from "react-redux";
+import app from "src/utils/firebase";
+import { SWRConfig } from "swr";
+import { store } from "../store/store";
+
+import 'react-multi-carousel/lib/styles.css';
+import "../styles/global.scss";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;

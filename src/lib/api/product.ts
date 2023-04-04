@@ -6,9 +6,8 @@ export const searchProduct = async (
 ): Promise<ResponseSearchProduct> => {
   try {
     const res = await axios.post("/products/", payload);
-    console.log(res);
     return res.data?.data || [];
-  } catch (error) {}
+  } catch (error) { }
   return {
     paging: {
       limit: payload.limit,
@@ -18,3 +17,14 @@ export const searchProduct = async (
     data: [],
   };
 };
+
+export const getProductDetail = async (id: string) => {
+  console.log(id)
+  try {
+    const res = await axios.get(`/products/${id}`)
+    return res?.data?.data || []
+  } catch (error) {
+    console.log(error)
+    return error
+  }
+}

@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 import { useRouter } from "next/router";
 
 import { NextPageWithLayout } from "../_app";
+import { MultiCarousel } from "@/components/common";
 import MainLayout from "@/components/main-layout";
 
 const NhaCungCap: NextPageWithLayout = () => {
@@ -10,7 +11,7 @@ const NhaCungCap: NextPageWithLayout = () => {
 
   return (
     <div>
-      <h1>Nha Cung Cap</h1>
+      <MultiCarousel />
     </div>
   );
 };
