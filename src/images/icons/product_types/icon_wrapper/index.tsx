@@ -199,3 +199,18 @@ export const HeartIcon = ({ className }: IconProps) => {
     </svg>
   );
 };
+
+export const LeftRightIcon = ({ className }: IconProps) => {
+  return (
+    <svg
+      width="10"
+      height="16"
+      viewBox="0 0 10 16"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <path d="M1.38805 13.1724L6.56138 7.99902L1.38805 2.82569C0.868046 2.30569 0.868046 1.46569 1.38805 0.945687C1.90805 0.425687 2.74805 0.425687 3.26805 0.945687L9.38805 7.06569C9.90805 7.58569 9.90805 8.42569 9.38805 8.94569L3.26805 15.0657C2.74805 15.5857 1.90805 15.5857 1.38805 15.0657C0.88138 14.5457 0.868047 13.6924 1.38805 13.1724Z" />
+    </svg>
+  );
+};

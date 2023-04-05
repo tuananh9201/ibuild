@@ -1,11 +1,12 @@
 import { AllProductIcon } from "@/images/icons/product_types/icon_wrapper";
 import { ICategory } from "src/lib/types";
 import { fetchChildCategories } from "src/lib/api/category";
+import { LeftRightIcon } from "@/images/icons/product_types/icon_wrapper";
 
 import { useState } from "react";
-import Flickity from "react-flickity-component";
 import useSWR from "swr";
 import Carousel from "react-multi-carousel";
+
 interface ProductTypesProps {
   parentId: string;
   onClickItem: (name: string) => void;
@@ -45,18 +46,16 @@ const ProductTypes = ({ parentId, onClickItem }: ProductTypesProps) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full mt-4 relative">
       <Carousel
         additionalTransfrom={0}
         arrows
-        autoPlaySpeed={3000}
         centerMode={false}
         className=""
-        containerClass="container"
+        containerClass="container-with-dots"
         dotListClass=""
         draggable
         focusOnSelect={false}
-        infinite={false}
         itemClass=""
         keyBoardControl
         minimumTouchDrag={80}
@@ -70,7 +69,7 @@ const ProductTypes = ({ parentId, onClickItem }: ProductTypesProps) => {
               max: 3000,
               min: 1024,
             },
-            items: 5,
+            items: 3,
             partialVisibilityGutter: 40,
           },
           mobile: {
@@ -98,14 +97,31 @@ const ProductTypes = ({ parentId, onClickItem }: ProductTypesProps) => {
         sliderClass=""
         slidesToSlide={2}
         swipeable
+        customLeftArrow={
+          <button className="absolute -left-5 rotate-180">
+            <LeftRightIcon className="fill-primary-color" />
+          </button>
+        }
+        customRightArrow={
+          <button className="absolute -right-5">
+            <LeftRightIcon className="fill-primary-color" />
+          </button>
+        }
       >
         {menus.map((menu) => {
           const Component = menu.icon;
 
           return (
-            <div key={menu.id}>
-              <Component className="" />
-              <span>{menu.name}</span>
+            <div
+              key={menu.id}
+              className="flex flex-row h-[64px] rounded border border-solid border-[#e6e6e6] items-center px-4 cursor-pointer"
+            >
+              <div>
+                <Component className="fill-secondary-color w-6 h-6" />
+              </div>
+              <span className="font-roboto not-italic font-medium text-base leading-[150%] text-secondary-color ml-2">
+                {menu.name}
+              </span>
             </div>
           );
         })}
