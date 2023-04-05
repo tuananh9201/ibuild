@@ -6,7 +6,7 @@ export const getAreas = async (): Promise<AreasModal[] | any> => {
     const res = await axios.get('/area')
     return res?.data?.data || []
   } catch (error) {
-    console.log(error)
+    console.warn(error)
     return error
   }
 }

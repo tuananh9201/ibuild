@@ -13,7 +13,7 @@ import {
   HeartIcon,
 } from "@/images/icons/product_types/icon_wrapper";
 import { getProductDetail } from "@/lib/api/product";
-import { Product } from "@/lib/types";
+import { Product, ProductImage } from "@/lib/types";
 import { addProductFavorite } from "@/lib/api/user";
 import { Button } from "@/components/common";
 import MainLayout from "@/components/main-layout";
@@ -95,18 +95,22 @@ const ProductDetail: NextPageWithLayout = () => {
   const { query } = useRouter();
   const [isHidden, setIsHidden] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [currentImage, setCurrentImage] = useState<ProductImage>({
+    image_id: "",
+    url: "",
+    web_image_code: "",
+    s3_image_url: "",
+  });
 
   const { data, isLoading } = useSWR<Product>(query.detail, getProductDetail);
-
-  console.log(data?.is_bookmark);
-
+  
   const addOrRemoveProductFavorite = async () => {
     if (!data?.data.product_id) return;
     setLoading(true);
     try {
-      const res = await addProductFavorite(data?.data.product_id);
+      await addProductFavorite(data?.data.product_id);
     } catch (error) {
-      console.log(error);
+      console.warn(error);
     }
     setLoading(false);
   };
@@ -115,19 +119,25 @@ const ProductDetail: NextPageWithLayout = () => {
     addOrRemoveProductFavorite();
   };
 
-  console.log("render");
-
   return (
     <div className="w-full mt-[60px]">
       <div className="max-w-[1280px] mx-auto my-0 flex flex-row min-h-[615px]">
         <div className="mr-[26px] w-[84px]">
-          <ProductCarouselVertical />
+          {data && (
+            <ProductCarouselVertical
+              images={data.images}
+              currentImage={currentImage}
+              setCurrentImage={setCurrentImage}
+            />
+          )}
         </div>
         <div className="mr-8">
           <Image
             src={exampleProductDetail}
             alt="product"
             className="w-auto h-full object-cover"
+            width={478}
+            height={615}
           />
         </div>
         <div className="flex-base flex flex-col justify-between">
@@ -146,6 +156,9 @@ const ProductDetail: NextPageWithLayout = () => {
               <Image
                 src={data?.supplier?.feature_image || companyLogo}
                 alt="logo"
+                width={32}
+                height={32}
+                className="rounded-full w-8 h-8 object-cover"
               />
               <h2 className="font-roboto not-italic font-medium text-base leading-[150%] text-[#333333] uppercase">
                 {data?.supplier?.cname || data?.supplier?.name}
@@ -224,9 +237,10 @@ const ProductDetail: NextPageWithLayout = () => {
                 isBookMark={data?.is_bookmark}
                 isLoading={loading}
                 onClick={handleAddOrRemoveFavorite}
+                overClass="px-[23px]"
               />
             )}
-            <Button title="Thông tin nhà cung cấp" />
+            <Button title="Thông tin nhà cung cấp" overClass="px-[23px]" />
           </div>
         </div>
       </div>

@@ -6,7 +6,6 @@ interface ICard {
 }
 const ProjectCard = (props: ICard) => {
   const { project } = props;
-  console.log(project);
 
   const router = useRouter();
   const handleClickProduct = (slug: string) => {
@@ -19,9 +18,7 @@ const ProjectCard = (props: ICard) => {
           <Image height={150} src={project.image} alt="" />
         </div>
         <div className="flex flex-col items-start p-0 gap-[10px]">
-          <div className="not-italic font-medium text-xl">
-            {project.name}
-          </div>
+          <div className="not-italic font-medium text-xl">{project.name}</div>
           <div className="not-italic font-normal text-sm leading-[150%]">
             {project.des}
           </div>

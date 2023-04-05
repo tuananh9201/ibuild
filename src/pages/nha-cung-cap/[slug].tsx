@@ -7,7 +7,6 @@ import MainLayout from "@/components/main-layout";
 
 const NhaCungCap: NextPageWithLayout = () => {
   const { query } = useRouter();
-  console.log(query);
 
   return (
     <div>

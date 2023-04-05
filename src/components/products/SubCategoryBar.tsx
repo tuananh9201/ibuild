@@ -22,7 +22,6 @@ const SubCategoryBar = (props: Props) => {
     error,
     isLoading,
   } = useSWR<ICategory[]>(props.parentId || "", fetchChildCategories);
-  console.log(childrend);
 
   return <div className="flex gap-4">SubCategoryBar</div>;
 };

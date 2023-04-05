@@ -69,7 +69,7 @@ const ProductTypes = ({ parentId, onClickItem }: ProductTypesProps) => {
               max: 3000,
               min: 1024,
             },
-            items: 3,
+            items: 5,
             partialVisibilityGutter: 40,
           },
           mobile: {
@@ -114,12 +114,21 @@ const ProductTypes = ({ parentId, onClickItem }: ProductTypesProps) => {
           return (
             <div
               key={menu.id}
-              className="flex flex-row h-[64px] rounded border border-solid border-[#e6e6e6] items-center px-4 cursor-pointer"
+              className={`flex flex-row h-[64px] rounded border border-solid border-[#e6e6e6] items-center px-4 cursor-pointer ${
+                currentActive === menu.id ? "bg-primary-color text-white" : ""
+              }`}
+              onClick={() => onClick(menu.id, menu.name)}
             >
               <div>
-                <Component className="fill-secondary-color w-6 h-6" />
+                <Component
+                  className={`w-6 h-6 ${
+                    currentActive === menu.id
+                      ? "fill-white"
+                      : "fill-secondary-color"
+                  }`}
+                />
               </div>
-              <span className="font-roboto not-italic font-medium text-base leading-[150%] text-secondary-color ml-2">
+              <span className="font-roboto not-italic font-medium text-base leading-[150%] text-inherit ml-2">
                 {menu.name}
               </span>
             </div>

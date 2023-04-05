@@ -19,12 +19,11 @@ export const searchProduct = async (
 };
 
 export const getProductDetail = async (id: string) => {
-  console.log(id)
   try {
     const res = await axios.get(`/products/${id}`)
     return res?.data?.data || []
   } catch (error) {
-    console.log(error)
+    console.warn(error)
     return error
   }
 }

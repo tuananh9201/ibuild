@@ -27,7 +27,6 @@ export default function SupplierLayout({ children }: IMainLayoutProps) {
     let path = router.pathname.split("/");
     let cTab = 0;
     for (const [key, value] of Object.entries(mapTab)) {
-      console.log(`${key}: ${value}`);
       if (path[path.length - 1].includes(key)) {
         cTab = value;
         break;

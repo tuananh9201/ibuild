@@ -214,3 +214,41 @@ export const LeftRightIcon = ({ className }: IconProps) => {
     </svg>
   );
 };
+
+export const FilterIcon = ({ className }: IconProps) => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <g clipPath="url(#clip0_695_22892)">
+        <path d="M0 0H24H0ZM24 24H0H24Z" />
+        <path d="M4.24999 5.61C6.56999 8.59 9.99999 13 9.99999 13V18C9.99999 19.1 10.9 20 12 20C13.1 20 14 19.1 14 18V13C14 13 17.43 8.59 19.75 5.61C20.26 4.95 19.79 4 18.95 4H5.03999C4.20999 4 3.73999 4.95 4.24999 5.61Z" />
+      </g>
+      <defs>
+        <clipPath id="clip0_695_22892">
+          <rect width="24" height="24" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
+
+export const DeleteIcon = ({ className }: IconProps) => {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <path d="M11.2496 0.758431C10.9246 0.433431 10.3996 0.433431 10.0746 0.758431L5.99961 4.8251L1.92461 0.750098C1.59961 0.425098 1.07461 0.425098 0.749609 0.750098C0.424609 1.0751 0.424609 1.6001 0.749609 1.9251L4.82461 6.0001L0.749609 10.0751C0.424609 10.4001 0.424609 10.9251 0.749609 11.2501C1.07461 11.5751 1.59961 11.5751 1.92461 11.2501L5.99961 7.1751L10.0746 11.2501C10.3996 11.5751 10.9246 11.5751 11.2496 11.2501C11.5746 10.9251 11.5746 10.4001 11.2496 10.0751L7.17461 6.0001L11.2496 1.9251C11.5663 1.60843 11.5663 1.0751 11.2496 0.758431Z" />
+    </svg>
+  );
+};

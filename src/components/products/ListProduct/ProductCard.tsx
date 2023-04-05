@@ -13,6 +13,7 @@ import { locationIcon, productLogo } from "@/images";
 import { Product } from "src/lib/types";
 import { RootState } from "src/store/store";
 import { addProductFavorite } from "src/lib/api/user";
+import { Button } from "@/components/common";
 
 interface ProductCardProps {
   product: Product;
@@ -24,6 +25,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const token = useSelector((state: RootState) => state.auth.accessToken);
   const router = useRouter();
   const isAddedFavorite = product.is_bookmark;
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const prodImageSrc =
     product.data?.product_image_s3 ||
@@ -41,7 +44,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
       });
       return;
     }
-    const res = await addProductFavorite(product.data.product_id);
+    setIsLoading(true);
+    await addProductFavorite(product.data.product_id);
+    setIsLoading(false);
   };
 
   const handleToSupplier = () => {
@@ -133,36 +138,17 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </Link>
         </button>
         <Tooltip title={product.supplier?.phone || "01234567"} trigger="click">
-          <button
-            className={`px-3 rounded border border-solid border-[#999999] ${
-              isPhoneHover ? "bg-primary-color" : ""
-            } w-[44px]`}
-            onMouseEnter={() => setIsPhoneHover(true)}
-            onMouseLeave={() => setIsPhoneHover(false)}
-          >
-            <PhoneIcon
-              className={`w-5 h-5 ${
-                isPhoneHover ? "fill-white" : "fill-primary-color"
-              }`}
-            />
-          </button>
+          <div>
+            <Button icon={PhoneIcon} overClass="w-[44px]" />
+          </div>
         </Tooltip>
-        <button
-          className={`px-3 rounded border border-solid border-[#999999] ${
-            isAddedFavorite || isHeartHover ? "bg-primary-color" : ""
-          } w-[44px]`}
-          onMouseEnter={() => setIsHeartHover(true)}
-          onMouseLeave={() => setIsHeartHover(false)}
+        <Button
+          icon={HeartIcon}
+          overClass="w-[44px] py-0"
+          isBookMark={isAddedFavorite}
+          isLoading={isLoading}
           onClick={handleAddFavorite}
-        >
-          <HeartIcon
-            className={`w-5 h-5 ${
-              isAddedFavorite || isHeartHover
-                ? "fill-white"
-                : "fill-primary-color"
-            }`}
-          />
-        </button>
+        />
       </div>
     </div>
   );

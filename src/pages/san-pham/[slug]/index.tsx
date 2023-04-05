@@ -9,6 +9,7 @@ import { Pagination } from "antd";
 import Breadcrums from "@/components/common/breadcrums";
 import MainLayout from "@/components/main-layout";
 import ListProduct from "@/components/products/ListProduct";
+import { ProductTypes } from "@/components/common";
 import { FilterCategories, FilterRelated } from "@/components/common";
 import { filterIcon, filterIconWhite } from "@/images/index";
 import { ParsedUrlQuery } from "querystring";
@@ -17,10 +18,6 @@ import { searchProduct } from "src/lib/api/product";
 import { ICategory, Product } from "src/lib/types";
 import { NextPageWithLayout } from "../../_app";
 import { LitsProductLoading } from "@/components/common";
-
-const ProductTypesDynamic = dynamic(
-  () => import("@/components/common/ProductTypes")
-);
 
 type Props = {
   category: ICategory;
@@ -138,7 +135,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
             {title}
           </h1>
         </div>
-        <ProductTypesDynamic
+        <ProductTypes
           onClickItem={onClickFilterCategory}
           parentId={category?.id || ""}
         />
