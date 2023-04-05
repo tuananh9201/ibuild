@@ -37,38 +37,38 @@ const ProductCarouselVertical = ({
     });
   };
 
+  console.log(images);
+
   return (
     <div className="w-full h-full overflow-hidden">
-      {images.length && (
-        <Flickity
-          className={`carousel flickity-vertical w-[615px]`}
-          elementType={"div"}
-          options={flickityOptions}
-          disableImagesLoaded={true}
-          reloadOnUpdate={false}
-          static
-        >
-          {images.map((img) => (
-            <div
-              key={img.image_id}
-              className={`mr-2 last:mr-0 rounded border-2 border-solid ${
-                currentImage.image_id === img.image_id
-                  ? "border-primary-color"
-                  : "border-transparent"
-              }  `}
-              onClick={() => handleActiveImage(img.image_id)}
-            >
-              <Image
-                src={img.s3_image_url || img.url}
-                alt={img.url}
-                width={80}
-                height={80}
-                className="-rotate-90"
-              />
-            </div>
-          ))}
-        </Flickity>
-      )}
+      <Flickity
+        className={`carousel flickity-vertical w-[615px]`}
+        elementType={"div"}
+        options={flickityOptions}
+        disableImagesLoaded={true}
+        reloadOnUpdate={true}
+        static
+      >
+        {images.map((img) => (
+          <div
+            key={img.image_id}
+            className={`mr-2 last:mr-0 rounded border-2 border-solid ${
+              currentImage.image_id === img.image_id
+                ? "border-primary-color"
+                : "border-transparent"
+            }  `}
+            onClick={() => handleActiveImage(img.image_id)}
+          >
+            <Image
+              src={img.s3_image_url || img.url}
+              alt={img.url}
+              width={80}
+              height={80}
+              className="-rotate-90"
+            />
+          </div>
+        ))}
+      </Flickity>
     </div>
   );
 };

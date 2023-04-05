@@ -103,7 +103,16 @@ const ProductDetail: NextPageWithLayout = () => {
   });
 
   const { data, isLoading } = useSWR<Product>(query.detail, getProductDetail);
-  
+
+  useEffect(() => {
+    if (data) {
+      setCurrentImage({
+        ...currentImage,
+        ...data.images[0],
+      });
+    }
+  }, [data]);
+
   const addOrRemoveProductFavorite = async () => {
     if (!data?.data.product_id) return;
     setLoading(true);
@@ -133,9 +142,9 @@ const ProductDetail: NextPageWithLayout = () => {
         </div>
         <div className="mr-8">
           <Image
-            src={exampleProductDetail}
+            src={currentImage.url || currentImage.s3_image_url}
             alt="product"
-            className="w-auto h-full object-cover"
+            className="h-auto object-cover w-[478px]"
             width={478}
             height={615}
           />
