@@ -27,14 +27,15 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const isAddedFavorite = product.is_bookmark;
 
   const [isLoading, setIsLoading] = useState(false);
+  const [logoImage, setLogoImage] = useState(() => {
+    return product.supplier?.feature_image || productLogo;
+  });
 
   const prodImageSrc =
-    product.data?.product_image_s3 ||
     product.data?.product_image ||
+    product.data?.product_image_s3 ||
     placeholdImageSrc;
 
-  const [isPhoneHover, setIsPhoneHover] = useState(false);
-  const [isHeartHover, setIsHeartHover] = useState(false);
   const [featureImageSrc, setFeatureImageSrc] = useState(prodImageSrc);
 
   const handleAddFavorite = async () => {
@@ -79,11 +80,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
           onClick={handleToSupplier}
         >
           <Image
-            src={product.supplier?.feature_image || productLogo}
+            src={logoImage}
             alt="logo product"
             className="mr-1 w-6 h-6 object-contain rounded-full"
             width={24}
             height={24}
+            onError={() => setLogoImage(productLogo)}
           />
           <h3 className="text-primary-color uppercase font-roboto not-italic font-medium text-base leading-[150%]">
             {product.supplier?.cname || product.supplier?.name}
@@ -139,12 +141,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </button>
         <Tooltip title={product.supplier?.phone || "01234567"} trigger="click">
           <div>
-            <Button icon={PhoneIcon} overClass="w-[44px]" />
+            <Button icon={PhoneIcon} overClass="w-[44px] py-0 h-full" />
           </div>
         </Tooltip>
         <Button
           icon={HeartIcon}
-          overClass="w-[44px] py-0"
+          overClass="w-[44px] py-0 h-full"
           isBookMark={isAddedFavorite}
           isLoading={isLoading}
           onClick={handleAddFavorite}

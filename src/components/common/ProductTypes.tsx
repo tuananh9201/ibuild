@@ -91,7 +91,6 @@ const ProductTypes = ({ parentId, onClickItem }: ProductTypesProps) => {
         }}
         rewind={false}
         rewindWithAnimation={false}
-        rtl={false}
         shouldResetAutoplay
         showDots={false}
         sliderClass=""

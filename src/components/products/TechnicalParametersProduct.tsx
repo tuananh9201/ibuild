@@ -5,12 +5,14 @@ interface Parameters {
 
 interface TechnicalParametersProductProps {
   title?: string;
-  parameters: Parameters[];
+  parameters: string[];
+  values: string[];
 }
 
 const TechnicalParametersProduct = ({
   title,
   parameters,
+  values,
 }: TechnicalParametersProductProps) => {
   return (
     <div>
@@ -23,8 +25,8 @@ const TechnicalParametersProduct = ({
             key={idx}
             className="font-roboto not-italic font-normal leading-[150%] text-text-color text-base flex flex-row items-start"
           >
-            <span className="w-1/6">{parameter.title}</span>
-            <span className="flex-base">{parameter.value}</span>
+            <span className="w-1/6">{parameter}</span>
+            <span className="flex-base">{values[idx]}</span>
           </li>
         ))}
       </ul>

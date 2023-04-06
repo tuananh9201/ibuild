@@ -37,8 +37,6 @@ const ProductCarouselVertical = ({
     });
   };
 
-  console.log(images);
-
   return (
     <div className="w-full h-full overflow-hidden">
       <Flickity
@@ -49,25 +47,28 @@ const ProductCarouselVertical = ({
         reloadOnUpdate={true}
         static
       >
-        {images.map((img) => (
-          <div
-            key={img.image_id}
-            className={`mr-2 last:mr-0 rounded border-2 border-solid ${
-              currentImage.image_id === img.image_id
-                ? "border-primary-color"
-                : "border-transparent"
-            }  `}
-            onClick={() => handleActiveImage(img.image_id)}
-          >
-            <Image
-              src={img.s3_image_url || img.url}
-              alt={img.url}
-              width={80}
-              height={80}
-              className="-rotate-90"
-            />
-          </div>
-        ))}
+        {images.map((img, idx) => {
+          if (idx > 9) return;
+          return (
+            <div
+              key={img.image_id}
+              className={`mr-2 last:mr-0 rounded border-2 border-solid ${
+                currentImage.image_id === img.image_id
+                  ? "border-primary-color"
+                  : "border-transparent"
+              }  `}
+              onClick={() => handleActiveImage(img.image_id)}
+            >
+              <Image
+                src={img.s3_image_url || img.url}
+                alt={img.url}
+                width={80}
+                height={80}
+                className="-rotate-90 w-20 h-20"
+              />
+            </div>
+          );
+        })}
       </Flickity>
     </div>
   );
