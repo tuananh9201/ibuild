@@ -42,9 +42,7 @@ const ProductDetail: NextPageWithLayout = () => {
     return data?.supplier?.feature_image || companyLogo;
   });
 
-  const newArr = data?.data.technical_details?.split("|");
-  const arrayTitle = newArr?.splice(0, newArr.length / 2 + 1) || [];
-  const arrayValue = newArr?.splice(newArr.length / 2 - 2) || [];
+  console.log(data?.data.technical_details);
 
   useEffect(() => {
     if (data) {
@@ -221,8 +219,7 @@ const ProductDetail: NextPageWithLayout = () => {
         <div className="max-w-[1280px] mx-auto my-0 mt-10">
           <TechnicalParametersProduct
             title="Thông số kỹ thuật"
-            parameters={arrayTitle}
-            values={arrayValue}
+            parameters={data.data.technical_details}
           />
         </div>
       )}
