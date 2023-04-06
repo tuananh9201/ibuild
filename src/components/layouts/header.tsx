@@ -22,14 +22,14 @@ const menus = [
     role: ["user"],
   },
   {
-    name: "Văn bản pháp lý",
-    href: "/van-ban-phap-ly",
+    name: "Thông tin xây dựng",
+    href: "/thong-tin-xay-dung",
     role: ["user", "expert"],
   },
   {
-    name: "Thông tin xây dựng",
-    href: "/thong-tin-xay-dung",
-    role: ["expert"],
+    name: "Văn bản pháp lý",
+    href: "/van-ban-phap-ly",
+    role: ["user", "expert"],
   },
 ];
 const pathsShowBackButton = ["/"];
