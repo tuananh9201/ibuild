@@ -18,6 +18,7 @@ import { searchProduct } from "src/lib/api/product";
 import { ICategory, Product } from "src/lib/types";
 import { NextPageWithLayout } from "../../_app";
 import { LitsProductLoading } from "@/components/common";
+import ProductSearch from "@/components/products/ProductSearch";
 
 type Props = {
   category: ICategory;
@@ -52,6 +53,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   const [keywordSearch, setKeywordSearch] = useState(
     props.category?.name_vi || "all"
   );
+  const [keyword, setKeyword] = useState("");
   const [categoriesSelected, setCategoriesSelected] =
     useState("LIEN_QUAN_NHAT");
   const [isLoadingData, setIsLoadingData] = useState(false);
@@ -115,6 +117,10 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
     loadProduct();
   }, [paging.current, keywordSearch, categoriesSelected]);
 
+  useEffect(() => {
+    console.log(query);
+  }, [query]);
+
   const handleSelectRelated = async (value: number) => {
     const valueSelected = RELATED_LIST.find((item) => item.id === value)?.slug;
     if (valueSelected) {
@@ -129,6 +135,12 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
         <title>{category?.name_vi}</title>
       </Head>
       <div className="flex flex-col items-start px-4 lg:px-20 pt-8 pb-[60px]">
+        <div className="w-full flex justify-center">
+          <ProductSearch
+            initialValue={keyword}
+            setInputValueToParent={setKeyword}
+          />
+        </div>
         <Breadcrums breadcrumbs={breadcrumbs} />
         <div className="mt-8">
           <h1 className="font-roboto not-italic font-medium text-2xl leading-[calc(36 / 24)] text-text-color">
