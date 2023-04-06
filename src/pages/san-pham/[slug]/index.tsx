@@ -9,6 +9,7 @@ import { Pagination } from "antd";
 import Breadcrums from "@/components/common/breadcrums";
 import MainLayout from "@/components/main-layout";
 import ListProduct from "@/components/products/ListProduct";
+import noFoundProduct from "@/images/no_search_result.png";
 import { ProductTypes } from "@/components/common";
 import { FilterCategories, FilterRelated } from "@/components/common";
 import { filterIcon, filterIconWhite } from "@/images/index";
@@ -129,6 +130,8 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
     }
   };
 
+  console.log(products);
+
   return (
     <>
       <Head>
@@ -187,12 +190,23 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
             <ListProduct products={products} />
           )}
         </div>
+        {(!isLoading || !isLoadingData) && products.length === 0 && (
+          <div className="w-full">
+            <Image
+              src={noFoundProduct}
+              alt="no found product"
+              className="mx-auto"
+            />
+            <p className="mt-4">Không tìm thấy sản phẩm</p>
+          </div>
+        )}
         <div className="w-full text-center">
           <Pagination
             onChange={(page) => setPaging({ ...paging, current: page })}
             current={paging.current}
             pageSize={12}
             total={paging.total}
+            hideOnSinglePage
           />
         </div>
       </div>
