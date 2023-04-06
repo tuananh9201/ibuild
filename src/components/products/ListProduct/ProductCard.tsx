@@ -14,12 +14,11 @@ import { Product } from "src/lib/types";
 import { RootState } from "src/store/store";
 import { addProductFavorite } from "src/lib/api/user";
 import { Button } from "@/components/common";
+import defaultProductImage from "@/images/default_product_image.png";
 
 interface ProductCardProps {
   product: Product;
 }
-
-const placeholdImageSrc = "https://placehold.co/270x140";
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const token = useSelector((state: RootState) => state.auth.accessToken);
@@ -34,7 +33,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const prodImageSrc =
     product.data?.product_image ||
     product.data?.product_image_s3 ||
-    placeholdImageSrc;
+    defaultProductImage;
 
   const [featureImageSrc, setFeatureImageSrc] = useState(prodImageSrc);
 
@@ -125,7 +124,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             src={featureImageSrc}
             width={270}
             height={140}
-            onError={() => setFeatureImageSrc(placeholdImageSrc)}
+            onError={() => setFeatureImageSrc(defaultProductImage)}
             placeholder="blur"
             blurDataURL="https://placehold.co/270x140"
             alt={product.data.product_name}

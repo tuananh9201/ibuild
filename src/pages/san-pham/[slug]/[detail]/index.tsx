@@ -14,6 +14,7 @@ import {
 } from "@/images/icons/product_types/icon_wrapper";
 import {
   getListMostRelevantProduct,
+  getListProductBySupplier,
   getProductDetail,
 } from "@/lib/api/product";
 import { Product, ProductImage } from "@/lib/types";
@@ -23,6 +24,7 @@ import MainLayout from "@/components/main-layout";
 import TechnicalParametersProduct from "@/components/products/TechnicalParametersProduct";
 import ListProduct from "@/components/products/ListProduct";
 import ProductCarouselVertical from "@/components/products/ProductCarouselVertical";
+import ProductSection from "@/components/products/ProductSection";
 
 const ProductDetail: NextPageWithLayout = () => {
   const { query } = useRouter();
@@ -42,10 +44,6 @@ const ProductDetail: NextPageWithLayout = () => {
     return data?.supplier?.feature_image || companyLogo;
   });
 
-  const newArr = data?.data.technical_details?.split("|");
-  const arrayTitle = newArr?.splice(0, newArr.length / 2 + 1) || [];
-  const arrayValue = newArr?.splice(newArr.length / 2 - 2) || [];
-
   useEffect(() => {
     if (data) {
       setCurrentImage({
@@ -57,19 +55,17 @@ const ProductDetail: NextPageWithLayout = () => {
 
   useEffect(() => {
     const payload = {
-      product_name: data?.data.product_name || "",
-      product_id: query.detail as string,
-      skip: 0,
-      limit: 4,
+      supplierId: data?.supplier?.id || "",
+      productId: data?.id || "",
     };
 
     const getMostRelevantProduct = async () => {
-      const res = await getListMostRelevantProduct(payload);
+      const res = await getListProductBySupplier(payload);
       setRelevantProducts(res);
     };
 
     getMostRelevantProduct();
-  }, [data, query.detail]);
+  }, [data]);
 
   const addOrRemoveProductFavorite = async () => {
     if (!data?.data.product_id) return;
@@ -170,15 +166,17 @@ const ProductDetail: NextPageWithLayout = () => {
                 }`}
               >
                 {data?.data?.description &&
-                  data?.data?.description.split("|").map((item, idx) => (
-                    <li key={idx} className="list-disc">
-                      {item}
-                    </li>
-                  ))}
+                  data?.data?.description.split("|").map((item, idx) => {
+                    return (
+                      <li key={idx} className="list-disc">
+                        {item}
+                      </li>
+                    );
+                  })}
               </ul>
             </div>
             {data?.data.description &&
-              data.data.description.split("|").length > 4 && (
+              data.data.description.split("|").length > 5 && (
                 <button
                   className={`w-full flex gap-[5px] items-center justify-center h-[70px] bottom-0 left-0 ${
                     isHidden ? "bg-gradient-white-to-transparent absolute" : ""
@@ -221,33 +219,12 @@ const ProductDetail: NextPageWithLayout = () => {
         <div className="max-w-[1280px] mx-auto my-0 mt-10">
           <TechnicalParametersProduct
             title="Thông số kỹ thuật"
-            parameters={arrayTitle}
-            values={arrayValue}
+            parameters={data.data.technical_details}
           />
         </div>
       )}
-      <div className="max-w-[1280px] mx-auto my-0 mt-10">
-        <div className="flex flex-row justify-between">
-          <h3 className="font-roboto not-italic font-medium text-xl leading-[150%] text-text-color mb-6">
-            Cùng nhà cung cấp
-          </h3>
-          <button className="text-primary-color font-roboto not-italic font-medium text-base leading-[150%]">
-            Xem thêm
-          </button>
-        </div>
-        <ListProduct products={relevantProducts} />
-      </div>
-      <div className="max-w-[1280px] mx-auto my-0 mt-10">
-        <div className="flex flex-row justify-between">
-          <h3 className="font-roboto not-italic font-medium text-xl leading-[150%] text-text-color mb-6">
-            Cùng danh mục
-          </h3>
-          <button className="text-primary-color font-roboto not-italic font-medium text-base leading-[150%]">
-            Xem thêm
-          </button>
-        </div>
-        <ListProduct products={relevantProducts} />
-      </div>
+      <ProductSection supplierId={data?.supplier?.id} productId={data?.id} />
+      <ProductSection supplierId={data?.supplier?.id} productId={data?.id} />
     </div>
   );
 };

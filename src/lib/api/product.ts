@@ -39,3 +39,13 @@ export const getListMostRelevantProduct = async (payload: { product_name: string
     return []
   }
 }
+
+export const getListProductBySupplier = async (payload: { supplierId: string, productId: string }): Promise<Product[]> => {
+  try {
+    const res = await axios.get(`products/by-supplier-id/${payload.supplierId}?product_id=${payload.productId}skip=0&limit=4`)
+    return res.data?.data?.data
+  } catch (error) {
+    console.warn(error)
+    return []
+  }
+}

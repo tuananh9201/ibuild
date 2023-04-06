@@ -50,12 +50,10 @@ const RELATED_LIST = [
 const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   const [isActiveFilterIcon, setIsActiveFilterIcon] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
-  const [keywordSearch, setKeywordSearch] = useState(
-    props.category?.name_vi || "all"
+  const [sortSelected, setSortSelected] = useState("LIEN_QUAN_NHAT");
+  const [categoriesSelected, setCategoriesSelected] = useState<string[]>(
+    props.category?.id ? [props.category.id] : []
   );
-  const [keyword, setKeyword] = useState("");
-  const [categoriesSelected, setCategoriesSelected] =
-    useState("LIEN_QUAN_NHAT");
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [paging, setPaging] = useState({
     current: 1,
@@ -86,25 +84,27 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   const handleShowFilter = () => {
     setIsActiveFilterIcon((prev) => !prev);
   };
-  const onClickFilterCategory = async (name: string) => {
-    let keyword: string | undefined = name;
-    if (name === "all") {
-      keyword = category?.name_vi;
+  const onClickFilterCategory = async (id: string) => {
+    let categoryId: string | undefined = id;
+    if (categoryId === "all") {
+      setCategoriesSelected(category ? [category.id] : []);
+    } else {
+      setCategoriesSelected([categoryId]);
     }
-    setKeywordSearch(keyword || "all");
   };
 
   const loadProduct = async () => {
     setIsLoadingData(true);
     const data = await searchProduct({
-      keyword: keywordSearch,
+      // keyword: keywordSearch,
       limit: 12,
       skip: paging.current !== 1 ? paging.current * 12 : 0,
-      sort_by: categoriesSelected,
+      sort_by: sortSelected,
       max_price: 0,
       min_price: 0,
       max_quantity: 0,
       min_quantity: 0,
+      category_id: categoriesSelected,
     });
     setProducts(data.data);
     setPaging({
@@ -115,7 +115,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   };
   useEffect(() => {
     loadProduct();
-  }, [paging.current, keywordSearch, categoriesSelected]);
+  }, [paging.current, categoriesSelected, sortSelected]);
 
   useEffect(() => {
     console.log(query);
@@ -124,7 +124,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   const handleSelectRelated = async (value: number) => {
     const valueSelected = RELATED_LIST.find((item) => item.id === value)?.slug;
     if (valueSelected) {
-      setCategoriesSelected(valueSelected);
+      setSortSelected(valueSelected);
       setPaging({ ...paging, current: 1, total: 0 });
     }
   };
@@ -135,12 +135,12 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
         <title>{category?.name_vi}</title>
       </Head>
       <div className="flex flex-col items-start px-4 lg:px-20 pt-8 pb-[60px]">
-        <div className="w-full flex justify-center">
+        {/* <div className="w-full flex justify-center">
           <ProductSearch
             initialValue={keyword}
             setInputValueToParent={setKeyword}
           />
-        </div>
+        </div> */}
         <Breadcrums breadcrumbs={breadcrumbs} />
         <div className="mt-8">
           <h1 className="font-roboto not-italic font-medium text-2xl leading-[calc(36 / 24)] text-text-color">
@@ -182,7 +182,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
         )}
         <div className="mt-4 mb-4 w-full">
           {isLoading || isLoadingData ? (
-            <LitsProductLoading />
+            <LitsProductLoading items={12} />
           ) : (
             <ListProduct products={products} />
           )}

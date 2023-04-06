@@ -147,7 +147,7 @@ const SearchPage: NextPageWithLayout = () => {
         </section>
         <section className="mt-4">
           {isLoadingData ? (
-            <LitsProductLoading />
+            <LitsProductLoading items={12} />
           ) : (
             <ListProduct products={products} />
           )}

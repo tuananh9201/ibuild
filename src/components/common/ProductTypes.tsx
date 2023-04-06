@@ -9,7 +9,7 @@ import Carousel from "react-multi-carousel";
 
 interface ProductTypesProps {
   parentId: string;
-  onClickItem: (name: string) => void;
+  onClickItem: (id: string) => void;
 }
 
 const ProductTypes = ({ parentId, onClickItem }: ProductTypesProps) => {
@@ -40,9 +40,9 @@ const ProductTypes = ({ parentId, onClickItem }: ProductTypesProps) => {
   const handleCurrentActive = (id: string) => {
     setCurrentActive(id);
   };
-  const onClick = (id: string, name: string) => {
+  const onClick = (id: string) => {
     handleCurrentActive(id);
-    onClickItem(name);
+    onClickItem(id);
   };
 
   return (
@@ -116,7 +116,7 @@ const ProductTypes = ({ parentId, onClickItem }: ProductTypesProps) => {
               className={`flex flex-row h-[64px] rounded border border-solid border-[#e6e6e6] items-center px-4 cursor-pointer ${
                 currentActive === menu.id ? "bg-primary-color text-white" : ""
               }`}
-              onClick={() => onClick(menu.id, menu.name)}
+              onClick={() => onClick(menu.id)}
             >
               <div>
                 <Component

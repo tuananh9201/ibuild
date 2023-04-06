@@ -1,11 +1,13 @@
 import { Skeleton } from "antd";
 
-interface ListProductLoadingProps {}
+interface ListProductLoadingProps {
+  items: number;
+}
 
-const ListProductLoading = () => {
+const ListProductLoading = ({ items }: ListProductLoadingProps) => {
   return (
     <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-      {Array(12)
+      {Array(items)
         .fill(0)
         .map((value, idx) => {
           return (
