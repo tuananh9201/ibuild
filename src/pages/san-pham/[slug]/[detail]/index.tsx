@@ -1,10 +1,10 @@
-import { ReactElement, useState } from "react";
-import { useRouter } from "next/router";
 import Image from "next/image";
+import useSWR from "swr";
+import { ReactElement, useState, useEffect, use } from "react";
+import { useRouter } from "next/router";
 
-import MainLayout from "@/components/main-layout";
 import { NextPageWithLayout } from "src/pages/_app";
-import { exampleProductDetail, companyLogo } from "@/images/index";
+import { exampleProductDetail, companyLogo, productLogo } from "@/images/index";
 import {
   LocationIcon,
   ShopCartIcon,
@@ -12,128 +12,145 @@ import {
   PhoneIcon,
   HeartIcon,
 } from "@/images/icons/product_types/icon_wrapper";
+import {
+  getListMostRelevantProduct,
+  getProductDetail,
+} from "@/lib/api/product";
+import { Product, ProductImage } from "@/lib/types";
+import { addProductFavorite } from "@/lib/api/user";
+import { Button } from "@/components/common";
+import MainLayout from "@/components/main-layout";
 import TechnicalParametersProduct from "@/components/products/TechnicalParametersProduct";
 import ListProduct from "@/components/products/ListProduct";
 import ProductCarouselVertical from "@/components/products/ProductCarouselVertical";
 
-const TECHNICAL_PARAMETERS = [
-  {
-    title: "Hãng sản xuất",
-    value: "HIKVISION",
-  },
-  {
-    title: "Camera",
-    value: "Camera Wifi không dây Yoosee HD 3 râu 1080p",
-  },
-  {
-    title: "Độ phân giải",
-    value: "1080 MP",
-  },
-  {
-    title: "Cảm biến hình",
-    value: "1/2.8″ progressive scan CMOS",
-  },
-  {
-    title: "Tầm xa hồng ngoại",
-    value: "Tầm xa hồng ngoại 30m",
-  },
-  {
-    title: "Phương thức kết nối",
-    value: "Kết nối qua dây mạng hoặc wifi",
-  },
-  {
-    title: "Ống kính",
-    value: "2.8/4 mm",
-  },
-  {
-    title: "Độ nhạy sáng",
-    value: "0.01 Lux @ (F1.2,AGC ON),0 Lux with IR",
-  },
-  {
-    title: "Tính năng",
-    value:
-      "Tính năng DWDR; 3D DNR; ICR;BLC, HLC, Hồng ngoại thông minh, Tích hợp mic thu âm. Tiêu chuẩn ngoài trời IP66. Nguồn vào 12 VDC",
-  },
-  {
-    title: "Đầu ghi",
-    value: "Đầu ghi 4 kênh Wifi DS-7104NI-K1/W/M",
-  },
-  {
-    title: "Hỗ trợ Camera",
-    value: "Camera IP độ phân giải ghi hình tối đa 4MP",
-  },
-  {
-    title: "Chuẩn nén hình",
-    value: "H.265+/H.265/H.264+/H.264",
-  },
-  {
-    title: "Cổng màn hình",
-    value: "Cổng ra HDMI và VGA với độ phân giải 1920X1080P",
-  },
-  {
-    title: "Phần mềm",
-    value: "Hik-connect / IVMS 4200/ Ezviz/ Hik-proconnect",
-  },
-  {
-    title: "Xem qua mạng",
-    value:
-      "Hỗ trợ dịch vụ Hik-connect P2P, tên miền Cameraddns miễn phí trọn đời",
-  },
-  {
-    title: "Phụ kiện kèm theo",
-    value:
-      "Cáp nguồn: cáp nguồn 4 × camera IPC, cáp nguồn 1 × NVRCáp Ethernet: RJ45, Cat5e UTP, 1 m. Kết nối NVR và SwitchCáp HDMI: 1 × Cáp HDMI, 2m, màu đen",
-  },
-];
-
 const ProductDetail: NextPageWithLayout = () => {
   const { query } = useRouter();
-  console.log(query);
-
   const [isHidden, setIsHidden] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [currentImage, setCurrentImage] = useState<ProductImage>({
+    image_id: "",
+    url: "",
+    web_image_code: "",
+    s3_image_url: "",
+  });
+  const [relevantProducts, setRelevantProducts] = useState<Product[]>([]);
+
+  const { data, isLoading } = useSWR<Product>(query.detail, getProductDetail);
+
+  const [logo, setLogo] = useState(() => {
+    return data?.supplier?.feature_image || companyLogo;
+  });
+
+  const newArr = data?.data.technical_details?.split("|");
+  const arrayTitle = newArr?.splice(0, newArr.length / 2 + 1) || [];
+  const arrayValue = newArr?.splice(newArr.length / 2 - 2) || [];
+
+  useEffect(() => {
+    if (data) {
+      setCurrentImage({
+        ...currentImage,
+        ...data.images[0],
+      });
+    }
+  }, [data]);
+
+  useEffect(() => {
+    const payload = {
+      product_name: data?.data.product_name || "",
+      product_id: query.detail as string,
+      skip: 0,
+      limit: 4,
+    };
+
+    const getMostRelevantProduct = async () => {
+      const res = await getListMostRelevantProduct(payload);
+      setRelevantProducts(res);
+    };
+
+    getMostRelevantProduct();
+  }, [data, query.detail]);
+
+  const addOrRemoveProductFavorite = async () => {
+    if (!data?.data.product_id) return;
+    setLoading(true);
+    try {
+      await addProductFavorite(data?.data.product_id);
+    } catch (error) {
+      console.warn(error);
+    }
+    setLoading(false);
+  };
+
+  const handleAddOrRemoveFavorite = () => {
+    addOrRemoveProductFavorite();
+  };
 
   return (
     <div className="w-full mt-[60px]">
       <div className="max-w-[1280px] mx-auto my-0 flex flex-row min-h-[615px]">
         <div className="mr-[26px] w-[84px]">
-          <ProductCarouselVertical />
+          {data && (
+            <ProductCarouselVertical
+              images={data.images}
+              currentImage={currentImage}
+              setCurrentImage={setCurrentImage}
+            />
+          )}
         </div>
         <div className="mr-8">
           <Image
-            src={exampleProductDetail}
+            src={currentImage.url || currentImage.s3_image_url}
             alt="product"
-            className="w-auto h-full object-cover"
+            className="h-auto object-cover w-[478px]"
+            width={478}
+            height={615}
           />
         </div>
         <div className="flex-base flex flex-col justify-between">
           <div className="relative">
-            <div className="px-3 py-[3px] bg-[#0000001a] inline-block rounded mb-2">
-              <span className="text-base font-robot not-italic font-normal leading-[150%] text-[#333333]">
-                Mã: G1236
-              </span>
-            </div>
+            {data?.data.model_num && (
+              <div className="px-3 py-[3px] bg-[#0000001a] inline-block rounded mb-2">
+                <span className="text-base font-robot not-italic font-normal leading-[150%] text-[#333333]">
+                  Mã: {data?.data.model_num || ""}
+                </span>
+              </div>
+            )}
             <div className="mb-2">
               <h1 className="font-roboto not-italic font-normal text-2xl text-[#333333] leading-[150%]">
-                Camera Wifi không dây Yoosee HD 3 râu 1080p
+                {data?.data.product_name}
               </h1>
             </div>
             <div className="flex flex-row gap-2 mb-4">
-              <Image src={companyLogo} alt="logo" />
+              <Image
+                src={logo}
+                alt="logo"
+                width={32}
+                height={32}
+                className="rounded-full w-8 h-8 object-cover"
+                onError={() => setLogo(productLogo)}
+              />
               <h2 className="font-roboto not-italic font-medium text-base leading-[150%] text-[#333333] uppercase">
-                Trung Tâm Vlxl Đồng Tâm
+                {data?.supplier?.cname || data?.supplier?.name}
               </h2>
             </div>
             <div className="mb-2">
               <span className="font-roboto not-italic font-semibold text-text-color text-[28px] leading-[125%]">
-                590.000 VND
+                {data?.data.original_price || "Liên hệ"}
               </span>
             </div>
-            <div className="flex flex-row gap-[13px] mb-2">
-              <LocationIcon className="" />
-              <span className="font-roboto not-italic font-normal text-base text-text-color leading-[150%]">
-                158 Nguyễn Khánh Toàn, Quan Hoa, Cầu Giấy, Hà Nội
-              </span>
-            </div>
+            {data?.supplier?.district || data?.supplier?.city ? (
+              <div className="flex flex-row gap-[13px] mb-2">
+                <LocationIcon className="" />
+                <span className="font-roboto not-italic font-normal text-base text-text-color leading-[150%]">
+                  {data?.supplier?.district}{" "}
+                  {data?.supplier?.district ? "," : ""} {data?.supplier?.city}
+                </span>
+              </div>
+            ) : (
+              <></>
+            )}
+
             <div className="flex mb-4">
               <ShopCartIcon className="" />
               <span className="ml-[9px] mr-4 font-roboto not-italic text-text-color font-normal text-base leading-[150%]">
@@ -152,89 +169,84 @@ const ProductDetail: NextPageWithLayout = () => {
                   isHidden ? "h-[240px] overflow-y-hidden" : ""
                 }`}
               >
-                <li className="list-disc">Hình ảnh sắc nét full HD – 1080p.</li>
-                <li className="list-disc">Báo động khi có người đột nhập.</li>
-                <li className="list-disc">Chế độ xoay theo người di chuyển.</li>
-                <li className="list-disc">
-                  Đèn hồng ngoại quay đêm lên đến 10 m.
-                </li>
-                <li className="list-disc">
-                  Kết nối Wifi không dây hoặc dây Lan.
-                </li>
-                <li className="list-disc">
-                  Hỗ trợ khe cắm thẻ nhớ (max 256G).
-                </li>
-                <li className="list-disc">Không tốn điện hàng tháng (5v).</li>
-                <li className="list-disc">Giám sát từ xa qua điện thoại.</li>
-                <li className="list-disc">
-                  Có thể treo tường hoặc đặt bàn, kệ…
-                </li>
-                <li className="list-disc">
-                  Có thể treo tường hoặc đặt bàn, kệ…
-                </li>
-                <li className="list-disc">
-                  Có thể treo tường hoặc đặt bàn, kệ…
-                </li>
-                <li className="list-disc">
-                  Có thể treo tường hoặc đặt bàn, kệ…
-                </li>
-                <li className="list-disc">
-                  Có thể treo tường hoặc đặt bàn, kệ…
-                </li>
-                <li className="list-disc">
-                  Có thể treo tường hoặc đặt bàn, kệ…
-                </li>
-                <li className="list-disc">Điều Khiển Xoay 360 Độ</li>
+                {data?.data?.description &&
+                  data?.data?.description.split("|").map((item, idx) => (
+                    <li key={idx} className="list-disc">
+                      {item}
+                    </li>
+                  ))}
               </ul>
             </div>
-            <button
-              className={`w-full flex gap-[5px] items-center justify-center h-[70px] bottom-0 left-0 ${
-                isHidden ? "bg-gradient-white-to-transparent absolute" : ""
-              }`}
-              onClick={() => setIsHidden((prev) => !prev)}
-            >
-              <span className="font-roboto not-italic font-medium text-primary-color leading-[150%]">
-                {isHidden ? "Xem thêm" : "Thu gọn"}
-              </span>
-              <UpDownIcon
-                className={`fill-[#eb7a01] transition ${
-                  isHidden ? "" : "rotate-180"
-                }`}
-              />
-            </button>
+            {data?.data.description &&
+              data.data.description.split("|").length > 4 && (
+                <button
+                  className={`w-full flex gap-[5px] items-center justify-center h-[70px] bottom-0 left-0 ${
+                    isHidden ? "bg-gradient-white-to-transparent absolute" : ""
+                  }`}
+                  onClick={() => setIsHidden((prev) => !prev)}
+                >
+                  <span className="font-roboto not-italic font-medium text-primary-color leading-[150%]">
+                    {isHidden ? "Xem thêm" : "Thu gọn"}
+                  </span>
+                  <UpDownIcon
+                    className={`fill-[#eb7a01] transition ${
+                      isHidden ? "" : "rotate-180"
+                    }`}
+                  />
+                </button>
+              )}
           </div>
           <div className="flex flex-row justify-between mt-4">
             <button className="flex items-center justify-center px-[23px] py-[10px] rounded border border-solid border-primary-color text-primary-color gap-[6px] hover:bg-primary-color transition group">
               <PhoneIcon className="fill-[#eb7a01] group-hover:fill-white" />
               <span className="font-roboto not-italic font-medium text-base leading-[150%] group-hover:text-white">
-                0272 387 2233
+                {data?.supplier?.phone || "0123456789"}
               </span>
             </button>
-            <button className="flex items-center justify-center px-[23px] py-[10px] rounded border border-solid border-primary-color text-primary-color gap-[6px] hover:bg-primary-color transition group">
-              <HeartIcon className="fill-[#eb7a01] group-hover:fill-white" />
-              <span className="font-roboto not-italic font-medium text-base leading-[150%] group-hover:text-white">
-                Theo dõi sản phẩm
-              </span>
-            </button>
-            <button className="flex items-center justify-center px-[23px] py-[10px] rounded border border-solid border-primary-color text-primary-color gap-[6px] hover:bg-primary-color transition group">
-              <span className="font-roboto not-italic font-medium text-base leading-[150%] group-hover:text-white">
-                Thông tin nhà cung cấp
-              </span>
-            </button>
+            {data && (
+              <Button
+                title="Theo dõi sản phẩm"
+                icon={HeartIcon}
+                isBookMark={data?.is_bookmark}
+                isLoading={loading}
+                onClick={handleAddOrRemoveFavorite}
+                overClass="px-[23px]"
+              />
+            )}
+            <Button title="Thông tin nhà cung cấp" overClass="px-[23px]" />
           </div>
         </div>
       </div>
+      {data?.data.technical_details && (
+        <div className="max-w-[1280px] mx-auto my-0 mt-10">
+          <TechnicalParametersProduct
+            title="Thông số kỹ thuật"
+            parameters={arrayTitle}
+            values={arrayValue}
+          />
+        </div>
+      )}
       <div className="max-w-[1280px] mx-auto my-0 mt-10">
-        <TechnicalParametersProduct
-          title="Thông số kỹ thuật"
-          parameters={TECHNICAL_PARAMETERS}
-        />
+        <div className="flex flex-row justify-between">
+          <h3 className="font-roboto not-italic font-medium text-xl leading-[150%] text-text-color mb-6">
+            Cùng nhà cung cấp
+          </h3>
+          <button className="text-primary-color font-roboto not-italic font-medium text-base leading-[150%]">
+            Xem thêm
+          </button>
+        </div>
+        <ListProduct products={relevantProducts} />
       </div>
       <div className="max-w-[1280px] mx-auto my-0 mt-10">
-        <h3 className="font-roboto not-italic font-medium text-xl leading-[150%] text-text-color mb-6">
-          Cùng nhà cung cấp
-        </h3>
-        {/* <ListProduct /> */}
+        <div className="flex flex-row justify-between">
+          <h3 className="font-roboto not-italic font-medium text-xl leading-[150%] text-text-color mb-6">
+            Cùng danh mục
+          </h3>
+          <button className="text-primary-color font-roboto not-italic font-medium text-base leading-[150%]">
+            Xem thêm
+          </button>
+        </div>
+        <ListProduct products={relevantProducts} />
       </div>
     </div>
   );

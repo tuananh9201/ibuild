@@ -1,27 +1,39 @@
+import { ReactElement, useState } from "react";
+import { motion } from "framer-motion";
+import { useRouter } from "next/router";
+import Head from "next/head";
+import Image from "next/image";
+import useSWR from "swr";
+
 import MainLayout from "@/components/main-layout";
+import ProductSearch from "@/components/products/ProductSearch";
 import CategoryCard, {
   CategoryCardLoading,
 } from "@/components/products/CategoryCard";
-import ProductSearch from "@/components/products/ProductSearch";
 import { sologan1, sologan2, sologan3 } from "@/constants/images";
-import { motion } from "framer-motion";
-import Head from "next/head";
-import Image from "next/image";
-import { ReactElement } from "react";
+import { fetchRootCategories } from "src/lib/api/category";
 import { ICategory } from "src/lib/types";
 import { NextPageWithLayout } from "../_app";
-import { fetchRootCategories } from "src/lib/api/category";
-import useSWR from "swr";
 
 type Props = {
   categories: ICategory[];
 };
 const SanPham: NextPageWithLayout<Props> = ({ categories }: Props) => {
+  const router = useRouter();
+
+  const [keyword, setKeyword] = useState("");
+
   const { data, error, isLoading } = useSWR("", fetchRootCategories, {
     fallbackData: categories,
   });
 
-  console.log(data);
+  const handleToRedirectToSearchPage = () => {
+    if (keyword.length < 2) return;
+    router.push({
+      pathname: "/tim-kiem",
+      query: { search: keyword },
+    });
+  };
 
   return (
     <>
@@ -76,7 +88,11 @@ const SanPham: NextPageWithLayout<Props> = ({ categories }: Props) => {
           </div>
         </section>
         <section className="p-4 lg:p-0 flex justify-center">
-          <ProductSearch />
+          <ProductSearch
+            initialValue={keyword}
+            setInputValueToParent={setKeyword}
+            redirectToSearchPage={handleToRedirectToSearchPage}
+          />
         </section>
         <section className="mt-6 lg:mt-20 px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
           {isLoading

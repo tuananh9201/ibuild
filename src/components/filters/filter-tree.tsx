@@ -25,7 +25,6 @@ const FilterTree = ({ options }: FilterTreeProps) => {
   }, []);
 
   const setSelectedValue = (value: any[]) => {
-    console.log(value);
     if (value.length > 1) {
       setOutputValue("Nhiều danh mục");
     } else {

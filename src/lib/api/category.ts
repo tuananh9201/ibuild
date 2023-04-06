@@ -8,7 +8,7 @@ export const fetchRootCategories = async (): Promise<ICategory[]> => {
     const data = res?.data;
     return data?.data || [];
   } catch (error) {
-    console.log(error);
+    console.warn(error);
   }
   return [];
 };
@@ -39,7 +39,6 @@ export const fetchChildCategories = async (
 };
 
 export const fetchChildsCategories = async (parentId: string) => {
-  console.log("load categories by parent " + parentId);
   return fetch(`/api/fake/categories/${parentId}`)
     .then((res) => res.json())
     .catch(() => {

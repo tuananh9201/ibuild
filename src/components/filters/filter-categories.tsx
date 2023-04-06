@@ -2,8 +2,10 @@ import { useMemo } from "react";
 import useSWR from "swr";
 
 import { FilterLocation, Input } from "@/components/common";
-import { ICategory } from "@/lib/types";
 import { fetchChildCategories } from "@/lib/api/category";
+import { getAreas } from "@/lib/api/information";
+import { ICategory } from "@/lib/types";
+import { AreasModal } from "@/lib/models";
 import FilterTree from "./filter-tree";
 
 import type { DataNode } from "antd/es/tree";
@@ -26,6 +28,8 @@ const FilterCategories = ({ productId }: FilterCategoriesProps) => {
     productId,
     fetchChildCategories
   );
+
+  const res = useSWR<AreasModal[]>("", getAreas);
 
   const options = useMemo(() => {
     if (!categories) return [];

@@ -1,5 +1,6 @@
 import { User } from "src/lib/types";
 import api from "./api";
+import { SearchResultModel } from "../models";
 
 export const authWithAccessToken = async (): Promise<User | undefined> => {
   const resp = await api.get("/users/me");
@@ -23,10 +24,36 @@ export const validateEmailExists = async (data: {
 
 export const addProductFavorite = async (productId: string) => {
   try {
-    const res = await api.post('/bookmark', { product_id: productId })
+    const res = await api.post("/bookmark", { product_id: productId })
     return res
   } catch (err) {
-    console.log(err)
+    console.warn(err)
     return false
+  }
+}
+
+export const getSearchHistories = async (): Promise<SearchResultModel[]> => {
+  try {
+    const res = await api.get("/search-history")
+    return res.data?.data?.data || []
+  } catch (error) {
+    console.warn(error)
+    return []
+  }
+}
+
+export const createSearchHistory = async (keyword: string) => {
+  try {
+    await api.post("/search-history", { keyword })
+  } catch (error) {
+    console.warn(error)
+  }
+}
+
+export const deleteSearchHistory = async (id: string) => {
+  try {
+    await api.delete(`/search-history/${id}`)
+  } catch (error) {
+    console.warn(error)
   }
 }

@@ -13,6 +13,7 @@ import { locationIcon, productLogo } from "@/images";
 import { Product } from "src/lib/types";
 import { RootState } from "src/store/store";
 import { addProductFavorite } from "src/lib/api/user";
+import { Button } from "@/components/common";
 
 interface ProductCardProps {
   product: Product;
@@ -25,13 +26,16 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const router = useRouter();
   const isAddedFavorite = product.is_bookmark;
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [logoImage, setLogoImage] = useState(() => {
+    return product.supplier?.feature_image || productLogo;
+  });
+
   const prodImageSrc =
-    product.data?.product_image_s3 ||
     product.data?.product_image ||
+    product.data?.product_image_s3 ||
     placeholdImageSrc;
 
-  const [isPhoneHover, setIsPhoneHover] = useState(false);
-  const [isHeartHover, setIsHeartHover] = useState(false);
   const [featureImageSrc, setFeatureImageSrc] = useState(prodImageSrc);
 
   const handleAddFavorite = async () => {
@@ -41,8 +45,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
       });
       return;
     }
-    const res = await addProductFavorite(product.data.product_id);
-    console.log(res);
+    setIsLoading(true);
+    await addProductFavorite(product.data.product_id);
+    setIsLoading(false);
   };
 
   const handleToSupplier = () => {
@@ -75,11 +80,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
           onClick={handleToSupplier}
         >
           <Image
-            src={product.supplier?.feature_image || productLogo}
+            src={logoImage}
             alt="logo product"
             className="mr-1 w-6 h-6 object-contain rounded-full"
             width={24}
             height={24}
+            onError={() => setLogoImage(productLogo)}
           />
           <h3 className="text-primary-color uppercase font-roboto not-italic font-medium text-base leading-[150%]">
             {product.supplier?.cname || product.supplier?.name}
@@ -134,36 +140,17 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </Link>
         </button>
         <Tooltip title={product.supplier?.phone || "01234567"} trigger="click">
-          <button
-            className={`px-3 rounded border border-solid border-[#999999] ${
-              isPhoneHover ? "bg-primary-color" : ""
-            } w-[44px]`}
-            onMouseEnter={() => setIsPhoneHover(true)}
-            onMouseLeave={() => setIsPhoneHover(false)}
-          >
-            <PhoneIcon
-              className={`w-5 h-5 ${
-                isPhoneHover ? "fill-white" : "fill-primary-color"
-              }`}
-            />
-          </button>
+          <div>
+            <Button icon={PhoneIcon} overClass="w-[44px] py-0 h-full" />
+          </div>
         </Tooltip>
-        <button
-          className={`px-3 rounded border border-solid border-[#999999] ${
-            isAddedFavorite || isHeartHover ? "bg-primary-color" : ""
-          } w-[44px]`}
-          onMouseEnter={() => setIsHeartHover(true)}
-          onMouseLeave={() => setIsHeartHover(false)}
+        <Button
+          icon={HeartIcon}
+          overClass="w-[44px] py-0 h-full"
+          isBookMark={isAddedFavorite}
+          isLoading={isLoading}
           onClick={handleAddFavorite}
-        >
-          <HeartIcon
-            className={`w-5 h-5 ${
-              isAddedFavorite || isHeartHover
-                ? "fill-white"
-                : "fill-primary-color"
-            }`}
-          />
-        </button>
+        />
       </div>
     </div>
   );

@@ -44,14 +44,6 @@ const MainHeader = () => {
   const handleClickBack = () => {
     router.back();
   };
-  // const unAuthorized = useSelector(
-  //   (state: RootState) => state.auth.unAuthorized
-  // );
-  // useEffect(() => {
-  //   if (unAuthorized) {
-  //     console.log("unAuthorized");
-  //   }
-  // }, [unAuthorized, router]);
   const autoLogin = () => {
     const token = localStorage.getItem("access_token");
     if (token) {

@@ -13,9 +13,7 @@ const FilterLocation = () => {
 
   const selectElement = useRef<HTMLDivElement>(null);
 
-  const onChange = (e: CheckboxChangeEvent) => {
-    console.log(`checked = ${e.target.checked}`);
-  };
+  const onChange = (e: CheckboxChangeEvent) => {};
   const options = [
     { label: "Hà Nội", value: "HaNoi" },
     { label: "TP.Hồ Chí Minh", value: "HCM" },
