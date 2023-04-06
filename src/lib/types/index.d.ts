@@ -97,6 +97,7 @@ export type SearchProduct = {
   min_quantity: number;
   max_price: number;
   min_price: number;
+  category_id?: string[];
 };
 type ProductData = {
   category?: string[];
@@ -132,7 +133,7 @@ type Supplier = {
   feature_image?: string;
   city?: string;
   district?: string;
-  phone?: string
+  phone?: string;
 };
 export type Product = {
   id: string;
