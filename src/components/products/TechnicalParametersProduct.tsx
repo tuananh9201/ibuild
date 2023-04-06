@@ -5,14 +5,12 @@ interface Parameters {
 
 interface TechnicalParametersProductProps {
   title?: string;
-  parameters: string[];
-  values: string[];
+  parameters: string;
 }
 
 const TechnicalParametersProduct = ({
   title,
   parameters,
-  values,
 }: TechnicalParametersProductProps) => {
   return (
     <div>
@@ -20,14 +18,8 @@ const TechnicalParametersProduct = ({
         {title}
       </h3>
       <ul className="flex flex-col gap-4">
-        {parameters.map((parameter, idx) => (
-          <li
-            key={idx}
-            className="font-roboto not-italic font-normal leading-[150%] text-text-color text-base flex flex-row items-start"
-          >
-            <span className="w-1/6">{parameter}</span>
-            <span className="flex-base">{values[idx]}</span>
-          </li>
+        {parameters.split("|").map((parameter, idx) => (
+          <li key={idx}>{parameter}</li>
         ))}
       </ul>
     </div>
