@@ -86,7 +86,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             height={24}
             onError={() => setLogoImage(productLogo)}
           />
-          <h3 className="text-primary-color uppercase font-roboto not-italic font-medium text-base leading-[150%]">
+          <h3 className="text-primary-color uppercase font-roboto not-italic font-medium text-base leading-[150%] line-clamp-1">
             {product.supplier?.cname || product.supplier?.name}
           </h3>
         </div>
@@ -116,7 +116,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             Số lượng sản phẩm
           </span>
           <span className="font-roboto not-italic text-sm leading-[150%] text-text-color font-normal">
-            300 - 1000
+            Liên hệ
           </span>
         </div>
         <div className="mb-3">
