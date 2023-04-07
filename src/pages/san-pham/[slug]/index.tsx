@@ -13,12 +13,13 @@ import { ProductTypes } from "@/components/common";
 import { FilterCategories, FilterRelated } from "@/components/common";
 import { filterIcon, filterIconWhite } from "@/images/index";
 import { ParsedUrlQuery } from "querystring";
-import { fetchCategorySlug } from "src/lib/api/category";
+import { fetchCategorySlug, fetchRootCategories } from "src/lib/api/category";
 import { searchProduct } from "src/lib/api/product";
 import { ICategory, Product } from "src/lib/types";
 import { NextPageWithLayout } from "../../_app";
 import { LitsProductLoading } from "@/components/common";
 import ProductSearch from "@/components/products/ProductSearch";
+import { GetStaticPaths } from "next";
 
 type Props = {
   category: ICategory;
@@ -203,17 +204,17 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
 interface IParams extends ParsedUrlQuery {
   slug: string;
 }
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const rootsCategories = await fetchRootCategories();
-//   const paths = rootsCategories.map((cate: ICategory) => ({
-//     params: { slug: cate.slug },
-//   }));
+export const getStaticPaths: GetStaticPaths = async () => {
+  const rootsCategories = await fetchRootCategories();
+  const paths = rootsCategories.map((cate: ICategory) => ({
+    params: { slug: cate.slug },
+  }));
 
-//   return {
-//     paths: paths, //indicates that no page needs be created at build time
-//     fallback: "blocking", //indicates the type of fallback
-//   };
-// };
+  return {
+    paths: paths, //indicates that no page needs be created at build time
+    fallback: "blocking", //indicates the type of fallback
+  };
+};
 
 // export async function getStaticProps(context: GetStaticPropsContext) {
 //   // `getStaticProps` is executed on the server side.
