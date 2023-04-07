@@ -51,7 +51,8 @@ const RELATED_LIST = [
 const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   const [isActiveFilterIcon, setIsActiveFilterIcon] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
-  const [sortSelected, setSortSelected] = useState("LIEN_QUAN_NHAT");
+  const [resetSort, setResetSort] = useState(false);
+  const [keyword, setKeyword] = useState("");
   const [payload, setPayload] = useState<SearchProduct>({
     category_id: [props.category.id],
     min_price: 0,
@@ -62,9 +63,6 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
     skip: 0,
     sort_by: "LIEN_QUAN_NHAT",
   });
-  const [categoriesSelected, setCategoriesSelected] = useState<string[]>(
-    props.category?.id ? [props.category.id] : []
-  );
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [paging, setPaging] = useState({
     current: 1,
@@ -98,10 +96,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   const onClickFilterCategory = async (id: string) => {
     let categoryId: string | undefined = id;
     if (categoryId === "all") {
-      setCategoriesSelected(category ? [category.id] : []);
       categoryId = category?.id;
-    } else {
-      setCategoriesSelected([categoryId]);
     }
     setPaging({ ...paging, current: 1 });
     setPayload({
@@ -142,13 +137,28 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
 
   useEffect(() => {
     console.log(query);
+    if (query.search) {
+      setKeyword(keyword), setPaging({ ...paging, current: 1 });
+      setResetSort(!resetSort);
+      setPayload({
+        ...payload,
+        keyword: query.search as string,
+        category_id: category?.id ? [category.id] : [],
+        skip: 0,
+      });
+    }
   }, [query]);
 
-  const handleSelectRelated = async (value: number) => {
+  const onChangeSort = (value: number) => {
     const valueSelected = RELATED_LIST.find((item) => item.id === value)?.slug;
     if (valueSelected) {
-      setSortSelected(valueSelected);
       setPaging({ ...paging, current: 1, total: 0 });
+      setPayload({
+        ...payload,
+        category_id: [],
+        skip: 0,
+        sort_by: valueSelected,
+      });
     }
   };
 
@@ -158,12 +168,12 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
         <title>{category?.name_vi}</title>
       </Head>
       <div className="flex flex-col items-start px-4 lg:px-20 pt-8 pb-[60px]">
-        {/* <div className="w-full flex justify-center">
+        <div className="w-full flex justify-center">
           <ProductSearch
             initialValue={keyword}
             setInputValueToParent={setKeyword}
           />
-        </div> */}
+        </div>
         <Breadcrums breadcrumbs={breadcrumbs} />
         <div className="mt-8">
           <h1 className="font-roboto not-italic font-medium text-2xl leading-[calc(36 / 24)] text-text-color">
@@ -178,7 +188,8 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
           <FilterRelated
             defaultValue={1}
             options={RELATED_LIST}
-            onSelect={handleSelectRelated}
+            onSelect={onChangeSort}
+            reset={resetSort}
           />
           <div
             className={`flex flex-row items-center px-4 py-3 rounded border border-[#e6e6e6] cursor-pointer group active:bg-[#eb7a01] transition ${
