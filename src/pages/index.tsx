@@ -1,4 +1,3 @@
-import { bookImage, designImage, productImage } from "@/constants/images";
 import { motion } from "framer-motion";
 import Head from "next/head";
 import Image from "next/image";
@@ -6,6 +5,8 @@ import Link from "next/link";
 import { ReactElement } from "react";
 import MainLayout from "../components/main-layout";
 import { NextPageWithLayout } from "./_app";
+import { bookImage, designImage, productImage } from "@/constants/images";
+import constructionInformation from "@/images/construction_information.png";
 
 const HomePage: NextPageWithLayout = () => {
   return (
@@ -41,7 +42,7 @@ const HomePage: NextPageWithLayout = () => {
           </div>
         </section>
         <section className="mt-[10px] mb-10">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-0 ">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-0 ">
             <div className="w-full h-full relative">
               <Link href="/san-pham">
                 <Image
@@ -102,6 +103,42 @@ const HomePage: NextPageWithLayout = () => {
                 >
                   <h2 className="text-2xl font-semibold text-center">
                     Mẫu thiết kế
+                  </h2>
+                  <div className="max-w-[240px] pt-6 pr-2 pb-0 pl-2 my-0 mx-auto">
+                    <p className="text-sm font-normal text-center">
+                      Nisl debitis tincidunt expedita architecto, ligula,
+                      sapiente interdum? Soluta montes nec? Elit rhoncus earum
+                      dui dolor consequatur veniam doloremque incididunt,
+                      aspernatur sapiente fames nonummy porro.
+                    </p>
+                  </div>
+                </motion.div>
+              </Link>
+            </div>
+            <div className="w-full h-full relative">
+              <Link href="/mau-thiet-ke">
+                <Image
+                  priority
+                  placeholder="blur"
+                  className="card-image w-full h-full"
+                  src={constructionInformation}
+                  alt="book"
+                />
+                <motion.div
+                  initial={{ y: 200, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ x: 300, opacity: 0 }}
+                  layout
+                  transition={{
+                    type: "spring",
+                    stiffness: 260,
+                    damping: 20,
+                    duration: 2,
+                  }}
+                  className="absolute w-full bottom-24 left-0 text-white"
+                >
+                  <h2 className="text-2xl font-semibold text-center">
+                    Thông tin xây dựng
                   </h2>
                   <div className="max-w-[240px] pt-6 pr-2 pb-0 pl-2 my-0 mx-auto">
                     <p className="text-sm font-normal text-center">
