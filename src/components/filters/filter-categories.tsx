@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import useSWR from "swr";
 
 import { FilterLocation, Input } from "@/components/common";
@@ -78,18 +78,18 @@ const FilterCategories = ({ productId }: FilterCategoriesProps) => {
 
   return (
     <div className="mt-4 flex gap-4">
-      <div className="w-[25%]">
+      <div className="w-[20%]">
         <span className="inline-block font-roboto font-medium text-base leading-[calc(24 / 16)] mb-2">
           Danh mục sản phẩm
         </span>
         <FilterTree options={newArry} originData={categories || []} />
       </div>
-      <div className="w-[10%]">
+      <div className="w-[15%]">
         <span className="inline-block font-roboto font-medium text-base leading-[calc(24 / 16)] mb-2">
           Số lượng
         </span>
         <div className="flex flex-row gap-2 items-center">
-          <Input placeHolder="Từ" />
+          <FilterTree options={newArry} originData={categories || []} />
         </div>
       </div>
       <div className="w-[20%]">

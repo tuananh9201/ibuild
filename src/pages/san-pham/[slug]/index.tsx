@@ -18,12 +18,13 @@ import {
 } from "@/components/common";
 import { filterIcon, filterIconWhite } from "@/images/index";
 import { ParsedUrlQuery } from "querystring";
-import { fetchCategorySlug } from "src/lib/api/category";
+import { fetchCategorySlug, fetchRootCategories } from "src/lib/api/category";
 import { searchProduct } from "src/lib/api/product";
-import { ICategory, Product } from "src/lib/types";
+import { ICategory, Product, SearchProduct } from "src/lib/types";
 import { NextPageWithLayout } from "../../_app";
 import { LitsProductLoading } from "@/components/common";
 import ProductSearch from "@/components/products/ProductSearch";
+import { GetStaticPaths, GetStaticPropsContext } from "next";
 
 type Props = {
   category: ICategory;
@@ -55,16 +56,23 @@ const RELATED_LIST = [
 const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   const [isActiveFilterIcon, setIsActiveFilterIcon] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
-  const [sortSelected, setSortSelected] = useState("LIEN_QUAN_NHAT");
-  const [categoriesSelected, setCategoriesSelected] = useState<string[]>(
-    props.category?.id ? [props.category.id] : []
-  );
+  const [resetSort, setResetSort] = useState(false);
+  const [keyword, setKeyword] = useState("");
+  const [payload, setPayload] = useState<SearchProduct>({
+    category_id: [props.category.id],
+    min_price: 0,
+    max_price: 9999999999,
+    min_quantity: 0,
+    max_quantity: 9999999,
+    limit: 12,
+    skip: 0,
+    sort_by: "LIEN_QUAN_NHAT",
+  });
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [paging, setPaging] = useState({
     current: 1,
     total: 0,
   });
-  const [keyword, setKeyword] = useState("");
 
   const { query } = useRouter();
   const { slug } = query;
@@ -94,24 +102,34 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   const onClickFilterCategory = async (id: string) => {
     let categoryId: string | undefined = id;
     if (categoryId === "all") {
-      setCategoriesSelected(category ? [category.id] : []);
-    } else {
-      setCategoriesSelected([categoryId]);
+      categoryId = category?.id;
     }
+    setPaging({ ...paging, current: 1 });
+    setPayload({
+      ...payload,
+      skip: 0,
+      category_id: categoryId ? [categoryId] : [],
+    });
+  };
+  const onChangePagination = (page: number) => {
+    setPaging({ ...paging, current: page });
+    setPayload({ ...payload, skip: page !== 1 ? page * 12 : 0 });
   };
 
   const loadProduct = async () => {
     setIsLoadingData(true);
-    const data = await searchProduct({
-      limit: 12,
-      skip: paging.current !== 1 ? paging.current * 12 : 0,
-      sort_by: sortSelected,
-      max_price: 0,
-      min_price: 0,
-      max_quantity: 0,
-      min_quantity: 0,
-      category_id: categoriesSelected,
-    });
+    // {
+    //   // keyword: keywordSearch,
+    //   limit: 12,
+    //   skip: paging.current !== 1 ? paging.current * 12 : 0,
+    //   sort_by: sortSelected,
+    //   max_price: 0,
+    //   min_price: 0,
+    //   max_quantity: 0,
+    //   min_quantity: 0,
+    //   category_id: categoriesSelected,
+    // }
+    const data = await searchProduct(payload);
     setProducts(data.data);
     setPaging({
       ...paging,
@@ -122,13 +140,31 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
 
   useEffect(() => {
     loadProduct();
-  }, [paging.current, categoriesSelected, sortSelected]);
+  }, [payload]);
 
-  const handleSelectRelated = async (value: number) => {
+  useEffect(() => {
+    if (query.search) {
+      setKeyword(keyword), setPaging({ ...paging, current: 1 });
+      setResetSort(!resetSort);
+      setPayload({
+        ...payload,
+        keyword: query.search as string,
+        category_id: category?.id ? [category.id] : [],
+        skip: 0,
+      });
+    }
+  }, [query]);
+
+  const onChangeSort = (value: number) => {
     const valueSelected = RELATED_LIST.find((item) => item.id === value)?.slug;
     if (valueSelected) {
-      setSortSelected(valueSelected);
       setPaging({ ...paging, current: 1, total: 0 });
+      setPayload({
+        ...payload,
+        category_id: [],
+        skip: 0,
+        sort_by: valueSelected,
+      });
     }
   };
 
@@ -154,7 +190,36 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
           onClickItem={onClickFilterCategory}
           parentId={category?.id || ""}
         />
-        <FilterProduct productId={category?.id} />
+        <div className="w-full flex flex-col sm:flex-row justify-between mt-8">
+          <FilterRelated
+            defaultValue={1}
+            options={RELATED_LIST}
+            onSelect={onChangeSort}
+            reset={resetSort}
+          />
+          <div
+            className={`flex flex-row items-center px-4 py-3 rounded border border-[#e6e6e6] cursor-pointer group active:bg-[#eb7a01] transition ${
+              isActiveFilterIcon ? "bg-[#eb7a01]" : ""
+            }`}
+            onClick={handleShowFilter}
+          >
+            <Image
+              src={isActiveFilterIcon ? filterIconWhite : filterIcon}
+              alt="filter icon"
+              className="w-3 h-3"
+            />
+            <span
+              className={`font-roboto not-italic font-medium text-base leading-[150%] text-[#333333] ml-3 group-active:text-white ${
+                isActiveFilterIcon ? "text-white" : ""
+              }`}
+            >
+              Bộ lọc
+            </span>
+          </div>
+        </div>
+        {isActiveFilterIcon && (
+          <FilterCategories productId={category?.id || ""} />
+        )}
         <div className="mt-4 mb-4 w-full">
           {isLoading || isLoadingData ? (
             <LitsProductLoading items={12} />
@@ -174,7 +239,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
         )}
         <div className="w-full text-center">
           <Pagination
-            onChange={(page) => setPaging({ ...paging, current: page })}
+            onChange={onChangePagination}
             current={paging.current}
             pageSize={12}
             total={paging.total}
@@ -189,29 +254,28 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
 interface IParams extends ParsedUrlQuery {
   slug: string;
 }
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const rootsCategories = await fetchRootCategories();
-//   const paths = rootsCategories.map((cate: ICategory) => ({
-//     params: { slug: cate.slug },
-//   }));
+export const getStaticPaths: GetStaticPaths = async () => {
+  const rootsCategories = await fetchRootCategories();
+  const paths = rootsCategories.map((cate: ICategory) => ({
+    params: { slug: cate.slug },
+  }));
+  return {
+    paths: paths, //indicates that no page needs be created at build time
+    fallback: "blocking", //indicates the type of fallback
+  };
+};
 
-//   return {
-//     paths: paths, //indicates that no page needs be created at build time
-//     fallback: "blocking", //indicates the type of fallback
-//   };
-// };
+export async function getStaticProps(context: GetStaticPropsContext) {
+  // `getStaticProps` is executed on the server side.
+  const { slug } = context.params as IParams;
 
-// export async function getStaticProps(context: GetStaticPropsContext) {
-//   // `getStaticProps` is executed on the server side.
-//   const { slug } = context.params as IParams;
-
-//   const category = await fetchCategorySlug(slug);
-//   return {
-//     props: {
-//       category: category || [],
-//     },
-//   };
-// }
+  const category = await fetchCategorySlug(slug);
+  return {
+    props: {
+      category: category || [],
+    },
+  };
+}
 
 ListCategoriesBySlug.getLayout = function getLayout(page: ReactElement) {
   return (

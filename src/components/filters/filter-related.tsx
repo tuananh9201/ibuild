@@ -13,6 +13,7 @@ interface FilterRelatedProps {
   defaultValue?: number;
   options?: ItemFilter[];
   onSelect: (value: number) => void;
+  reset?: boolean;
 }
 
 const FilterRelated = ({
@@ -20,6 +21,7 @@ const FilterRelated = ({
   defaultValue,
   options,
   onSelect,
+  reset,
 }: FilterRelatedProps) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [valueSelected, setValueSelected] = useState(() => {
@@ -48,6 +50,11 @@ const FilterRelated = ({
     setValueSelected(value);
     onSelect(id);
   };
+  useEffect(() => {
+    if (reset) {
+      handleSelectValue(1);
+    }
+  }, [reset]);
 
   return (
     <div className="relative min-w-[205px]">

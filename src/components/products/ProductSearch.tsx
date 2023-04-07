@@ -84,7 +84,7 @@ const ProductSearch = ({
   };
 
   useEffect(() => {
-    if (initialValue.length > 0) return;
+    if (initialValue?.length > 0) return;
     getSearchHistory();
   }, [initialValue]);
 
