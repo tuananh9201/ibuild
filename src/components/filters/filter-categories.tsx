@@ -82,7 +82,7 @@ const FilterCategories = ({ productId }: FilterCategoriesProps) => {
         <span className="inline-block font-roboto font-medium text-base leading-[calc(24 / 16)] mb-2">
           Danh mục sản phẩm
         </span>
-        <FilterTree options={newArry} />
+        <FilterTree options={newArry} originData={categories || []} />
       </div>
       <div className="w-[10%]">
         <span className="inline-block font-roboto font-medium text-base leading-[calc(24 / 16)] mb-2">

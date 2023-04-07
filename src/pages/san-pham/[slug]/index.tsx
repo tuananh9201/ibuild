@@ -11,7 +11,11 @@ import MainLayout from "@/components/main-layout";
 import ListProduct from "@/components/products/ListProduct";
 import noFoundProduct from "@/images/no_search_result.png";
 import { ProductTypes } from "@/components/common";
-import { FilterCategories, FilterRelated } from "@/components/common";
+import {
+  FilterCategories,
+  FilterRelated,
+  FilterProduct,
+} from "@/components/common";
 import { filterIcon, filterIconWhite } from "@/images/index";
 import { ParsedUrlQuery } from "querystring";
 import { fetchCategorySlug } from "src/lib/api/category";
@@ -150,35 +154,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
           onClickItem={onClickFilterCategory}
           parentId={category?.id || ""}
         />
-        <div className="w-full flex flex-col sm:flex-row justify-between mt-8">
-          <FilterRelated
-            defaultValue={1}
-            options={RELATED_LIST}
-            onSelect={handleSelectRelated}
-          />
-          <div
-            className={`flex flex-row items-center px-4 py-3 rounded border border-[#e6e6e6] cursor-pointer group active:bg-[#eb7a01] transition ${
-              isActiveFilterIcon ? "bg-[#eb7a01]" : ""
-            }`}
-            onClick={handleShowFilter}
-          >
-            <Image
-              src={isActiveFilterIcon ? filterIconWhite : filterIcon}
-              alt="filter icon"
-              className="w-3 h-3"
-            />
-            <span
-              className={`font-roboto not-italic font-medium text-base leading-[150%] text-[#333333] ml-3 group-active:text-white ${
-                isActiveFilterIcon ? "text-white" : ""
-              }`}
-            >
-              Bộ lọc
-            </span>
-          </div>
-        </div>
-        {isActiveFilterIcon && (
-          <FilterCategories productId={category?.id || ""} />
-        )}
+        <FilterProduct productId={category?.id} />
         <div className="mt-4 mb-4 w-full">
           {isLoading || isLoadingData ? (
             <LitsProductLoading items={12} />

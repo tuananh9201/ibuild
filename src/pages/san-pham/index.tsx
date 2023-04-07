@@ -31,7 +31,7 @@ const SanPham: NextPageWithLayout<Props> = ({ categories }: Props) => {
     if (keyword.length < 2) return;
     router.push({
       pathname: "/tim-kiem",
-      query: { search: keyword },
+      query: { search: keyword, category: router.pathname },
     });
   };
 

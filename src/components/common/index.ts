@@ -6,6 +6,7 @@ export { default as FilterLocation } from '../filters/filter-location'
 export { default as FilterQuantity } from '../filters/filter-quantity'
 export { default as FilterRelated } from '../filters/filter-related'
 export { default as FilterCategories } from '../filters/filter-categories'
+export { default as FilterProduct } from "../filters/filter-product"
 
 // common
 export { default as MultiCarousel } from "./MultiCarousel"

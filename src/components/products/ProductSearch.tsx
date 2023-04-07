@@ -84,8 +84,9 @@ const ProductSearch = ({
   };
 
   useEffect(() => {
+    if (initialValue.length > 0) return;
     getSearchHistory();
-  }, []);
+  }, [initialValue]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -139,9 +140,9 @@ const ProductSearch = ({
   const classNameActivate = `${className} border-solid border border-[#dddddd]`;
   return (
     <motion.div
-      animate={isActivateSearch ? "active" : "deactive"}
+      animate={histories ? "active" : "deactive"}
       className={
-        isActivateSearch
+        histories.length > 0
           ? "mt-2 lg:mt-10 lg:max-w-3/4 flex flex-col bg-white items-start gap-2 shadow-[0_0.5px_15px_1px_rgba(0,0,0,0.1)] rounded-lg"
           : "mt-2 lg:mt-10 lg:max-w-3/4 flex flex-col gap-2"
       }

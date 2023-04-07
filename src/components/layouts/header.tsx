@@ -39,6 +39,8 @@ const MainHeader = () => {
   const dispatch = useDispatch();
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const currentPath = router.pathname;
+  const currenQuery = router.query.category;
+
   const [openMenu, setOpenMenu] = useState(false);
   const isHidden = pathsShowBackButton.includes(router.pathname);
   const handleClickBack = () => {
@@ -89,7 +91,10 @@ const MainHeader = () => {
               <li
                 key={idx}
                 className={`flex flex-col items-center group font-roboto font-normal text-base text-[#343434] ${
-                  menu.href === currentPath ? "active" : ""
+                  currentPath.includes(menu.href) ||
+                  currenQuery?.includes(menu.href)
+                    ? "active"
+                    : ""
                 }`}
               >
                 <Link
