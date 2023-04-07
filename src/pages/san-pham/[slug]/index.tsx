@@ -15,11 +15,11 @@ import { filterIcon, filterIconWhite } from "@/images/index";
 import { ParsedUrlQuery } from "querystring";
 import { fetchCategorySlug, fetchRootCategories } from "src/lib/api/category";
 import { searchProduct } from "src/lib/api/product";
-import { ICategory, Product } from "src/lib/types";
+import { ICategory, Product, SearchProduct } from "src/lib/types";
 import { NextPageWithLayout } from "../../_app";
 import { LitsProductLoading } from "@/components/common";
 import ProductSearch from "@/components/products/ProductSearch";
-import { GetStaticPaths } from "next";
+import { GetStaticPaths, GetStaticPropsContext } from "next";
 
 type Props = {
   category: ICategory;
@@ -52,6 +52,16 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   const [isActiveFilterIcon, setIsActiveFilterIcon] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [sortSelected, setSortSelected] = useState("LIEN_QUAN_NHAT");
+  const [payload, setPayload] = useState<SearchProduct>({
+    category_id: [props.category.id],
+    min_price: 0,
+    max_price: 9999999999,
+    min_quantity: 0,
+    max_quantity: 9999999,
+    limit: 12,
+    skip: 0,
+    sort_by: "LIEN_QUAN_NHAT",
+  });
   const [categoriesSelected, setCategoriesSelected] = useState<string[]>(
     props.category?.id ? [props.category.id] : []
   );
@@ -89,24 +99,36 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
     let categoryId: string | undefined = id;
     if (categoryId === "all") {
       setCategoriesSelected(category ? [category.id] : []);
+      categoryId = category?.id;
     } else {
       setCategoriesSelected([categoryId]);
     }
+    setPaging({ ...paging, current: 1 });
+    setPayload({
+      ...payload,
+      skip: 0,
+      category_id: categoryId ? [categoryId] : [],
+    });
+  };
+  const onChangePagination = (page: number) => {
+    setPaging({ ...paging, current: page });
+    setPayload({ ...payload, skip: page !== 1 ? page * 12 : 0 });
   };
 
   const loadProduct = async () => {
     setIsLoadingData(true);
-    const data = await searchProduct({
-      // keyword: keywordSearch,
-      limit: 12,
-      skip: paging.current !== 1 ? paging.current * 12 : 0,
-      sort_by: sortSelected,
-      max_price: 0,
-      min_price: 0,
-      max_quantity: 0,
-      min_quantity: 0,
-      category_id: categoriesSelected,
-    });
+    // {
+    //   // keyword: keywordSearch,
+    //   limit: 12,
+    //   skip: paging.current !== 1 ? paging.current * 12 : 0,
+    //   sort_by: sortSelected,
+    //   max_price: 0,
+    //   min_price: 0,
+    //   max_quantity: 0,
+    //   min_quantity: 0,
+    //   category_id: categoriesSelected,
+    // }
+    const data = await searchProduct(payload);
     setProducts(data.data);
     setPaging({
       ...paging,
@@ -116,7 +138,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   };
   useEffect(() => {
     loadProduct();
-  }, [paging.current, categoriesSelected, sortSelected]);
+  }, [payload]);
 
   useEffect(() => {
     console.log(query);
@@ -190,7 +212,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
         </div>
         <div className="w-full text-center">
           <Pagination
-            onChange={(page) => setPaging({ ...paging, current: page })}
+            onChange={onChangePagination}
             current={paging.current}
             pageSize={12}
             total={paging.total}
@@ -209,24 +231,23 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const paths = rootsCategories.map((cate: ICategory) => ({
     params: { slug: cate.slug },
   }));
-
   return {
     paths: paths, //indicates that no page needs be created at build time
     fallback: "blocking", //indicates the type of fallback
   };
 };
 
-// export async function getStaticProps(context: GetStaticPropsContext) {
-//   // `getStaticProps` is executed on the server side.
-//   const { slug } = context.params as IParams;
+export async function getStaticProps(context: GetStaticPropsContext) {
+  // `getStaticProps` is executed on the server side.
+  const { slug } = context.params as IParams;
 
-//   const category = await fetchCategorySlug(slug);
-//   return {
-//     props: {
-//       category: category || [],
-//     },
-//   };
-// }
+  const category = await fetchCategorySlug(slug);
+  return {
+    props: {
+      category: category || [],
+    },
+  };
+}
 
 ListCategoriesBySlug.getLayout = function getLayout(page: ReactElement) {
   return (
