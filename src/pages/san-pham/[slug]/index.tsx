@@ -118,17 +118,6 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
 
   const loadProduct = async () => {
     setIsLoadingData(true);
-    // {
-    //   // keyword: keywordSearch,
-    //   limit: 12,
-    //   skip: paging.current !== 1 ? paging.current * 12 : 0,
-    //   sort_by: sortSelected,
-    //   max_price: 0,
-    //   min_price: 0,
-    //   max_quantity: 0,
-    //   min_quantity: 0,
-    //   category_id: categoriesSelected,
-    // }
     const data = await searchProduct(payload);
     setProducts(data.data);
     setPaging({
@@ -144,7 +133,8 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
 
   useEffect(() => {
     if (query.search) {
-      setKeyword(keyword), setPaging({ ...paging, current: 1 });
+      setKeyword(query.search as string);
+      setPaging({ ...paging, current: 1 });
       setResetSort(!resetSort);
       setPayload({
         ...payload,
