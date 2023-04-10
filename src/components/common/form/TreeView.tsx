@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Tree } from "antd";
 
 import { UpDownIcon } from "@/images/icons/product_types/icon_wrapper";
@@ -11,46 +11,85 @@ interface TreeOption extends DataNode {
   parent_id?: string;
 }
 interface TreeViewProps {
-  setSelectedValue: Function;
-  options: TreeOption[];
-  originData: ICategory[];
+  options: ICategory[];
+  defaultValue?: string;
+  setOutputValue?: Function;
 }
 
-const TreeView = ({ options, setSelectedValue, originData }: TreeViewProps) => {
-  // const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
-  const [checkedKeys, setCheckedKeys] = useState<React.Key[]>([]);
-  // const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
-  // const [autoExpandParent, setAutoExpandParent] = useState<boolean>(true);
+const TreeView = ({ options, setOutputValue, defaultValue }: TreeViewProps) => {
+  const [treeData, setTreeData] = useState<TreeOption[]>([]);
 
-  // const onExpand = (expandedKeysValue: React.Key[]) => {
-  //   setExpandedKeys(expandedKeysValue);
-  //   setAutoExpandParent(false);
-  // };
+  useEffect(() => {
+    if (!options) return;
 
-  const onCheck = (checkedKeysValue: any) => {
-    setCheckedKeys(checkedKeysValue);
-    if (checkedKeysValue.length > 1) {
-      setSelectedValue("Nhiều danh mục");
-    } else if (checkedKeysValue.length === 0) {
-      setSelectedValue("Chọn danh mục sản phẩm");
-    } else if (checkedKeysValue[0] === "0") {
-      setSelectedValue("Tất cả");
+    const rootItems: any[] = [];
+    const lookup: any = {};
+
+    const newOptions = options.map((option) => {
+      return {
+        id: option.id,
+        parent_id: option.parent_id,
+        title: option.name_vi,
+        key: option.id,
+        children: [],
+      };
+    });
+
+    newOptions.forEach((item) => {
+      item.children = [];
+      lookup[item.id] = item;
+    });
+
+    console.log(lookup);
+
+    newOptions.forEach((item) => {
+      if (!item.parent_id) return;
+      const parent = lookup[item.parent_id];
+      if (parent) {
+        parent.children.push(item);
+      } else {
+        rootItems.push(item);
+      }
+    });
+
+    setTreeData([
+      {
+        id: "0",
+        parent_id: "0",
+        title: "Tất cả",
+        key: "0",
+        children: [],
+      },
+      ...rootItems,
+    ]);
+  }, [options]);
+
+  const onCheck = (checkedValue: any) => {
+    if (!setOutputValue) return;
+    if (checkedValue.length > 1) {
+      setOutputValue({
+        id: "00",
+        name_vi: "Nhiều danh mục",
+      });
+    } else if (checkedValue[0] === "0" || checkedValue.length === 0) {
+      setOutputValue({
+        id: "0",
+        name_vi: "Tất cả",
+      });
     } else {
-      const value = originData.find((data) => data.id === checkedKeysValue[0]);
-      setSelectedValue(value?.name_vi);
+      const option = options.find((item) => item.id === checkedValue[0]);
+      setOutputValue({
+        id: option?.id,
+        name_vi: option?.name_vi || "",
+      });
     }
   };
-
-  // const onSelect = (selectedKeysValue: React.Key[], info: any) => {
-  //   setSelectedKeys(selectedKeysValue);
-  // };
 
   return (
     <Tree
       checkable
       onCheck={onCheck}
-      checkedKeys={checkedKeys}
-      treeData={options}
+      treeData={treeData}
       switcherIcon={<UpDownIcon className="transition" />}
     />
   );

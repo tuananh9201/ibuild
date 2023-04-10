@@ -1,21 +1,44 @@
 import { useState, useRef, useEffect } from "react";
+import useSWR from "swr";
 
-import { TreeView, TreeViewWrapper, SearchInput } from "@/components/common";
+import { TreeView, SearchInput } from "@/components/common";
 import { UpDownIcon } from "@/images/icons/product_types/icon_wrapper";
 import { ICategory } from "@/lib/types";
-// import {} from "@/lib"
+import { fetchChildCategories } from "@/lib/api/category";
 
 interface FilterTreeProps {
-  options: any[];
-  originData: ICategory[];
+  categoryId?: string;
+  defaultValue?: ICategory;
+  searchEnabled?: boolean;
+  defaultOptions?: ICategory[];
 }
 
-const FilterTree = ({ options, originData }: FilterTreeProps) => {
+const FilterTree = ({
+  categoryId,
+  defaultValue,
+  searchEnabled,
+  defaultOptions,
+}: FilterTreeProps) => {
+  // console.log(defaultOptions);
+
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const [outputValue, setOutputValue] = useState("Chọn danh mục sản phẩm");
+  const [outputValue, setOutputValue] = useState(defaultValue);
+  const [keyword, setKeyword] = useState("");
+
+  const { data: categories } = useSWR<ICategory[]>(
+    categoryId,
+    fetchChildCategories
+  );
+
+  const [options, setOptions] = useState<ICategory[]>(defaultOptions || []);
+
+  useEffect(() => {
+    if (categories) {
+      setOptions(categories);
+    }
+  }, [categories, defaultOptions]);
 
   const selectElement = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     window.addEventListener("click", (e: any) => {
       if (!selectElement.current?.contains(e.target)) {
@@ -26,6 +49,17 @@ const FilterTree = ({ options, originData }: FilterTreeProps) => {
     () => window.removeEventListener("click", () => {});
   }, []);
 
+  useEffect(() => {
+    if (!keyword) {
+      setOptions(categories || defaultOptions || []);
+      return;
+    }
+    const optionsByKeyword = categories?.filter((option) =>
+      option.name_vi.toLowerCase().includes(keyword.toLocaleLowerCase())
+    );
+    setOptions(optionsByKeyword || []);
+  }, [keyword]);
+
   return (
     <div className="w-full relative" ref={selectElement}>
       <div
@@ -35,7 +69,7 @@ const FilterTree = ({ options, originData }: FilterTreeProps) => {
         onClick={() => setIsOpenMenu((prev) => !prev)}
       >
         <span className="font-roboto font-normal text-base leading-[calc(24 / 16)] text-text-color">
-          {outputValue}
+          {outputValue?.name_vi}
         </span>
         <UpDownIcon
           className={`cursor-pointer transition ${
@@ -46,13 +80,10 @@ const FilterTree = ({ options, originData }: FilterTreeProps) => {
       <div
         className={`${
           isOpenMenu ? "block" : "hidden"
-        } absolute z-10 bg-white border border-solid border-primary-color border-t-0 w-full rounded-b px-4 pt-[22px] pb-[14px]`}
+        } absolute z-10 bg-white border border-solid border-primary-color border-t-0 w-full rounded-b px-4 pt-[22px] pb-[14px] flex flex-col gap-5`}
       >
-        <TreeView
-          setSelectedValue={setOutputValue}
-          options={options}
-          originData={originData}
-        />
+        {searchEnabled && <SearchInput value={keyword} setValue={setKeyword} />}
+        <TreeView options={options} setOutputValue={setOutputValue} />
       </div>
     </div>
   );

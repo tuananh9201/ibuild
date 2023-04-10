@@ -180,36 +180,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
           onClickItem={onClickFilterCategory}
           parentId={category?.id || ""}
         />
-        <div className="w-full flex flex-col sm:flex-row justify-between mt-8">
-          <FilterRelated
-            defaultValue={1}
-            options={RELATED_LIST}
-            onSelect={onChangeSort}
-            reset={resetSort}
-          />
-          <div
-            className={`flex flex-row items-center px-4 py-3 rounded border border-[#e6e6e6] cursor-pointer group active:bg-[#eb7a01] transition ${
-              isActiveFilterIcon ? "bg-[#eb7a01]" : ""
-            }`}
-            onClick={handleShowFilter}
-          >
-            <Image
-              src={isActiveFilterIcon ? filterIconWhite : filterIcon}
-              alt="filter icon"
-              className="w-3 h-3"
-            />
-            <span
-              className={`font-roboto not-italic font-medium text-base leading-[150%] text-[#333333] ml-3 group-active:text-white ${
-                isActiveFilterIcon ? "text-white" : ""
-              }`}
-            >
-              Bộ lọc
-            </span>
-          </div>
-        </div>
-        {isActiveFilterIcon && (
-          <FilterCategories productId={category?.id || ""} />
-        )}
+        <FilterProduct categoryId={category?.id} />
         <div className="mt-4 mb-4 w-full">
           {isLoading || isLoadingData ? (
             <LitsProductLoading items={12} />

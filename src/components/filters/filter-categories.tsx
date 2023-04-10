@@ -11,7 +11,7 @@ import FilterTree from "./filter-tree";
 import type { DataNode } from "antd/es/tree";
 
 interface FilterCategoriesProps {
-  productId: string;
+  categoryId?: string;
 }
 
 interface TreeOptionView extends ICategory {
@@ -23,58 +23,33 @@ interface SelectTreeOptionView extends DataNode {
   parent_id?: string;
 }
 
-const FilterCategories = ({ productId }: FilterCategoriesProps) => {
-  const { data: categories } = useSWR<ICategory[]>(
-    productId,
-    fetchChildCategories
-  );
+const QUANTITIES = [
+  {
+    id: "1",
+    name_vi: "0-99",
+    parent_id: "1",
+  },
+  {
+    id: "2",
+    name_vi: "100-999",
+    parent_id: "2",
+  },
+  {
+    id: "3",
+    name_vi: "1000-9999",
+    parent_id: "3",
+  },
+];
 
-  const res = useSWR<AreasModal[]>("", getAreas);
-
-  const options = useMemo(() => {
-    if (!categories) return [];
-
-    return categories.map((option) => {
-      return {
-        id: option.id,
-        parent_id: option.parent_id,
-        title: option.name_vi,
-        key: option.id,
-        children: [],
-      };
-    });
-  }, [categories]);
-
-  const renderTreeOptions = (arr: SelectTreeOptionView[]) => {
-    const rootItems: any = [];
-    const lookup: any = {};
-
-    arr.forEach((item) => {
-      item.children = [];
-      lookup[item.id] = item;
-    });
-
-    arr.forEach((item) => {
-      if (!item.parent_id) return;
-      const parent = lookup[item.parent_id];
-      if (parent) {
-        parent.children.push(item);
-      } else {
-        rootItems.push(item);
-      }
-    });
-
-    return rootItems;
+const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
+  const defaultValue = {
+    id: "00",
+    name_vi: "Chọn danh mục sản phẩm",
   };
-
-  const newArry = renderTreeOptions(options);
-  newArry.unshift({
-    id: "0",
-    parent_id: "0",
-    title: "Tất cả",
-    key: "0",
-    children: [],
-  });
+  const defaultQuantityValue = {
+    id: "00",
+    name_vi: "Chọn số lượng",
+  };
 
   return (
     <div className="mt-4 flex gap-4">
@@ -82,14 +57,21 @@ const FilterCategories = ({ productId }: FilterCategoriesProps) => {
         <span className="inline-block font-roboto font-medium text-base leading-[calc(24 / 16)] mb-2">
           Danh mục sản phẩm
         </span>
-        <FilterTree options={newArry} originData={categories || []} />
+        {/* <FilterTree
+          categoryId={categoryId}
+          defaultValue={defaultValue}
+          searchEnabled={true}
+        /> */}
       </div>
       <div className="w-[15%]">
         <span className="inline-block font-roboto font-medium text-base leading-[calc(24 / 16)] mb-2">
           Số lượng
         </span>
         <div className="flex flex-row gap-2 items-center">
-          <FilterTree options={newArry} originData={categories || []} />
+          <FilterTree
+            defaultValue={defaultQuantityValue}
+            defaultOptions={QUANTITIES}
+          />
         </div>
       </div>
       <div className="w-[20%]">

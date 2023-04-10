@@ -28,10 +28,10 @@ const RELATED_LIST = [
 ];
 
 interface FilterProductProps {
-  productId?: string;
+  categoryId?: string;
 }
 
-const FilterProduct = ({ productId }: FilterProductProps) => {
+const FilterProduct = ({ categoryId }: FilterProductProps) => {
   const [isActiveFilterIcon, setIsActiveFilterIcon] = useState(false);
 
   const handleSelectRelated = () => {};
@@ -62,7 +62,7 @@ const FilterProduct = ({ productId }: FilterProductProps) => {
           </span>
         </div>
       </div>
-      {isActiveFilterIcon && <FilterCategories productId={productId || ""} />}
+      {isActiveFilterIcon && <FilterCategories categoryId={categoryId} />}
     </div>
   );
 };
