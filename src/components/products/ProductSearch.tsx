@@ -35,8 +35,8 @@ const SearchHistoryItem = (props: HistoryItem) => {
     }
   };
 
-  const handleDeleteItem = (id: string) => {
-    deleteSearchHistory(id);
+  const handleDeleteItem = async (id: string) => {
+    await deleteSearchHistory(id);
     if (props.getSearchResultAgain) {
       props.getSearchResultAgain();
     }
@@ -128,10 +128,8 @@ const ProductSearch = ({
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      if (redirectToSearchPage) {
-        redirectToSearchPage();
-        return;
-      }
+      if (!initialValue || initialValue.trim().length < 2) return;
+      createSearchHistory(initialValue);
       router.push({
         pathname: router.pathname,
         query: { ...router.query, search: initialValue },
