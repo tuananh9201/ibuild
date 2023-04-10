@@ -128,6 +128,8 @@ const ProductSearch = ({
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
+      if (!initialValue || initialValue.trim().length < 2) return;
+      createSearchHistory(initialValue);
       router.push({
         pathname: router.pathname,
         query: { ...router.query, search: initialValue },
