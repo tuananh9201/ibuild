@@ -17,15 +17,15 @@ interface TreeViewProps {
 }
 
 const TreeView = ({ options, setSelectedValue, originData }: TreeViewProps) => {
-  const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
+  // const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
   const [checkedKeys, setCheckedKeys] = useState<React.Key[]>([]);
-  const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
-  const [autoExpandParent, setAutoExpandParent] = useState<boolean>(true);
+  // const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
+  // const [autoExpandParent, setAutoExpandParent] = useState<boolean>(true);
 
-  const onExpand = (expandedKeysValue: React.Key[]) => {
-    setExpandedKeys(expandedKeysValue);
-    setAutoExpandParent(false);
-  };
+  // const onExpand = (expandedKeysValue: React.Key[]) => {
+  //   setExpandedKeys(expandedKeysValue);
+  //   setAutoExpandParent(false);
+  // };
 
   const onCheck = (checkedKeysValue: any) => {
     setCheckedKeys(checkedKeysValue);
@@ -41,20 +41,15 @@ const TreeView = ({ options, setSelectedValue, originData }: TreeViewProps) => {
     }
   };
 
-  const onSelect = (selectedKeysValue: React.Key[], info: any) => {
-    setSelectedKeys(selectedKeysValue);
-  };
+  // const onSelect = (selectedKeysValue: React.Key[], info: any) => {
+  //   setSelectedKeys(selectedKeysValue);
+  // };
 
   return (
     <Tree
       checkable
-      onExpand={onExpand}
-      expandedKeys={expandedKeys}
-      autoExpandParent={autoExpandParent}
       onCheck={onCheck}
       checkedKeys={checkedKeys}
-      onSelect={onSelect}
-      selectedKeys={selectedKeys}
       treeData={options}
       switcherIcon={<UpDownIcon className="transition" />}
     />
