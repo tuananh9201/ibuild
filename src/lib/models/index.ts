@@ -5,7 +5,7 @@ export interface TreeOptionOriginModel {
 
 export interface AreasModal {
     id: string;
-    name: string;
+    name_vi: string;
     parent_id: string
 }
 

@@ -1,32 +1,34 @@
-import { useState } from "react";
 import useSWR from "swr";
 
-import { Product } from "@/lib/types";
-import ListProduct from "./ListProduct";
-import { getListProductBySupplier } from "@/lib/api/product";
 import ListProductLoading from "../common/ListProductLoading";
+import ListProduct from "./ListProduct";
+import { searchProduct } from "@/lib/api/product";
 
-interface ProductSectionProps {
+interface SameCategoryProps {
   title: string;
-  supplierId?: string;
-  productId?: string;
+  categoryId: string;
 }
 
-const ProductSection = ({
-  title,
-  supplierId,
-  productId,
-}: ProductSectionProps) => {
-  const { data, isLoading } = useSWR<Product[]>(
-    { supplierId, productId },
-    getListProductBySupplier
-  );
+const SameCategory = ({ title, categoryId }: SameCategoryProps) => {
+  const payload = {
+    category_id: [categoryId],
+    cities: [categoryId],
+    max_quantity: 0,
+    min_quantity: 0,
+    max_price: 0,
+    min_price: 0,
+    sort_by: "LIEN_QUAN_NHAT",
+    limit: 12,
+    skip: 0,
+  };
+
+  const { data, isLoading } = useSWR(payload, searchProduct);
 
   return (
     <div className="max-w-[1280px] mx-auto my-0 mt-10">
       <div className="flex flex-row justify-between items-center mb-6">
         <h3 className="font-roboto not-italic font-medium text-xl leading-[150%] text-text-color">
-          Cùng nhà cung cấp
+          {title}
         </h3>
         <button className="text-primary-color font-roboto not-italic font-medium text-base leading-[150%]">
           Xem thêm
@@ -41,4 +43,4 @@ const ProductSection = ({
   );
 };
 
-export default ProductSection;
+export default SameCategory;
