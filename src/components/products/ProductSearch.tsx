@@ -35,8 +35,8 @@ const SearchHistoryItem = (props: HistoryItem) => {
     }
   };
 
-  const handleDeleteItem = (id: string) => {
-    deleteSearchHistory(id);
+  const handleDeleteItem = async (id: string) => {
+    await deleteSearchHistory(id);
     if (props.getSearchResultAgain) {
       props.getSearchResultAgain();
     }
