@@ -130,6 +130,10 @@ const ProductSearch = ({
     if (e.key === "Enter") {
       if (!initialValue || initialValue.trim().length < 2) return;
       createSearchHistory(initialValue);
+      if (redirectToSearchPage) {
+        redirectToSearchPage();
+        return;
+      }
       router.push({
         pathname: router.pathname,
         query: { ...router.query, search: initialValue },
