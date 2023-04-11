@@ -140,11 +140,7 @@ const SearchPage: NextPageWithLayout = () => {
             </span>
           </div>
         </section>
-        <section>
-          {isActiveFilterIcon && (
-            <FilterCategories productId="vat-lieu-xay-dung" />
-          )}
-        </section>
+        <section>{isActiveFilterIcon && <FilterCategories />}</section>
         <section className="mt-4">
           {isLoadingData ? (
             <LitsProductLoading items={12} />
