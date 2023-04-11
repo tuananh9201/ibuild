@@ -27,17 +27,17 @@ const QUANTITIES = [
   {
     id: "1",
     name_vi: "0-99",
-    parent_id: "1",
+    key: "1",
   },
   {
     id: "2",
     name_vi: "100-999",
-    parent_id: "2",
+    key: "2",
   },
   {
     id: "3",
     name_vi: "1000-9999",
-    parent_id: "3",
+    key: "3",
   },
 ];
 
@@ -57,11 +57,11 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
         <span className="inline-block font-roboto font-medium text-base leading-[calc(24 / 16)] mb-2">
           Danh mục sản phẩm
         </span>
-        {/* <FilterTree
+        <FilterTree
           categoryId={categoryId}
           defaultValue={defaultValue}
           searchEnabled={true}
-        /> */}
+        />
       </div>
       <div className="w-[15%]">
         <span className="inline-block font-roboto font-medium text-base leading-[calc(24 / 16)] mb-2">

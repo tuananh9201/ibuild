@@ -22,6 +22,23 @@ const TreeView = ({ options, setOutputValue, defaultValue }: TreeViewProps) => {
   useEffect(() => {
     if (!options) return;
 
+    if (options[0] && Object.keys(options[0]).length < 4) {
+      const newOptions = options.map((option) => ({
+        id: option.id,
+        title: option.name_vi,
+        key: option.id,
+      }));
+      setTreeData([{
+        id: "0",
+        parent_id: "0",
+        title: "Tất cả",
+        key: "0",
+        children: [],
+      },...newOptions]);
+      console.log(newOptions);
+      return;
+    }
+
     const rootItems: any[] = [];
     const lookup: any = {};
 
@@ -39,8 +56,6 @@ const TreeView = ({ options, setOutputValue, defaultValue }: TreeViewProps) => {
       item.children = [];
       lookup[item.id] = item;
     });
-
-    console.log(lookup);
 
     newOptions.forEach((item) => {
       if (!item.parent_id) return;

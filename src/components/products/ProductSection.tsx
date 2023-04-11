@@ -19,8 +19,8 @@ const ProductSection = ({ supplierId, productId }: ProductSectionProps) => {
 
   return (
     <div className="max-w-[1280px] mx-auto my-0 mt-10">
-      <div className="flex flex-row justify-between">
-        <h3 className="font-roboto not-italic font-medium text-xl leading-[150%] text-text-color mb-6">
+      <div className="flex flex-row justify-between items-center mb-6">
+        <h3 className="font-roboto not-italic font-medium text-xl leading-[150%] text-text-color">
           Cùng nhà cung cấp
         </h3>
         <button className="text-primary-color font-roboto not-italic font-medium text-base leading-[150%]">

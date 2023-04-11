@@ -75,9 +75,9 @@ const ProductDetail: NextPageWithLayout = () => {
   };
 
   return (
-    <div className="w-full mt-[60px]">
-      <div className="max-w-[1280px] mx-auto my-0 flex flex-row min-h-[615px]">
-        <div className="mr-[26px] w-[84px]">
+    <div className="w-full mt-[60px] px-3 lg:px-0">
+      <div className="max-w-[1280px] mx-auto my-0 flex flex-col gap-5 lg:flex-row lg:gap-0 min-h-[615px]">
+        <div className="lg:mr-[26px] w-full lg:w-[84px]">
           {data && (
             <ProductCarouselVertical
               images={data.images}
@@ -86,7 +86,7 @@ const ProductDetail: NextPageWithLayout = () => {
             />
           )}
         </div>
-        <div className="mr-8">
+        <div className="lg:mr-8 mx-auto">
           <Image
             src={currentImage.url || currentImage.s3_image_url}
             alt="product"
@@ -189,7 +189,7 @@ const ProductDetail: NextPageWithLayout = () => {
                 </button>
               )}
           </div>
-          <div className="flex flex-row justify-between mt-4">
+          <div className="flex flex-col gap-3 md:flex-row justify-between mt-4">
             <button className="flex items-center justify-center px-[23px] py-[10px] rounded border border-solid border-primary-color text-primary-color gap-[6px] hover:bg-primary-color transition group">
               <PhoneIcon className="fill-[#eb7a01] group-hover:fill-white" />
               <span className="font-roboto not-italic font-medium text-base leading-[150%] group-hover:text-white">

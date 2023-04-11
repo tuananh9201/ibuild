@@ -19,8 +19,6 @@ const FilterTree = ({
   searchEnabled,
   defaultOptions,
 }: FilterTreeProps) => {
-  // console.log(defaultOptions);
-
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [outputValue, setOutputValue] = useState(defaultValue);
   const [keyword, setKeyword] = useState("");
@@ -33,10 +31,15 @@ const FilterTree = ({
   const [options, setOptions] = useState<ICategory[]>(defaultOptions || []);
 
   useEffect(() => {
-    if (categories) {
-      setOptions(categories);
+    if (!keyword) {
+      setOptions(categories || defaultOptions || []);
+    } else {
+      const optionsByKeyword = categories?.filter((option) =>
+        option.name_vi.toLowerCase().includes(keyword.toLocaleLowerCase())
+      );
+      setOptions(optionsByKeyword || []);
     }
-  }, [categories, defaultOptions]);
+  }, [categories, defaultOptions, keyword]);
 
   const selectElement = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -48,17 +51,6 @@ const FilterTree = ({
 
     () => window.removeEventListener("click", () => {});
   }, []);
-
-  useEffect(() => {
-    if (!keyword) {
-      setOptions(categories || defaultOptions || []);
-      return;
-    }
-    const optionsByKeyword = categories?.filter((option) =>
-      option.name_vi.toLowerCase().includes(keyword.toLocaleLowerCase())
-    );
-    setOptions(optionsByKeyword || []);
-  }, [keyword]);
 
   return (
     <div className="w-full relative" ref={selectElement}>

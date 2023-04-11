@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Flickity from "react-flickity-component";
 import Image from "next/image";
+import defaultImageError from "@/images/product/defaultFlickityError.png";
 
 import { miniExampleProductDetail } from "@/images/index";
 import { ProductImage } from "@/lib/types";
@@ -24,6 +25,26 @@ interface ProductCarouselVerticalProps {
   setCurrentImage: Function;
 }
 
+interface handleRenderImageProps {
+  image: any;
+  alt: string;
+}
+
+const HandleRenderImage = ({ image, alt }: handleRenderImageProps) => {
+  const [src, setSrc] = useState(image);
+
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      width={80}
+      height={80}
+      className="lg:-rotate-90 w-20 h-20"
+      onError={() => setSrc(defaultImageError)}
+    />
+  );
+};
+
 const ProductCarouselVertical = ({
   images,
   currentImage,
@@ -40,7 +61,7 @@ const ProductCarouselVertical = ({
   return (
     <div className="w-full h-full overflow-hidden">
       <Flickity
-        className={`carousel flickity-vertical w-[615px]`}
+        className={`carousel w-full lg:w-[615px] flickity-vertical`}
         elementType={"div"}
         options={flickityOptions}
         disableImagesLoaded={true}
@@ -59,12 +80,9 @@ const ProductCarouselVertical = ({
               }  `}
               onClick={() => handleActiveImage(img.image_id)}
             >
-              <Image
-                src={img.s3_image_url || img.url}
+              <HandleRenderImage
+                image={img.s3_image_url || img.url}
                 alt={img.url}
-                width={80}
-                height={80}
-                className="-rotate-90 w-20 h-20"
               />
             </div>
           );
