@@ -26,7 +26,6 @@ export const getProductDetail = async (id: string) => {
     return res?.data?.data || []
   } catch (error) {
     console.warn(error)
-
     return error
   }
 }

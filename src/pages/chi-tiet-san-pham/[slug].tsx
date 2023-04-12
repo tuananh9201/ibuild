@@ -40,7 +40,11 @@ const ProductDetail: NextPageWithLayout = () => {
     s3_image_url: "",
   });
 
-  const { data } = useSWR<Product>(query.slug, getProductDetail);
+  const { data } = useSWR<Product>(query.slug, getProductDetail, {
+    onError: () => {
+      router.push("/404");
+    },
+  });
 
   const [logo, setLogo] = useState(() => {
     return data?.supplier?.feature_image || companyLogo;

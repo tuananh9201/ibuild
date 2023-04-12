@@ -15,21 +15,30 @@ const menus = [
     name: "Sản phẩm",
     href: "/san-pham",
     role: ["user", "expert"],
+    isActive: [
+      "/chi-tiet-san-pham/[slug]",
+      "/san-pham",
+      "/san-pham/[slug]",
+      "/tim-kiem",
+    ],
   },
   {
     name: "Mẫu thiết kế",
     href: "/mau-thiet-ke",
     role: ["user"],
+    isActive: [],
   },
   {
     name: "Thông tin xây dựng",
     href: "/thong-tin-xay-dung",
     role: ["user", "expert"],
+    isActive: [],
   },
   {
     name: "Văn bản pháp lý",
     href: "/van-ban-phap-ly",
     role: ["user", "expert"],
+    isActive: [],
   },
 ];
 const pathsShowBackButton = ["/"];
@@ -39,8 +48,6 @@ const MainHeader = () => {
   const dispatch = useDispatch();
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const currentPath = router.pathname;
-  const currenQuery = router.query.category;
-
   const [openMenu, setOpenMenu] = useState(false);
   const isHidden = pathsShowBackButton.includes(router.pathname);
   const handleClickBack = () => {
@@ -91,10 +98,7 @@ const MainHeader = () => {
               <li
                 key={idx}
                 className={`flex flex-col items-center group font-roboto font-normal text-base text-[#343434] ${
-                  currentPath.includes(menu.href) ||
-                  currenQuery?.includes(menu.href)
-                    ? "active"
-                    : ""
+                  menu.isActive.includes(currentPath) ? "active" : ""
                 }`}
               >
                 <Link
