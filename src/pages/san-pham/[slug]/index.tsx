@@ -30,29 +30,6 @@ type Props = {
   category: ICategory;
 };
 
-const RELATED_LIST = [
-  {
-    id: 1,
-    value: "Liên quan nhất",
-    slug: "LIEN_QUAN_NHAT",
-  },
-  {
-    id: 2,
-    value: "Sản phẩm mới",
-    slug: "SAN_PHAM_MOI",
-  },
-  {
-    id: 3,
-    value: "Lượt xem nhiều nhất",
-    slug: "LUOT_XEM_NHIEU_NHAT",
-  },
-  {
-    id: 4,
-    value: "Lượt thích nhiều nhất",
-    slug: "LUOT_THICH_NHIEU_NHAT",
-  },
-];
-
 const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [resetSort, setResetSort] = useState(false);
@@ -141,15 +118,14 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
     }
   }, [query]);
 
-  const onChangeSort = (value: number) => {
-    const valueSelected = RELATED_LIST.find((item) => item.id === value)?.slug;
-    if (valueSelected) {
+  const onChangeSort = (sortSlug: string) => {
+    if (sortSlug) {
       setPaging({ ...paging, current: 1, total: 0 });
       setPayload({
         ...payload,
         category_id: [],
         skip: 0,
-        sort_by: valueSelected,
+        sort_by: sortSlug,
       });
     }
   };
@@ -176,7 +152,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
           onClickItem={onClickFilterCategory}
           parentId={category?.id || ""}
         />
-        <FilterProduct categoryId={category?.id} />
+        <FilterProduct onChangeSort={onChangeSort} categoryId={category?.id} />
         <div className="mt-4 mb-4 w-full">
           {isLoading || isLoadingData ? (
             <LitsProductLoading items={12} />
