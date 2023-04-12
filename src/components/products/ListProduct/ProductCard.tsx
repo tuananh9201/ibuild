@@ -119,7 +119,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             Hãng
           </span>
           <span className="text-sm dark:text-white font-normal">
-            {product.data?.brand_name || "NO BRAND"}
+            {product.data?.brand_name || ""}
           </span>
         </div>
         <div className="flex flex-row justify-between items-center mb-3">

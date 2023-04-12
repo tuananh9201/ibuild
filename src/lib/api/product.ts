@@ -1,3 +1,4 @@
+
 import { ResponseSearchProduct, SearchProduct } from "src/lib/types";
 import axios from "./api";
 import { Product } from "src/lib/types";
@@ -25,6 +26,7 @@ export const getProductDetail = async (id: string) => {
     return res?.data?.data || []
   } catch (error) {
     console.warn(error)
+
     return error
   }
 }
