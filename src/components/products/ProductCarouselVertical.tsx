@@ -81,7 +81,7 @@ const ProductCarouselVertical = ({
               onClick={() => handleActiveImage(img.image_id)}
             >
               <HandleRenderImage
-                image={img.s3_image_url || img.url}
+                image={img.url || img.s3_image_url}
                 alt={img.url}
               />
             </div>
