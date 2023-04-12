@@ -223,7 +223,8 @@
 
     .ant-tree-switcher {
       position: absolute;
-      right: 0;
+      right: 10px;
+      z-index: 10;
     }
 
     .ant-tree-switcher_close {
@@ -234,6 +235,10 @@
     .ant-tree-switcher_close {
       transition: all 0.5s;
     }
+  }
+
+  .ant-tree-checkbox + span.ant-tree-node-selected {
+    background-color: transparent !important;
   }
 
   .ant-tree-title {

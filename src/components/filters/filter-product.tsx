@@ -17,13 +17,18 @@ const RELATED_LIST = [
   },
   {
     id: 3,
-    value: "Lượt xem nhiều nhất",
-    slug: "LUOT_XEM_NHIEU_NHAT",
+    value: "Giá tăng dần",
+    slug: "GIA_TANG_DAN",
   },
   {
     id: 4,
-    value: "Lượt thích nhiều nhất",
-    slug: "LUOT_THICH_NHIEU_NHAT",
+    value: "Giá giảm dần",
+    slug: "GIA_GIAM_DAN",
+  },
+  {
+    id: 4,
+    value: "Theo dõi nhiều nhất",
+    slug: "THEO_DOI_NHIEU_NHAT",
   },
 ];
 

@@ -53,6 +53,17 @@ const ProductCard = ({ product }: ProductCardProps) => {
     router.push(`/nha-cung-cap/${product.data}`);
   };
 
+  const handleShowTitle = () => {
+    if (!token) {
+      router.push({
+        pathname: "/dang-nhap",
+      });
+      return;
+    }
+
+    return <p>{product.supplier?.phone || "01234567"}</p>;
+  };
+
   return (
     <div className="bg-[#f8f9ff] rounded p-4 h-full flex flex-col justify-between">
       <div>
@@ -133,12 +144,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </div>
       </div>
       <div className="flex flex-row justify-between h-[44px]">
-        <button className="px-9 py-[10px] bg-primary-color text-white font-roboto not-italic font-medium text-base leading-[150%] rounded whitespace-nowrap">
-          <Link href={`/san-pham/${router.query.slug}/${product.id}`}>
+        <Link href={`/chi-tiet-san-pham/${product.id}`}>
+          <button className="px-9 py-[10px] bg-primary-color text-white font-roboto not-italic font-medium text-base leading-[150%] rounded whitespace-nowrap">
             Xem chi tiết
-          </Link>
-        </button>
-        <Tooltip title={product.supplier?.phone || "01234567"} trigger="click">
+          </button>
+        </Link>
+        <Tooltip title={() => handleShowTitle()} trigger="click">
           <div>
             <Button icon={PhoneIcon} overClass="w-[44px] py-0 h-full" />
           </div>

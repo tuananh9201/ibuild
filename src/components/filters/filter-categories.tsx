@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 
 import { FilterLocation, Input } from "@/components/common";
@@ -9,6 +9,7 @@ import { AreasModal } from "@/lib/models";
 import FilterTree from "./filter-tree";
 
 import type { DataNode } from "antd/es/tree";
+import { fetchChildsCategories } from "@/lib/api/category";
 
 interface FilterCategoriesProps {
   categoryId?: string;
@@ -27,21 +28,24 @@ const QUANTITIES = [
   {
     id: "1",
     name_vi: "0-99",
-    key: "1",
+    parent_id: "5",
   },
   {
     id: "2",
     name_vi: "100-999",
-    key: "2",
+    parent_id: "5",
   },
   {
     id: "3",
     name_vi: "1000-9999",
-    key: "3",
+    parent_id: "5",
   },
 ];
 
 const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
+  const [categories, setCategories] = useState<ICategory[]>([]);
+  const [areas, setAreas] = useState<ICategory[]>([]);
+
   const defaultValue = {
     id: "00",
     name_vi: "Chọn danh mục sản phẩm",
@@ -51,6 +55,25 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
     name_vi: "Chọn số lượng",
   };
 
+  useEffect(() => {
+    if (!categoryId) return;
+    const getChildCategories = async () => {
+      const res = await fetchChildCategories(categoryId);
+      setCategories(res);
+    };
+
+    getChildCategories();
+  }, [categoryId]);
+
+  useEffect(() => {
+    const getListArea = async () => {
+      const res = await getAreas();
+      setAreas(res);
+    };
+
+    getListArea();
+  }, []);
+
   return (
     <div className="mt-4 flex gap-4">
       <div className="w-[20%]">
@@ -58,7 +81,7 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
           Danh mục sản phẩm
         </span>
         <FilterTree
-          categoryId={categoryId}
+          options={categories}
           defaultValue={defaultValue}
           searchEnabled={true}
         />
@@ -69,8 +92,8 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
         </span>
         <div className="flex flex-row gap-2 items-center">
           <FilterTree
+            options={QUANTITIES}
             defaultValue={defaultQuantityValue}
-            defaultOptions={QUANTITIES}
           />
         </div>
       </div>
@@ -88,7 +111,7 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
         <span className="inline-block font-roboto font-medium text-base leading-[calc(24 / 16)] mb-2">
           Khu vực
         </span>
-        <FilterLocation />
+        <FilterTree options={areas} defaultValue={defaultQuantityValue} />
       </div>
       <div className="w-[25%] flex-base flex flex-row gap-3 justify-end items-end">
         <button className="h-[46px] rounded border border-solid px-5 border-primary-color bg-primary-color text-white">

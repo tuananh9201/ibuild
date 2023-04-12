@@ -137,6 +137,7 @@ type Supplier = {
 };
 export type Product = {
   id: string;
+  category_id: string;
   data: ProductData;
   images: ProductImage[];
   website_id: string;

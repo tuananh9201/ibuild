@@ -54,7 +54,6 @@ const RELATED_LIST = [
 ];
 
 const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
-  const [isActiveFilterIcon, setIsActiveFilterIcon] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [resetSort, setResetSort] = useState(false);
   const [keyword, setKeyword] = useState("");
@@ -96,9 +95,6 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
 
   const title = breadcrumbs.filter((bread) => bread.slug === slug)[0]?.title;
 
-  const handleShowFilter = () => {
-    setIsActiveFilterIcon((prev) => !prev);
-  };
   const onClickFilterCategory = async (id: string) => {
     let categoryId: string | undefined = id;
     if (categoryId === "all") {

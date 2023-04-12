@@ -5,41 +5,30 @@ import { TreeView, SearchInput } from "@/components/common";
 import { UpDownIcon } from "@/images/icons/product_types/icon_wrapper";
 import { ICategory } from "@/lib/types";
 import { fetchChildCategories } from "@/lib/api/category";
+import { getAreas } from "@/lib/api/information";
 
 interface FilterTreeProps {
-  categoryId?: string;
-  defaultValue?: ICategory;
+  options: ICategory[];
+  keyword?: string;
   searchEnabled?: boolean;
-  defaultOptions?: ICategory[];
+  defaultValue?: ICategory;
+  setKeyword?: Function;
 }
 
 const FilterTree = ({
-  categoryId,
+  options,
+  keyword,
   defaultValue,
   searchEnabled,
-  defaultOptions,
+  setKeyword,
 }: FilterTreeProps) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [outputValue, setOutputValue] = useState(defaultValue);
-  const [keyword, setKeyword] = useState("");
 
-  const { data: categories } = useSWR<ICategory[]>(
-    categoryId,
-    fetchChildCategories
-  );
-
-  const [options, setOptions] = useState<ICategory[]>(defaultOptions || []);
-
-  useEffect(() => {
-    if (!keyword) {
-      setOptions(categories || defaultOptions || []);
-    } else {
-      const optionsByKeyword = categories?.filter((option) =>
-        option.name_vi.toLowerCase().includes(keyword.toLocaleLowerCase())
-      );
-      setOptions(optionsByKeyword || []);
-    }
-  }, [categories, defaultOptions, keyword]);
+  // const { data: categories } = useSWR<ICategory[]>(
+  //   categoryId,
+  //   fetchChildCategories
+  // );
 
   const selectElement = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -51,6 +40,8 @@ const FilterTree = ({
 
     () => window.removeEventListener("click", () => {});
   }, []);
+
+  const handleKeyword = () => {};
 
   return (
     <div className="w-full relative" ref={selectElement}>
@@ -74,7 +65,12 @@ const FilterTree = ({
           isOpenMenu ? "block" : "hidden"
         } absolute z-10 bg-white border border-solid border-primary-color border-t-0 w-full rounded-b px-4 pt-[22px] pb-[14px] flex flex-col gap-5`}
       >
-        {searchEnabled && <SearchInput value={keyword} setValue={setKeyword} />}
+        {searchEnabled && (
+          <SearchInput
+            value={keyword || ""}
+            setValue={setKeyword || handleKeyword}
+          />
+        )}
         <TreeView options={options} setOutputValue={setOutputValue} />
       </div>
     </div>

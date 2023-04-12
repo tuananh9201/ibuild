@@ -7,11 +7,16 @@ import { getListProductBySupplier } from "@/lib/api/product";
 import ListProductLoading from "../common/ListProductLoading";
 
 interface ProductSectionProps {
+  title: string;
   supplierId?: string;
   productId?: string;
 }
 
-const ProductSection = ({ supplierId, productId }: ProductSectionProps) => {
+const ProductSection = ({
+  title,
+  supplierId,
+  productId,
+}: ProductSectionProps) => {
   const { data, isLoading } = useSWR<Product[]>(
     { supplierId, productId },
     getListProductBySupplier

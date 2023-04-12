@@ -39,7 +39,9 @@ const ProductDetail: NextPageWithLayout = () => {
     s3_image_url: "",
   });
 
-  const { data, isLoading } = useSWR<Product>(query.detail, getProductDetail);
+  const { data, isLoading } = useSWR<Product>(query.slug, getProductDetail);
+
+  console.log(data);
 
   const [logo, setLogo] = useState(() => {
     return data?.supplier?.feature_image || companyLogo;
