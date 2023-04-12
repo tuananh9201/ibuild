@@ -5,7 +5,7 @@ interface Parameters {
 
 interface TechnicalParametersProductProps {
   title?: string;
-  parameters: string;
+  parameters?: string;
 }
 
 const TechnicalParametersProduct = ({
@@ -18,9 +18,10 @@ const TechnicalParametersProduct = ({
         {title}
       </h3>
       <ul className="flex flex-col gap-4">
-        {parameters.split("|").map((parameter, idx) => (
-          <li key={idx}>{parameter}</li>
-        ))}
+        {parameters &&
+          parameters
+            .split("|")
+            .map((parameter, idx) => <li key={idx}>{parameter}</li>)}
       </ul>
     </div>
   );
