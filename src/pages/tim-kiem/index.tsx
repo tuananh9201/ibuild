@@ -8,12 +8,13 @@ import Image from "next/image";
 import { NextPageWithLayout } from "../_app";
 import {
   FilterCategories,
+  FilterProduct,
   FilterRelated,
   LitsProductLoading,
 } from "@/components/common";
 import { FilterIcon } from "@/images/icons/product_types/icon_wrapper";
 import { searchProduct } from "@/lib/api/product";
-import { Product } from "@/lib/types";
+import { Product, SearchProduct } from "@/lib/types";
 import MainLayout from "@/components/main-layout";
 import ProductSearch from "@/components/products/ProductSearch";
 import ListProduct from "@/components/products/ListProduct";
@@ -44,8 +45,6 @@ const RELATED_LIST = [
 
 const SearchPage: NextPageWithLayout = () => {
   const router = useRouter();
-
-  const [isActiveFilterIcon, setIsActiveFilterIcon] = useState(false);
   const [paging, setPaging] = useState({
     current: 1,
     total: 0,
@@ -54,27 +53,24 @@ const SearchPage: NextPageWithLayout = () => {
   const [keywordSearch, setKeywordSearch] = useState(
     router.query.search as string
   );
+
+  const [payload, setPayload] = useState<SearchProduct>({
+    keyword: (router.query.search as string) || "",
+    limit: 12,
+    skip: paging.current !== 1 ? paging.current * 12 : 0,
+    sort_by: "LIEN_QUAN_NHAT",
+    max_price: 0,
+    min_price: 0,
+    max_quantity: 0,
+    min_quantity: 0,
+  });
+
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(false);
 
-  const handleSelectRelated = async (value: number) => {};
-
-  const handleShowFilter = () => {
-    setIsActiveFilterIcon((prev) => !prev);
-  };
-
   const getSearchResult = async () => {
     setIsLoadingData(true);
-    const data = await searchProduct({
-      keyword: keywordSearch || (router.query.search as string) || "all",
-      limit: 12,
-      skip: paging.current !== 1 ? paging.current * 12 : 0,
-      sort_by: "LIEN_QUAN_NHAT",
-      max_price: 0,
-      min_price: 0,
-      max_quantity: 0,
-      min_quantity: 0,
-    });
+    const data = await searchProduct(payload);
     setProducts(data.data);
     setPaging({
       ...paging,
@@ -84,13 +80,41 @@ const SearchPage: NextPageWithLayout = () => {
   };
 
   useEffect(() => {
+    console.log(payload);
+  }, [payload]);
+
+  useEffect(() => {
+    setKeywordSearch(router.query.search as string);
     setPaging({ ...paging, current: 1, total: 0 });
-    getSearchResult();
+    setPayload({
+      ...payload,
+      skip: 0,
+      sort_by: "LIEN_QUAN_NHAT",
+      keyword: router.query.search as string,
+    });
   }, [router.query]);
 
   useEffect(() => {
-    getSearchResult();
+    setPayload({
+      ...payload,
+      skip: paging.current !== 1 ? paging.current * 12 : 0,
+    });
   }, [paging.current]);
+
+  const onChangeSort = (sortSlug: string) => {
+    if (sortSlug) {
+      setPaging({ ...paging, current: 1, total: 0 });
+      setPayload({
+        ...payload,
+        skip: 0,
+        sort_by: sortSlug,
+      });
+    }
+  };
+
+  useEffect(() => {
+    getSearchResult();
+  }, [payload]);
 
   return (
     <>
@@ -122,25 +146,10 @@ const SearchPage: NextPageWithLayout = () => {
             {keywordSearch || router.query.search}”
           </p>
         </section>
-        <section className="flex flex-row justify-between">
-          <FilterRelated
-            defaultValue={1}
-            options={RELATED_LIST}
-            onSelect={handleSelectRelated}
-          />
-          <div
-            className={`flex flex-row items-center px-4 py-3 rounded border border-[#e6e6e6] text-[#333333] cursor-pointer group transition ${
-              isActiveFilterIcon ? "bg-primary-color text-white" : ""
-            }`}
-            onClick={handleShowFilter}
-          >
-            <FilterIcon className="" />
-            <span className="font-roboto not-italic font-medium text-base leading-[150%] text-inherit ml-3">
-              Bộ lọc
-            </span>
-          </div>
-        </section>
-        <section>{isActiveFilterIcon && <FilterCategories />}</section>
+        <FilterProduct
+          onChangeSort={onChangeSort}
+          categoryId={products ? products[0]?.category_id : ""}
+        />
         <section className="mt-4">
           {isLoadingData ? (
             <LitsProductLoading items={12} />
