@@ -25,11 +25,6 @@ const FilterTree = ({
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [outputValue, setOutputValue] = useState(defaultValue);
 
-  // const { data: categories } = useSWR<ICategory[]>(
-  //   categoryId,
-  //   fetchChildCategories
-  // );
-
   const selectElement = useRef<HTMLDivElement>(null);
   useEffect(() => {
     window.addEventListener("click", (e: any) => {

@@ -45,6 +45,9 @@ const QUANTITIES = [
 const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [areas, setAreas] = useState<ICategory[]>([]);
+  const [keywordSearch, setKeywordSearch] = useState({
+    category: "",
+  });
 
   const defaultValue = {
     id: "00",
@@ -74,6 +77,17 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
     getListArea();
   }, []);
 
+  useEffect(() => {
+    if (keywordSearch.category) {
+      setCategories(categories);
+    } else {
+      const newCategories = categories.filter((category) =>
+        category.name_vi.includes(keywordSearch.category)
+      );
+      setCategories(newCategories);
+    }
+  }, [keywordSearch]);
+
   return (
     <div className="mt-4 flex gap-4">
       <div className="w-[20%]">
@@ -84,6 +98,8 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
           options={categories}
           defaultValue={defaultValue}
           searchEnabled={true}
+          keyword={keywordSearch.category}
+          setKeyword={setKeywordSearch}
         />
       </div>
       <div className="w-[15%]">
