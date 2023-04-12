@@ -110,7 +110,7 @@ type ProductData = {
   weight?: string;
   product_id: string;
   original_price?: string;
-  reference_price?: string;
+  reference_price?: number;
   brand_name?: string;
   product_image_s3: string;
   technical_details?: string;
@@ -142,7 +142,7 @@ type Supplier = {
 type CategoryInfo = {
   id: string;
   slug?: string;
-}
+};
 export type Product = {
   id: string;
   category_id: string;

@@ -26,7 +26,7 @@ const RELATED_LIST = [
     slug: "GIA_GIAM_DAN",
   },
   {
-    id: 4,
+    id: 5,
     value: "Theo dõi nhiều nhất",
     slug: "THEO_DOI_NHIEU_NHAT",
   },
@@ -34,12 +34,16 @@ const RELATED_LIST = [
 
 interface FilterProductProps {
   categoryId?: string;
+  onChangeSort: (sortSlug: string) => void;
 }
 
-const FilterProduct = ({ categoryId }: FilterProductProps) => {
+const FilterProduct = ({ categoryId, onChangeSort }: FilterProductProps) => {
   const [isActiveFilterIcon, setIsActiveFilterIcon] = useState(false);
 
-  const handleSelectRelated = () => {};
+  const handleSelectRelated = (id: number) => {
+    const sortSelected = RELATED_LIST.find((s) => s.id === id);
+    sortSelected && onChangeSort(sortSelected.slug);
+  };
 
   const handleShowFilter = () => {};
 
