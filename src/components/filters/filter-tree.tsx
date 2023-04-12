@@ -60,12 +60,7 @@ const FilterTree = ({
           isOpenMenu ? "block" : "hidden"
         } absolute z-10 bg-white border border-solid border-primary-color border-t-0 w-full rounded-b px-4 pt-[22px] pb-[14px] flex flex-col gap-5`}
       >
-        {searchEnabled && (
-          <SearchInput
-            value={keyword || ""}
-            setValue={setKeyword || handleKeyword}
-          />
-        )}
+        {searchEnabled && <SearchInput value={keyword} setValue={setKeyword} />}
         <TreeView options={options} setOutputValue={setOutputValue} />
       </div>
     </div>

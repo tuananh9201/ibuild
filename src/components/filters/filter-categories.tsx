@@ -42,21 +42,27 @@ const QUANTITIES = [
   },
 ];
 
+const DEFAULT_VALUE = {
+  id: "00",
+  name_vi: "Chọn danh mục sản phẩm",
+};
+const DEFAULT_QUANTITY_VALUE = {
+  id: "00",
+  name_vi: "Chọn số lượng",
+};
+
+const DEFAULT_AREA_VALUE = {
+  id: "00",
+  name_vi: "Chọn khu vực",
+};
+
 const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [areas, setAreas] = useState<ICategory[]>([]);
   const [keywordSearch, setKeywordSearch] = useState({
     category: "",
+    area: "",
   });
-
-  const defaultValue = {
-    id: "00",
-    name_vi: "Chọn danh mục sản phẩm",
-  };
-  const defaultQuantityValue = {
-    id: "00",
-    name_vi: "Chọn số lượng",
-  };
 
   useEffect(() => {
     if (!categoryId) return;
@@ -78,7 +84,7 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
   }, []);
 
   useEffect(() => {
-    if (keywordSearch.category) {
+    if (!keywordSearch.category) {
       setCategories(categories);
     } else {
       const newCategories = categories.filter((category) =>
@@ -96,10 +102,8 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
         </span>
         <FilterTree
           options={categories}
-          defaultValue={defaultValue}
+          defaultValue={DEFAULT_VALUE}
           searchEnabled={true}
-          keyword={keywordSearch.category}
-          setKeyword={setKeywordSearch}
         />
       </div>
       <div className="w-[15%]">
@@ -109,7 +113,7 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
         <div className="flex flex-row gap-2 items-center">
           <FilterTree
             options={QUANTITIES}
-            defaultValue={defaultQuantityValue}
+            defaultValue={DEFAULT_QUANTITY_VALUE}
           />
         </div>
       </div>
@@ -127,7 +131,7 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
         <span className="inline-block font-roboto font-medium text-base leading-[calc(24 / 16)] mb-2">
           Khu vực
         </span>
-        <FilterTree options={areas} defaultValue={defaultQuantityValue} />
+        <FilterTree options={areas} defaultValue={DEFAULT_AREA_VALUE} />
       </div>
       <div className="w-[25%] flex-base flex flex-row gap-3 justify-end items-end">
         <button className="h-[46px] rounded border border-solid px-5 border-primary-color bg-primary-color text-white">
