@@ -4,12 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import UserAvatar from "./avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "src/lib/api/api";
 import useUser from "src/lib/hooks/user";
 import { login } from "src/store/features/auth/auth";
 import { RootState } from "src/store/store";
+import UserAvatar from "./avatar";
 const menus = [
   {
     name: "Sản phẩm",

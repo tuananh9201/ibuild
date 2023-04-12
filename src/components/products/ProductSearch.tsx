@@ -1,16 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import React, { useEffect, useRef, useState } from "react";
 
+import { historyIcon } from "@/constants/images";
+import { DeleteIcon } from "@/images/icons/product_types/icon_wrapper";
 import {
   createSearchHistory,
   deleteSearchHistory,
   getSearchHistories,
 } from "@/lib/api/user";
-import { historyIcon } from "@/constants/images";
 import { SearchResultModel } from "@/lib/models";
-import { DeleteIcon } from "@/images/icons/product_types/icon_wrapper";
 
 type HistoryItem = {
   item: string;

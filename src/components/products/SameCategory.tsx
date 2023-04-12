@@ -18,26 +18,30 @@ const SameCategory = ({ title, categoryId }: SameCategoryProps) => {
     max_price: 0,
     min_price: 0,
     sort_by: "LIEN_QUAN_NHAT",
-    limit: 12,
+    limit: 4,
     skip: 0,
   };
 
   const { data, isLoading } = useSWR(payload, searchProduct);
 
+  console.log(data);
+
   return (
     <div className="max-w-[1280px] mx-auto my-0 mt-10">
-      <div className="flex flex-row justify-between items-center mb-6">
-        <h3 className="font-roboto not-italic font-medium text-xl leading-[150%] text-text-color">
-          {title}
-        </h3>
-        <button className="text-primary-color font-roboto not-italic font-medium text-base leading-[150%]">
-          Xem thêm
-        </button>
-      </div>
+      {data && (
+        <div className="flex flex-row justify-between items-center mb-6">
+          <h3 className="font-roboto not-italic font-medium text-xl leading-[150%] text-text-color">
+            {title}
+          </h3>
+          <button className="text-primary-color font-roboto not-italic font-medium text-base leading-[150%]">
+            Xem thêm
+          </button>
+        </div>
+      )}
       {isLoading ? (
         <ListProductLoading items={4} />
       ) : (
-        <ListProduct products={data || []} />
+        <ListProduct products={data?.data || []} />
       )}
     </div>
   );
