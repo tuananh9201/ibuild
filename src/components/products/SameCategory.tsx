@@ -1,9 +1,12 @@
 import useSWR from "swr";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 import ListProductLoading from "../common/ListProductLoading";
 import ListProduct from "./ListProduct";
 import { searchProduct } from "@/lib/api/product";
+import { fetchRootProductCategoryById } from "@/lib/api/category";
+import { CategoryInfo } from "@/lib/types";
 
 interface SameCategoryProps {
   title: string;
@@ -12,6 +15,8 @@ interface SameCategoryProps {
 }
 
 const SameCategory = ({ title, categoryId, slug }: SameCategoryProps) => {
+  const [categorySlug, setCategorySlug] = useState("");
+
   const payload = {
     category_id: [categoryId],
     cities: [categoryId],
@@ -26,6 +31,19 @@ const SameCategory = ({ title, categoryId, slug }: SameCategoryProps) => {
 
   const { data, isLoading } = useSWR(payload, searchProduct);
 
+  useEffect(() => {
+    const getCategorySlug = async () => {
+      const categoryInfo: CategoryInfo[] = await fetchRootProductCategoryById(
+        categoryId
+      );
+      if (categoryInfo?.length) {
+        setCategorySlug(categoryInfo[0].slug || "");
+      }
+    };
+
+    getCategorySlug();
+  }, [categoryId]);
+
   return (
     <div className="max-w-[1280px] mx-auto my-0 mt-10">
       {data && (
@@ -33,7 +51,7 @@ const SameCategory = ({ title, categoryId, slug }: SameCategoryProps) => {
           <h3 className="font-roboto not-italic font-medium text-xl leading-[150%] text-text-color">
             {title}
           </h3>
-          <Link href={`/san-pham/${slug}`}>
+          <Link href={`/san-pham/${categorySlug}`}>
             <button className="text-primary-color font-roboto not-italic font-medium text-base leading-[150%]">
               Xem thêm
             </button>

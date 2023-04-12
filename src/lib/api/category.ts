@@ -45,3 +45,12 @@ export const fetchChildsCategories = async (parentId: string) => {
       return [];
     });
 };
+
+export const fetchRootProductCategoryById = async (categoryId: string) => {
+  try {
+    const res = await axios.get(`/product-category/parents/${categoryId}`)
+    return res.data.data || []
+  } catch (error) {
+    console.warn(error)
+  }
+}

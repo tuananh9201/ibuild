@@ -57,6 +57,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
     if (!token) {
       router.push({
         pathname: "/dang-nhap",
+        query: {
+          redirect: router.asPath,
+        },
       });
       return;
     }
