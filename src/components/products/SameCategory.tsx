@@ -1,4 +1,5 @@
 import useSWR from "swr";
+import Link from "next/link";
 
 import ListProductLoading from "../common/ListProductLoading";
 import ListProduct from "./ListProduct";
@@ -7,9 +8,10 @@ import { searchProduct } from "@/lib/api/product";
 interface SameCategoryProps {
   title: string;
   categoryId: string;
+  slug?: string;
 }
 
-const SameCategory = ({ title, categoryId }: SameCategoryProps) => {
+const SameCategory = ({ title, categoryId, slug }: SameCategoryProps) => {
   const payload = {
     category_id: [categoryId],
     cities: [categoryId],
@@ -24,8 +26,6 @@ const SameCategory = ({ title, categoryId }: SameCategoryProps) => {
 
   const { data, isLoading } = useSWR(payload, searchProduct);
 
-  console.log(data);
-
   return (
     <div className="max-w-[1280px] mx-auto my-0 mt-10">
       {data && (
@@ -33,9 +33,11 @@ const SameCategory = ({ title, categoryId }: SameCategoryProps) => {
           <h3 className="font-roboto not-italic font-medium text-xl leading-[150%] text-text-color">
             {title}
           </h3>
-          <button className="text-primary-color font-roboto not-italic font-medium text-base leading-[150%]">
-            Xem thêm
-          </button>
+          <Link href={`/san-pham/${slug}`}>
+            <button className="text-primary-color font-roboto not-italic font-medium text-base leading-[150%]">
+              Xem thêm
+            </button>
+          </Link>
         </div>
       )}
       {isLoading ? (

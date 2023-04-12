@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useSWR from "swr";
+import Link from "next/link";
 
 import { Product } from "@/lib/types";
 import ListProduct from "./ListProduct";
@@ -28,9 +29,11 @@ const ProductSection = ({
         <h3 className="font-roboto not-italic font-medium text-xl leading-[150%] text-text-color">
           Cùng nhà cung cấp
         </h3>
-        <button className="text-primary-color font-roboto not-italic font-medium text-base leading-[150%]">
-          Xem thêm
-        </button>
+        <Link href="/nha-cung-cap/ddddddddddd">
+          <button className="text-primary-color font-roboto not-italic font-medium text-base leading-[150%]">
+            Xem thêm
+          </button>
+        </Link>
       </div>
       {isLoading ? (
         <ListProductLoading items={4} />

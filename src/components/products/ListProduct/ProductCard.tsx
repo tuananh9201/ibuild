@@ -111,7 +111,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </div>
         <div className="mb-[13.5px]">
           <span className="font-roboto not-italic font-semibold text-lg leading-[150%] text-secondary-color">
-            {product.data?.original_price || "Liên hệ"}
+            {product.data?.reference_price || "Liên hệ"}
           </span>
         </div>
         <div className="flex flex-row justify-between items-center mb-3">
@@ -127,7 +127,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             Số lượng sản phẩm
           </span>
           <span className="font-roboto not-italic text-sm leading-[150%] text-text-color font-normal">
-            Liên hệ
+            {product.data.quantity || "Đang cập nhật"}
           </span>
         </div>
         <div className="mb-3">

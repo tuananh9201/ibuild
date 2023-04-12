@@ -1,16 +1,15 @@
-import { ReactElement } from "react";
 import { useRouter } from "next/router";
+import { ReactElement } from "react";
 
-import { NextPageWithLayout } from "../_app";
-import { MultiCarousel } from "@/components/common";
 import MainLayout from "@/components/main-layout";
+import { NextPageWithLayout } from "../_app";
 
 const NhaCungCap: NextPageWithLayout = () => {
   const { query } = useRouter();
 
   return (
     <div>
-      <MultiCarousel />
+      <h1>Nha cung cap</h1>
     </div>
   );
 };

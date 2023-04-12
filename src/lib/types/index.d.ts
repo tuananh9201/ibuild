@@ -110,6 +110,7 @@ type ProductData = {
   weight?: string;
   product_id: string;
   original_price?: string;
+  reference_price?: string;
   brand_name?: string;
   product_image_s3: string;
   technical_details?: string;
@@ -118,6 +119,7 @@ type ProductData = {
   source_name?: string;
   source_url?: string;
   phone_number?: string;
+  quantity?: number;
 };
 type ProductImage = {
   url: string;
@@ -134,7 +136,13 @@ type Supplier = {
   city?: string;
   district?: string;
   phone?: string;
+  slug?: string;
 };
+
+type CategoryInfo = {
+  id: string;
+  slug?: string;
+}
 export type Product = {
   id: string;
   category_id: string;
@@ -146,6 +154,7 @@ export type Product = {
   updated_at: string;
   score?: number;
   supplier?: Supplier;
+  category_info?: CategoryInfo;
   is_bookmark?: boolean;
 };
 type Paging = {
