@@ -40,14 +40,18 @@ const ProductDetail: NextPageWithLayout = () => {
     s3_image_url: "",
   });
 
-  const { data, isLoading } = useSWR<Product>(query.slug, getProductDetail);
+  const { data } = useSWR<Product>(query.slug, getProductDetail, {
+    onError: () => {
+      router.push("/404");
+    },
+  });
 
   const [logo, setLogo] = useState(() => {
     return data?.supplier?.feature_image || companyLogo;
   });
 
   useEffect(() => {
-    if (data) {
+    if (data && data.images && data.images.length) {
       setCurrentImage({
         ...currentImage,
         ...data.images[0],
@@ -88,7 +92,7 @@ const ProductDetail: NextPageWithLayout = () => {
     <div className="w-full mt-[60px] px-3 lg:px-0">
       <div className="max-w-[1280px] mx-auto my-0 flex flex-col gap-5 lg:flex-row lg:gap-0 min-h-[615px]">
         <div className="lg:mr-[26px] w-full lg:w-[84px]">
-          {data && (
+          {data && data?.images && data?.images.length && (
             <ProductCarouselVertical
               images={data.images}
               currentImage={currentImage}
@@ -174,6 +178,7 @@ const ProductDetail: NextPageWithLayout = () => {
                 }`}
               >
                 {data?.data?.description &&
+                  data?.data?.description.split("|") &&
                   data?.data?.description.split("|").map((item, idx) => {
                     return (
                       <li key={idx} className="list-disc">
@@ -184,6 +189,7 @@ const ProductDetail: NextPageWithLayout = () => {
               </ul>
             </div>
             {data?.data?.description &&
+              data.data?.description.split("|") &&
               data.data?.description.split("|").length > 5 && (
                 <button
                   className={`w-full flex gap-[5px] items-center justify-center h-[70px] bottom-0 left-0 ${

@@ -1,3 +1,4 @@
+
 import { ResponseSearchProduct, SearchProduct } from "src/lib/types";
 import axios from "./api";
 import { Product } from "src/lib/types";
