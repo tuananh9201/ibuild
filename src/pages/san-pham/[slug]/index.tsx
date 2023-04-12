@@ -123,7 +123,6 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
       setPaging({ ...paging, current: 1, total: 0 });
       setPayload({
         ...payload,
-        category_id: [],
         skip: 0,
         sort_by: sortSlug,
       });
