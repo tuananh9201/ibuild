@@ -224,11 +224,11 @@ const ProductDetail: NextPageWithLayout = () => {
           </div>
           <div className="flex flex-col gap-3 md:flex-row justify-between mt-4">
             <button
-              className="flex items-center justify-center px-[23px] py-[10px] rounded border border-solid border-primary-color text-primary-color gap-[6px] hover:bg-primary-color transition group"
+              className="flex items-center justify-center px-[23px] min-w-[200px] py-[10px] rounded border border-solid border-transparent text-primary-color gap-[6px] bg-[#EFF1F9] transition group"
               onClick={handleToLogin}
             >
-              <PhoneIcon className="fill-[#eb7a01] group-hover:fill-white" />
-              <span className="font-roboto not-italic font-medium text-base leading-[150%] group-hover:text-white">
+              <PhoneIcon className="fill-black" />
+              <span className="font-roboto not-italic font-medium text-base text-black leading-[150%]">
                 {!token ? "Đăng nhập để xem" : data?.supplier?.phone || ""}
               </span>
             </button>
