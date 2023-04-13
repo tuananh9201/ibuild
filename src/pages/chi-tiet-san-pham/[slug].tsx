@@ -74,6 +74,9 @@ const ProductDetail: NextPageWithLayout = () => {
     if (!token) {
       router.push({
         pathname: "/dang-nhap",
+        query: {
+          redirect: router.asPath,
+        },
       });
       return;
     }
@@ -84,6 +87,9 @@ const ProductDetail: NextPageWithLayout = () => {
     if (!token) {
       router.push({
         pathname: "/dang-nhap",
+        query: {
+          redirect: router.asPath,
+        },
       });
     }
   };

@@ -142,6 +142,7 @@ type Supplier = {
 type CategoryInfo = {
   id: string;
   slug?: string;
+  parent_id?: string;
 };
 export type Product = {
   id: string;
