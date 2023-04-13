@@ -64,7 +64,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       return;
     }
 
-    return <p>{product.supplier?.phone || "01234567"}</p>;
+    return <p>{product.supplier?.phone || ""}</p>;
   };
 
   return (
@@ -108,7 +108,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           {product.data.product_name}
         </p>
         <div className="px-3 py-[3px] bg-[#0000001a] inline-block rounded mb-3">
-          <span className="text-xs font-robot not-italic font-normal leading-[150%]">
+          <span className="text-xs font-robot not-italic font-normal leading-[150%] line-clamp-1">
             Mã: {product.data.model_num}
           </span>
         </div>

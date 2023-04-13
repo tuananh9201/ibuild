@@ -229,7 +229,7 @@ const ProductDetail: NextPageWithLayout = () => {
             >
               <PhoneIcon className="fill-[#eb7a01] group-hover:fill-white" />
               <span className="font-roboto not-italic font-medium text-base leading-[150%] group-hover:text-white">
-                {!token ? "Đăng nhập" : data?.supplier?.phone || "0123456789"}
+                {!token ? "Đăng nhập để xem" : data?.supplier?.phone || ""}
               </span>
             </button>
             {data && (
