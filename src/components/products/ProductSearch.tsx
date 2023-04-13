@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
+import { Select, Space } from "antd";
 
 import { historyIcon } from "@/constants/images";
 import { DeleteIcon } from "@/images/icons/product_types/icon_wrapper";
@@ -155,6 +156,18 @@ const ProductSearch = ({
       ref={inputRef}
     >
       <div className={isActivateSearch ? className : classNameActivate}>
+        <div>
+          <Select
+            defaultValue="lucy"
+            style={{ width: 120 }}
+            bordered={false}
+            options={[
+              { value: "jack", label: "Jack" },
+              { value: "lucy", label: "Lucy" },
+              { value: "Yiminghe", label: "yiminghe" },
+            ]}
+          />
+        </div>
         <div className="icon-search w-5 h-5">
           <svg
             xmlns="http://www.w3.org/2000/svg"

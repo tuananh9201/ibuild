@@ -72,11 +72,16 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
     },
   ];
   return (
-    <div className="min-w-[172px] min-h-[32px] flex flex-row items-center p-0 gap-2 mb-[6px]">
+    <div className="min-w-[247px] min-h-[32px] flex flex-row items-center p-0 gap-2 mb-[6px]">
       <Dropdown menu={{ items }}>
         <Space>
           <div>
             <Image width={32} height={32} src={userAvata} alt="user-avatar" />
+          </div>
+          <div className="w-[67px] h-[22px] bg-[#5C84D6] rounded flex items-center justify-center">
+            <span className="text-xs leading-[150%] font-normal text-white">
+              Chuyên gia
+            </span>
           </div>
           <span className="max-w-full">{displayName}</span>
           <Image width={24} height={24} src={keyboardArrowUp} alt="up-icon" />
