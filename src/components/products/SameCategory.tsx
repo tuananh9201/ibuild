@@ -37,7 +37,9 @@ const SameCategory = ({ title, categoryId, slug }: SameCategoryProps) => {
         categoryId
       );
       if (categoryInfo?.length) {
-        setCategorySlug(categoryInfo[0].slug || "");
+        const category = categoryInfo.find((item) => item.parent_id === "0");
+        const slug = category ? category.slug : categoryInfo[0].slug;
+        setCategorySlug(slug || "");
       }
     };
 
