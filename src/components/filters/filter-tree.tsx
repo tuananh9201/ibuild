@@ -12,7 +12,7 @@ interface FilterTreeProps {
   keyword?: string;
   searchEnabled?: boolean;
   defaultValue?: ICategory;
-  setKeyword?: Function;
+  setKeyword?: (word: string) => void;
 }
 
 const FilterTree = ({

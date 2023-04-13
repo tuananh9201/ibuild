@@ -12,6 +12,22 @@ interface ProductTypesProps {
   onClickItem: (id: string) => void;
 }
 
+const ButtonLeftIcon = () => {
+  return (
+    <button className="absolute -left-5 rotate-180">
+      <LeftRightIcon className="fill-primary-color" />
+    </button>
+  );
+};
+
+const ButtonRightIcon = () => {
+  return (
+    <button className="absolute -right-5">
+      <LeftRightIcon className="fill-primary-color" />
+    </button>
+  );
+};
+
 const ProductTypes = ({ parentId, onClickItem }: ProductTypesProps) => {
   const [currentActive, setCurrentActive] = useState("all");
   const {
@@ -51,15 +67,11 @@ const ProductTypes = ({ parentId, onClickItem }: ProductTypesProps) => {
         additionalTransfrom={0}
         arrows
         centerMode={false}
-        className=""
         containerClass="container-with-dots"
-        dotListClass=""
         draggable
         focusOnSelect={false}
         itemClass=""
-        keyBoardControl
         minimumTouchDrag={80}
-        pauseOnHover
         renderArrowsWhenDisabled={false}
         renderButtonGroupOutside={false}
         renderDotsOutside={false}
@@ -89,23 +101,11 @@ const ProductTypes = ({ parentId, onClickItem }: ProductTypesProps) => {
             partialVisibilityGutter: 30,
           },
         }}
-        rewind={false}
-        rewindWithAnimation={false}
-        shouldResetAutoplay
-        showDots={false}
-        sliderClass=""
         slidesToSlide={2}
         swipeable
-        customLeftArrow={
-          <button className="absolute -left-5 rotate-180">
-            <LeftRightIcon className="fill-primary-color" />
-          </button>
-        }
-        customRightArrow={
-          <button className="absolute -right-5">
-            <LeftRightIcon className="fill-primary-color" />
-          </button>
-        }
+        rtl={false}
+        customLeftArrow={<ButtonLeftIcon />}
+        customRightArrow={<ButtonRightIcon />}
       >
         {menus.map((menu) => {
           const Component = menu.icon;

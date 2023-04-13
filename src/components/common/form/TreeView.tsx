@@ -62,6 +62,7 @@ const TreeView = ({ options, setOutputValue }: TreeViewProps) => {
   }, [options]);
 
   const onCheck = (checkedValue: any) => {
+    console.log(checkedValue);
     // if (!setOutputValue) return;
     // if (checkedValue.length > 1) {
     //   setOutputValue({

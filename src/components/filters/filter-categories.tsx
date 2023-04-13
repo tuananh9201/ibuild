@@ -64,35 +64,41 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
     area: "",
   });
 
-  useEffect(() => {
-    if (!categoryId) return;
-    const getChildCategories = async () => {
-      const res = await fetchChildCategories(categoryId);
-      setCategories(res);
-    };
-
-    getChildCategories();
-  }, [categoryId]);
+  const { data: categoryList } = useSWR(categoryId, fetchChildCategories);
+  const { data: areaList } = useSWR("dddd", getAreas);
 
   useEffect(() => {
-    const getListArea = async () => {
-      const res = await getAreas();
-      setAreas(res);
-    };
-
-    getListArea();
-  }, []);
-
-  useEffect(() => {
-    if (!keywordSearch.category) {
-      setCategories(categories);
-    } else {
-      const newCategories = categories.filter((category) =>
-        category.name_vi.includes(keywordSearch.category)
+    if (!keywordSearch.area && areaList) {
+      setAreas(areaList);
+    } else if (keywordSearch.area && areaList) {
+      const newArea = areaList.filter((area: ICategory) =>
+        area.name_vi.includes(keywordSearch.area.trim())
       );
-      setCategories(newCategories);
+      setAreas(newArea || []);
     }
-  }, [keywordSearch]);
+    if (!keywordSearch.category && categoryList) {
+      setCategories(categoryList);
+    } else if (keywordSearch.category && categoryList) {
+      const newCategories = categoryList.filter((category) =>
+        category.name_vi.includes(keywordSearch.category.trim())
+      );
+      setCategories(newCategories || []);
+    }
+  }, [keywordSearch, categoryList, areaList]);
+
+  const handleCategorySearch = (word: string) => {
+    setKeywordSearch({
+      ...keywordSearch,
+      category: word,
+    });
+  };
+
+  const handleAreaSearch = (word: string) => {
+    setKeywordSearch({
+      ...keywordSearch,
+      area: word,
+    });
+  };
 
   return (
     <div className="mt-4 flex gap-4">
@@ -101,9 +107,11 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
           Danh mục sản phẩm
         </span>
         <FilterTree
+          searchEnabled={true}
           options={categories}
           defaultValue={DEFAULT_VALUE}
-          searchEnabled={true}
+          keyword={keywordSearch.category}
+          setKeyword={handleCategorySearch}
         />
       </div>
       <div className="w-[15%]">
@@ -131,7 +139,13 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
         <span className="inline-block font-roboto font-medium text-base leading-[calc(24 / 16)] mb-2">
           Khu vực
         </span>
-        <FilterTree options={areas} defaultValue={DEFAULT_AREA_VALUE} />
+        <FilterTree
+          searchEnabled={true}
+          options={areas}
+          defaultValue={DEFAULT_AREA_VALUE}
+          keyword={keywordSearch.area}
+          setKeyword={handleAreaSearch}
+        />
       </div>
       <div className="w-[25%] flex-base flex flex-row gap-3 justify-end items-end">
         <button className="h-[46px] rounded border border-solid px-5 border-primary-color bg-primary-color text-white">

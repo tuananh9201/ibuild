@@ -114,9 +114,14 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </div>
         <div className="mb-[13.5px]">
           <span className="font-roboto not-italic font-semibold text-lg leading-[150%] text-secondary-color">
-            {(product.data?.reference_price &&
-              product.data.reference_price > 0) ||
-              "Liên hệ"}
+            {`${
+              product.data?.reference_price && product.data.reference_price > 0
+                ? `${
+                    product.data?.reference_price &&
+                    product.data.reference_price > 0
+                  } VNĐ`
+                : "Liên hệ"
+            }`}
           </span>
         </div>
         <div className="flex flex-row justify-between items-center mb-3">
