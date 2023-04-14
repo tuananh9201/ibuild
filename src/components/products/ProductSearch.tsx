@@ -1,11 +1,14 @@
+import { Select } from "antd";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
-import { Select, Space } from "antd";
 
 import { historyIcon } from "@/constants/images";
-import { DeleteIcon } from "@/images/icons/product_types/icon_wrapper";
+import {
+  DeleteIcon,
+  UpDownIcon,
+} from "@/images/icons/product_types/icon_wrapper";
 import {
   createSearchHistory,
   deleteSearchHistory,
@@ -76,6 +79,7 @@ const ProductSearch = ({
 
   const [isActivateSearch, setIsActivateSearch] = useState(false);
   const [histories, setHistories] = useState<SearchResultModel[]>([]);
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -166,6 +170,14 @@ const ProductSearch = ({
               { value: "lucy", label: "Lucy" },
               { value: "Yiminghe", label: "yiminghe" },
             ]}
+            suffixIcon={
+              <UpDownIcon
+                className={`transition fill-primary-color ${
+                  isOpenMenu ? "rotate-180" : ""
+                }`}
+              />
+            }
+            onDropdownVisibleChange={() => setIsOpenMenu((prev) => !prev)}
           />
         </div>
         <div className="icon-search w-5 h-5">
