@@ -159,7 +159,13 @@ const ProductDetail: NextPageWithLayout = () => {
             </div>
             <div className="mb-2">
               <span className="font-roboto not-italic font-semibold text-text-color text-[28px] leading-[125%]">
-                {data?.data?.reference_price || "Liên hệ"}
+                {`${
+                  data?.data?.reference_price && data?.data.reference_price > 0
+                    ? `${new Intl.NumberFormat().format(
+                        data?.data?.reference_price
+                      )} VNĐ`
+                    : "Liên hệ"
+                }`}
               </span>
             </div>
 

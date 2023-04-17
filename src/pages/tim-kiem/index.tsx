@@ -131,7 +131,7 @@ const SearchPage: NextPageWithLayout = () => {
           damping: 20,
         }}
       >
-        <section className="max-w-[700px] mx-auto flex justify-center">
+        <section className="max-w-[700px] mx-auto flex justify-center h-[100px]">
           <ProductSearch
             initialValue={keywordSearch}
             setInputValueToParent={setKeywordSearch}

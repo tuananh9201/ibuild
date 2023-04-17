@@ -149,8 +149,8 @@ const ProductSearch = ({
       animate={histories ? "active" : "deactive"}
       className={
         histories.length > 0
-          ? "absolute top-[-60px] z-20 mt-2 lg:mt-10 lg:max-w-3/4 flex flex-col bg-white items-start gap-2 shadow-[0_0.5px_15px_1px_rgba(0,0,0,0.1)] rounded-lg"
-          : "absolute top-[-60px] z-20 mt-2 lg:mt-10 lg:max-w-3/4 flex flex-col gap-2"
+          ? "absolute z-20 mt-2 lg:mt-10 lg:max-w-3/4 flex flex-col bg-white items-start gap-2 shadow-[0_0.5px_15px_1px_rgba(0,0,0,0.1)] rounded-lg"
+          : "absolute z-20 mt-2 lg:mt-10 lg:max-w-3/4 flex flex-col gap-2"
       }
       ref={inputRef}
     >
