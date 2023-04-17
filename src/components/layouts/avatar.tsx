@@ -78,11 +78,13 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
           <div>
             <Image width={32} height={32} src={userAvata} alt="user-avatar" />
           </div>
-          <div className="w-[67px] h-[22px] bg-[#5C84D6] rounded flex items-center justify-center">
-            <span className="text-xs leading-[150%] font-normal text-white">
-              Chuyên gia
-            </span>
-          </div>
+          {props.user.user_type === "expert" && (
+            <div className="w-[67px] h-[22px] bg-[#5C84D6] rounded flex items-center justify-center">
+              <span className="text-xs leading-[150%] font-normal text-white">
+                Chuyên gia
+              </span>
+            </div>
+          )}
           <span className="max-w-full">{displayName}</span>
           <Image width={24} height={24} src={keyboardArrowUp} alt="up-icon" />
         </Space>

@@ -19,6 +19,8 @@ import MainLayout from "@/components/main-layout";
 import ProductSearch from "@/components/products/ProductSearch";
 import ListProduct from "@/components/products/ListProduct";
 import noSearchResult from "@/images/no_search_result.png";
+import ListProductGroup from "@/components/products/ListProductGroup";
+import SupplierContainer from "@/components/supplier/SupplierContainer";
 
 const RELATED_LIST = [
   {
@@ -191,6 +193,15 @@ const SearchPage: NextPageWithLayout = () => {
               hideOnSinglePage
             />
           </div>
+        </section>
+
+        {/* pharse3 */}
+        <section>
+          <ListProductGroup />
+        </section>
+
+        <section>
+          <SupplierContainer />
         </section>
       </motion.div>
     </>

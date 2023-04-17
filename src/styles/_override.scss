@@ -142,6 +142,17 @@
   color: rgba(0, 0, 0, 0.9) !important;
 }
 
+.menu-select-category {
+  .ant-select-selection-item {
+    font-family: "Roboto" !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    line-height: 150% !important;
+    color: #eb7a01 !important;
+  }
+}
+
 .ant-select-selection-item {
   font-family: "Roboto" !important;
   font-style: normal !important;

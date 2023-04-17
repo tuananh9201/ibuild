@@ -15,6 +15,7 @@ import {
   getSearchHistories,
 } from "@/lib/api/user";
 import { SearchResultModel } from "@/lib/models";
+import useUser from "@/lib/hooks/user";
 
 type HistoryItem = {
   item: string;
@@ -76,6 +77,7 @@ const ProductSearch = ({
   redirectToSearchPage,
 }: ProductSearchProps) => {
   const router = useRouter();
+  const { user } = useUser();
 
   const [isActivateSearch, setIsActivateSearch] = useState(false);
   const [histories, setHistories] = useState<SearchResultModel[]>([]);
@@ -108,7 +110,7 @@ const ProductSearch = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [inputRef]);
+  }, []);
 
   const onFocusInput = (e: React.FocusEvent<HTMLInputElement, Element>) => {
     setIsActivateSearch(true);
@@ -160,15 +162,15 @@ const ProductSearch = ({
       ref={inputRef}
     >
       <div className={isActivateSearch ? className : classNameActivate}>
-        <div>
+        {user?.user_type === "expert" && (
           <Select
-            defaultValue="lucy"
-            style={{ width: 120 }}
+            defaultValue="0"
+            style={{ width: 170 }}
             bordered={false}
             options={[
-              { value: "jack", label: "Jack" },
-              { value: "lucy", label: "Lucy" },
-              { value: "Yiminghe", label: "yiminghe" },
+              { value: "0", label: "Sản phẩm" },
+              { value: "1", label: "Nhóm sản phẩm" },
+              { value: "2", label: "Nhà cung cấp" },
             ]}
             suffixIcon={
               <UpDownIcon
@@ -177,9 +179,10 @@ const ProductSearch = ({
                 }`}
               />
             }
+            className="menu-select-category"
             onDropdownVisibleChange={() => setIsOpenMenu((prev) => !prev)}
           />
-        </div>
+        )}
         <div className="icon-search w-5 h-5">
           <svg
             xmlns="http://www.w3.org/2000/svg"
