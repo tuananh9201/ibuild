@@ -87,7 +87,7 @@ const SanPham: NextPageWithLayout<Props> = ({ categories }: Props) => {
             </div>
           </div>
         </section>
-        <section className="p-4 lg:p-0 flex justify-center">
+        <section className="p-4 lg:p-0 flex justify-center relative">
           <ProductSearch
             initialValue={keyword}
             setInputValueToParent={setKeyword}

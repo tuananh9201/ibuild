@@ -134,8 +134,8 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
       <Head>
         <title>{category?.name_vi}</title>
       </Head>
-      <div className="flex flex-col items-start px-4 lg:px-20 pt-8 pb-[60px]">
-        <div className="w-full flex justify-center">
+      <div className="flex flex-col items-start px-4 lg:px-20 pt-8 pb-[80px]">
+        <div className="w-full flex justify-center relative h-14">
           <ProductSearch
             initialValue={keyword}
             setInputValueToParent={setKeyword}
