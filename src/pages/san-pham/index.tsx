@@ -22,6 +22,7 @@ const SanPham: NextPageWithLayout<Props> = ({ categories }: Props) => {
   const router = useRouter();
 
   const [keyword, setKeyword] = useState("");
+  const [searchType, setSearchType] = useState("0");
 
   const { data, error, isLoading } = useSWR("", fetchRootCategories, {
     fallbackData: categories,
@@ -31,7 +32,7 @@ const SanPham: NextPageWithLayout<Props> = ({ categories }: Props) => {
     if (keyword.length < 2) return;
     router.push({
       pathname: "/tim-kiem",
-      query: { search: keyword },
+      query: { search: keyword, searchType: searchType },
     });
   };
 
@@ -90,7 +91,9 @@ const SanPham: NextPageWithLayout<Props> = ({ categories }: Props) => {
         <section className="p-4 lg:p-0 flex justify-center relative h-[100px]">
           <ProductSearch
             initialValue={keyword}
+            selectValue={searchType}
             setInputValueToParent={setKeyword}
+            onSelectValue={setSearchType}
             redirectToSearchPage={handleToRedirectToSearchPage}
           />
         </section>

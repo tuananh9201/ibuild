@@ -27,9 +27,11 @@ type HistoryItem = {
 
 interface ProductSearchProps {
   initialValue: string;
+  selectValue?: string;
   onClick?: () => void;
   setInputValueToParent?: Function;
   redirectToSearchPage?: Function;
+  onSelectValue?: Function;
 }
 
 const SearchHistoryItem = (props: HistoryItem) => {
@@ -72,9 +74,11 @@ const SearchHistoryItem = (props: HistoryItem) => {
 
 const ProductSearch = ({
   initialValue,
+  selectValue,
   onClick,
   setInputValueToParent,
   redirectToSearchPage,
+  onSelectValue,
 }: ProductSearchProps) => {
   const router = useRouter();
   const { user } = useUser();
@@ -148,6 +152,12 @@ const ProductSearch = ({
     }
   };
 
+  const handleSelect = (value: string) => {
+    if (onSelectValue) {
+      onSelectValue(value);
+    }
+  };
+
   const className =
     "flex flex-row justify-start items-center p-2 gap-2 lg:max-w-3/4 bg-white rounded-lg h-16 ";
   const classNameActivate = `${className} border-solid border border-[#dddddd]`;
@@ -164,7 +174,7 @@ const ProductSearch = ({
       <div className={isActivateSearch ? className : classNameActivate}>
         {user?.user_type === "expert" && (
           <Select
-            defaultValue="0"
+            defaultValue={selectValue || "0"}
             style={{ width: 170 }}
             bordered={false}
             options={[
@@ -181,6 +191,7 @@ const ProductSearch = ({
             }
             className="menu-select-category"
             onDropdownVisibleChange={() => setIsOpenMenu((prev) => !prev)}
+            onSelect={handleSelect}
           />
         )}
         <div className="icon-search w-5 h-5">
