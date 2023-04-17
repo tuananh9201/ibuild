@@ -3,6 +3,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ICategory } from "src/lib/types";
+import { getCategoryImage } from "@/lib/utils";
 type Props = {
   category: ICategory;
 };
@@ -23,7 +24,7 @@ const CategoryCard = (props: Props) => {
     >
       <Link href={`/san-pham/${props.category.slug}`}>
         <Image
-          src={props.category?.image || ""}
+          src={getCategoryImage(props.category?.image || "")}
           alt={props.category.name_vi}
           width={430}
           height={330}
