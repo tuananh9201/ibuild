@@ -118,10 +118,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
               product.data?.reference_price && product.data.reference_price > 0
                 ? `${new Intl.NumberFormat().format(
                     product?.data?.reference_price
-                  )} VNĐ`
+                  )} VNĐ${product?.data?.unit ? `/${product?.data?.unit}` : ""}`
                 : "Liên hệ"
             }`}
-            {/* {new Intl.NumberFormat().format(5000000)} */}
           </span>
         </div>
         <div className="flex flex-row justify-between items-center mb-3">

@@ -162,7 +162,7 @@ const ProductDetail: NextPageWithLayout = () => {
                   data?.data?.reference_price && data?.data.reference_price > 0
                     ? `${new Intl.NumberFormat().format(
                         data?.data?.reference_price
-                      )} VNĐ`
+                      )} VNĐ${data?.data?.unit ? `/${data?.data?.unit}` : ""}`
                     : "Liên hệ"
                 }`}
               </span>
