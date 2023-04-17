@@ -64,7 +64,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       return;
     }
 
-    return <p>{product.supplier?.phone || "01234567"}</p>;
+    return <p>{product.supplier?.phone || ""}</p>;
   };
 
   return (
@@ -108,7 +108,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           {product.data.product_name}
         </p>
         <div className="px-3 py-[3px] bg-[#0000001a] inline-block rounded mb-3">
-          <span className="text-xs font-robot not-italic font-normal leading-[150%]">
+          <span className="text-xs font-robot not-italic font-normal leading-[150%] line-clamp-1">
             Mã: {product.data.model_num}
           </span>
         </div>
@@ -116,10 +116,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <span className="font-roboto not-italic font-semibold text-lg leading-[150%] text-secondary-color">
             {`${
               product.data?.reference_price && product.data.reference_price > 0
-                ? `${
-                    product.data?.reference_price &&
-                    product.data.reference_price > 0
-                  } VNĐ`
+                ? `${product?.data?.reference_price} VNĐ`
                 : "Liên hệ"
             }`}
           </span>

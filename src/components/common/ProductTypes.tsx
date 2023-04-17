@@ -2,10 +2,11 @@ import { AllProductIcon } from "@/images/icons/product_types/icon_wrapper";
 import { ICategory } from "src/lib/types";
 import { fetchChildCategories } from "src/lib/api/category";
 import { LeftRightIcon } from "@/images/icons/product_types/icon_wrapper";
-
+import Image from "next/image";
 import { useState } from "react";
 import useSWR from "swr";
 import Carousel from "react-multi-carousel";
+import { getCategoriesIcon } from "@/lib/utils";
 
 interface ProductTypesProps {
   parentId: string;
@@ -38,7 +39,8 @@ const ProductTypes = ({ parentId, onClickItem }: ProductTypesProps) => {
   const firstItem = {
     id: "all",
     name: "Tất cả sản phẩm",
-    icon: AllProductIcon,
+    icon: getCategoriesIcon("all", false),
+    iconActive: getCategoriesIcon("all", true),
   };
   if (!childrend) return null;
   const childsTopLevel = childrend?.filter((cate) => cate.level === 0);
@@ -46,7 +48,8 @@ const ProductTypes = ({ parentId, onClickItem }: ProductTypesProps) => {
     return {
       id: c.id,
       name: c.name_vi,
-      icon: AllProductIcon,
+      icon: getCategoriesIcon(c?.icon || "", false),
+      iconActive: getCategoriesIcon(c?.icon || "", true),
     };
   });
   const menus = [firstItem].concat(childs);
@@ -108,8 +111,6 @@ const ProductTypes = ({ parentId, onClickItem }: ProductTypesProps) => {
         customRightArrow={<ButtonRightIcon />}
       >
         {menus.map((menu) => {
-          const Component = menu.icon;
-
           return (
             <div
               key={menu.id}
@@ -118,13 +119,13 @@ const ProductTypes = ({ parentId, onClickItem }: ProductTypesProps) => {
               }`}
               onClick={() => onClick(menu.id)}
             >
-              <div>
-                <Component
-                  className={`w-6 h-6 ${
-                    currentActive === menu.id
-                      ? "fill-white"
-                      : "fill-secondary-color"
-                  }`}
+              <div className="h-6 w-6 min-w-[24px] min-h-[24px]">
+                <Image
+                  className="h-6 w-6"
+                  width={24}
+                  height={24}
+                  alt=""
+                  src={currentActive === menu.id ? menu.iconActive : menu.icon}
                 />
               </div>
               <span className="font-roboto not-italic font-medium text-base leading-[150%] text-inherit ml-2">

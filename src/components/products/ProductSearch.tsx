@@ -48,9 +48,9 @@ const SearchHistoryItem = (props: HistoryItem) => {
   };
 
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center last:mb-4">
       <div
-        className="flex flex-row items-center gap-4 w-full bg-white p-4  hover:bg-zinc-100  hover:cursor-pointer"
+        className="flex flex-row items-center gap-4 w-full bg-white p-4  hover:bg-zinc-100 hover:rounded-lg  hover:cursor-pointer"
         onClick={() => selectSelectedProduct(props.item)}
       >
         <div className="icon w-5 h-5">
@@ -62,7 +62,7 @@ const SearchHistoryItem = (props: HistoryItem) => {
       </div>
       <div
         onClick={() => handleDeleteItem(props.id)}
-        className="h-full w-[10%] flex justify-center items-center cursor-pointer"
+        className="h-8 w-[10%] flex justify-center items-center cursor-pointer transition hover:rounded-lg hover:scale-125 hover:bg-zinc-100"
       >
         <DeleteIcon className="fill-[#666666]" />
       </div>
@@ -156,8 +156,8 @@ const ProductSearch = ({
       animate={histories ? "active" : "deactive"}
       className={
         histories.length > 0
-          ? "mt-2 lg:mt-10 lg:max-w-3/4 flex flex-col bg-white items-start gap-2 shadow-[0_0.5px_15px_1px_rgba(0,0,0,0.1)] rounded-lg"
-          : "mt-2 lg:mt-10 lg:max-w-3/4 flex flex-col gap-2"
+          ? "absolute top-[-60px] z-20 mt-2 lg:mt-10 lg:max-w-3/4 flex flex-col bg-white items-start gap-2 shadow-[0_0.5px_15px_1px_rgba(0,0,0,0.1)] rounded-lg"
+          : "absolute top-[-60px] z-20 mt-2 lg:mt-10 lg:max-w-3/4 flex flex-col gap-2"
       }
       ref={inputRef}
     >
@@ -215,8 +215,10 @@ const ProductSearch = ({
         </button>
       </div>
       {isActivateSearch && !initialValue?.trim() ? (
-        <div className="px-4 min-w-full bg-white flex flex-col">
-          <div className="line h-px w-full border-solid border border-gray-100"></div>
+        <div className="px-4 min-w-full bg-white flex flex-col [&>*:nth-child(2)]:mt-2">
+          {histories ? (
+            <div className="line h-px w-full border-solid border border-gray-100"></div>
+          ) : null}
           {histories &&
             histories.map((h, idx) => {
               if (idx > 4) return;
