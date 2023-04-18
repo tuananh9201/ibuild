@@ -1,30 +1,26 @@
-import dynamic from "next/dynamic";
+import { Pagination } from "antd";
 import Head from "next/head";
 import Image from "next/image";
-import useSWR from "swr";
 import { useRouter } from "next/router";
 import { ReactElement, useEffect, useState } from "react";
-import { Pagination } from "antd";
+import useSWR from "swr";
 
+import {
+  FilterProduct,
+  LitsProductLoading,
+  ProductTypes,
+} from "@/components/common";
 import Breadcrums from "@/components/common/breadcrums";
 import MainLayout from "@/components/main-layout";
 import ListProduct from "@/components/products/ListProduct";
+import ProductSearch from "@/components/products/ProductSearch";
 import noFoundProduct from "@/images/no_search_result.png";
-import { ProductTypes } from "@/components/common";
-import {
-  FilterCategories,
-  FilterRelated,
-  FilterProduct,
-} from "@/components/common";
-import { filterIcon, filterIconWhite } from "@/images/index";
+import { GetStaticPaths, GetStaticPropsContext } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { fetchCategorySlug, fetchRootCategories } from "src/lib/api/category";
 import { searchProduct } from "src/lib/api/product";
 import { ICategory, Product, SearchProduct } from "src/lib/types";
 import { NextPageWithLayout } from "../../_app";
-import { LitsProductLoading } from "@/components/common";
-import ProductSearch from "@/components/products/ProductSearch";
-import { GetStaticPaths, GetStaticPropsContext } from "next";
 
 type Props = {
   category: ICategory;
@@ -135,7 +131,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
         <title>{category?.name_vi}</title>
       </Head>
       <div className="flex flex-col items-start px-4 lg:px-20 pt-8 pb-[80px]">
-        <div className="w-full flex justify-center relative h-24">
+        <div className="w-full flex justify-center relative h-[100px]">
           <ProductSearch
             initialValue={keyword}
             setInputValueToParent={setKeyword}
@@ -151,7 +147,11 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
           onClickItem={onClickFilterCategory}
           parentId={category?.id || ""}
         />
-        <FilterProduct onChangeSort={onChangeSort} categoryId={category?.id} />
+        <FilterProduct
+          onChangeSort={onChangeSort}
+          categoryId={category?.id}
+          isShowMostRelevant={true}
+        />
         <div className="mt-4 mb-4 w-full">
           {isLoading || isLoadingData ? (
             <LitsProductLoading items={12} />

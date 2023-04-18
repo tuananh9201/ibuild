@@ -62,25 +62,9 @@ const TreeView = ({ options, setOutputValue }: TreeViewProps) => {
   }, [options]);
 
   const onCheck = (checkedValue: any) => {
-    console.log(checkedValue);
-    // if (!setOutputValue) return;
-    // if (checkedValue.length > 1) {
-    //   setOutputValue({
-    //     id: "00",
-    //     name_vi: "Nhiều danh mục",
-    //   });
-    // } else if (checkedValue[0] === "0" || checkedValue.length === 0) {
-    //   setOutputValue({
-    //     id: "0",
-    //     name_vi: "Tất cả",
-    //   });
-    // } else {
-    //   const option = options.find((item) => item.id === checkedValue[0]);
-    //   setOutputValue({
-    //     id: option?.id,
-    //     name_vi: option?.name_vi || "",
-    //   });
-    // }
+    if (setOutputValue) {
+      setOutputValue(checkedValue);
+    }
   };
 
   return (

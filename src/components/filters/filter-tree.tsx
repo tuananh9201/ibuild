@@ -1,17 +1,14 @@
-import { useState, useRef, useEffect } from "react";
-import useSWR from "swr";
+import { useEffect, useRef, useState } from "react";
 
-import { TreeView, SearchInput } from "@/components/common";
+import { SearchInput, TreeView } from "@/components/common";
 import { UpDownIcon } from "@/images/icons/product_types/icon_wrapper";
 import { ICategory } from "@/lib/types";
-import { fetchChildCategories } from "@/lib/api/category";
-import { getAreas } from "@/lib/api/information";
 
 interface FilterTreeProps {
   options: ICategory[];
   keyword?: string;
   searchEnabled?: boolean;
-  defaultValue?: ICategory;
+  defaultValue: ICategory;
   setKeyword?: (word: string) => void;
 }
 
@@ -36,7 +33,27 @@ const FilterTree = ({
     () => window.removeEventListener("click", () => {});
   }, []);
 
-  const handleKeyword = () => {};
+  const handleCheckedValue = (value: any) => {
+    if (value.length === 1) {
+      const newOption = options.find((option) => option.id === value[0]);
+      if (newOption) {
+        setOutputValue({
+          ...outputValue,
+          ...newOption,
+        });
+      }
+    } else if (value.length === 0) {
+      setOutputValue({
+        ...outputValue,
+        ...defaultValue,
+      });
+    } else {
+      setOutputValue({
+        ...outputValue,
+        ...defaultValue,
+      });
+    }
+  };
 
   return (
     <div className="w-full relative" ref={selectElement}>
@@ -61,7 +78,7 @@ const FilterTree = ({
         } absolute z-10 bg-white border border-solid border-primary-color border-t-0 w-full rounded-b px-4 pt-[22px] pb-[14px] flex flex-col gap-5`}
       >
         {searchEnabled && <SearchInput value={keyword} setValue={setKeyword} />}
-        <TreeView options={options} setOutputValue={setOutputValue} />
+        <TreeView options={options} setOutputValue={handleCheckedValue} />
       </div>
     </div>
   );

@@ -44,16 +44,16 @@ const QUANTITIES = [
 
 const DEFAULT_VALUE = {
   id: "00",
-  name_vi: "Chọn danh mục sản phẩm",
+  name_vi: "Nhiều danh mục",
 };
 const DEFAULT_QUANTITY_VALUE = {
   id: "00",
-  name_vi: "Chọn số lượng",
+  name_vi: "Nhiều khoảng số lượng",
 };
 
 const DEFAULT_AREA_VALUE = {
   id: "00",
-  name_vi: "Chọn khu vực",
+  name_vi: "Nhiều khu vực",
 };
 
 const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {

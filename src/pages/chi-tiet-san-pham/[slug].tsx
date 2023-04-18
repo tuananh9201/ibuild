@@ -9,22 +9,21 @@ import ProductCarouselVertical from "@/components/products/ProductCarouselVertic
 import ProductSection from "@/components/products/ProductSection";
 import SameCategory from "@/components/products/SameCategory";
 import TechnicalParametersProduct from "@/components/products/TechnicalParametersProduct";
+import { productLogo } from "@/images";
 import {
   HeartIcon,
   LocationIcon,
   PhoneIcon,
-  ShopCartIcon,
   UpDownIcon,
 } from "@/images/icons/product_types/icon_wrapper";
-import { companyLogo, productLogo } from "@/images/index";
+import defaultProductDetail from "@/images/product/imageoffline-co-placeholder-image.png";
 import { getProductDetail } from "@/lib/api/product";
 import { addProductFavorite } from "@/lib/api/user";
 import { Product, ProductImage } from "@/lib/types";
 import { RootState } from "@/store/store";
+import Link from "next/link";
 import { useSelector } from "react-redux";
 import { NextPageWithLayout } from "src/pages/_app";
-import Link from "next/link";
-import defaultProductDetail from "@/images/product/imageoffline-co-placeholder-image.png";
 
 const ProductDetail: NextPageWithLayout = () => {
   const router = useRouter();
@@ -46,7 +45,7 @@ const ProductDetail: NextPageWithLayout = () => {
   });
 
   const [logo, setLogo] = useState(() => {
-    return data?.supplier?.feature_image || companyLogo;
+    return data?.supplier?.feature_image || productLogo;
   });
 
   useEffect(() => {
@@ -144,7 +143,7 @@ const ProductDetail: NextPageWithLayout = () => {
                 {data?.data?.product_name}
               </h1>
             </div>
-            <div className="flex flex-row gap-2 mb-4">
+            <div className="flex flex-row gap-2 mb-4 h-8">
               <Image
                 src={logo}
                 alt="logo"
@@ -153,13 +152,19 @@ const ProductDetail: NextPageWithLayout = () => {
                 className="rounded-full w-8 h-8 object-cover"
                 onError={() => setLogo(productLogo)}
               />
-              <h2 className="font-roboto not-italic font-medium text-base leading-[150%] text-[#333333] uppercase">
+              <h2 className="font-roboto not-italic font-medium text-base leading-8 text-[#333333] uppercase">
                 {data?.supplier?.cname || data?.supplier?.name}
               </h2>
             </div>
             <div className="mb-2">
               <span className="font-roboto not-italic font-semibold text-text-color text-[28px] leading-[125%]">
-                {data?.data?.reference_price || "Liên hệ"}
+                {`${
+                  data?.data?.reference_price && data?.data.reference_price > 0
+                    ? `${new Intl.NumberFormat().format(
+                        data?.data?.reference_price
+                      )} VNĐ${data?.data?.unit ? `/${data?.data?.unit}` : ""}`
+                    : "Liên hệ"
+                }`}
               </span>
             </div>
 

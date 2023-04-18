@@ -116,7 +116,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <span className="font-roboto not-italic font-semibold text-lg leading-[150%] text-secondary-color">
             {`${
               product.data?.reference_price && product.data.reference_price > 0
-                ? `${product?.data?.reference_price} VNĐ`
+                ? `${new Intl.NumberFormat().format(
+                    product?.data?.reference_price
+                  )} VNĐ${product?.data?.unit ? `/${product?.data?.unit}` : ""}`
                 : "Liên hệ"
             }`}
           </span>

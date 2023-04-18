@@ -120,6 +120,7 @@ type ProductData = {
   source_url?: string;
   phone_number?: string;
   quantity?: number;
+  unit?: string;
 };
 type ProductImage = {
   url: string;

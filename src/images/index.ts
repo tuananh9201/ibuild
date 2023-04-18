@@ -10,7 +10,7 @@ export { default as filterIcon } from './icons/filter_icon.svg'
 export { default as filterIconWhite } from './icons/filter_icon_white.svg'
 
 export { default as locationIcon } from './icons/location.svg'
-export { default as productLogo } from './product/product_logo.png'
+export { default as productLogo } from './defaultLogo.png'
 export { default as companyLogo } from './product/company_logo.png'
 export { default as exampleProduct } from './product/example_product.png'
 export { default as phoneIcon } from './icons/phone.svg'

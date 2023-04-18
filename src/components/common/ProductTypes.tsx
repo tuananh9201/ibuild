@@ -1,31 +1,73 @@
-import { AllProductIcon } from "@/images/icons/product_types/icon_wrapper";
-import { ICategory } from "src/lib/types";
-import { fetchChildCategories } from "src/lib/api/category";
-import { LeftRightIcon } from "@/images/icons/product_types/icon_wrapper";
-import Image from "next/image";
-import { useState } from "react";
-import useSWR from "swr";
-import Carousel from "react-multi-carousel";
+import {
+  LeftRightIcon,
+  AllProductIcon,
+  AllProductActiveIcon,
+} from "@/images/icons/product_types/icon_wrapper";
 import { getCategoriesIcon } from "@/lib/utils";
+import Image from "next/image";
+import React, { useState, useEffect } from "react";
+import Carousel, { ArrowProps } from "react-multi-carousel";
+import { fetchChildCategories } from "src/lib/api/category";
+import { ICategory } from "src/lib/types";
+import useSWR from "swr";
 
 interface ProductTypesProps {
   parentId: string;
   onClickItem: (id: string) => void;
 }
 
-const ButtonLeftIcon = () => {
+interface ButtonIconProps extends ArrowProps {
+  children: React.ReactNode;
+}
+
+type RenderImageProps = {
+  url: string;
+  currentActive: boolean;
+};
+
+const ButtonLeftIcon = ({ children, onClick }: ButtonIconProps) => {
   return (
-    <button className="absolute -left-5 rotate-180">
-      <LeftRightIcon className="fill-primary-color" />
+    <button className="absolute -left-5 rotate-180" onClick={onClick}>
+      {children}
     </button>
   );
 };
 
-const ButtonRightIcon = () => {
+const ButtonRightIcon = ({ children, onClick }: ButtonIconProps) => {
   return (
-    <button className="absolute -right-5">
-      <LeftRightIcon className="fill-primary-color" />
+    <button className="absolute -right-5" onClick={onClick}>
+      {children}
     </button>
+  );
+};
+
+const RenderImage = ({ url, currentActive }: RenderImageProps) => {
+  const [img, setImg] = useState("");
+  useEffect(() => {
+    setImg(url);
+  }, [url]);
+
+  const handleErrorImage = () => {
+    setImg(
+      currentActive
+        ? getCategoriesIcon("all", true)
+        : getCategoriesIcon("all", false)
+    );
+  };
+
+  return (
+    <>
+      {img.length > 0 && (
+        <Image
+          src={img}
+          alt=""
+          className="h-6 w-6"
+          width={24}
+          height={24}
+          onError={handleErrorImage}
+        />
+      )}
+    </>
   );
 };
 
@@ -107,8 +149,16 @@ const ProductTypes = ({ parentId, onClickItem }: ProductTypesProps) => {
         slidesToSlide={2}
         swipeable
         rtl={false}
-        customLeftArrow={<ButtonLeftIcon />}
-        customRightArrow={<ButtonRightIcon />}
+        customLeftArrow={
+          <ButtonLeftIcon>
+            <LeftRightIcon className="fill-primary-color" />
+          </ButtonLeftIcon>
+        }
+        customRightArrow={
+          <ButtonRightIcon>
+            <LeftRightIcon className="fill-primary-color" />
+          </ButtonRightIcon>
+        }
       >
         {menus.map((menu) => {
           return (
@@ -120,12 +170,9 @@ const ProductTypes = ({ parentId, onClickItem }: ProductTypesProps) => {
               onClick={() => onClick(menu.id)}
             >
               <div className="h-6 w-6 min-w-[24px] min-h-[24px]">
-                <Image
-                  className="h-6 w-6"
-                  width={24}
-                  height={24}
-                  alt=""
-                  src={currentActive === menu.id ? menu.iconActive : menu.icon}
+                <RenderImage
+                  url={currentActive === menu.id ? menu.iconActive : menu.icon}
+                  currentActive={currentActive === menu.id}
                 />
               </div>
               <span className="font-roboto not-italic font-medium text-base leading-[150%] text-inherit ml-2">

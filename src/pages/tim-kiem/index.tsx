@@ -1,26 +1,20 @@
-import { ReactElement, useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { useRouter } from "next/router";
 import { Pagination } from "antd";
+import { motion } from "framer-motion";
 import Head from "next/head";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { ReactElement, useEffect, useState } from "react";
 
-import { NextPageWithLayout } from "../_app";
-import {
-  FilterCategories,
-  FilterProduct,
-  FilterRelated,
-  LitsProductLoading,
-} from "@/components/common";
-import { FilterIcon } from "@/images/icons/product_types/icon_wrapper";
+import { FilterProduct, LitsProductLoading } from "@/components/common";
+import MainLayout from "@/components/main-layout";
+import ListProduct from "@/components/products/ListProduct";
+import ListProductGroup from "@/components/products/ListProductGroup";
+import ProductSearch from "@/components/products/ProductSearch";
+import SupplierContainer from "@/components/supplier/SupplierContainer";
+import noSearchResult from "@/images/no_search_result.png";
 import { searchProduct } from "@/lib/api/product";
 import { Product, SearchProduct } from "@/lib/types";
-import MainLayout from "@/components/main-layout";
-import ProductSearch from "@/components/products/ProductSearch";
-import ListProduct from "@/components/products/ListProduct";
-import noSearchResult from "@/images/no_search_result.png";
-import ListProductGroup from "@/components/products/ListProductGroup";
-import SupplierContainer from "@/components/supplier/SupplierContainer";
+import { NextPageWithLayout } from "../_app";
 
 const RELATED_LIST = [
   {
@@ -133,7 +127,7 @@ const SearchPage: NextPageWithLayout = () => {
           damping: 20,
         }}
       >
-        <section className="max-w-[700px] mx-auto flex justify-center relative h-[100px]">
+        <section className="max-w-[700px] mx-auto flex justify-center h-[100px]">
           <ProductSearch
             initialValue={keywordSearch}
             setInputValueToParent={setKeywordSearch}
