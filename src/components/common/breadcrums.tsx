@@ -32,7 +32,6 @@ const Breadcrums = ({ breadcrumbs }: Props) => {
     return crumblist;
   }
   const crumsHref = generateBreadcrumbs();
-  console.log(crumsHref);
 
   return (
     <div className="flex flex-row items-center lg:p-0 w-full lg:mt-10">

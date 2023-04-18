@@ -16,6 +16,8 @@ import {
 } from "@/lib/api/user";
 import { SearchResultModel } from "@/lib/models";
 import useUser from "@/lib/hooks/user";
+import useDebounce from "@/lib/hooks/useDebounce";
+import { getSuggestionKeyword } from "@/lib/api/suggestion";
 
 type HistoryItem = {
   item: string;
@@ -94,10 +96,23 @@ const ProductSearch = ({
     setHistories(data);
   };
 
+  const debounceValue = useDebounce(initialValue, 500);
+
   useEffect(() => {
     if (initialValue?.length > 0) return;
     getSearchHistory();
   }, [initialValue]);
+
+  useEffect(() => {
+    console.log(debounceValue);
+    if (debounceValue.length > 0) {
+      getSuggestionKeyword({
+        search_type: "PRODUCT",
+        limit: 5,
+        keyword: debounceValue,
+      });
+    }
+  }, [debounceValue]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

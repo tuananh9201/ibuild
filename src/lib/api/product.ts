@@ -1,7 +1,6 @@
 
-import { ResponseSearchProduct, SearchProduct } from "src/lib/types";
+import { Product, ResponseSearchProduct, SearchProduct } from "src/lib/types";
 import axios from "./api";
-import { Product } from "src/lib/types";
 
 export const searchProduct = async (
   payload: SearchProduct

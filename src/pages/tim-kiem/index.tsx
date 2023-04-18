@@ -16,29 +16,6 @@ import { searchProduct } from "@/lib/api/product";
 import { Product, SearchProduct } from "@/lib/types";
 import { NextPageWithLayout } from "../_app";
 
-const RELATED_LIST = [
-  {
-    id: 1,
-    value: "Liên quan nhất",
-    slug: "LIEN_QUAN_NHAT",
-  },
-  {
-    id: 2,
-    value: "Sản phẩm mới",
-    slug: "SAN_PHAM_MOI",
-  },
-  {
-    id: 3,
-    value: "Lượt xem nhiều nhất",
-    slug: "LUOT_XEM_NHIEU_NHAT",
-  },
-  {
-    id: 4,
-    value: "Lượt thích nhiều nhất",
-    slug: "LUOT_THICH_NHIEU_NHAT",
-  },
-];
-
 const SearchPage: NextPageWithLayout = () => {
   const router = useRouter();
   const [paging, setPaging] = useState({

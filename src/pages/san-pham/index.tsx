@@ -1,15 +1,15 @@
-import { ReactElement, useState } from "react";
 import { motion } from "framer-motion";
-import { useRouter } from "next/router";
 import Head from "next/head";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { ReactElement, useState } from "react";
 import useSWR from "swr";
 
 import MainLayout from "@/components/main-layout";
-import ProductSearch from "@/components/products/ProductSearch";
 import CategoryCard, {
   CategoryCardLoading,
 } from "@/components/products/CategoryCard";
+import ProductSearch from "@/components/products/ProductSearch";
 import { sologan1, sologan2, sologan3 } from "@/constants/images";
 import { fetchRootCategories } from "src/lib/api/category";
 import { ICategory } from "src/lib/types";

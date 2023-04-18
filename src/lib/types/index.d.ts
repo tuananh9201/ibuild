@@ -168,3 +168,4 @@ export type ResponseSearchProduct = {
   paging: Paging;
   data: Product[];
 };
+
