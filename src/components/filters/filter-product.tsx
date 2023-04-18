@@ -32,16 +32,46 @@ const RELATED_LIST = [
   },
 ];
 
+const RELATED_LIST_NOT_RELEVANT = [
+  {
+    id: 1,
+    value: "Sản phẩm mới",
+    slug: "SAN_PHAM_MOI",
+  },
+  {
+    id: 2,
+    value: "Giá tăng dần",
+    slug: "GIA_TANG_DAN",
+  },
+  {
+    id: 3,
+    value: "Giá giảm dần",
+    slug: "GIA_GIAM_DAN",
+  },
+  {
+    id: 4,
+    value: "Theo dõi nhiều nhất",
+    slug: "THEO_DOI_NHIEU_NHAT",
+  },
+];
+
 interface FilterProductProps {
   categoryId?: string;
+  isShowMostRelevant?: boolean;
   onChangeSort: (sortSlug: string) => void;
 }
 
-const FilterProduct = ({ categoryId, onChangeSort }: FilterProductProps) => {
+const FilterProduct = ({
+  categoryId,
+  isShowMostRelevant,
+  onChangeSort,
+}: FilterProductProps) => {
   const [isActiveFilterIcon, setIsActiveFilterIcon] = useState(false);
-
+  const [options, setOptions] = useState(() => {
+    return isShowMostRelevant ? RELATED_LIST_NOT_RELEVANT : RELATED_LIST;
+  });
   const handleSelectRelated = (id: number) => {
-    const sortSelected = RELATED_LIST.find((s) => s.id === id);
+    const sortSelected = options.find((s) => s.id === id);
     sortSelected && onChangeSort(sortSelected.slug);
   };
 
@@ -52,7 +82,7 @@ const FilterProduct = ({ categoryId, onChangeSort }: FilterProductProps) => {
       <div className="w-full flex flex-col sm:flex-row justify-between mt-8">
         <FilterRelated
           defaultValue={1}
-          options={RELATED_LIST}
+          options={options}
           onSelect={handleSelectRelated}
         />
         <div

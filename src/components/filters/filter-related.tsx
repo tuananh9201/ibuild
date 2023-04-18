@@ -12,8 +12,8 @@ interface FilterRelatedProps {
   placeHolder?: string;
   defaultValue?: number;
   options?: ItemFilter[];
-  onSelect: (value: number) => void;
   reset?: boolean;
+  onSelect: (value: number) => void;
 }
 
 const FilterRelated = ({

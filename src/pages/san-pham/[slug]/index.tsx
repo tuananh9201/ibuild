@@ -151,7 +151,11 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
           onClickItem={onClickFilterCategory}
           parentId={category?.id || ""}
         />
-        <FilterProduct onChangeSort={onChangeSort} categoryId={category?.id} />
+        <FilterProduct
+          onChangeSort={onChangeSort}
+          categoryId={category?.id}
+          isShowMostRelevant={true}
+        />
         <div className="mt-4 mb-4 w-full">
           {isLoading || isLoadingData ? (
             <LitsProductLoading items={12} />
