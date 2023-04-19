@@ -53,10 +53,6 @@ const SearchPage: NextPageWithLayout = () => {
   };
 
   useEffect(() => {
-    console.log(payload);
-  }, [payload]);
-
-  useEffect(() => {
     setKeywordSearch(router.query.search as string);
     setPaging({ ...paging, current: 1, total: 0 });
     setPayload({

@@ -105,7 +105,7 @@ const ProductSearch = ({
 
   useEffect(() => {
     console.log(debounceValue);
-    if (debounceValue.length > 0) {
+    if (debounceValue) {
       getSuggestionKeyword({
         search_type: "PRODUCT",
         limit: 5,
@@ -134,17 +134,27 @@ const ProductSearch = ({
   const onFocusInput = (e: React.FocusEvent<HTMLInputElement, Element>) => {
     setIsActivateSearch(true);
   };
-  const handleAddSearchResult = () => {
+
+  const handler = () => {
     if (!initialValue || initialValue.trim().length < 2) return;
     createSearchHistory(initialValue);
     if (redirectToSearchPage) {
       redirectToSearchPage();
-      return;
     }
-    router.push({
-      pathname: router.pathname,
-      query: { ...router.query, search: initialValue },
-    });
+  };
+
+  const handleAddSearchResult = () => {
+    // if (!initialValue || initialValue.trim().length < 2) return;
+    // createSearchHistory(initialValue);
+    // if (redirectToSearchPage) {
+    //   redirectToSearchPage();
+    //   return;
+    // }
+    // router.push({
+    //   pathname: router.pathname,
+    //   query: { ...router.query, search: initialValue },
+    // });
+    handler();
   };
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (setInputValueToParent) {
@@ -154,16 +164,17 @@ const ProductSearch = ({
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      if (!initialValue || initialValue.trim().length < 2) return;
-      createSearchHistory(initialValue);
-      if (redirectToSearchPage) {
-        redirectToSearchPage();
-        return;
-      }
-      router.push({
-        pathname: router.pathname,
-        query: { ...router.query, search: initialValue },
-      });
+      // if (!initialValue || initialValue.trim().length < 2) return;
+      // createSearchHistory(initialValue);
+      // if (redirectToSearchPage) {
+      //   redirectToSearchPage();
+      //   return;
+      // }
+      // router.push({
+      //   pathname: router.pathname,
+      //   query: { ...router.query, search: initialValue },
+      // });
+      handler();
     }
   };
 

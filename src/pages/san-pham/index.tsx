@@ -14,10 +14,12 @@ import { sologan1, sologan2, sologan3 } from "@/constants/images";
 import { fetchRootCategories } from "src/lib/api/category";
 import { ICategory } from "src/lib/types";
 import { NextPageWithLayout } from "../_app";
+import { OPTIONS_SELECT } from "@/constants/data";
 
 type Props = {
   categories: ICategory[];
 };
+
 const SanPham: NextPageWithLayout<Props> = ({ categories }: Props) => {
   const router = useRouter();
 
@@ -29,10 +31,12 @@ const SanPham: NextPageWithLayout<Props> = ({ categories }: Props) => {
   });
 
   const handleToRedirectToSearchPage = () => {
-    if (keyword.length < 2) return;
+    const optionSelect = OPTIONS_SELECT.find(
+      (option) => option.value === searchType
+    );
     router.push({
-      pathname: "/tim-kiem",
-      query: { search: keyword, searchType: searchType },
+      pathname: optionSelect?.path,
+      query: keyword,
     });
   };
 

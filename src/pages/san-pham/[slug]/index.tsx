@@ -21,6 +21,7 @@ import { fetchCategorySlug, fetchRootCategories } from "src/lib/api/category";
 import { searchProduct } from "src/lib/api/product";
 import { ICategory, Product, SearchProduct } from "src/lib/types";
 import { NextPageWithLayout } from "../../_app";
+import { OPTIONS_SELECT } from "@/constants/data";
 
 type Props = {
   category: ICategory;
@@ -28,7 +29,6 @@ type Props = {
 
 const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [resetSort, setResetSort] = useState(false);
   const [keyword, setKeyword] = useState("");
   const [payload, setPayload] = useState<SearchProduct>({
     category_id: [props.category.id],
@@ -45,7 +45,9 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
     current: 1,
     total: 0,
   });
+  const [searchType, setSearchType] = useState("0");
 
+  const router = useRouter();
   const { query } = useRouter();
   const { slug } = query;
 
@@ -100,19 +102,15 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
     loadProduct();
   }, [payload]);
 
-  useEffect(() => {
-    if (query.search) {
-      setKeyword(query.search as string);
-      setPaging({ ...paging, current: 1 });
-      setResetSort(!resetSort);
-      setPayload({
-        ...payload,
-        keyword: query.search as string,
-        category_id: category?.id ? [category.id] : [],
-        skip: 0,
-      });
-    }
-  }, [query]);
+  const handleToRedirectToSearchPage = () => {
+    const optionSelect = OPTIONS_SELECT.find(
+      (option) => option.value === searchType
+    );
+    router.push({
+      pathname: optionSelect?.path,
+      query: keyword,
+    });
+  };
 
   const onChangeSort = (sortSlug: string) => {
     if (sortSlug) {
@@ -134,7 +132,10 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
         <div className="w-full flex justify-center relative h-[100px]">
           <ProductSearch
             initialValue={keyword}
+            selectValue={searchType}
             setInputValueToParent={setKeyword}
+            redirectToSearchPage={handleToRedirectToSearchPage}
+            onSelectValue={setSearchType}
           />
         </div>
         <Breadcrums breadcrumbs={breadcrumbs} />
