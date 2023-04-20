@@ -8,9 +8,9 @@ import { ReactElement, useEffect, useState } from "react";
 import { FilterProduct, LitsProductLoading } from "@/components/common";
 import MainLayout from "@/components/main-layout";
 import ListProduct from "@/components/products/ListProduct";
-import ListProductGroup from "@/components/products/ListProductGroup";
 import ProductSearch from "@/components/products/ProductSearch";
 import SupplierContainer from "@/components/supplier/SupplierContainer";
+import { OPTIONS_SELECT } from "@/constants/data";
 import noSearchResult from "@/images/no_search_result.png";
 import { searchProduct } from "@/lib/api/product";
 import { Product, SearchProduct } from "@/lib/types";
@@ -18,15 +18,15 @@ import { NextPageWithLayout } from "../_app";
 
 const SearchPage: NextPageWithLayout = () => {
   const router = useRouter();
+
   const [paging, setPaging] = useState({
     current: 1,
     total: 0,
   });
-
+  const [searchType, setSearchType] = useState("0");
   const [keywordSearch, setKeywordSearch] = useState(
     router.query.search as string
   );
-
   const [payload, setPayload] = useState<SearchProduct>({
     keyword: (router.query.search as string) || "",
     limit: 12,
@@ -37,7 +37,6 @@ const SearchPage: NextPageWithLayout = () => {
     max_quantity: 0,
     min_quantity: 0,
   });
-
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(false);
 
@@ -81,6 +80,23 @@ const SearchPage: NextPageWithLayout = () => {
     }
   };
 
+  const handleToRedirectToSearchPage = () => {
+    if (searchType === "0") {
+      router.push({
+        pathname: router.pathname,
+        query: { ...router.query, search: keywordSearch },
+      });
+      return;
+    }
+    const optionSelect = OPTIONS_SELECT.find(
+      (option) => option.value === searchType
+    );
+    router.push({
+      pathname: optionSelect?.path,
+      query: keywordSearch,
+    });
+  };
+
   useEffect(() => {
     getSearchResult();
   }, [payload]);
@@ -103,7 +119,10 @@ const SearchPage: NextPageWithLayout = () => {
         <section className="max-w-[700px] mx-auto flex justify-center h-[100px]">
           <ProductSearch
             initialValue={keywordSearch}
+            selectValue={searchType}
             setInputValueToParent={setKeywordSearch}
+            onSelectValue={setSearchType}
+            redirectToSearchPage={handleToRedirectToSearchPage}
           />
         </section>
         <section className="my-6 text-center font-roboto not-italic">
@@ -163,9 +182,6 @@ const SearchPage: NextPageWithLayout = () => {
         </section>
 
         {/* pharse3 */}
-        <section>
-          <ListProductGroup />
-        </section>
 
         <section>
           <SupplierContainer />

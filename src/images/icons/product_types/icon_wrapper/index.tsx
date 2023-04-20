@@ -355,3 +355,30 @@ export const DateRangeIcon = ({ className }: IconProps) => {
     </svg>
   );
 };
+
+export const SearchIcon = () => {
+  return (
+    <svg
+      width="22"
+      height="22"
+      viewBox="0 0 22 22"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M9.53333 18.4666C14.2462 18.4666 18.0667 14.6461 18.0667 9.93324C18.0667 5.22041 14.2462 1.3999 9.53333 1.3999C4.8205 1.3999 1 5.22041 1 9.93324C1 14.6461 4.8205 18.4666 9.53333 18.4666Z"
+        stroke="#B9B9B9"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M20.2 20.6L15.56 15.96"
+        stroke="#B9B9B9"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};

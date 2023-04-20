@@ -108,7 +108,9 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
     );
     router.push({
       pathname: optionSelect?.path,
-      query: keyword,
+      query: {
+        search: keyword,
+      },
     });
   };
 

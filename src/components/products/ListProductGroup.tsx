@@ -1,14 +1,19 @@
 import React from "react";
 
 import ProductGroupCard from "./ProductGroupCard";
+import { ICategory } from "@/lib/types";
 
-const ListProductGroup = () => {
+interface ListProductGroupProps {
+  data: ICategory[];
+}
+
+const ListProductGroup = ({ data }: ListProductGroupProps) => {
   return (
     <div className="grid grid-cols-4 gap-6">
-      {Array(13)
-        .fill(0)
-        .map((value, idx) => (
-          <ProductGroupCard key={idx} />
+      {data &&
+        data.length &&
+        data.map((v, idx) => (
+          <ProductGroupCard key={idx} title={v.name_vi} icon={v.icon} />
         ))}
     </div>
   );

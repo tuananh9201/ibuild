@@ -36,7 +36,9 @@ const SanPham: NextPageWithLayout<Props> = ({ categories }: Props) => {
     );
     router.push({
       pathname: optionSelect?.path,
-      query: keyword,
+      query: {
+        search: keyword,
+      },
     });
   };
 

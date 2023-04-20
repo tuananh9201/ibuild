@@ -1,23 +1,23 @@
 import { Select } from "antd";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 
 import { historyIcon } from "@/constants/images";
 import {
   DeleteIcon,
   UpDownIcon,
+  SearchIcon,
 } from "@/images/icons/product_types/icon_wrapper";
+import { ISuggestionKeyword, getSuggestionKeyword } from "@/lib/api/suggestion";
 import {
   createSearchHistory,
   deleteSearchHistory,
   getSearchHistories,
 } from "@/lib/api/user";
-import { SearchResultModel } from "@/lib/models";
-import useUser from "@/lib/hooks/user";
 import useDebounce from "@/lib/hooks/useDebounce";
-import { getSuggestionKeyword } from "@/lib/api/suggestion";
+import useUser from "@/lib/hooks/user";
+import { SearchResultModel } from "@/lib/models";
 
 type HistoryItem = {
   item: string;
@@ -35,6 +35,12 @@ interface ProductSearchProps {
   redirectToSearchPage?: Function;
   onSelectValue?: Function;
 }
+
+type SearchSuggestionProps = {
+  item: string;
+  onSelect: Function;
+  setValue?: Function;
+};
 
 const SearchHistoryItem = (props: HistoryItem) => {
   const selectSelectedProduct = (item: string) => {
@@ -74,20 +80,44 @@ const SearchHistoryItem = (props: HistoryItem) => {
   );
 };
 
+const SearchSuggestionItem = (props: SearchSuggestionProps) => {
+  const handleSelectValue = () => {
+    props.onSelect(false);
+    if (props.setValue) {
+      props.setValue(props.item);
+    }
+  };
+
+  return (
+    <div
+      className="flex justify-between items-center last:mb-4"
+      onClick={handleSelectValue}
+    >
+      <div className="flex flex-row items-center gap-4 w-full bg-white p-4  hover:bg-zinc-100 hover:rounded-lg  hover:cursor-pointer">
+        <div className="icon w-5 h-5">
+          <SearchIcon />
+        </div>
+        <div className="font-normal text-base text-black-900 ">
+          {props.item}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const ProductSearch = ({
   initialValue,
   selectValue,
-  onClick,
   setInputValueToParent,
   redirectToSearchPage,
   onSelectValue,
 }: ProductSearchProps) => {
-  const router = useRouter();
   const { user } = useUser();
 
   const [isActivateSearch, setIsActivateSearch] = useState(false);
-  const [histories, setHistories] = useState<SearchResultModel[]>([]);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const [histories, setHistories] = useState<SearchResultModel[]>([]);
+  const [suggestion, setSuggestion] = useState<ISuggestionKeyword[]>([]);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -104,13 +134,22 @@ const ProductSearch = ({
   }, [initialValue]);
 
   useEffect(() => {
-    console.log(debounceValue);
-    if (debounceValue) {
-      getSuggestionKeyword({
-        search_type: "PRODUCT",
-        limit: 5,
-        keyword: debounceValue,
-      });
+    if (debounceValue && debounceValue?.length) {
+      const getSuggestion = async () => {
+        const res = await getSuggestionKeyword({
+          search_type:
+            selectValue === "0"
+              ? "PRODUCT"
+              : selectValue === "1"
+              ? "CATEGORY"
+              : "SUPPLIER",
+          limit: 5,
+          keyword: debounceValue,
+        });
+        setSuggestion(res);
+      };
+
+      getSuggestion();
     }
   }, [debounceValue]);
 
@@ -142,18 +181,7 @@ const ProductSearch = ({
       redirectToSearchPage();
     }
   };
-
   const handleAddSearchResult = () => {
-    // if (!initialValue || initialValue.trim().length < 2) return;
-    // createSearchHistory(initialValue);
-    // if (redirectToSearchPage) {
-    //   redirectToSearchPage();
-    //   return;
-    // }
-    // router.push({
-    //   pathname: router.pathname,
-    //   query: { ...router.query, search: initialValue },
-    // });
     handler();
   };
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -161,23 +189,11 @@ const ProductSearch = ({
       setInputValueToParent(e.target.value);
     }
   };
-
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      // if (!initialValue || initialValue.trim().length < 2) return;
-      // createSearchHistory(initialValue);
-      // if (redirectToSearchPage) {
-      //   redirectToSearchPage();
-      //   return;
-      // }
-      // router.push({
-      //   pathname: router.pathname,
-      //   query: { ...router.query, search: initialValue },
-      // });
       handler();
     }
   };
-
   const handleSelect = (value: string) => {
     if (onSelectValue) {
       onSelectValue(value);
@@ -199,26 +215,29 @@ const ProductSearch = ({
     >
       <div className={isActivateSearch ? className : classNameActivate}>
         {user?.user_type === "expert" && (
-          <Select
-            defaultValue={selectValue || "0"}
-            style={{ width: 170 }}
-            bordered={false}
-            options={[
-              { value: "0", label: "Sản phẩm" },
-              { value: "1", label: "Nhóm sản phẩm" },
-              { value: "2", label: "Nhà cung cấp" },
-            ]}
-            suffixIcon={
-              <UpDownIcon
-                className={`transition fill-primary-color ${
-                  isOpenMenu ? "rotate-180" : ""
-                }`}
-              />
-            }
-            className="menu-select-category"
-            onDropdownVisibleChange={() => setIsOpenMenu((prev) => !prev)}
-            onSelect={handleSelect}
-          />
+          <>
+            <Select
+              defaultValue={selectValue || "0"}
+              style={{ width: 170 }}
+              bordered={false}
+              options={[
+                { value: "0", label: "Sản phẩm" },
+                { value: "1", label: "Nhóm sản phẩm" },
+                { value: "2", label: "Nhà cung cấp" },
+              ]}
+              suffixIcon={
+                <UpDownIcon
+                  className={`transition fill-primary-color ${
+                    isOpenMenu ? "rotate-180" : ""
+                  }`}
+                />
+              }
+              className="menu-select-category"
+              onDropdownVisibleChange={() => setIsOpenMenu((prev) => !prev)}
+              onSelect={handleSelect}
+            />
+            <div className="h-full w-px bg-[#e6e6e6]"></div>
+          </>
         )}
         <div className="icon-search w-5 h-5">
           <svg
@@ -251,12 +270,13 @@ const ProductSearch = ({
           Tìm kiếm
         </button>
       </div>
-      {isActivateSearch && !initialValue?.trim() ? (
+      {isActivateSearch && (
         <div className="px-4 min-w-full bg-white flex flex-col [&>*:nth-child(2)]:mt-2">
-          {histories ? (
+          {histories || suggestion ? (
             <div className="line h-px w-full border-solid border border-gray-100"></div>
           ) : null}
           {histories &&
+            (!initialValue || initialValue?.length === 0) &&
             histories.map((h, idx) => {
               if (idx > 4) return;
               return (
@@ -270,8 +290,19 @@ const ProductSearch = ({
                 />
               );
             })}
+          {suggestion &&
+            initialValue &&
+            initialValue.length > 0 &&
+            suggestion.map((su) => (
+              <SearchSuggestionItem
+                key={su.id}
+                item={su.name}
+                onSelect={setIsActivateSearch}
+                setValue={setInputValueToParent}
+              />
+            ))}
         </div>
-      ) : null}
+      )}
     </motion.div>
   );
 };

@@ -1,6 +1,5 @@
 import { ICategory } from "src/lib/types";
 import axios from "./api";
-import categories from "@/data/categories.json";
 
 export const fetchRootCategories = async (): Promise<ICategory[]> => {
   try {
@@ -52,5 +51,15 @@ export const fetchRootProductCategoryById = async (categoryId: string) => {
     return res.data.data || []
   } catch (error) {
     console.warn(error)
+  }
+}
+
+export const fetchProductCategoryBySearch = async (word: string): Promise<ICategory[]> => {
+  try {
+    const res = await axios.get(`/product-category/search?name=${word}`)
+    return res?.data?.data || []
+  } catch (error) {
+    console.warn(error)
+    return []
   }
 }
