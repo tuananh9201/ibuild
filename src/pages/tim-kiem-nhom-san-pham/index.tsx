@@ -9,6 +9,7 @@ import { NextPageWithLayout } from "../_app";
 import { fetchProductCategoryBySearch } from "@/lib/api/category";
 import { ICategory } from "@/lib/types";
 import { OPTIONS_SELECT } from "@/constants/data";
+import ProductCategoryLoading from "@/components/products/ProductCategoryLoading";
 
 const SearchProductGroup: NextPageWithLayout = () => {
   const router = useRouter();
@@ -77,11 +78,13 @@ const SearchProductGroup: NextPageWithLayout = () => {
           {keyword || router.query.search}”
         </p>
       </div>
-      {data && data?.length > 0 ? (
+      {/* {data && data?.length > 0 ? (
         <ListProductGroup data={data || []} />
       ) : (
         <NoFoundProduct title={keyword} />
       )}
+      <ProductCategoryLoading items={8} /> */}
+      {isLoading ? () : ()}
     </section>
   );
 };
