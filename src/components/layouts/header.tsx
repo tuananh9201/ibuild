@@ -20,6 +20,7 @@ const menus = [
       "/san-pham",
       "/san-pham/[slug]",
       "/tim-kiem",
+      "/tim-kiem-nhom-san-pham",
     ],
   },
   {

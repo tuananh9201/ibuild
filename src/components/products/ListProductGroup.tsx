@@ -13,7 +13,12 @@ const ListProductGroup = ({ data }: ListProductGroupProps) => {
       {data &&
         data.length &&
         data.map((v, idx) => (
-          <ProductGroupCard key={idx} title={v.name_vi} icon={v.icon} />
+          <ProductGroupCard
+            key={idx}
+            id={v.slug}
+            title={v.name_vi}
+            icon={v.icon}
+          />
         ))}
     </div>
   );

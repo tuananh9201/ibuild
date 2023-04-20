@@ -1,10 +1,10 @@
-import ProductAdsCard from "./ProductAdsCard";
+// import ProductAdsCard from "./ProductAdsCard";
 import SupplierCard from "./SupplierCard";
 
 const SupplierContainer = () => {
   return (
     <div>
-      <ProductAdsCard />
+      {/* <ProductAdsCard /> */}
       <div className="flex flex-col gap-6 mt-6">
         {Array(8)
           .fill(0)

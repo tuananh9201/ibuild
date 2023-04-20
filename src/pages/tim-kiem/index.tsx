@@ -9,7 +9,6 @@ import { FilterProduct, LitsProductLoading } from "@/components/common";
 import MainLayout from "@/components/main-layout";
 import ListProduct from "@/components/products/ListProduct";
 import ProductSearch from "@/components/products/ProductSearch";
-import SupplierContainer from "@/components/supplier/SupplierContainer";
 import { OPTIONS_SELECT } from "@/constants/data";
 import noSearchResult from "@/images/no_search_result.png";
 import { searchProduct } from "@/lib/api/product";
@@ -93,7 +92,10 @@ const SearchPage: NextPageWithLayout = () => {
     );
     router.push({
       pathname: optionSelect?.path,
-      query: keywordSearch,
+      query: {
+        search: keywordSearch,
+        search_type: searchType,
+      },
     });
   };
 
@@ -179,12 +181,6 @@ const SearchPage: NextPageWithLayout = () => {
               hideOnSinglePage
             />
           </div>
-        </section>
-
-        {/* pharse3 */}
-
-        <section>
-          <SupplierContainer />
         </section>
       </motion.div>
     </>

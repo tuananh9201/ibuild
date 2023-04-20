@@ -38,6 +38,7 @@ const SanPham: NextPageWithLayout<Props> = ({ categories }: Props) => {
       pathname: optionSelect?.path,
       query: {
         search: keyword,
+        search_type: searchType,
       },
     });
   };
