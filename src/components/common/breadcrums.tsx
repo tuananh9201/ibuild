@@ -39,12 +39,12 @@ const Breadcrums = ({ breadcrumbs }: Props) => {
         return (
           <div
             key={idx}
-            className={`flex items-center lg:first:flex lg:first:items-center not-italic font-normal text-base leading-[150%] gap-4 text-primary-color hover:cursor-pointer hover:last:cursor-default peer last:w-[calc(100% - 158px)] last:overflow-hidden last:text-ellipsis last:ml-3`}
+            className={`flex items-center lg:first:flex lg:first:items-center not-italic font-normal text-base leading-[150%] gap-4 text-[#999999] hover:cursor-pointer hover:last:cursor-default last:w-[calc(100% - 158px)] last:overflow-hidden last:text-ellipsis last:ml-3 last:text-text-secondary-color`}
           >
             <span className="whitespace-nowrap inline-block">
               <Link
-                href={`${crumsHref[idx].href}`}
-                className="peer-hover:text-primary-color peer-hover:peer-last:text-black visited:text-[#343434]"
+                href={`${crumsHref[idx] ? crumsHref[idx].href : ""}`}
+                className="text-inherit"
               >
                 {breadcrumb.title}
               </Link>

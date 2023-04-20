@@ -57,6 +57,7 @@ export const fetchRootProductCategoryById = async (categoryId: string) => {
 export const fetchProductCategoryBySearch = async (word: string): Promise<ICategory[]> => {
   try {
     const res = await axios.get(`/product-category/search?name=${word}`)
+    console.log(res)
     return res?.data?.data || []
   } catch (error) {
     console.warn(error)

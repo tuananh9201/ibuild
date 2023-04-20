@@ -1,6 +1,7 @@
+import { useState } from "react";
 import Image from "next/image";
 
-import { companyLogo } from "@/images";
+import { IBuildLogo } from "@/images";
 import {
   PhoneIcon,
   LocationIcon,
@@ -9,33 +10,48 @@ import {
   DateRangeIcon,
   HeartIcon,
 } from "@/images/icons/product_types/icon_wrapper";
+import { ISupplierInfo } from "@/lib/types";
 
-const SupplierCard = () => {
+interface SupplierCardProps {
+  supplier: ISupplierInfo;
+}
+
+const SupplierCard = ({ supplier }: SupplierCardProps) => {
+  const [logo, setLogo] = useState(supplier.logo);
+
+  const getAddress = () => {
+    if (supplier?.addresses && supplier?.addresses.length > 0) {
+      const add = supplier.addresses[0];
+      return [add.wards, add.district, add.city].join(", ");
+    }
+  };
+
   return (
     <div className="w-full bg-[#f8f9ff] rounded-lg p-4 flex flex-row relative">
       <div className="w-[170px] h-full overflow-hidden rounded-[6px] mr-4">
         <Image
-          src={companyLogo}
+          src={logo}
           width={170}
           height={150}
           alt="logo"
           className="w-full h-full"
+          onError={() => setLogo(IBuildLogo.src)}
         />
       </div>
       <div className="flex-base flex flex-col gap-4">
         <h1 className="font-medium text-xl leading-[150%] text-text-secondary-color line-clamp-1">
-          Công Ty CPTM Vật Liệu Xây Dựng Minh Tuấn
+          {supplier?.name || ""}
         </h1>
         <div className="flex flex-row items-center gap-3">
           <PhoneIcon className="fill-text-color" />
           <span className="font-normal text-base leading-[150%] text-text-color">
-            0272 387 2233
+            {supplier?.phone || ""}
           </span>
         </div>
         <div className="flex flex-row items-center gap-3">
           <LocationIcon className="fill-text-color" />
           <span className="font-normal text-base leading-[150%] text-text-color">
-            Cầu Giấy, Hà Nội
+            sss
           </span>
         </div>
         <div className="flex flex-row items-center gap-8">

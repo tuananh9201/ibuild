@@ -1,3 +1,9 @@
+type IAddresses = {
+  city?: string;
+  wards?: string;
+  district?: string;
+}
+
 export interface IBrand {
   id: string;
   name: string;
@@ -168,4 +174,20 @@ export type ResponseSearchProduct = {
   paging: Paging;
   data: Product[];
 };
+export type ISupplierInfo = {
+  id: string;
+  slug: string;
+  about: string;
+  website_url: string;
+  name: string;
+  followers?: number,
+  phone?: string;
+  logo: string;
+  participation_date?: string;
+  addresses: IAddresses[]
+}
+
+export type ResponseSupplierInfo = {
+  data: ISupplierInfo[];
+}
 

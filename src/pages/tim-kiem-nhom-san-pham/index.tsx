@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
+import { useSelector } from "react-redux";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Image from "next/image";
 
 import MainLayout from "@/components/main-layout";
 import ListProductGroup from "@/components/products/ListProductGroup";
 import NoFoundProduct from "@/components/products/NoFoundProduct";
 import ProductSearch from "@/components/products/ProductSearch";
+import ProductCategoryLoading from "@/components/products/ProductCategoryLoading";
 import { NextPageWithLayout } from "../_app";
 import { fetchProductCategoryBySearch } from "@/lib/api/category";
 import { ICategory } from "@/lib/types";
 import { OPTIONS_SELECT } from "@/constants/data";
-import ProductCategoryLoading from "@/components/products/ProductCategoryLoading";
+import LoadingIcon from "@/images/icons/LoadingIcon.png";
 
 const SearchProductGroup: NextPageWithLayout = () => {
   const router = useRouter();
 
   const [keyword, setKeyword] = useState("");
-  const [searchType, setSearchType] = useState(
-    (router.query?.search_type as string) || "0"
-  );
+  const [searchType, setSearchType] = useState("1");
   const [data, setData] = useState<ICategory[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -40,8 +42,12 @@ const SearchProductGroup: NextPageWithLayout = () => {
       },
     });
   };
+  const handleLoadMore = () => {};
 
   useEffect(() => {
+    if (router.query?.search_type) {
+      setSearchType(router.query.search_type as string);
+    }
     if (router.query?.search) {
       setKeyword(router.query?.search as string);
       const fetchProductCategory = async () => {
@@ -55,7 +61,9 @@ const SearchProductGroup: NextPageWithLayout = () => {
 
       fetchProductCategory();
     }
-  }, [router.query?.search]);
+  }, [router.query]);
+
+  const showLoader = data && data.length > 8;
 
   return (
     <section className="mb-[64px]">
@@ -78,13 +86,26 @@ const SearchProductGroup: NextPageWithLayout = () => {
           {keyword || router.query.search}”
         </p>
       </div>
-      {/* {data && data?.length > 0 ? (
+      {/* {isLoading && <ProductCategoryLoading items={8} />}
+      {!isLoading && data && data.length > 0 && (
         <ListProductGroup data={data || []} />
-      ) : (
-        <NoFoundProduct title={keyword} />
       )}
-      <ProductCategoryLoading items={8} /> */}
-      {isLoading ? () : ()}
+      {!isLoading && data.length === 0 && <NoFoundProduct title={keyword} />} */}
+      <InfiniteScroll
+        dataLength={data.length}
+        next={handleLoadMore}
+        hasMore={true}
+        loader
+      >
+        {!isLoading && <ListProductGroup data={data || []} />}
+      </InfiniteScroll>
+      {isLoading && (
+        <Image
+          src={LoadingIcon}
+          alt="loading"
+          className="animate-spin mx-auto mt-5"
+        />
+      )}
     </section>
   );
 };

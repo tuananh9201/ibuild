@@ -1,17 +1,18 @@
+import { Dropdown, Space, Switch } from "antd";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import * as React from "react";
+import { useDispatch } from "react-redux";
+
+import { User } from "src/lib/types";
+import { logout } from "src/store/features/auth/auth";
+import type { MenuProps } from "antd";
 import {
   keyboardArrowUp,
   logoutIcon,
   useIcon,
   userAvata,
 } from "@/constants/images";
-import type { MenuProps } from "antd";
-import { Dropdown, Space, Switch } from "antd";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import * as React from "react";
-import { useDispatch } from "react-redux";
-import { User } from "src/lib/types";
-import { logout } from "src/store/features/auth/auth";
 interface IUserAvatarProps {
   user: User;
 }
@@ -19,6 +20,12 @@ interface IUserAvatarProps {
 const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
+
+  // save status user to localStorage
+  localStorage.setItem(
+    "userType",
+    props.user?.user_type === "expert" ? "expert" : "user"
+  );
 
   const handleLougout = () => {
     dispatch(logout());
@@ -30,6 +37,10 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
       },
     });
   };
+  const handleCheck = (value: boolean) => {
+    console.log(value);
+  };
+
   const name = props.user.full_name || props.user.email || "Nguyễn Văn A";
   let displayName = name.substring(0, 13);
   if (name.length > 13) displayName += "...";
@@ -51,7 +62,10 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
       label: (
         <div className="flex gap-4 w-full p-2">
           <span>Chuyên gia </span>
-          <Switch checked={props.user?.user_type === "expert"} />
+          <Switch
+            defaultChecked={props.user?.user_type === "expert"}
+            onChange={handleCheck}
+          />
         </div>
       ),
     },
