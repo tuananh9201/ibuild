@@ -110,7 +110,6 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
       pathname: optionSelect?.path,
       query: {
         search: keyword,
-        search_type: searchType,
       },
     });
   };

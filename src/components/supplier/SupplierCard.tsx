@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Image from "next/image";
+import moment from "moment";
+import Link from "next/link";
 
 import { IBuildLogo } from "@/images";
 import {
@@ -22,21 +24,23 @@ const SupplierCard = ({ supplier }: SupplierCardProps) => {
   const getAddress = () => {
     if (supplier?.addresses && supplier?.addresses.length > 0) {
       const add = supplier.addresses[0];
-      return [add.wards, add.district, add.city].join(", ");
+      return [add.wards, add.district, add.city].join(", ") || "";
     }
   };
 
   return (
     <div className="w-full bg-[#f8f9ff] rounded-lg p-4 flex flex-row relative">
       <div className="w-[170px] h-full overflow-hidden rounded-[6px] mr-4">
-        <Image
-          src={logo}
-          width={170}
-          height={150}
-          alt="logo"
-          className="w-full h-full"
-          onError={() => setLogo(IBuildLogo.src)}
-        />
+        {logo && (
+          <Image
+            src={logo}
+            width={170}
+            height={150}
+            alt="logo"
+            className="w-full h-full object-cover"
+            onError={() => setLogo(IBuildLogo.src)}
+          />
+        )}
       </div>
       <div className="flex-base flex flex-col gap-4">
         <h1 className="font-medium text-xl leading-[150%] text-text-secondary-color line-clamp-1">
@@ -51,7 +55,7 @@ const SupplierCard = ({ supplier }: SupplierCardProps) => {
         <div className="flex flex-row items-center gap-3">
           <LocationIcon className="fill-text-color" />
           <span className="font-normal text-base leading-[150%] text-text-color">
-            sss
+            {getAddress()}
           </span>
         </div>
         <div className="flex flex-row items-center gap-8">
@@ -70,7 +74,7 @@ const SupplierCard = ({ supplier }: SupplierCardProps) => {
               Người theo dõi
             </span>
             <span className="font-medium text-base leading-[150%] text-text-color">
-              1000
+              {supplier?.followers || 0}
             </span>
           </div>
           <div className="flex flex-row items-center">
@@ -79,10 +83,18 @@ const SupplierCard = ({ supplier }: SupplierCardProps) => {
               Ngày tham gia
             </span>
             <span className="font-medium text-base leading-[150%] text-text-color">
-              12/10/2019
+              {supplier?.participation_date
+                ? moment(supplier.participation_date).format("DD/MM/YYYY")
+                : "Không rõ"}
             </span>
           </div>
         </div>
+        <Link
+          href={`/nha-cung-cap/${supplier.slug}`}
+          className="mt-4 text-primary-color text-base leading-[150%] font-medium"
+        >
+          <span>Xem chi tiết</span>
+        </Link>
       </div>
       <button className="absolute top-4 right-4 flex flex-row gap-3 items-center">
         <HeartIcon className="fill-primary-color" />

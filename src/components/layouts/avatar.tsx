@@ -1,7 +1,7 @@
-import { Dropdown, Space, Switch } from "antd";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import * as React from "react";
+import { Dropdown, Space, Switch } from "antd";
+import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 
 import { User } from "src/lib/types";
@@ -21,14 +21,13 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  // save status user to localStorage
-  localStorage.setItem(
-    "userType",
-    props.user?.user_type === "expert" ? "expert" : "user"
-  );
+  const [userRole, setUserRole] = React.useState("");
 
   const handleLougout = () => {
     dispatch(logout());
+    if (localStorage.getItem("user_type")) {
+      localStorage.removeItem("user_type");
+    }
     router.push({
       pathname: "/dang-nhap",
       query: {
@@ -38,12 +37,19 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
     });
   };
   const handleCheck = (value: boolean) => {
-    console.log(value);
+    if (value) {
+      localStorage.setItem("user_type", "expert");
+      window.dispatchEvent(new Event("storage"));
+    } else {
+      localStorage.setItem("user_type", "user");
+      window.dispatchEvent(new Event("storage"));
+    }
   };
 
   const name = props.user.full_name || props.user.email || "Nguyễn Văn A";
   let displayName = name.substring(0, 13);
   if (name.length > 13) displayName += "...";
+
   const items: MenuProps["items"] = [
     {
       key: "1",
@@ -63,7 +69,7 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
         <div className="flex gap-4 w-full p-2">
           <span>Chuyên gia </span>
           <Switch
-            defaultChecked={props.user?.user_type === "expert"}
+            defaultChecked={userRole === "expert"}
             onChange={handleCheck}
           />
         </div>
@@ -85,6 +91,26 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
       ),
     },
   ];
+
+  React.useEffect(() => {
+    const handleChangeStorage = () => {
+      const newRole = localStorage.getItem("user_type");
+      if (newRole) {
+        setUserRole(newRole);
+      }
+    };
+
+    window.addEventListener("storage", handleChangeStorage);
+
+    return () => window.removeEventListener("storage", handleChangeStorage);
+  }, []);
+
+  React.useEffect(() => {
+    if (props.user.user_type) {
+      setUserRole(props.user.user_type);
+    }
+  }, [props]);
+
   return (
     <div className="min-w-[247px] min-h-[32px] flex flex-row items-center p-0 gap-2 mb-[6px]">
       <Dropdown menu={{ items }}>
@@ -92,7 +118,7 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
           <div>
             <Image width={32} height={32} src={userAvata} alt="user-avatar" />
           </div>
-          {props.user.user_type === "expert" && (
+          {userRole === "expert" && (
             <div className="w-[67px] h-[22px] bg-[#5C84D6] rounded flex items-center justify-center">
               <span className="text-xs leading-[150%] font-normal text-white">
                 Chuyên gia

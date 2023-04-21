@@ -1,3 +1,5 @@
+"use client";
+
 import { Select } from "antd";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -118,6 +120,7 @@ const ProductSearch = ({
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [histories, setHistories] = useState<SearchResultModel[]>([]);
   const [suggestion, setSuggestion] = useState<ISuggestionKeyword[]>([]);
+  const [userRole, setUserRole] = useState("");
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -169,11 +172,27 @@ const ProductSearch = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  useEffect(() => {
+    const handleChangeStorage = () => {
+      const newRole = localStorage.getItem("user_type");
+      if (newRole) {
+        setUserRole(newRole);
+      }
+    };
+
+    window.addEventListener("storage", handleChangeStorage);
+
+    return () => window.removeEventListener("storage", handleChangeStorage);
+  }, []);
+  useEffect(() => {
+    if (user?.user_type) {
+      setUserRole(user.user_type);
+    }
+  }, [user]);
 
   const onFocusInput = (e: React.FocusEvent<HTMLInputElement, Element>) => {
     setIsActivateSearch(true);
   };
-
   const handler = () => {
     if (!initialValue || initialValue.trim().length < 2) return;
     createSearchHistory(initialValue);
@@ -214,7 +233,7 @@ const ProductSearch = ({
       ref={inputRef}
     >
       <div className={isActivateSearch ? className : classNameActivate}>
-        {user?.user_type === "expert" && (
+        {userRole === "expert" && (
           <>
             <Select
               defaultValue={selectValue || "0"}

@@ -1,6 +1,6 @@
+import React, { useEffect, useState } from "react";
 import { Pagination } from "antd";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
 
 import FilterSingle from "@/components/filters/filter-single";
 import MainLayout from "@/components/main-layout";
@@ -10,11 +10,12 @@ import { OPTIONS_SELECT } from "@/constants/data";
 import { fetchListSupplierBySearch } from "@/lib/api/supplier";
 import { ISupplierInfo } from "@/lib/types";
 import { NextPageWithLayout } from "../_app";
+import SupplierContainerLoading from "@/components/supplier/SupplierContainerLoading";
 
 const SearchSupplier: NextPageWithLayout = () => {
   const router = useRouter();
 
-  const [keyword, setKeyword] = useState(router.query?.search as string);
+  const [keyword, setKeyword] = useState("");
   const [searchType, setSearchType] = useState("2");
   const [paging, setPaging] = useState({
     current: 1,
@@ -26,6 +27,7 @@ const SearchSupplier: NextPageWithLayout = () => {
     limit: 8,
     name: router.query?.search as string,
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleRedirectToPage = () => {
     if (searchType === "2") {
@@ -48,30 +50,36 @@ const SearchSupplier: NextPageWithLayout = () => {
   };
   const onChangePagination = (page: number) => {
     setPaging({ ...paging, current: page });
+    setPayload({
+      ...payload,
+      skip: page === 1 ? 0 : (page - 1) * 8,
+    });
   };
   const loadData = async () => {
-    console.log(payload);
+    setIsLoading(true);
     const res = await fetchListSupplierBySearch(payload);
+    setIsLoading(false);
     if (res) {
       setData(res.data);
+      setPaging({
+        ...paging,
+        total: res.paging.total,
+      });
     }
-    console.log(res);
   };
 
-  // useEffect(() => {
-  //   if (router.query?.search_type) {
-  //     setSearchType(router.query.search_type as string);
-  //   }
-  //   if (router.query?.search) {
-  //     setKeyword(router.query?.search as string);
-  //     setPayload({
-  //       ...payload,
-  //       name: router.query?.search as string,
-  //     });
-  //   }
-  // }, [router.query]);
+  useEffect(() => {
+    if (router.query?.search) {
+      setKeyword(router.query?.search as string);
+      setPayload({
+        ...payload,
+        name: router.query?.search as string,
+      });
+    }
+  }, [router.query?.search]);
 
   useEffect(() => {
+    if (!payload.name) return;
     loadData();
   }, [payload]);
 
@@ -95,12 +103,15 @@ const SearchSupplier: NextPageWithLayout = () => {
         </p>
       </div>
       <FilterSingle />
-      <SupplierContainer data={data} />
-      <div className="w-full text-center">
+      {isLoading && <SupplierContainerLoading items={8} />}
+      {!isLoading && data && data.length > 0 && (
+        <SupplierContainer data={data} />
+      )}
+      <div className="w-full text-center mt-6">
         <Pagination
           onChange={onChangePagination}
           current={paging.current}
-          pageSize={12}
+          pageSize={8}
           total={paging.total}
           hideOnSinglePage
         />

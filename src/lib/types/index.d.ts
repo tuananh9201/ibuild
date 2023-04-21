@@ -189,5 +189,6 @@ export type ISupplierInfo = {
 
 export type ResponseSupplierInfo = {
   data: ISupplierInfo[];
+  paging: Paging
 }
 

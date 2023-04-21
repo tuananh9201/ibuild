@@ -1,20 +1,28 @@
-import { motion } from "framer-motion";
 import Head from "next/head";
 import Image from "next/image";
+import useSWR from "swr";
+import dynamic from "next/dynamic";
+import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { ReactElement, useState } from "react";
-import useSWR from "swr";
 
 import MainLayout from "@/components/main-layout";
 import CategoryCard, {
   CategoryCardLoading,
 } from "@/components/products/CategoryCard";
-import ProductSearch from "@/components/products/ProductSearch";
+// import ProductSearch from "@/components/products/ProductSearch";
 import { sologan1, sologan2, sologan3 } from "@/constants/images";
 import { fetchRootCategories } from "src/lib/api/category";
 import { ICategory } from "src/lib/types";
 import { NextPageWithLayout } from "../_app";
 import { OPTIONS_SELECT } from "@/constants/data";
+
+const ProductSearch = dynamic(
+  () => import("@/components/products/ProductSearch"),
+  {
+    ssr: false,
+  }
+);
 
 type Props = {
   categories: ICategory[];
@@ -38,7 +46,6 @@ const SanPham: NextPageWithLayout<Props> = ({ categories }: Props) => {
       pathname: optionSelect?.path,
       query: {
         search: keyword,
-        search_type: searchType,
       },
     });
   };

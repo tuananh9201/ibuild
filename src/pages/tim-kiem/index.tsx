@@ -174,7 +174,9 @@ const SearchPage: NextPageWithLayout = () => {
         <section className="mt-4">
           <div className="w-full text-center">
             <Pagination
-              onChange={(page) => setPaging({ ...paging, current: page })}
+              onChange={(page: number) =>
+                setPaging({ ...paging, current: page })
+              }
               current={paging.current}
               pageSize={12}
               total={paging.total}
