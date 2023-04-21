@@ -4,6 +4,7 @@ import LockWrongPassword from "@/components/common/LockWrongPassword";
 import AuthLayout from "@/components/layouts/AuthLayout";
 import { backIcon, logo, unsplashLogin } from "@/constants/images";
 import { ERRORS } from "@/constants/msg";
+
 import { LoadingOutlined } from "@ant-design/icons";
 import { Form, Input, Spin } from "antd";
 import Head from "next/head";

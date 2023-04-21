@@ -184,7 +184,9 @@ export type ISupplierInfo = {
   phone?: string;
   logo: string;
   participation_date?: string;
-  addresses: IAddresses[]
+  addresses: IAddresses[];
+  is_follow: boolean;
+  products: number
 }
 
 export type ResponseSupplierInfo = {
