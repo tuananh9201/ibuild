@@ -11,6 +11,7 @@ import { fetchListSupplierBySearch } from "@/lib/api/supplier";
 import { ISupplierInfo } from "@/lib/types";
 import { NextPageWithLayout } from "../_app";
 import SupplierContainerLoading from "@/components/supplier/SupplierContainerLoading";
+import NoFoundProduct from "@/components/products/NoFoundProduct";
 
 const SearchSupplier: NextPageWithLayout = () => {
   const router = useRouter();
@@ -26,6 +27,7 @@ const SearchSupplier: NextPageWithLayout = () => {
     skip: 0,
     limit: 8,
     name: router.query?.search as string,
+    sort_by: "PRODUCTS",
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -66,6 +68,18 @@ const SearchSupplier: NextPageWithLayout = () => {
         total: res.paging.total,
       });
     }
+  };
+  const changeSort = (sort: string) => {
+    setPaging({
+      ...paging,
+      current: 1,
+      total: 0,
+    });
+    setPayload({
+      ...payload,
+      skip: 0,
+      sort_by: sort,
+    });
   };
 
   useEffect(() => {
@@ -110,11 +124,12 @@ const SearchSupplier: NextPageWithLayout = () => {
           quả “{keyword}”
         </p>
       </div>
-      <FilterSingle />
+      <FilterSingle changeSort={changeSort} />
       {isLoading && <SupplierContainerLoading items={8} />}
       {!isLoading && data && data.length > 0 && (
         <SupplierContainer data={data} />
       )}
+      {!isLoading && data.length === 0 && <NoFoundProduct title={keyword} />}
       <div className="w-full text-center mt-6">
         <Pagination
           onChange={onChangePagination}
