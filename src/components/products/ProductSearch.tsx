@@ -3,7 +3,7 @@
 import { Select } from "antd";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 
 import { historyIcon } from "@/constants/images";
 import {
@@ -194,9 +194,11 @@ const ProductSearch = ({
     }
   }, [user]);
 
-  const onFocusInput = (e: React.FocusEvent<HTMLInputElement, Element>) => {
-    setIsActivateSearch(true);
-  };
+  const onFocusInput = useMemo(() => {
+    return (e: React.FocusEvent<HTMLInputElement, Element>) => {
+      setIsActivateSearch(true);
+    };
+  }, []);
   const handler = () => {
     if (!initialValue || initialValue.trim().length < 2) return;
     createSearchHistory(initialValue);
