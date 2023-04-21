@@ -1,12 +1,12 @@
+import { message } from "antd";
 import axios, {
   AxiosError,
-  AxiosRequestConfig,
-  AxiosRequestHeaders,
   AxiosHeaders,
+  AxiosRequestHeaders,
+  InternalAxiosRequestConfig
 } from "axios";
-import { message } from "antd";
-import { store } from "../../store/store";
 import { unAuthorized } from "../../store/features/auth/auth";
+import { store } from "../../store/store";
 
 // interface CustomAxiosRequestHeaders extends AxiosRequestHeaders {
 //   Authorization: string;
@@ -20,7 +20,7 @@ export const setToken = (access_token: string) => {
   axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
 };
 
-const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
+const onRequest = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
   // add something configs
   try {
     const token = localStorage.getItem("access_token");
@@ -28,9 +28,11 @@ const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
       const mHeaders = AxiosHeaders.from({
         Authorization: `Bearer ${token}`,
       }) as AxiosRequestHeaders;
-      config.headers = mHeaders;
+      if (mHeaders) {
+        config.headers = mHeaders;
+      }
     }
-  } catch (error) {}
+  } catch (error) { }
   return config;
 };
 
