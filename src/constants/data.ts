@@ -7,27 +7,22 @@ export const OPTIONS_SELECT = [
 export const RELATED_LIST = [
     {
         id: 1,
-        value: "Liên quan nhất",
-        slug: "LIEN_QUAN_NHAT",
+        value: "Số lượng sản phẩm",
+        slug: "PRODUCTS",
     },
     {
         id: 2,
-        value: "Sản phẩm mới",
-        slug: "SAN_PHAM_MOI",
+        value: "Số lượt theo dõi",
+        slug: "FOLLOWS",
     },
     {
         id: 3,
-        value: "Giá tăng dần",
-        slug: "GIA_TANG_DAN",
+        value: "Ngày tham gia",
+        slug: "PARTICIPATION_DATE",
     },
     {
         id: 4,
-        value: "Giá giảm dần",
-        slug: "GIA_GIAM_DAN",
-    },
-    {
-        id: 5,
-        value: "Theo dõi nhiều nhất",
-        slug: "THEO_DOI_NHIEU_NHAT",
-    },
+        value: "Tên nhà cung cấp",
+        slug: "NAME",
+    }
 ];

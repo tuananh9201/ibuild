@@ -7,18 +7,27 @@ import { getAreas } from "@/lib/api/information";
 import { RELATED_LIST } from "@/constants/data";
 import { ICategory } from "@/lib/types";
 
+interface FilterSingleProps {
+  changeSort: (sort: string) => void;
+}
+
 const DEFAULT_AREA_VALUE = {
   id: "00",
-  name_vi: "Nhiều khu vực",
+  name_vi: "Chọn khu vực",
 };
 
-const FilterSingle = () => {
+const FilterSingle = ({ changeSort }: FilterSingleProps) => {
   const { data: areaList } = useSWR("dddd", getAreas);
-
   const [areas, setAreas] = useState<ICategory[]>([]);
   const [area, setArea] = useState("");
+  const [selectedArea, setSelectedArea] = useState([]);
 
-  const handleSelect = () => {};
+  const handleSelect = (value: number) => {
+    const option = RELATED_LIST.find((related) => related.id === value);
+    if (option) {
+      changeSort(option?.slug);
+    }
+  };
   const handleAreaSearch = (word: string) => {
     setArea(word);
   };
@@ -50,6 +59,7 @@ const FilterSingle = () => {
           defaultValue={DEFAULT_AREA_VALUE}
           keyword={area}
           setKeyword={handleAreaSearch}
+          setSelectedValue={setSelectedArea}
         />
       </div>
     </div>

@@ -27,6 +27,7 @@ const ListProductCategory: NextPageWithLayout = () => {
     category_id: "",
     skip: 0,
     limit: 8,
+    sort_by: "PRODUCTS",
   });
   const [data, setData] = useState<ISupplierInfo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -71,6 +72,18 @@ const ListProductCategory: NextPageWithLayout = () => {
     }
     console.log(res);
   };
+  const changeSort = (sort: string) => {
+    setPaging({
+      ...paging,
+      current: 1,
+      total: 0,
+    });
+    setParams({
+      ...params,
+      skip: 0,
+      sort_by: sort,
+    });
+  };
 
   useEffect(() => {
     if (categoryInfo?.id) {
@@ -93,7 +106,7 @@ const ListProductCategory: NextPageWithLayout = () => {
       <h1 className="text-text-color font-medium text-2xl my-8">
         {categoryInfo?.name_vi || ""}
       </h1>
-      <FilterSingle />
+      <FilterSingle changeSort={changeSort} />
       {isLoading && <SupplierContainerLoading items={8} />}
       {!isLoading && data && data.length > 0 && (
         <SupplierContainer data={data} />
