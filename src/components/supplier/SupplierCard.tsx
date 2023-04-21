@@ -1,20 +1,21 @@
-import { useEffect, useState } from "react";
-import Image from "next/image";
 import moment from "moment";
+import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 import { IBuildLogo } from "@/images";
 import {
-  PhoneIcon,
-  LocationIcon,
-  ShopMallIcon,
-  SupervisionIcon,
   DateRangeIcon,
   HeartBgWhiteIcon,
   HeartIcon,
+  LocationIcon,
+  PhoneIcon,
+  ShopMallIcon,
+  SupervisionIcon,
 } from "@/images/icons/product_types/icon_wrapper";
-import { ISupplierInfo } from "@/lib/types";
 import { followSupplier } from "@/lib/api/supplier";
+import { FormatNumber } from "@/lib/hooks";
+import { ISupplierInfo } from "@/lib/types";
 
 interface SupplierCardProps {
   supplier: ISupplierInfo;
@@ -112,7 +113,7 @@ const SupplierCard = ({ supplier }: SupplierCardProps) => {
               Sản phẩm
             </span>
             <span className="font-medium text-base leading-[150%] text-text-color">
-              {supplier.products}
+              {FormatNumber(supplier.products)}
             </span>
           </div>
           <div className="flex flex-row items-center">
@@ -121,7 +122,7 @@ const SupplierCard = ({ supplier }: SupplierCardProps) => {
               Người theo dõi
             </span>
             <span className="font-medium text-base leading-[150%] text-text-color">
-              {supplier?.followers || 0}
+              {supplier?.followers ? FormatNumber(supplier.followers) : 0}
             </span>
           </div>
           <div className="flex flex-row items-center">

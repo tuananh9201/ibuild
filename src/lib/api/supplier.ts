@@ -11,9 +11,9 @@ export const fetchListSupplierBySearch = async (params: { skip: number, limit: n
     }
 }
 
-export const fetchListSupplierByCategoryId = async (params: { category_id: string, skip: number, limit: number }): Promise<ResponseSupplierInfo | undefined> => {
+export const fetchListSupplierByCategoryId = async (params: { category_id: string, skip: number, limit: number, sort_by: string }): Promise<ResponseSupplierInfo | undefined> => {
     try {
-        const res = await api.get(`/supplier/by-category-id/${params.category_id}?skip=${params.skip}&limit=${params.limit}`)
+        const res = await api.get(`/supplier/by-category-id/${params.category_id}?skip=${params.skip}&limit=${params.limit}&sort_by=${params.sort_by}`)
         return res.data?.data
     } catch (error) {
         console.warn(error)

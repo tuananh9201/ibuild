@@ -70,7 +70,6 @@ const ListProductCategory: NextPageWithLayout = () => {
         total: res.paging.total,
       });
     }
-    console.log(res);
   };
   const changeSort = (sort: string) => {
     setPaging({
