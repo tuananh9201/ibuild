@@ -10,13 +10,49 @@ import {
   ShopMallIcon,
   SupervisionIcon,
   DateRangeIcon,
+  HeartBgWhiteIcon,
   HeartIcon,
 } from "@/images/icons/product_types/icon_wrapper";
 import { ISupplierInfo } from "@/lib/types";
+import { followSupplier } from "@/lib/api/supplier";
 
 interface SupplierCardProps {
   supplier: ISupplierInfo;
 }
+
+type ButtonFollowProps = {
+  supplierId: string;
+};
+
+const ButtonFollow = ({ supplierId }: ButtonFollowProps) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isFollow, setIsFollow] = useState(false);
+
+  const handleFollow = async () => {
+    setIsFollow((prev) => !prev);
+    setIsLoading(true);
+    await followSupplier(supplierId);
+    setIsLoading(false);
+  };
+
+  return (
+    <button
+      className={`absolute top-4 right-4 flex flex-row gap-3 items-center ${
+        isLoading ? "pointer-events-none opacity-50" : ""
+      }`}
+      onClick={handleFollow}
+    >
+      {isFollow ? (
+        <HeartBgWhiteIcon className="fill-primary-color" />
+      ) : (
+        <HeartIcon className="fill-primary-color" />
+      )}
+      <span className="text-primary-color font-normal text-sm leading-[150%]">
+        {isFollow ? "Đang theo dõi" : "Theo dõi"}
+      </span>
+    </button>
+  );
+};
 
 const SupplierCard = ({ supplier }: SupplierCardProps) => {
   const [logo, setLogo] = useState(supplier.logo);
@@ -54,7 +90,7 @@ const SupplierCard = ({ supplier }: SupplierCardProps) => {
         </div>
         <div className="flex flex-row items-center gap-3">
           <LocationIcon className="fill-text-color" />
-          <span className="font-normal text-base leading-[150%] text-text-color">
+          <span className="font-normal text-base leading-[150%] text-text-color line-clamp-1">
             {getAddress()}
           </span>
         </div>
@@ -96,12 +132,7 @@ const SupplierCard = ({ supplier }: SupplierCardProps) => {
           <span>Xem chi tiết</span>
         </Link>
       </div>
-      <button className="absolute top-4 right-4 flex flex-row gap-3 items-center">
-        <HeartIcon className="fill-primary-color" />
-        <span className="text-primary-color font-normal text-sm leading-[150%]">
-          Theo dõi
-        </span>
-      </button>
+      <ButtonFollow supplierId={supplier.id} />
     </div>
   );
 };

@@ -44,9 +44,13 @@ const ProductDetail: NextPageWithLayout = () => {
     },
   });
 
-  const [logo, setLogo] = useState(() => {
-    return data?.supplier?.feature_image || productLogo;
-  });
+  const [logo, setLogo] = useState("");
+
+  useEffect(() => {
+    if (data?.supplier?.feature_image) {
+      setLogo(data?.supplier?.feature_image);
+    }
+  }, [data]);
 
   useEffect(() => {
     if (data && data.images && data.images.length) {
@@ -144,14 +148,16 @@ const ProductDetail: NextPageWithLayout = () => {
               </h1>
             </div>
             <div className="flex flex-row gap-2 mb-4 h-8">
-              <Image
-                src={logo}
-                alt="logo"
-                width={32}
-                height={32}
-                className="rounded-full w-8 h-8 object-cover"
-                onError={() => setLogo(productLogo)}
-              />
+              {logo && (
+                <Image
+                  src={logo}
+                  alt="logo"
+                  width={32}
+                  height={32}
+                  className="rounded-full w-8 h-8 object-contain"
+                  onError={() => setLogo(productLogo.src)}
+                />
+              )}
               <h2 className="font-roboto not-italic font-medium text-base leading-8 text-[#333333] uppercase">
                 {data?.supplier?.cname || data?.supplier?.name}
               </h2>

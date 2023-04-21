@@ -185,7 +185,11 @@ const ProductSearch = ({
     return () => window.removeEventListener("storage", handleChangeStorage);
   }, []);
   useEffect(() => {
-    if (user?.user_type) {
+    const userType = localStorage.getItem("user_type");
+    if (userType) {
+      setUserRole(userType);
+    }
+    if (user?.user_type && !userType) {
       setUserRole(user.user_type);
     }
   }, [user]);

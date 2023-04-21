@@ -45,9 +45,6 @@ const SearchProductGroup: NextPageWithLayout = () => {
   const handleLoadMore = () => {};
 
   useEffect(() => {
-    if (router.query?.search_type) {
-      setSearchType(router.query.search_type as string);
-    }
     if (router.query?.search) {
       setKeyword(router.query?.search as string);
       const fetchProductCategory = async () => {
@@ -82,15 +79,10 @@ const SearchProductGroup: NextPageWithLayout = () => {
           {keyword || router.query.search}
         </h1>
         <p className="font-normal text-base leading-[150%] text-[#a09c9c]">
-          Tìm thấy {data ? data.length : 0} kết quả “
-          {keyword || router.query.search}”
+          Tìm thấy {data ? new Intl.NumberFormat().format(data.length) : 0} kết
+          quả “{keyword || router.query.search}”
         </p>
       </div>
-      {/* {isLoading && <ProductCategoryLoading items={8} />}
-      {!isLoading && data && data.length > 0 && (
-        <ListProductGroup data={data || []} />
-      )}
-      {!isLoading && data.length === 0 && <NoFoundProduct title={keyword} />} */}
       <InfiniteScroll
         dataLength={data.length}
         next={handleLoadMore}
@@ -106,6 +98,7 @@ const SearchProductGroup: NextPageWithLayout = () => {
           className="animate-spin mx-auto mt-5"
         />
       )}
+      {!isLoading && !data && <NoFoundProduct title={keyword} />}
     </section>
   );
 };

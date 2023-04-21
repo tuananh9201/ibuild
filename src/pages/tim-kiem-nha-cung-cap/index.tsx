@@ -19,7 +19,7 @@ const SearchSupplier: NextPageWithLayout = () => {
   const [searchType, setSearchType] = useState("2");
   const [paging, setPaging] = useState({
     current: 1,
-    total: 200,
+    total: 0,
   });
   const [data, setData] = useState<ISupplierInfo[]>([]);
   const [payload, setPayload] = useState({
@@ -73,7 +73,13 @@ const SearchSupplier: NextPageWithLayout = () => {
       setKeyword(router.query?.search as string);
       setPayload({
         ...payload,
+        skip: 0,
         name: router.query?.search as string,
+      });
+      setPaging({
+        ...paging,
+        current: 1,
+        total: 0,
       });
     }
   }, [router.query?.search]);
@@ -95,11 +101,13 @@ const SearchSupplier: NextPageWithLayout = () => {
         />
       </div>
       <div className="my-8 text-center font-roboto not-italic">
-        <h1 className="text-secondary-color font-medium text-[32px] leading-[125%]">
+        <h1 className="text-secondary-color font-medium text-[32px] leading-[125%] mb-2 line-clamp-1">
           {keyword}
         </h1>
-        <p className="font-normal text-base leading-[150%] text-[#a09c9c]">
-          Tìm thấy {0} kết quả “{keyword}”
+        <p className="font-normal text-base leading-[150%] text-[#a09c9c] line-clamp-1">
+          Tìm thấy{" "}
+          {paging.total ? new Intl.NumberFormat().format(paging.total) : 0} kết
+          quả “{keyword}”
         </p>
       </div>
       <FilterSingle />

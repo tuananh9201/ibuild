@@ -7,6 +7,7 @@ import MainLayout from "@/components/main-layout";
 import SupplierContainer from "@/components/supplier/SupplierContainer";
 import Breadcrums from "@/components/common/breadcrums";
 import FilterSingle from "@/components/filters/filter-single";
+import { fetchListSupplierBySlug } from "@/lib/api/supplier";
 
 const ListProductCategory: NextPageWithLayout = () => {
   const router = useRouter();
@@ -33,6 +34,10 @@ const ListProductCategory: NextPageWithLayout = () => {
 
   const onChangePagination = (page: number) => {
     setPaging({ ...paging, current: page });
+  };
+  const loadData = async () => {
+    const res = await fetchListSupplierBySlug("sss");
+    console.log(res);
   };
 
   return (

@@ -27,7 +27,7 @@ const menus = [
   {
     name: "Mẫu thiết kế",
     href: "/mau-thiet-ke",
-    role: ["user"],
+    role: ["user", "expert"],
     isActive: [],
   },
   {

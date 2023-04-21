@@ -132,8 +132,9 @@ const SearchPage: NextPageWithLayout = () => {
             {keywordSearch || router.query.search}
           </h1>
           <p className="font-normal text-base leading-[150%] text-[#a09c9c]">
-            Tìm thấy {paging.total || 0} kết quả “
-            {keywordSearch || router.query.search}”
+            Tìm thấy{" "}
+            {paging.total ? new Intl.NumberFormat().format(paging.total) : 0}{" "}
+            kết quả “{keywordSearch || router.query.search}”
           </p>
         </section>
         <FilterProduct

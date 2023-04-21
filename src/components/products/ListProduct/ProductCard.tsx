@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { Tooltip } from "antd";
@@ -26,9 +26,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const isAddedFavorite = product.is_bookmark;
 
   const [isLoading, setIsLoading] = useState(false);
-  const [logoImage, setLogoImage] = useState(() => {
-    return product.supplier?.feature_image || productLogo;
-  });
+  const [logoImage, setLogoImage] = useState("");
 
   const prodImageSrc =
     product.data?.product_image ||
@@ -67,6 +65,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
     return <p>{product.supplier?.phone || ""}</p>;
   };
 
+  useEffect(() => {
+    if (product.supplier?.feature_image) {
+      setLogoImage(product.supplier?.feature_image);
+    }
+  }, [product]);
+
   return (
     <div className="bg-[#f8f9ff] rounded p-4 h-full flex flex-col justify-between">
       <div>
@@ -92,14 +96,16 @@ const ProductCard = ({ product }: ProductCardProps) => {
           className="flex flex-row mb-4 cursor-pointer"
           onClick={handleToSupplier}
         >
-          <Image
-            src={logoImage}
-            alt="logo product"
-            className="mr-1 w-6 h-6 object-contain rounded-full"
-            width={24}
-            height={24}
-            onError={() => setLogoImage(productLogo)}
-          />
+          {logoImage && (
+            <Image
+              src={logoImage}
+              alt="logo product"
+              className="mr-1 w-6 h-6 object-contain rounded-full"
+              width={24}
+              height={24}
+              onError={() => setLogoImage(productLogo.src)}
+            />
+          )}
           <h3 className="text-primary-color uppercase font-roboto not-italic font-medium text-base leading-[150%] line-clamp-1">
             {product.supplier?.cname || product.supplier?.name}
           </h3>

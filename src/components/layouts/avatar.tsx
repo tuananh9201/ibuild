@@ -106,7 +106,11 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
   }, []);
 
   React.useEffect(() => {
-    if (props.user.user_type) {
+    const userType = localStorage.getItem("user_type");
+    if (userType) {
+      setUserRole(userType);
+    }
+    if (props.user.user_type && !userType) {
       setUserRole(props.user.user_type);
     }
   }, [props]);
