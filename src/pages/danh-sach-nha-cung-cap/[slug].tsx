@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import useSWR from "swr";
 import { useRouter } from "next/router";
 import { Pagination } from "antd";
 
@@ -7,15 +8,33 @@ import MainLayout from "@/components/main-layout";
 import SupplierContainer from "@/components/supplier/SupplierContainer";
 import Breadcrums from "@/components/common/breadcrums";
 import FilterSingle from "@/components/filters/filter-single";
-import { fetchListSupplierBySlug } from "@/lib/api/supplier";
+import {
+  fetchInfoSupplierBySlug,
+  fetchListSupplierByCategoryId,
+} from "@/lib/api/supplier";
+import { ICategory, ISupplierInfo } from "@/lib/types";
+import SupplierContainerLoading from "@/components/supplier/SupplierContainerLoading";
 
 const ListProductCategory: NextPageWithLayout = () => {
   const router = useRouter();
+  const { query } = router;
 
   const [paging, setPaging] = useState({
     current: 1,
-    total: 200,
+    total: 0,
   });
+  const [params, setParams] = useState({
+    category_id: "",
+    skip: 0,
+    limit: 8,
+  });
+  const [data, setData] = useState<ISupplierInfo[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { data: categoryInfo } = useSWR<ICategory>(
+    query?.slug,
+    fetchInfoSupplierBySlug
+  );
 
   const breadcrumbs = [
     {
@@ -27,27 +46,58 @@ const ListProductCategory: NextPageWithLayout = () => {
       slug: "tim-kiem-nhom-san-pham",
     },
     {
-      title: "Nhóm sản phẩm",
+      title: categoryInfo?.name_vi || "",
       slug: router.query.slug as string,
     },
   ];
 
   const onChangePagination = (page: number) => {
     setPaging({ ...paging, current: page });
+    setParams({
+      ...params,
+      skip: page === 1 ? 0 : (page - 1) * 8,
+    });
   };
   const loadData = async () => {
-    const res = await fetchListSupplierBySlug("sss");
+    setIsLoading(true);
+    const res = await fetchListSupplierByCategoryId(params);
+    setIsLoading(false);
+    if (res) {
+      setData(res.data);
+      setPaging({
+        ...paging,
+        total: res.paging.total,
+      });
+    }
     console.log(res);
   };
+
+  useEffect(() => {
+    if (categoryInfo?.id) {
+      setParams({
+        ...params,
+        category_id: categoryInfo.id,
+      });
+    }
+  }, [categoryInfo]);
+
+  useEffect(() => {
+    if (params.category_id) {
+      loadData();
+    }
+  }, [params]);
 
   return (
     <section>
       <Breadcrums breadcrumbs={breadcrumbs} />
       <h1 className="text-text-color font-medium text-2xl my-8">
-        Vật liệu nhựa xây dựng
+        {categoryInfo?.name_vi || ""}
       </h1>
       <FilterSingle />
-      <SupplierContainer data={[]} />
+      {isLoading && <SupplierContainerLoading items={8} />}
+      {!isLoading && data && data.length > 0 && (
+        <SupplierContainer data={data} />
+      )}
       <div className="w-full text-center">
         <Pagination
           onChange={onChangePagination}

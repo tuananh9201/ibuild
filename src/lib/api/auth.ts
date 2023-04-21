@@ -39,7 +39,7 @@ export const loginApi = async (credentials: {
       headers: { "Content-Type": "multipart/form-data" },
     });
     if (resp.status === 200) {
-      const { access_token } = resp.data.data;
+      const { access_token } = resp.data;
       return { access_token };
     }
   } catch (error: any) {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import moment from "moment";
 import Link from "next/link";
@@ -22,11 +22,12 @@ interface SupplierCardProps {
 
 type ButtonFollowProps = {
   supplierId: string;
+  follow: boolean;
 };
 
-const ButtonFollow = ({ supplierId }: ButtonFollowProps) => {
+const ButtonFollow = ({ supplierId, follow }: ButtonFollowProps) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [isFollow, setIsFollow] = useState(false);
+  const [isFollow, setIsFollow] = useState(follow);
 
   const handleFollow = async () => {
     setIsFollow((prev) => !prev);
@@ -55,25 +56,35 @@ const ButtonFollow = ({ supplierId }: ButtonFollowProps) => {
 };
 
 const SupplierCard = ({ supplier }: SupplierCardProps) => {
-  const [logo, setLogo] = useState(supplier.logo);
+  const [logo, setLogo] = useState(supplier.logo || IBuildLogo);
 
   const getAddress = () => {
     if (supplier?.addresses && supplier?.addresses.length > 0) {
       const add = supplier.addresses[0];
-      return [add.wards, add.district, add.city].join(", ") || "";
+      const addressArr = [];
+      if (add.wards) {
+        addressArr.push(add.wards);
+      }
+      if (add.district) {
+        addressArr.push(add.district);
+      }
+      if (add.city) {
+        addressArr.push(add.city);
+      }
+      return addressArr.join(", ") || "";
     }
   };
 
   return (
-    <div className="w-full bg-[#f8f9ff] rounded-lg p-4 flex flex-row relative">
-      <div className="w-[170px] h-full overflow-hidden rounded-[6px] mr-4">
+    <div className="w-full bg-[#f8f9ff] rounded-lg p-4 flex flex-row items-center relative">
+      <div className="w-[170px] h-[150px] overflow-hidden rounded-[6px] mr-4">
         {logo && (
           <Image
             src={logo}
             width={170}
             height={150}
             alt="logo"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
             onError={() => setLogo(IBuildLogo.src)}
           />
         )}
@@ -101,7 +112,7 @@ const SupplierCard = ({ supplier }: SupplierCardProps) => {
               Sản phẩm
             </span>
             <span className="font-medium text-base leading-[150%] text-text-color">
-              70
+              {supplier.products}
             </span>
           </div>
           <div className="flex flex-row items-center">
@@ -132,7 +143,7 @@ const SupplierCard = ({ supplier }: SupplierCardProps) => {
           <span>Xem chi tiết</span>
         </Link>
       </div>
-      <ButtonFollow supplierId={supplier.id} />
+      <ButtonFollow supplierId={supplier.id} follow={supplier.is_follow} />
     </div>
   );
 };
