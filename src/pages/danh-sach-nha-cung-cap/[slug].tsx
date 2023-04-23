@@ -70,7 +70,6 @@ const ListProductCategory: NextPageWithLayout = () => {
         total: res.paging.total,
       });
     }
-    console.log(res);
   };
   const changeSort = (sort: string) => {
     setPaging({
@@ -111,7 +110,7 @@ const ListProductCategory: NextPageWithLayout = () => {
       {!isLoading && data && data.length > 0 && (
         <SupplierContainer data={data} />
       )}
-      <div className="w-full text-center">
+      <div className="w-full text-center mt-4">
         <Pagination
           onChange={onChangePagination}
           current={paging.current}
