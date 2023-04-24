@@ -6,12 +6,13 @@ import FilterSingle from "@/components/filters/filter-single";
 import MainLayout from "@/components/main-layout";
 import ProductSearch from "@/components/products/ProductSearch";
 import SupplierContainer from "@/components/supplier/SupplierContainer";
+import SupplierContainerLoading from "@/components/supplier/SupplierContainerLoading";
+import NoFoundProduct from "@/components/products/NoFoundProduct";
 import { OPTIONS_SELECT } from "@/constants/data";
 import { fetchListSupplierBySearch } from "@/lib/api/supplier";
 import { ISupplierInfo } from "@/lib/types";
 import { NextPageWithLayout } from "../_app";
-import SupplierContainerLoading from "@/components/supplier/SupplierContainerLoading";
-import NoFoundProduct from "@/components/products/NoFoundProduct";
+import { FormatNumber } from "@/lib/hooks";
 
 const SearchSupplier: NextPageWithLayout = () => {
   const router = useRouter();
@@ -28,6 +29,7 @@ const SearchSupplier: NextPageWithLayout = () => {
     limit: 8,
     name: router.query?.search as string,
     sort_by: "PRODUCTS",
+    cities: [],
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -81,6 +83,19 @@ const SearchSupplier: NextPageWithLayout = () => {
       sort_by: sort,
     });
   };
+  const changeChecked = (values: any) => {
+    setPaging({
+      ...paging,
+      current: 1,
+      total: 0,
+    });
+    console.log(values);
+    setPayload({
+      ...payload,
+      skip: 0,
+      cities: values,
+    });
+  };
 
   useEffect(() => {
     if (router.query?.search) {
@@ -119,12 +134,11 @@ const SearchSupplier: NextPageWithLayout = () => {
           {keyword}
         </h1>
         <p className="font-normal text-base leading-[150%] text-[#a09c9c] line-clamp-1">
-          Tìm thấy{" "}
-          {paging.total ? new Intl.NumberFormat().format(paging.total) : 0} kết
-          quả “{keyword}”
+          Tìm thấy {paging.total ? FormatNumber(paging.total) : 0} kết quả “
+          {keyword}”
         </p>
       </div>
-      <FilterSingle changeSort={changeSort} />
+      <FilterSingle changeSort={changeSort} changeChecked={changeChecked} />
       {isLoading && <SupplierContainerLoading items={8} />}
       {!isLoading && data && data.length > 0 && (
         <SupplierContainer data={data} />

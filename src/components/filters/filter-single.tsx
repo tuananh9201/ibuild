@@ -9,6 +9,7 @@ import { ICategory } from "@/lib/types";
 
 interface FilterSingleProps {
   changeSort: (sort: string) => void;
+  changeChecked: (values: any) => void;
 }
 
 const DEFAULT_AREA_VALUE = {
@@ -16,11 +17,10 @@ const DEFAULT_AREA_VALUE = {
   name_vi: "Chọn khu vực",
 };
 
-const FilterSingle = ({ changeSort }: FilterSingleProps) => {
-  const { data: areaList } = useSWR("dddd", getAreas);
+const FilterSingle = ({ changeSort, changeChecked }: FilterSingleProps) => {
+  const { data: areaList } = useSWR<ICategory[]>("dddd", getAreas);
   const [areas, setAreas] = useState<ICategory[]>([]);
   const [area, setArea] = useState("");
-  const [selectedArea, setSelectedArea] = useState([]);
 
   const handleSelect = (value: number) => {
     const option = RELATED_LIST.find((related) => related.id === value);
@@ -30,6 +30,60 @@ const FilterSingle = ({ changeSort }: FilterSingleProps) => {
   };
   const handleAreaSearch = (word: string) => {
     setArea(word);
+  };
+  const onChangeChecked = (values: any) => {
+    if (!areaList) return;
+    if (values.length === 0 || values[0] === "0" || values.includes("0")) {
+      changeChecked(["0"]);
+      return;
+    }
+    const parentArea: ICategory[] = [];
+    const stringId: string[] = [];
+    const ids: string[] = [];
+    values.forEach((value: string) => {
+      const option = areaList.find(
+        (area) => area.id === value && area.parent_id === "0"
+      );
+      if (option) {
+        parentArea.push(option);
+        stringId.push(option.id);
+      }
+    });
+    parentArea.forEach((parent) => {
+      ids.push(parent.id);
+      const child = areaList.filter((area) => area.parent_id === parent.id);
+      if (child) {
+        child.forEach((c) => {
+          stringId.push(c.id);
+        });
+      }
+    });
+    values.forEach((value: string) => {
+      if (!stringId.includes(value)) {
+        ids.push(value);
+      }
+    });
+    const names = ids.map((id) => {
+      const city = areaList.find((area) => area.id === id);
+      if (!city) return;
+      if (city.name_vi.startsWith("Thành")) {
+        // thành phố
+        return city.name_vi.slice(10);
+      }
+      if (city.name_vi.startsWith("Tỉnh")) {
+        // Tỉnh
+        return city.name_vi.slice(0, 5);
+      }
+      if (city.name_vi.startsWith("Huyện")) {
+        // Huyện
+        return city.name_vi.slice(0, 6);
+      }
+      if (city.name_vi.startsWith("Thị xã")) {
+        // Thị xã
+        return city.name_vi.slice(0, 7);
+      }
+    });
+    changeChecked(names);
   };
 
   useEffect(() => {
@@ -59,7 +113,7 @@ const FilterSingle = ({ changeSort }: FilterSingleProps) => {
           defaultValue={DEFAULT_AREA_VALUE}
           keyword={area}
           setKeyword={handleAreaSearch}
-          setSelectedValue={setSelectedArea}
+          setSelectedValue={onChangeChecked}
         />
       </div>
     </div>

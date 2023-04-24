@@ -14,6 +14,7 @@ import { fetchProductCategoryBySearch } from "@/lib/api/category";
 import { ICategory } from "@/lib/types";
 import { OPTIONS_SELECT } from "@/constants/data";
 import LoadingIcon from "@/images/icons/LoadingIcon.png";
+import { FormatNumber } from "@/lib/hooks";
 
 const SearchProductGroup: NextPageWithLayout = () => {
   const router = useRouter();
@@ -79,8 +80,8 @@ const SearchProductGroup: NextPageWithLayout = () => {
           {keyword || router.query.search}
         </h1>
         <p className="font-normal text-base leading-[150%] text-[#a09c9c]">
-          Tìm thấy {data ? new Intl.NumberFormat().format(data.length) : 0} kết
-          quả “{keyword || router.query.search}”
+          Tìm thấy {data ? FormatNumber(data.length) : 0} kết quả “
+          {keyword || router.query.search}”
         </p>
       </div>
       <InfiniteScroll

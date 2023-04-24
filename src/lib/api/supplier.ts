@@ -2,9 +2,15 @@ import axios from './api'
 import api from './api';
 import { ICategory, ResponseSupplierInfo } from "../types";
 
-export const fetchListSupplierBySearch = async (params: { skip: number, limit: number, name: string, sort_by: string }): Promise<ResponseSupplierInfo | undefined> => {
+export const fetchListSupplierBySearch = async (params: { skip: number, limit: number, name: string, sort_by: string, cities: Array<string> }): Promise<ResponseSupplierInfo | undefined> => {
+    let urlCity = ``
+    if (params.cities.length > 0 && params.cities[0] !== '0') {
+        params.cities.forEach((city) => {
+            urlCity += `&cities=${city}`
+        })
+    }
     try {
-        const res = await axios.get(`/supplier/?skip=${params.skip}&limit=${params.limit}&name=${params.name}&sort_by=${params.sort_by}`)
+        const res = await axios.get(`/supplier/?skip=${params.skip}&limit=${params.limit}&name=${params.name}&sort_by=${params.sort_by}${urlCity ? urlCity : ''}`)
         return res.data.data
     } catch (error) {
         console.warn(error)

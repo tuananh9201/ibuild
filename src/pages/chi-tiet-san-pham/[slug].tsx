@@ -24,6 +24,7 @@ import { RootState } from "@/store/store";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { NextPageWithLayout } from "src/pages/_app";
+import { FormatNumber } from "@/lib/hooks";
 
 const ProductDetail: NextPageWithLayout = () => {
   const router = useRouter();
@@ -166,9 +167,9 @@ const ProductDetail: NextPageWithLayout = () => {
               <span className="font-roboto not-italic font-semibold text-text-color text-[28px] leading-[125%]">
                 {`${
                   data?.data?.reference_price && data?.data.reference_price > 0
-                    ? `${new Intl.NumberFormat().format(
-                        data?.data?.reference_price
-                      )} VNĐ${data?.data?.unit ? `/${data?.data?.unit}` : ""}`
+                    ? `${FormatNumber(data?.data?.reference_price)} VNĐ${
+                        data?.data?.unit ? `/${data?.data?.unit}` : ""
+                      }`
                     : "Liên hệ"
                 }`}
               </span>

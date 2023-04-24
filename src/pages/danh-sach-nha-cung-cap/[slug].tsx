@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
-import useSWR from "swr";
-import { useRouter } from "next/router";
 import { Pagination } from "antd";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import useSWR from "swr";
 
-import { NextPageWithLayout } from "../_app";
-import MainLayout from "@/components/main-layout";
-import SupplierContainer from "@/components/supplier/SupplierContainer";
-import Breadcrums from "@/components/common/breadcrums";
 import FilterSingle from "@/components/filters/filter-single";
+import MainLayout from "@/components/main-layout";
+import NoFoundProduct from "@/components/products/NoFoundProduct";
+import SupplierContainer from "@/components/supplier/SupplierContainer";
+import SupplierContainerLoading from "@/components/supplier/SupplierContainerLoading";
 import {
   fetchInfoSupplierBySlug,
   fetchListSupplierByCategoryId,
 } from "@/lib/api/supplier";
 import { ICategory, ISupplierInfo } from "@/lib/types";
-import SupplierContainerLoading from "@/components/supplier/SupplierContainerLoading";
+import { NextPageWithLayout } from "../_app";
 
 const ListProductCategory: NextPageWithLayout = () => {
   const router = useRouter();
@@ -28,6 +28,7 @@ const ListProductCategory: NextPageWithLayout = () => {
     skip: 0,
     limit: 8,
     sort_by: "PRODUCTS",
+    cities: [],
   });
   const [data, setData] = useState<ISupplierInfo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -36,21 +37,6 @@ const ListProductCategory: NextPageWithLayout = () => {
     query?.slug,
     fetchInfoSupplierBySlug
   );
-
-  const breadcrumbs = [
-    {
-      title: "Tìm kiếm",
-      slug: "tim-kiem-nhom-san-pham",
-    },
-    {
-      title: "Nhóm sản phẩm",
-      slug: "tim-kiem-nhom-san-pham",
-    },
-    {
-      title: categoryInfo?.name_vi || "",
-      slug: router.query.slug as string,
-    },
-  ];
 
   const onChangePagination = (page: number) => {
     setPaging({ ...paging, current: page });
@@ -83,6 +69,19 @@ const ListProductCategory: NextPageWithLayout = () => {
       sort_by: sort,
     });
   };
+  const changeChecked = (values: any) => {
+    setPaging({
+      ...paging,
+      current: 1,
+      total: 0,
+    });
+    console.log(values);
+    setParams({
+      ...params,
+      skip: 0,
+      cities: values,
+    });
+  };
 
   useEffect(() => {
     if (categoryInfo?.id) {
@@ -101,14 +100,16 @@ const ListProductCategory: NextPageWithLayout = () => {
 
   return (
     <section>
-      <Breadcrums breadcrumbs={breadcrumbs} />
       <h1 className="text-text-color font-medium text-2xl my-8">
         {categoryInfo?.name_vi || ""}
       </h1>
-      <FilterSingle changeSort={changeSort} />
+      <FilterSingle changeSort={changeSort} changeChecked={changeChecked} />
       {isLoading && <SupplierContainerLoading items={8} />}
       {!isLoading && data && data.length > 0 && (
         <SupplierContainer data={data} />
+      )}
+      {!isLoading && data.length === 0 && (
+        <NoFoundProduct title={categoryInfo?.name_vi || ""} />
       )}
       <div className="w-full text-center mt-4">
         <Pagination

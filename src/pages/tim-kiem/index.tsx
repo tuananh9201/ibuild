@@ -14,6 +14,7 @@ import noSearchResult from "@/images/no_search_result.png";
 import { searchProduct } from "@/lib/api/product";
 import { Product, SearchProduct } from "@/lib/types";
 import { NextPageWithLayout } from "../_app";
+import { FormatNumber } from "@/lib/hooks";
 
 const SearchPage: NextPageWithLayout = () => {
   const router = useRouter();
@@ -132,9 +133,8 @@ const SearchPage: NextPageWithLayout = () => {
             {keywordSearch || router.query.search}
           </h1>
           <p className="font-normal text-base leading-[150%] text-[#a09c9c]">
-            Tìm thấy{" "}
-            {paging.total ? new Intl.NumberFormat().format(paging.total) : 0}{" "}
-            kết quả “{keywordSearch || router.query.search}”
+            Tìm thấy {paging.total ? FormatNumber(paging.total) : 0} kết quả “
+            {keywordSearch || router.query.search}”
           </p>
         </section>
         <FilterProduct

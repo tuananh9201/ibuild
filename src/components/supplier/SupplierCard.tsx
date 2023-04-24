@@ -113,7 +113,8 @@ const SupplierCard = ({ supplier }: SupplierCardProps) => {
               Sản phẩm
             </span>
             <span className="font-medium text-base leading-[150%] text-text-color">
-              {FormatNumber(supplier.products)}
+              {FormatNumber(supplier?.products || 0)}
+              {}
             </span>
           </div>
           <div className="flex flex-row items-center">
