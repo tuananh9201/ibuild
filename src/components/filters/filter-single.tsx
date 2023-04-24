@@ -72,15 +72,19 @@ const FilterSingle = ({ changeSort, changeChecked }: FilterSingleProps) => {
       }
       if (city.name_vi.startsWith("Tỉnh")) {
         // Tỉnh
-        return city.name_vi.slice(0, 5);
+        return city.name_vi.slice(5);
       }
       if (city.name_vi.startsWith("Huyện")) {
         // Huyện
-        return city.name_vi.slice(0, 6);
+        return city.name_vi.slice(6);
       }
       if (city.name_vi.startsWith("Thị xã")) {
         // Thị xã
-        return city.name_vi.slice(0, 7);
+        return city.name_vi.slice(7);
+      }
+      if (city.name_vi.startsWith("Quận")) {
+        // Thị xã
+        return city.name_vi.slice(5);
       }
     });
     changeChecked(names);
@@ -91,7 +95,7 @@ const FilterSingle = ({ changeSort, changeChecked }: FilterSingleProps) => {
       setAreas(areaList);
     } else if (area && areaList) {
       const newArea = areaList.filter((a: ICategory) =>
-        a.name_vi.includes(area.trim())
+        a.name_vi.toLocaleLowerCase().includes(area.trim().toLocaleLowerCase())
       );
       setAreas(newArea || []);
     }

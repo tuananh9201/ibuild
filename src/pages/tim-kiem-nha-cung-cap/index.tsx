@@ -143,7 +143,9 @@ const SearchSupplier: NextPageWithLayout = () => {
       {!isLoading && data && data.length > 0 && (
         <SupplierContainer data={data} />
       )}
-      {!isLoading && data.length === 0 && <NoFoundProduct title={keyword} />}
+      {!isLoading && data.length === 0 && (
+        <NoFoundProduct title={keyword} content="Không tìm thấy nhà cung cấp" />
+      )}
       <div className="w-full text-center mt-6">
         <Pagination
           onChange={onChangePagination}

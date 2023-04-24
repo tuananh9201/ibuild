@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
-import { useSelector } from "react-redux";
-import InfiniteScroll from "react-infinite-scroll-component";
 import Image from "next/image";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 import MainLayout from "@/components/main-layout";
 import ListProductGroup from "@/components/products/ListProductGroup";
 import NoFoundProduct from "@/components/products/NoFoundProduct";
 import ProductSearch from "@/components/products/ProductSearch";
-import ProductCategoryLoading from "@/components/products/ProductCategoryLoading";
-import { NextPageWithLayout } from "../_app";
-import { fetchProductCategoryBySearch } from "@/lib/api/category";
-import { ICategory } from "@/lib/types";
-import { OPTIONS_SELECT } from "@/constants/data";
 import LoadingIcon from "@/images/icons/LoadingIcon.png";
+import { OPTIONS_SELECT } from "@/constants/data";
+import { fetchProductCategoryBySearch } from "@/lib/api/category";
 import { FormatNumber } from "@/lib/hooks";
+import { ICategory } from "@/lib/types";
+import { NextPageWithLayout } from "../_app";
 
 const SearchProductGroup: NextPageWithLayout = () => {
   const router = useRouter();
@@ -99,7 +97,12 @@ const SearchProductGroup: NextPageWithLayout = () => {
           className="animate-spin mx-auto mt-5"
         />
       )}
-      {!isLoading && !data && <NoFoundProduct title={keyword} />}
+      {!isLoading && !data && (
+        <NoFoundProduct
+          title={keyword}
+          content="Không tìm thấy nhóm sản phẩm"
+        />
+      )}
     </section>
   );
 };

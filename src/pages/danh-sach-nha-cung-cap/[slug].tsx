@@ -109,7 +109,10 @@ const ListProductCategory: NextPageWithLayout = () => {
         <SupplierContainer data={data} />
       )}
       {!isLoading && data.length === 0 && (
-        <NoFoundProduct title={categoryInfo?.name_vi || ""} />
+        <NoFoundProduct
+          title={categoryInfo?.name_vi || ""}
+          content="Không tìm thấy nhà cung cấp"
+        />
       )}
       <div className="w-full text-center mt-4">
         <Pagination
