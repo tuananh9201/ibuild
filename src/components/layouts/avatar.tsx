@@ -28,6 +28,9 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
     if (localStorage.getItem("user_type")) {
       localStorage.removeItem("user_type");
     }
+    if (localStorage.getItem("search_type")) {
+      localStorage.removeItem("search_type");
+    }
     router.push({
       pathname: "/dang-nhap",
       query: {

@@ -41,7 +41,6 @@ const FilterTree = ({
   }, []);
 
   const handleCheckedValue = (value: any) => {
-    console.log(value);
     if (setSelectedValue) {
       setSelectedValue(value);
     }

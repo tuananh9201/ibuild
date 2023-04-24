@@ -95,7 +95,7 @@ const SearchSuggestionItem = (props: SearchSuggestionProps) => {
       className="flex justify-between items-center last:mb-4"
       onClick={handleSelectValue}
     >
-      <div className="flex flex-row items-center gap-4 w-full bg-white p-4  hover:bg-zinc-100 hover:rounded-lg  hover:cursor-pointer">
+      <div className="flex flex-row items-center gap-4 w-full bg-white p-4 hover:bg-zinc-100 hover:rounded-lg hover:cursor-pointer">
         <div className="icon w-5 h-5">
           <SearchIcon />
         </div>
@@ -193,6 +193,16 @@ const ProductSearch = ({
       setUserRole(user.user_type);
     }
   }, [user]);
+  useEffect(() => {
+    if (!user) return;
+    const type = localStorage.getItem("search_type");
+    if (!type) {
+      localStorage.setItem("search_type", "0");
+    }
+    if (type && onSelectValue) {
+      onSelectValue(type);
+    }
+  }, [user]);
 
   const onFocusInput = useMemo(() => {
     return (e: React.FocusEvent<HTMLInputElement, Element>) => {
@@ -220,9 +230,8 @@ const ProductSearch = ({
     }
   };
   const handleSelect = (value: string) => {
-    if (onSelectValue) {
-      onSelectValue(value);
-    }
+    localStorage.setItem("search_type", value);
+    onSelectValue && onSelectValue(value);
   };
 
   const className =
@@ -242,7 +251,7 @@ const ProductSearch = ({
         {userRole === "expert" && (
           <>
             <Select
-              defaultValue={selectValue || "0"}
+              defaultValue={selectValue}
               style={{ width: 170 }}
               bordered={false}
               options={[
