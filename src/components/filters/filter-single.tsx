@@ -17,6 +17,14 @@ const DEFAULT_AREA_VALUE = {
   name_vi: "Chọn khu vực",
 };
 
+const PREFIXES = [
+  { prefix: "Thành", length: 10 },
+  { prefix: "Tỉnh", length: 5 },
+  { prefix: "Huyện", length: 6 },
+  { prefix: "Thị xã", length: 7 },
+  { prefix: "Quận", length: 5 },
+];
+
 const FilterSingle = ({ changeSort, changeChecked }: FilterSingleProps) => {
   const { data: areaList } = useSWR<ICategory[]>("dddd", getAreas);
   const [areas, setAreas] = useState<ICategory[]>([]);
@@ -66,26 +74,33 @@ const FilterSingle = ({ changeSort, changeChecked }: FilterSingleProps) => {
     const names = ids.map((id) => {
       const city = areaList.find((area) => area.id === id);
       if (!city) return;
-      if (city.name_vi.startsWith("Thành")) {
-        // thành phố
-        return city.name_vi.slice(10);
+      // if (city.name_vi.startsWith("Thành")) {
+      //   // thành phố
+      //   return city.name_vi.slice(10);
+      // }
+      // if (city.name_vi.startsWith("Tỉnh")) {
+      //   // Tỉnh
+      //   return city.name_vi.slice(5);
+      // }
+      // if (city.name_vi.startsWith("Huyện")) {
+      //   // Huyện
+      //   return city.name_vi.slice(6);
+      // }
+      // if (city.name_vi.startsWith("Thị xã")) {
+      //   // Thị xã
+      //   return city.name_vi.slice(7);
+      // }
+      // if (city.name_vi.startsWith("Quận")) {
+      //   // Thị xã
+      //   return city.name_vi.slice(5);
+      // }
+      let name = "";
+      for (const { prefix, length } of PREFIXES) {
+        if (city.name_vi.startsWith(prefix)) {
+          name = city.name_vi.slice(length);
+        }
       }
-      if (city.name_vi.startsWith("Tỉnh")) {
-        // Tỉnh
-        return city.name_vi.slice(5);
-      }
-      if (city.name_vi.startsWith("Huyện")) {
-        // Huyện
-        return city.name_vi.slice(6);
-      }
-      if (city.name_vi.startsWith("Thị xã")) {
-        // Thị xã
-        return city.name_vi.slice(7);
-      }
-      if (city.name_vi.startsWith("Quận")) {
-        // Thị xã
-        return city.name_vi.slice(5);
-      }
+      return name;
     });
     changeChecked(names);
   };

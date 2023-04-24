@@ -9,6 +9,7 @@ interface FilterTreeProps {
   keyword?: string;
   searchEnabled?: boolean;
   defaultValue: ICategory;
+  multipleValue: ICategory;
   setKeyword?: (word: string) => void;
   setSelectedValue?: Function;
 }
@@ -17,15 +18,11 @@ const FilterTree = ({
   options,
   keyword,
   defaultValue,
+  multipleValue,
   searchEnabled,
   setKeyword,
   setSelectedValue,
 }: FilterTreeProps) => {
-  const multipleArea = {
-    id: "0",
-    name_vi: "Nhiều khu vực",
-  };
-
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [outputValue, setOutputValue] = useState(defaultValue);
 
@@ -68,7 +65,7 @@ const FilterTree = ({
     } else {
       setOutputValue({
         ...outputValue,
-        ...multipleArea,
+        ...multipleValue,
       });
     }
   };

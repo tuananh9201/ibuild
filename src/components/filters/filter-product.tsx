@@ -75,8 +75,6 @@ const FilterProduct = ({
     sortSelected && onChangeSort(sortSelected.slug);
   };
 
-  const handleShowFilter = () => {};
-
   return (
     <div className="w-full">
       <div className="w-full flex flex-col sm:flex-row justify-between mt-8">

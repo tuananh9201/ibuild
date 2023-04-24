@@ -32,6 +32,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   const [keyword, setKeyword] = useState("");
   const [payload, setPayload] = useState<SearchProduct>({
     category_id: [props.category.id],
+    cities: [],
     min_price: 0,
     max_price: 9999999999,
     min_quantity: 0,

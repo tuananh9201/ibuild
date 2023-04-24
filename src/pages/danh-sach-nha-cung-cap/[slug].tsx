@@ -75,7 +75,6 @@ const ListProductCategory: NextPageWithLayout = () => {
       current: 1,
       total: 0,
     });
-    console.log(values);
     setParams({
       ...params,
       skip: 0,

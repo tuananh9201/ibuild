@@ -11,8 +11,9 @@ import app from "src/utils/firebase";
 import { SWRConfig } from "swr";
 import { store } from "../store/store";
 
-import 'react-multi-carousel/lib/styles.css';
+import "react-multi-carousel/lib/styles.css";
 import "../styles/global.scss";
+import { ErrorBoundary } from "@sentry/nextjs";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -50,8 +51,6 @@ export default function App({
           value={{
             onError: (error, key) => {
               if (error.status !== 403 && error.status !== 404) {
-                // We can send the error to Sentry,
-                // or show a notification UI.
               }
             },
           }}

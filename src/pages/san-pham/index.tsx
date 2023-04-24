@@ -10,7 +10,6 @@ import MainLayout from "@/components/main-layout";
 import CategoryCard, {
   CategoryCardLoading,
 } from "@/components/products/CategoryCard";
-// import ProductSearch from "@/components/products/ProductSearch";
 import { sologan1, sologan2, sologan3 } from "@/constants/images";
 import { fetchRootCategories } from "src/lib/api/category";
 import { ICategory } from "src/lib/types";

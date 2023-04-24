@@ -4,7 +4,7 @@ import useSWR from "swr";
 import { FilterLocation, Input } from "@/components/common";
 import { fetchChildCategories } from "@/lib/api/category";
 import { getAreas } from "@/lib/api/information";
-import { ICategory } from "@/lib/types";
+import { ICategory, SearchProduct } from "@/lib/types";
 import { AreasModal } from "@/lib/models";
 import FilterTree from "./filter-tree";
 
@@ -44,15 +44,27 @@ const QUANTITIES = [
 
 const DEFAULT_VALUE = {
   id: "00",
-  name_vi: "Nhiều danh mục",
+  name_vi: "Chọn danh mục sản phẩm",
 };
 const DEFAULT_QUANTITY_VALUE = {
   id: "00",
-  name_vi: "Nhiều khoảng số lượng",
+  name_vi: "Chọn số lượng",
 };
 
 const DEFAULT_AREA_VALUE = {
   id: "00",
+  name_vi: "Chọn khu vực",
+};
+const multipleCategory = {
+  id: "0",
+  name_vi: "Nhiều sản phẩm",
+};
+const multipleQuantity = {
+  id: "0",
+  name_vi: "Nhiều số lượng",
+};
+const multipleArea = {
+  id: "0",
   name_vi: "Nhiều khu vực",
 };
 
@@ -62,6 +74,17 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
   const [keywordSearch, setKeywordSearch] = useState({
     category: "",
     area: "",
+  });
+  const [payload, setPayload] = useState<SearchProduct>({
+    category_id: [],
+    cities: [],
+    min_price: 0,
+    max_price: 9999999999,
+    min_quantity: 0,
+    max_quantity: 9999999,
+    limit: 12,
+    skip: 0,
+    sort_by: "LIEN_QUAN_NHAT",
   });
 
   const { data: categoryList } = useSWR(categoryId, fetchChildCategories);
@@ -92,13 +115,13 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
       category: word,
     });
   };
-
   const handleAreaSearch = (word: string) => {
     setKeywordSearch({
       ...keywordSearch,
       area: word,
     });
   };
+  const handleApply = () => {};
 
   return (
     <div className="mt-4 flex gap-4">
@@ -110,6 +133,7 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
           searchEnabled={true}
           options={categories}
           defaultValue={DEFAULT_VALUE}
+          multipleValue={multipleCategory}
           keyword={keywordSearch.category}
           setKeyword={handleCategorySearch}
         />
@@ -121,6 +145,7 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
         <div className="flex flex-row gap-2 items-center">
           <FilterTree
             options={QUANTITIES}
+            multipleValue={multipleQuantity}
             defaultValue={DEFAULT_QUANTITY_VALUE}
           />
         </div>
@@ -143,12 +168,16 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
           searchEnabled={true}
           options={areas}
           defaultValue={DEFAULT_AREA_VALUE}
+          multipleValue={multipleArea}
           keyword={keywordSearch.area}
           setKeyword={handleAreaSearch}
         />
       </div>
       <div className="w-[25%] flex-base flex flex-row gap-3 justify-end items-end">
-        <button className="h-[46px] rounded border border-solid px-5 border-primary-color bg-primary-color text-white">
+        <button
+          className="h-[46px] rounded border border-solid px-5 border-primary-color bg-primary-color text-white"
+          onClick={handleApply}
+        >
           Áp dụng
         </button>
         <button className="h-[46px] rounded border border-solid px-5 border-[#999999]">

@@ -89,7 +89,6 @@ const SearchSupplier: NextPageWithLayout = () => {
       current: 1,
       total: 0,
     });
-    console.log(values);
     setPayload({
       ...payload,
       skip: 0,

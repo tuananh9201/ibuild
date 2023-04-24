@@ -104,6 +104,7 @@ export type SearchProduct = {
   max_price: number;
   min_price: number;
   category_id?: string[];
+  cities: string[];
 };
 type ProductData = {
   category?: string[];
