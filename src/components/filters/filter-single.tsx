@@ -4,8 +4,9 @@ import useSWR from "swr";
 import FilterRelated from "./filter-related";
 import FilterTree from "./filter-tree";
 import { getAreas } from "@/lib/api/information";
-import { RELATED_LIST } from "@/constants/data";
+import { RELATED_LIST, PREFIXES } from "@/constants/data";
 import { ICategory } from "@/lib/types";
+import { arrayChecked } from "@/lib/hooks";
 
 interface FilterSingleProps {
   changeSort: (sort: string) => void;
@@ -17,13 +18,10 @@ const DEFAULT_AREA_VALUE = {
   name_vi: "Chọn khu vực",
 };
 
-const PREFIXES = [
-  { prefix: "Thành", length: 10 },
-  { prefix: "Tỉnh", length: 5 },
-  { prefix: "Huyện", length: 6 },
-  { prefix: "Thị xã", length: 7 },
-  { prefix: "Quận", length: 5 },
-];
+const multipleArea = {
+  id: "0",
+  name_vi: "Nhiều khu vực",
+};
 
 const FilterSingle = ({ changeSort, changeChecked }: FilterSingleProps) => {
   const { data: areaList } = useSWR<ICategory[]>("dddd", getAreas);
@@ -40,68 +38,7 @@ const FilterSingle = ({ changeSort, changeChecked }: FilterSingleProps) => {
     setArea(word);
   };
   const onChangeChecked = (values: any) => {
-    if (!areaList) return;
-    if (values.length === 0 || values[0] === "0" || values.includes("0")) {
-      changeChecked(["0"]);
-      return;
-    }
-    const parentArea: ICategory[] = [];
-    const stringId: string[] = [];
-    const ids: string[] = [];
-    values.forEach((value: string) => {
-      const option = areaList.find(
-        (area) => area.id === value && area.parent_id === "0"
-      );
-      if (option) {
-        parentArea.push(option);
-        stringId.push(option.id);
-      }
-    });
-    parentArea.forEach((parent) => {
-      ids.push(parent.id);
-      const child = areaList.filter((area) => area.parent_id === parent.id);
-      if (child) {
-        child.forEach((c) => {
-          stringId.push(c.id);
-        });
-      }
-    });
-    values.forEach((value: string) => {
-      if (!stringId.includes(value)) {
-        ids.push(value);
-      }
-    });
-    const names = ids.map((id) => {
-      const city = areaList.find((area) => area.id === id);
-      if (!city) return;
-      // if (city.name_vi.startsWith("Thành")) {
-      //   // thành phố
-      //   return city.name_vi.slice(10);
-      // }
-      // if (city.name_vi.startsWith("Tỉnh")) {
-      //   // Tỉnh
-      //   return city.name_vi.slice(5);
-      // }
-      // if (city.name_vi.startsWith("Huyện")) {
-      //   // Huyện
-      //   return city.name_vi.slice(6);
-      // }
-      // if (city.name_vi.startsWith("Thị xã")) {
-      //   // Thị xã
-      //   return city.name_vi.slice(7);
-      // }
-      // if (city.name_vi.startsWith("Quận")) {
-      //   // Thị xã
-      //   return city.name_vi.slice(5);
-      // }
-      let name = "";
-      for (const { prefix, length } of PREFIXES) {
-        if (city.name_vi.startsWith(prefix)) {
-          name = city.name_vi.slice(length);
-        }
-      }
-      return name;
-    });
+    const names = arrayChecked(areaList, values);
     changeChecked(names);
   };
 
@@ -133,6 +70,7 @@ const FilterSingle = ({ changeSort, changeChecked }: FilterSingleProps) => {
           keyword={area}
           setKeyword={handleAreaSearch}
           setSelectedValue={onChangeChecked}
+          multipleValue={multipleArea}
         />
       </div>
     </div>

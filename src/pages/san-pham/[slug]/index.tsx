@@ -47,6 +47,8 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
     total: 0,
   });
   const [searchType, setSearchType] = useState("0");
+  const [currentActive, setCurrentActive] = useState("all");
+  const [refresh, setRefresh] = useState(0);
 
   const router = useRouter();
   const { query } = useRouter();
@@ -71,14 +73,35 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
 
   const title = breadcrumbs.filter((bread) => bread.slug === slug)[0]?.title;
 
+  const handleResetFilter = () => {
+    setRefresh((prev) => prev + 1);
+    setPayload({
+      ...payload,
+      cities: [],
+      max_quantity: 10000,
+      min_quantity: 0,
+      max_price: 10000000000,
+      min_price: 0,
+      limit: 12,
+      skip: 0,
+    });
+  };
+
   const onClickFilterCategory = async (id: string) => {
     let categoryId: string | undefined = id;
     if (categoryId === "all") {
       categoryId = category?.id;
     }
+    setRefresh((prev) => prev + 1);
     setPaging({ ...paging, current: 1 });
     setPayload({
       ...payload,
+      cities: [],
+      max_quantity: 10000,
+      min_quantity: 0,
+      max_price: 10000000000,
+      min_price: 0,
+      limit: 12,
       skip: 0,
       category_id: categoryId ? [categoryId] : [],
     });
@@ -126,6 +149,15 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
     }
   };
 
+  const onHandleApplyFilter = (params: SearchProduct) => {
+    setCurrentActive("all");
+    setPaging({ ...paging, current: 1, total: 0 });
+    setPayload({
+      ...payload,
+      ...params,
+    });
+  };
+
   return (
     <>
       <Head>
@@ -148,13 +180,18 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
           </h1>
         </div>
         <ProductTypes
-          onClickItem={onClickFilterCategory}
           parentId={category?.id || ""}
+          currentActive={currentActive}
+          setCurrentActive={setCurrentActive}
+          onClickItem={onClickFilterCategory}
         />
         <FilterProduct
-          onChangeSort={onChangeSort}
           categoryId={category?.id}
           isShowMostRelevant={true}
+          refresh={refresh}
+          onChangeSort={onChangeSort}
+          onHandleApplyFilter={onHandleApplyFilter}
+          resetFilter={handleResetFilter}
         />
         <div className="mt-4 mb-4 w-full">
           {isLoading || isLoadingData ? (
@@ -175,11 +212,11 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
         )}
         <div className="w-full text-center">
           <Pagination
-            onChange={onChangePagination}
             current={paging.current}
             pageSize={12}
             total={paging.total}
             hideOnSinglePage
+            onChange={onChangePagination}
           />
         </div>
       </div>

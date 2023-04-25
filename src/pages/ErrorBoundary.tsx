@@ -11,7 +11,6 @@ function ErrorBoundary({ children }: ErrorBoundaryProps) {
   const [hasError, setHasError] = useState(false);
 
   const handleError = (error: Error) => {
-    console.log(error);
     setHasError(true);
   };
 

@@ -32,13 +32,15 @@ const SearchPage: NextPageWithLayout = () => {
     limit: 12,
     skip: paging.current !== 1 ? paging.current * 12 : 0,
     sort_by: "LIEN_QUAN_NHAT",
-    max_price: 0,
+    max_price: 9999999999,
     min_price: 0,
-    max_quantity: 0,
+    max_quantity: 9999999,
     min_quantity: 0,
+    cities: [],
   });
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(false);
+  const [refresh, setRefresh] = useState(0);
 
   const getSearchResult = async () => {
     setIsLoadingData(true);
@@ -49,6 +51,21 @@ const SearchPage: NextPageWithLayout = () => {
       total: data.paging.total,
     });
     setIsLoadingData(false);
+  };
+
+  const handleResetFilter = () => {
+    setRefresh((prev) => prev + 1);
+    setPayload({
+      ...payload,
+      cities: [],
+      max_quantity: 10000,
+      min_quantity: 0,
+      max_price: 10000000000,
+      min_price: 0,
+      limit: 12,
+      skip: 0,
+      category_id: [],
+    });
   };
 
   useEffect(() => {
@@ -104,6 +121,14 @@ const SearchPage: NextPageWithLayout = () => {
     getSearchResult();
   }, [payload]);
 
+  const onHandleApplyFilter = (params: SearchProduct) => {
+    setPaging({ ...paging, current: 1, total: 0 });
+    setPayload({
+      ...payload,
+      ...params,
+    });
+  };
+
   return (
     <>
       <Head>
@@ -138,8 +163,11 @@ const SearchPage: NextPageWithLayout = () => {
           </p>
         </section>
         <FilterProduct
+          categoryId={"0"}
+          refresh={refresh}
           onChangeSort={onChangeSort}
-          categoryId={products ? products[0]?.category_id : ""}
+          resetFilter={handleResetFilter}
+          onHandleApplyFilter={onHandleApplyFilter}
         />
         <section className="mt-4">
           {isLoadingData ? (

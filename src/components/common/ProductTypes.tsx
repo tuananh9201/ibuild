@@ -1,18 +1,17 @@
-import {
-  LeftRightIcon,
-  AllProductIcon,
-  AllProductActiveIcon,
-} from "@/images/icons/product_types/icon_wrapper";
-import { getCategoriesIcon } from "@/lib/utils";
-import Image from "next/image";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Carousel, { ArrowProps } from "react-multi-carousel";
+import Image from "next/image";
+import useSWR from "swr";
+
+import { LeftRightIcon } from "@/images/icons/product_types/icon_wrapper";
+import { getCategoriesIcon } from "@/lib/utils";
 import { fetchChildCategories } from "src/lib/api/category";
 import { ICategory } from "src/lib/types";
-import useSWR from "swr";
 
 interface ProductTypesProps {
   parentId: string;
+  currentActive: string;
+  setCurrentActive: Function;
   onClickItem: (id: string) => void;
 }
 
@@ -71,8 +70,12 @@ const RenderImage = ({ url, currentActive }: RenderImageProps) => {
   );
 };
 
-const ProductTypes = ({ parentId, onClickItem }: ProductTypesProps) => {
-  const [currentActive, setCurrentActive] = useState("all");
+const ProductTypes = ({
+  parentId,
+  currentActive,
+  setCurrentActive,
+  onClickItem,
+}: ProductTypesProps) => {
   const {
     data: childrend,
     error,
@@ -98,11 +101,8 @@ const ProductTypes = ({ parentId, onClickItem }: ProductTypesProps) => {
 
   if (!menus) return null;
 
-  const handleCurrentActive = (id: string) => {
-    setCurrentActive(id);
-  };
   const onClick = (id: string) => {
-    handleCurrentActive(id);
+    setCurrentActive(id);
     onClickItem(id);
   };
 
@@ -160,24 +160,30 @@ const ProductTypes = ({ parentId, onClickItem }: ProductTypesProps) => {
           </ButtonRightIcon>
         }
       >
-        {menus.map((menu) => {
+        {menus.map((menu, idx) => {
           return (
             <div
               key={menu.id}
-              className={`flex flex-row h-[64px] rounded border border-solid border-[#e6e6e6] items-center px-4 cursor-pointer ${
-                currentActive === menu.id ? "bg-primary-color text-white" : ""
-              }`}
-              onClick={() => onClick(menu.id)}
+              className={`pr-4 ${idx === menus.length - 1 ? "pr-0" : ""}`}
             >
-              <div className="h-6 w-6 min-w-[24px] min-h-[24px]">
-                <RenderImage
-                  url={currentActive === menu.id ? menu.iconActive : menu.icon}
-                  currentActive={currentActive === menu.id}
-                />
+              <div
+                className={`flex flex-row h-[64px] rounded border border-solid border-[#e6e6e6] items-center px-4 cursor-pointer ${
+                  currentActive === menu.id ? "bg-primary-color text-white" : ""
+                }`}
+                onClick={() => onClick(menu.id)}
+              >
+                <div className="h-6 w-6 min-w-[24px] min-h-[24px]">
+                  <RenderImage
+                    url={
+                      currentActive === menu.id ? menu.iconActive : menu.icon
+                    }
+                    currentActive={currentActive === menu.id}
+                  />
+                </div>
+                <span className="font-roboto not-italic font-medium text-base leading-[150%] text-inherit ml-2">
+                  {menu.name}
+                </span>
               </div>
-              <span className="font-roboto not-italic font-medium text-base leading-[150%] text-inherit ml-2">
-                {menu.name}
-              </span>
             </div>
           );
         })}

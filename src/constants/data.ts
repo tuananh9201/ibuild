@@ -26,3 +26,38 @@ export const RELATED_LIST = [
         slug: "NAME",
     }
 ];
+
+export const PREFIXES = [
+    { prefix: "Thành", length: 10 },
+    { prefix: "Tỉnh", length: 5 },
+    { prefix: "Huyện", length: 6 },
+    { prefix: "Thị xã", length: 7 },
+    { prefix: "Quận", length: 5 },
+];
+
+export const QUANTITIES_OPTIONS = [
+    {
+        id: '0',
+        name_vi: 'Tất cả',
+        min_quantity: 0,
+        max_quantity: 10000,
+    },
+    {
+        id: '1',
+        name_vi: '0-99',
+        min_quantity: 0,
+        max_quantity: 99,
+    },
+    {
+        id: '2',
+        name_vi: '100-999',
+        min_quantity: 100,
+        max_quantity: 999,
+    },
+    {
+        id: '3',
+        name_vi: '1000-9999',
+        min_quantity: 1000,
+        max_quantity: 9999,
+    }
+]

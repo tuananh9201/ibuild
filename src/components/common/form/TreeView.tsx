@@ -12,11 +12,13 @@ interface TreeOption extends DataNode {
 }
 interface TreeViewProps {
   options: ICategory[];
+  refresh?: number;
   setOutputValue?: Function;
 }
 
-const TreeView = ({ options, setOutputValue }: TreeViewProps) => {
+const TreeView = ({ options, setOutputValue, refresh }: TreeViewProps) => {
   const [treeData, setTreeData] = useState<TreeOption[]>([]);
+  const [checkedKeys, setCheckedKeys] = useState<React.Key[]>([]);
 
   useEffect(() => {
     if (!options) return;
@@ -62,18 +64,30 @@ const TreeView = ({ options, setOutputValue }: TreeViewProps) => {
   }, [options]);
 
   const onCheck = (checkedValue: any) => {
+    setCheckedKeys(checkedValue);
     if (setOutputValue) {
       setOutputValue(checkedValue);
     }
   };
 
+  const handleReset = () => {
+    setCheckedKeys([]);
+    setOutputValue && setOutputValue([]);
+  };
+
+  useEffect(() => {
+    if (!refresh) return;
+    handleReset();
+  }, [refresh]);
+
   return (
     <Tree
       checkable
-      onCheck={onCheck}
       treeData={treeData}
       switcherIcon={<UpDownIcon className="transition" />}
       height={350}
+      onCheck={onCheck}
+      checkedKeys={checkedKeys}
     />
   );
 };

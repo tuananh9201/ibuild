@@ -1,13 +1,19 @@
+import Image from "next/image";
+import useUser from "@/lib/hooks/user";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { message } from "antd";
+
 import { addressIcon, faxIcon, logo, sendIcon } from "@/constants/images";
 import { ERRORS } from "@/constants/msg";
-import { message } from "antd";
-import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
 
 export default function Footer() {
+  const { user } = useUser();
+
   const [emailSubcriber, setEmailSubcriber] = useState("");
   const [emailValidateMessages, setEmailValidateMessages] = useState("");
+  const [userRole, setUserRole] = useState("");
+
   const handleValidEmail = (email: string) => {
     return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
   };
@@ -29,6 +35,29 @@ export default function Footer() {
     const value = e.target.value;
     setEmailSubcriber(value);
   };
+
+  useEffect(() => {
+    const handleChangeStorage = () => {
+      const newRole = localStorage.getItem("user_type");
+      if (newRole) {
+        setUserRole(newRole);
+      }
+    };
+
+    window.addEventListener("storage", handleChangeStorage);
+
+    return () => window.removeEventListener("storage", handleChangeStorage);
+  }, []);
+  useEffect(() => {
+    const userType = localStorage.getItem("user_type");
+    if (userType) {
+      setUserRole(userType);
+    }
+    if (user?.user_type && !userType) {
+      setUserRole(user.user_type);
+    }
+  }, [user]);
+
   return (
     <div className="flex flex-col justify-start py-4 px-6 lg:py-6 gap-4">
       <div className="logo-space flex flex-col">
@@ -111,6 +140,16 @@ export default function Footer() {
                 Thông tin xây dựng
               </Link>
             </li>
+            {userRole === "expert" && (
+              <li className="mb-4 last:mb-0">
+                <Link
+                  className="text-base text-[#343434] hover:text-primary-color"
+                  href="/thong-tin-xay-dung"
+                >
+                  Gửi góp ý
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
         <div className="subcribers">

@@ -1,8 +1,9 @@
 import { useState } from "react";
 
-import FilterRelated from "./filter-related";
 import { FilterIcon } from "@/images/icons/product_types/icon_wrapper";
+import { SearchProduct } from "@/lib/types";
 import FilterCategories from "./filter-categories";
+import FilterRelated from "./filter-related";
 
 const RELATED_LIST = [
   {
@@ -58,18 +59,25 @@ const RELATED_LIST_NOT_RELEVANT = [
 interface FilterProductProps {
   categoryId?: string;
   isShowMostRelevant?: boolean;
+  refresh?: number;
   onChangeSort: (sortSlug: string) => void;
+  onHandleApplyFilter?: (params: SearchProduct) => void;
+  resetFilter: Function;
 }
 
 const FilterProduct = ({
   categoryId,
   isShowMostRelevant,
+  refresh,
   onChangeSort,
+  onHandleApplyFilter,
+  resetFilter,
 }: FilterProductProps) => {
   const [isActiveFilterIcon, setIsActiveFilterIcon] = useState(false);
   const [options, setOptions] = useState(() => {
     return isShowMostRelevant ? RELATED_LIST_NOT_RELEVANT : RELATED_LIST;
   });
+
   const handleSelectRelated = (id: number) => {
     const sortSelected = options.find((s) => s.id === id);
     sortSelected && onChangeSort(sortSelected.slug);
@@ -99,7 +107,14 @@ const FilterProduct = ({
           </span>
         </div>
       </div>
-      {isActiveFilterIcon && <FilterCategories categoryId={categoryId} />}
+      {isActiveFilterIcon && (
+        <FilterCategories
+          categoryId={categoryId}
+          refresh={refresh}
+          onHandleApplyFilter={onHandleApplyFilter}
+          resetFilter={resetFilter}
+        />
+      )}
     </div>
   );
 };

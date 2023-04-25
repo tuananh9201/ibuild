@@ -10,6 +10,7 @@ interface FilterTreeProps {
   searchEnabled?: boolean;
   defaultValue: ICategory;
   multipleValue: ICategory;
+  refresh?: number;
   setKeyword?: (word: string) => void;
   setSelectedValue?: Function;
 }
@@ -20,6 +21,7 @@ const FilterTree = ({
   defaultValue,
   multipleValue,
   searchEnabled,
+  refresh,
   setKeyword,
   setSelectedValue,
 }: FilterTreeProps) => {
@@ -38,9 +40,8 @@ const FilterTree = ({
   }, []);
 
   const handleCheckedValue = (value: any) => {
-    if (setSelectedValue) {
-      setSelectedValue(value);
-    }
+    setSelectedValue && setSelectedValue(value);
+
     if (value[0] === "0") {
       setOutputValue({
         ...outputValue,
@@ -93,7 +94,11 @@ const FilterTree = ({
         } absolute z-10 bg-white border border-solid border-primary-color border-t-0 w-full rounded-b px-4 pt-[22px] pb-[14px] flex flex-col gap-5`}
       >
         {searchEnabled && <SearchInput value={keyword} setValue={setKeyword} />}
-        <TreeView options={options} setOutputValue={handleCheckedValue} />
+        <TreeView
+          options={options}
+          refresh={refresh}
+          setOutputValue={handleCheckedValue}
+        />
       </div>
     </div>
   );

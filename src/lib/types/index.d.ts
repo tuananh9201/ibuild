@@ -96,14 +96,14 @@ export enum SORT_BY {
 }
 export type SearchProduct = {
   keyword?: string;
+  category_id?: string[];
   limit: number;
   skip: number;
-  sort_by: string;
+  sort_by?: string;
   max_quantity: number;
   min_quantity: number;
   max_price: number;
   min_price: number;
-  category_id?: string[];
   cities: string[];
 };
 type ProductData = {

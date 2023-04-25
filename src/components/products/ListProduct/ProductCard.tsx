@@ -5,6 +5,7 @@ import { Tooltip } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 
+import defaultProductImage from "@/images/default_product_image.png";
 import {
   HeartIcon,
   PhoneIcon,
@@ -14,7 +15,6 @@ import { Product } from "src/lib/types";
 import { RootState } from "src/store/store";
 import { addProductFavorite } from "src/lib/api/user";
 import { Button } from "@/components/common";
-import defaultProductImage from "@/images/default_product_image.png";
 import { FormatNumber } from "@/lib/hooks";
 
 interface ProductCardProps {
@@ -27,7 +27,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const isAddedFavorite = product.is_bookmark;
 
   const [isLoading, setIsLoading] = useState(false);
-  const [logoImage, setLogoImage] = useState("");
+  const [logoImage, setLogoImage] = useState(productLogo.src);
 
   const prodImageSrc =
     product.data?.product_image ||

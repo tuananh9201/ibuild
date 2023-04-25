@@ -91,9 +91,11 @@ const SupplierCard = ({ supplier }: SupplierCardProps) => {
         )}
       </div>
       <div className="flex-base flex flex-col gap-4">
-        <h1 className="font-medium text-xl leading-[150%] text-text-secondary-color line-clamp-1">
-          {supplier?.name || ""}
-        </h1>
+        <Link href={`/nha-cung-cap/${supplier.slug}`}>
+          <h1 className="font-medium text-xl leading-[150%] text-text-secondary-color line-clamp-1 cursor-pointer">
+            {supplier?.name || ""}
+          </h1>
+        </Link>
         <div className="flex flex-row items-center gap-3">
           <PhoneIcon className="fill-text-color" />
           <span className="font-normal text-base leading-[150%] text-text-color">

@@ -10,18 +10,14 @@ import FilterTree from "./filter-tree";
 
 import type { DataNode } from "antd/es/tree";
 import { fetchChildsCategories } from "@/lib/api/category";
+import { arrayChecked } from "@/lib/hooks";
+import { QUANTITIES_OPTIONS } from "@/constants/data";
 
 interface FilterCategoriesProps {
   categoryId?: string;
-}
-
-interface TreeOptionView extends ICategory {
-  children?: TreeOptionView[];
-}
-
-interface SelectTreeOptionView extends DataNode {
-  id: string;
-  parent_id?: string;
+  refresh?: number;
+  onHandleApplyFilter?: (params: SearchProduct) => void;
+  resetFilter: Function;
 }
 
 const QUANTITIES = [
@@ -68,24 +64,23 @@ const multipleArea = {
   name_vi: "Nhiều khu vực",
 };
 
-const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
+const FilterCategories = ({
+  categoryId,
+  refresh,
+  onHandleApplyFilter,
+  resetFilter,
+}: FilterCategoriesProps) => {
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [areas, setAreas] = useState<ICategory[]>([]);
   const [keywordSearch, setKeywordSearch] = useState({
     category: "",
     area: "",
   });
-  const [payload, setPayload] = useState<SearchProduct>({
-    category_id: [],
-    cities: [],
-    min_price: 0,
-    max_price: 9999999999,
-    min_quantity: 0,
-    max_quantity: 9999999,
-    limit: 12,
-    skip: 0,
-    sort_by: "LIEN_QUAN_NHAT",
-  });
+  const [categoryChecked, setCategoryChecked] = useState();
+  const [quantityChecked, setQuantityChecked] = useState();
+  const [areaChecked, setAreaChecked] = useState();
+  const [fromPrice, setFromPrice] = useState("");
+  const [toPrice, setToPrice] = useState("");
 
   const { data: categoryList } = useSWR(categoryId, fetchChildCategories);
   const { data: areaList } = useSWR("dddd", getAreas);
@@ -121,7 +116,55 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
       area: word,
     });
   };
-  const handleApply = () => {};
+  const getMinMaxQuantity = (levels: string[] | undefined) => {
+    if (!levels || levels.length === 0)
+      return {
+        min: 0,
+        max: 10000,
+      };
+    if (levels.includes("0"))
+      return {
+        min: 0,
+        max: 10000,
+      };
+    const quantities: number[] = [];
+    levels.forEach((level) => {
+      const option = QUANTITIES_OPTIONS.find((q) => q.id === level);
+      if (option) {
+        quantities.push(option.min_quantity, option.max_quantity);
+      }
+    });
+
+    return {
+      min: Math.min(...quantities),
+      max: Math.max(...quantities),
+    };
+  };
+  const handleApplyFilter = () => {
+    const listAreaChecked = arrayChecked(areaList, areaChecked);
+    const price = getMinMaxQuantity(quantityChecked);
+    const payload: SearchProduct = {
+      category_id: categoryChecked || [categoryId || ""],
+      limit: 12,
+      skip: 0,
+      max_quantity: price.max,
+      min_quantity: price.min,
+      max_price: !toPrice ? 10000000000 : Number(toPrice),
+      min_price: !fromPrice ? 0 : Number(fromPrice),
+      cities: listAreaChecked || [],
+    };
+    onHandleApplyFilter && onHandleApplyFilter(payload);
+  };
+
+  useEffect(() => {
+    if (!refresh) return;
+    setFromPrice("");
+    setToPrice("");
+  }, [refresh]);
+
+  const handleResetFilter = () => {
+    resetFilter();
+  };
 
   return (
     <div className="mt-4 flex gap-4">
@@ -135,7 +178,9 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
           defaultValue={DEFAULT_VALUE}
           multipleValue={multipleCategory}
           keyword={keywordSearch.category}
+          refresh={refresh}
           setKeyword={handleCategorySearch}
+          setSelectedValue={setCategoryChecked}
         />
       </div>
       <div className="w-[15%]">
@@ -147,6 +192,8 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
             options={QUANTITIES}
             multipleValue={multipleQuantity}
             defaultValue={DEFAULT_QUANTITY_VALUE}
+            refresh={refresh}
+            setSelectedValue={setQuantityChecked}
           />
         </div>
       </div>
@@ -155,9 +202,13 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
           Khoảng giá
         </span>
         <div className="flex flex-row gap-2 items-center">
-          <Input placeHolder="đ  Từ" />
+          <Input
+            placeHolder="đ  Từ"
+            value={fromPrice}
+            setValue={setFromPrice}
+          />
           <div className="bg-[#333333] w-4 h-[1px]"></div>
-          <Input placeHolder="đ  Đến" />
+          <Input placeHolder="đ  Đến" value={toPrice} setValue={setToPrice} />
         </div>
       </div>
       <div className="w-[20%]">
@@ -170,17 +221,22 @@ const FilterCategories = ({ categoryId }: FilterCategoriesProps) => {
           defaultValue={DEFAULT_AREA_VALUE}
           multipleValue={multipleArea}
           keyword={keywordSearch.area}
+          refresh={refresh}
           setKeyword={handleAreaSearch}
+          setSelectedValue={setAreaChecked}
         />
       </div>
       <div className="w-[25%] flex-base flex flex-row gap-3 justify-end items-end">
         <button
           className="h-[46px] rounded border border-solid px-5 border-primary-color bg-primary-color text-white"
-          onClick={handleApply}
+          onClick={handleApplyFilter}
         >
           Áp dụng
         </button>
-        <button className="h-[46px] rounded border border-solid px-5 border-[#999999]">
+        <button
+          className="h-[46px] rounded border border-solid px-5 border-[#999999]"
+          onClick={handleResetFilter}
+        >
           Xóa lọc
         </button>
       </div>

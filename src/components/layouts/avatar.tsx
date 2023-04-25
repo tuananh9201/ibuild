@@ -133,7 +133,13 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
             </div>
           )}
           <span className="max-w-full">{displayName}</span>
-          <Image width={24} height={24} src={keyboardArrowUp} alt="up-icon" />
+          <Image
+            width={24}
+            height={24}
+            src={keyboardArrowUp}
+            alt="up-icon"
+            className="rotate-180"
+          />
         </Space>
       </Dropdown>
     </div>
