@@ -189,6 +189,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
           categoryId={category?.id}
           isShowMostRelevant={true}
           refresh={refresh}
+          isLoading={isLoadingData}
           onChangeSort={onChangeSort}
           onHandleApplyFilter={onHandleApplyFilter}
           resetFilter={handleResetFilter}

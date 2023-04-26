@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Head from "next/head";
 import { Pagination } from "antd";
 import { useRouter } from "next/router";
 
@@ -118,43 +119,51 @@ const SearchSupplier: NextPageWithLayout = () => {
   }, [payload]);
 
   return (
-    <section>
-      <div className="p-4 lg:p-0 flex justify-center relative h-[100px]">
-        <ProductSearch
-          initialValue={keyword}
-          selectValue={searchType}
-          setInputValueToParent={setKeyword}
-          onSelectValue={setSearchType}
-          redirectToSearchPage={handleRedirectToPage}
-        />
-      </div>
-      <div className="my-8 text-center font-roboto not-italic">
-        <h1 className="text-secondary-color font-medium text-[32px] leading-[125%] mb-2 line-clamp-1">
-          {keyword}
-        </h1>
-        <p className="font-normal text-base leading-[150%] text-[#a09c9c] line-clamp-1">
-          Tìm thấy {paging.total ? FormatNumber(paging.total) : 0} kết quả “
-          {keyword}”
-        </p>
-      </div>
-      <FilterSingle changeSort={changeSort} changeChecked={changeChecked} />
-      {isLoading && <SupplierContainerLoading items={8} />}
-      {!isLoading && data && data.length > 0 && (
-        <SupplierContainer data={data} />
-      )}
-      {!isLoading && data.length === 0 && (
-        <NoFoundProduct title={keyword} content="Không tìm thấy nhà cung cấp" />
-      )}
-      <div className="w-full text-center mt-6">
-        <Pagination
-          onChange={onChangePagination}
-          current={paging.current}
-          pageSize={8}
-          total={paging.total}
-          hideOnSinglePage
-        />
-      </div>
-    </section>
+    <>
+      <Head>
+        <title>Tìm kiếm nhà cung cấp</title>
+      </Head>
+      <section>
+        <div className="p-4 lg:p-0 flex justify-center relative h-[100px]">
+          <ProductSearch
+            initialValue={keyword}
+            selectValue={searchType}
+            setInputValueToParent={setKeyword}
+            onSelectValue={setSearchType}
+            redirectToSearchPage={handleRedirectToPage}
+          />
+        </div>
+        <div className="my-8 text-center font-roboto not-italic">
+          <h1 className="text-secondary-color font-medium text-[32px] leading-[125%] mb-2 line-clamp-1">
+            {keyword}
+          </h1>
+          <p className="font-normal text-base leading-[150%] text-[#a09c9c] line-clamp-2">
+            Tìm thấy {paging.total ? FormatNumber(paging.total) : 0} kết quả “
+            {keyword}”
+          </p>
+        </div>
+        <FilterSingle changeSort={changeSort} changeChecked={changeChecked} />
+        {isLoading && <SupplierContainerLoading items={8} />}
+        {!isLoading && data && data.length > 0 && (
+          <SupplierContainer data={data} />
+        )}
+        {!isLoading && data.length === 0 && (
+          <NoFoundProduct
+            title={keyword}
+            content="Không tìm thấy nhà cung cấp"
+          />
+        )}
+        <div className="w-full text-center mt-6">
+          <Pagination
+            onChange={onChangePagination}
+            current={paging.current}
+            pageSize={8}
+            total={paging.total}
+            hideOnSinglePage
+          />
+        </div>
+      </section>
+    </>
   );
 };
 

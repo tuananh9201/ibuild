@@ -164,7 +164,7 @@ const ProductTypes = ({
           return (
             <div
               key={menu.id}
-              className={`pr-4 ${idx === menus.length - 1 ? "pr-0" : ""}`}
+              className={`pr-4 ${idx === menus.length - 1 ? "-mr-3" : ""}`}
             >
               <div
                 className={`flex flex-row h-[64px] rounded border border-solid border-[#e6e6e6] items-center px-4 cursor-pointer ${

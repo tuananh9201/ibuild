@@ -60,18 +60,20 @@ interface FilterProductProps {
   categoryId?: string;
   isShowMostRelevant?: boolean;
   refresh?: number;
+  isLoading: boolean;
+  resetFilter: Function;
   onChangeSort: (sortSlug: string) => void;
   onHandleApplyFilter?: (params: SearchProduct) => void;
-  resetFilter: Function;
 }
 
 const FilterProduct = ({
   categoryId,
   isShowMostRelevant,
   refresh,
+  isLoading,
+  resetFilter,
   onChangeSort,
   onHandleApplyFilter,
-  resetFilter,
 }: FilterProductProps) => {
   const [isActiveFilterIcon, setIsActiveFilterIcon] = useState(false);
   const [options, setOptions] = useState(() => {
@@ -110,6 +112,7 @@ const FilterProduct = ({
       {isActiveFilterIcon && (
         <FilterCategories
           categoryId={categoryId}
+          isLoading={isLoading}
           refresh={refresh}
           onHandleApplyFilter={onHandleApplyFilter}
           resetFilter={resetFilter}

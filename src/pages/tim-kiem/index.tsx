@@ -77,6 +77,7 @@ const SearchPage: NextPageWithLayout = () => {
       sort_by: "LIEN_QUAN_NHAT",
       keyword: router.query.search as string,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query]);
 
   useEffect(() => {
@@ -84,6 +85,7 @@ const SearchPage: NextPageWithLayout = () => {
       ...payload,
       skip: paging.current !== 1 ? paging.current * 12 : 0,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paging.current]);
 
   const onChangeSort = (sortSlug: string) => {
@@ -119,13 +121,18 @@ const SearchPage: NextPageWithLayout = () => {
 
   useEffect(() => {
     getSearchResult();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [payload]);
 
   const onHandleApplyFilter = (params: SearchProduct) => {
+    const categoryId = params.category_id?.includes("0")
+      ? []
+      : params.category_id;
     setPaging({ ...paging, current: 1, total: 0 });
     setPayload({
       ...payload,
       ...params,
+      category_id: categoryId || [],
     });
   };
 
@@ -154,10 +161,10 @@ const SearchPage: NextPageWithLayout = () => {
           />
         </section>
         <section className="my-6 text-center font-roboto not-italic">
-          <h1 className="text-secondary-color font-medium text-[32px] leading-[125%]">
+          <h1 className="text-secondary-color font-medium text-[32px] leading-[125%] line-clamp-1">
             {keywordSearch || router.query.search}
           </h1>
-          <p className="font-normal text-base leading-[150%] text-[#a09c9c]">
+          <p className="font-normal text-base leading-[150%] text-[#a09c9c] line-clamp-2">
             Tìm thấy {paging.total ? FormatNumber(paging.total) : 0} kết quả “
             {keywordSearch || router.query.search}”
           </p>
@@ -165,6 +172,7 @@ const SearchPage: NextPageWithLayout = () => {
         <FilterProduct
           categoryId={"0"}
           refresh={refresh}
+          isLoading={isLoadingData}
           onChangeSort={onChangeSort}
           resetFilter={handleResetFilter}
           onHandleApplyFilter={onHandleApplyFilter}

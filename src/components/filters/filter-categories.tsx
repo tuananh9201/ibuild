@@ -1,21 +1,19 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
 
-import { FilterLocation, Input } from "@/components/common";
+import FilterTree from "./filter-tree";
+import { Input } from "@/components/common";
 import { fetchChildCategories } from "@/lib/api/category";
 import { getAreas } from "@/lib/api/information";
 import { ICategory, SearchProduct } from "@/lib/types";
-import { AreasModal } from "@/lib/models";
-import FilterTree from "./filter-tree";
-
-import type { DataNode } from "antd/es/tree";
-import { fetchChildsCategories } from "@/lib/api/category";
-import { arrayChecked } from "@/lib/hooks";
 import { QUANTITIES_OPTIONS } from "@/constants/data";
+import { arrayChecked } from "@/lib/hooks";
+import { LoadingIcon } from "@/images/icons/product_types/icon_wrapper";
 
 interface FilterCategoriesProps {
   categoryId?: string;
   refresh?: number;
+  isLoading: boolean;
   onHandleApplyFilter?: (params: SearchProduct) => void;
   resetFilter: Function;
 }
@@ -23,7 +21,7 @@ interface FilterCategoriesProps {
 const QUANTITIES = [
   {
     id: "1",
-    name_vi: "0-99",
+    name_vi: "1-99",
     parent_id: "5",
   },
   {
@@ -33,7 +31,7 @@ const QUANTITIES = [
   },
   {
     id: "3",
-    name_vi: "1000-9999",
+    name_vi: "Trên 1000",
     parent_id: "5",
   },
 ];
@@ -67,8 +65,9 @@ const multipleArea = {
 const FilterCategories = ({
   categoryId,
   refresh,
-  onHandleApplyFilter,
+  isLoading,
   resetFilter,
+  onHandleApplyFilter,
 }: FilterCategoriesProps) => {
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [areas, setAreas] = useState<ICategory[]>([]);
@@ -228,10 +227,15 @@ const FilterCategories = ({
       </div>
       <div className="w-[25%] flex-base flex flex-row gap-3 justify-end items-end">
         <button
-          className="h-[46px] rounded border border-solid px-5 border-primary-color bg-primary-color text-white"
+          className={`h-[46px] rounded border border-solid w-[130px] border-primary-color bg-primary-color text-white flex flex-row items-center justify-center ${
+            isLoading ? "opacity-50 pointer-events-none" : ""
+          }`}
           onClick={handleApplyFilter}
         >
-          Áp dụng
+          <span className="mr-2">
+            {isLoading && <LoadingIcon className="fill-white animate-spin" />}
+          </span>
+          <span>Áp dụng</span>
         </button>
         <button
           className="h-[46px] rounded border border-solid px-5 border-[#999999]"

@@ -24,6 +24,7 @@ import { SearchResultModel } from "@/lib/models";
 type HistoryItem = {
   item: string;
   id: string;
+  isHighLight: boolean;
   closeSearchModal: Function;
   setKeywordSearch?: Function;
   getSearchResultAgain?: Function;
@@ -40,6 +41,7 @@ interface ProductSearchProps {
 
 type SearchSuggestionProps = {
   item: string;
+  isHighLight: boolean;
   onSelect: Function;
   setValue?: Function;
 };
@@ -62,7 +64,9 @@ const SearchHistoryItem = (props: HistoryItem) => {
   return (
     <div className="flex justify-between items-center last:mb-4">
       <div
-        className="flex flex-row items-center gap-4 w-full bg-white p-4  hover:bg-zinc-100 hover:rounded-lg  hover:cursor-pointer"
+        className={`flex flex-row items-center gap-4 w-full p-4 hover:bg-zinc-100 hover:rounded-lg hover:cursor-pointer ${
+          props.isHighLight ? "bg-zinc-100 rounded-lg" : "bg-white"
+        }`}
         onClick={() => selectSelectedProduct(props.item)}
       >
         <div className="icon w-5 h-5">
@@ -95,7 +99,11 @@ const SearchSuggestionItem = (props: SearchSuggestionProps) => {
       className="flex justify-between items-center last:mb-4"
       onClick={handleSelectValue}
     >
-      <div className="flex flex-row items-center gap-4 w-full bg-white p-4 hover:bg-zinc-100 hover:rounded-lg hover:cursor-pointer">
+      <div
+        className={`flex flex-row items-center gap-4 w-full p-4 hover:bg-zinc-100 hover:rounded-lg hover:cursor-pointer ${
+          props.isHighLight ? "bg-zinc-100 rounded-lg" : "bg-white"
+        }`}
+      >
         <div className="icon w-5 h-5">
           <SearchIcon />
         </div>
@@ -121,6 +129,8 @@ const ProductSearch = ({
   const [histories, setHistories] = useState<SearchResultModel[]>([]);
   const [suggestion, setSuggestion] = useState<ISuggestionKeyword[]>([]);
   const [userRole, setUserRole] = useState("");
+  const [highLightOption, setHighLightOption] = useState(-1);
+  const [suggestionSelected, setSuggestionSelected] = useState("");
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -165,14 +175,6 @@ const ProductSearch = ({
         setIsActivateSearch(false);
       }
     };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-  useEffect(() => {
     const handleChangeStorage = () => {
       const newRole = localStorage.getItem("user_type");
       if (newRole) {
@@ -180,29 +182,36 @@ const ProductSearch = ({
       }
     };
 
+    document.addEventListener("mousedown", handleClickOutside);
     window.addEventListener("storage", handleChangeStorage);
 
-    return () => window.removeEventListener("storage", handleChangeStorage);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("storage", handleChangeStorage);
+    };
   }, []);
-  useEffect(() => {
-    const userType = localStorage.getItem("user_type");
-    if (userType) {
-      setUserRole(userType);
-    }
-    if (user?.user_type && !userType) {
-      setUserRole(user.user_type);
-    }
-  }, [user]);
+
   useEffect(() => {
     if (!user) return;
+    const userType = localStorage.getItem("user_type");
+
+    userType && setUserRole(userType);
+
+    user?.user_type && !userType && setUserRole(user.user_type);
+
     const type = localStorage.getItem("search_type");
-    if (!type) {
-      localStorage.setItem("search_type", "0");
-    }
-    if (type && onSelectValue) {
-      onSelectValue(type);
-    }
+
+    !type && localStorage.setItem("search_type", "0");
+
+    type && onSelectValue && onSelectValue(type);
   }, [user]);
+
+  useEffect(() => {
+    if (suggestionSelected.length > 0) {
+      handler();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [suggestionSelected]);
 
   const onFocusInput = useMemo(() => {
     return (e: React.FocusEvent<HTMLInputElement, Element>) => {
@@ -222,11 +231,29 @@ const ProductSearch = ({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (setInputValueToParent) {
       setInputValueToParent(e.target.value);
+      setHighLightOption(-1);
     }
   };
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      handler();
+      if (highLightOption === -1) {
+        handler();
+      } else {
+        if (!setInputValueToParent) return;
+        if (!initialValue) {
+          setInputValueToParent(histories[highLightOption].keyword);
+          setSuggestionSelected(histories[highLightOption].keyword);
+        } else {
+          setInputValueToParent(suggestion[highLightOption].name);
+          setSuggestionSelected(suggestion[highLightOption].name);
+        }
+      }
+    }
+    if (e.key === "ArrowDown") {
+      setHighLightOption((prev) => Math.min(prev + 1, 4));
+    }
+    if (e.key === "ArrowUp") {
+      setHighLightOption((prev) => Math.max(prev - 1, 0));
     }
   };
   const handleSelect = (value: string) => {
@@ -290,7 +317,7 @@ const ProductSearch = ({
           </svg>
         </div>
         <input
-          className="input-search w-full lg:w-96 placeholder:text-black text-base font-normal"
+          className="input-search w-full lg:w-96 placeholder:text-black text-base font-normal line-clamp-1"
           placeholder="Bạn đang muốn tìm sản phẩm nào?"
           value={initialValue}
           onChange={handleInputChange}
@@ -315,9 +342,10 @@ const ProductSearch = ({
               if (idx > 4) return;
               return (
                 <SearchHistoryItem
-                  item={h.keyword}
-                  id={h.id}
                   key={h.id}
+                  id={h.id}
+                  item={h.keyword}
+                  isHighLight={highLightOption === idx}
                   closeSearchModal={setIsActivateSearch}
                   setKeywordSearch={setInputValueToParent}
                   getSearchResultAgain={getSearchHistory}
@@ -327,12 +355,13 @@ const ProductSearch = ({
           {suggestion &&
             initialValue &&
             initialValue.length > 0 &&
-            suggestion.map((su) => (
+            suggestion.map((su, idx) => (
               <SearchSuggestionItem
                 key={su.id}
                 item={su.name}
-                onSelect={setIsActivateSearch}
+                isHighLight={highLightOption === idx}
                 setValue={setInputValueToParent}
+                onSelect={setIsActivateSearch}
               />
             ))}
         </div>

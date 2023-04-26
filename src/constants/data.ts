@@ -44,7 +44,7 @@ export const QUANTITIES_OPTIONS = [
     },
     {
         id: '1',
-        name_vi: '0-99',
+        name_vi: '1-99',
         min_quantity: 0,
         max_quantity: 99,
     },
@@ -56,7 +56,7 @@ export const QUANTITIES_OPTIONS = [
     },
     {
         id: '3',
-        name_vi: '1000-9999',
+        name_vi: 'Trên 1000',
         min_quantity: 1000,
         max_quantity: 9999,
     }
