@@ -200,12 +200,6 @@ const SearchPage: NextPageWithLayout = () => {
                 xin vui lòng kiểm tra lại.
               </p>
             </div>
-            <div>
-              <h3 className="font-roboto not-italic text-text-color text-2xl font-medium leading-[150%]">
-                Sản phẩm được quan tâm
-              </h3>
-              <p>nhung san pham lien quan</p>
-            </div>
           </section>
         )}
         <section className="mt-4">
