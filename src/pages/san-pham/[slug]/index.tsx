@@ -77,6 +77,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
     setRefresh((prev) => prev + 1);
     setPayload({
       ...payload,
+      category_id: [props.category.id],
       cities: [],
       max_quantity: 10000,
       min_quantity: 0,
