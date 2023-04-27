@@ -1,9 +1,9 @@
 "use client";
 
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import { Select } from "antd";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import React, { useEffect, useRef, useState, useMemo } from "react";
 
 import { historyIcon } from "@/constants/images";
 import {
@@ -147,7 +147,7 @@ const ProductSearch = ({
   }, [initialValue]);
 
   useEffect(() => {
-    if (debounceValue && debounceValue?.length) {
+    if (debounceValue && debounceValue?.length && debounceValue?.length > 1) {
       const getSuggestion = async () => {
         const res = await getSuggestionKeyword({
           search_type:
@@ -260,6 +260,10 @@ const ProductSearch = ({
     localStorage.setItem("search_type", value);
     onSelectValue && onSelectValue(value);
   };
+  const handleSelectItem = (item: string) => {
+    setInputValueToParent && setInputValueToParent(item);
+    setSuggestionSelected(item);
+  };
 
   const className =
     "flex flex-row justify-start items-center p-2 gap-2 lg:max-w-3/4 bg-white rounded-lg h-16 ";
@@ -347,7 +351,7 @@ const ProductSearch = ({
                   item={h.keyword}
                   isHighLight={highLightOption === idx}
                   closeSearchModal={setIsActivateSearch}
-                  setKeywordSearch={setInputValueToParent}
+                  setKeywordSearch={handleSelectItem}
                   getSearchResultAgain={getSearchHistory}
                 />
               );
@@ -360,7 +364,7 @@ const ProductSearch = ({
                 key={su.id}
                 item={su.name}
                 isHighLight={highLightOption === idx}
-                setValue={setInputValueToParent}
+                setValue={handleSelectItem}
                 onSelect={setIsActivateSearch}
               />
             ))}
