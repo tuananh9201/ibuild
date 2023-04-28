@@ -1,7 +1,7 @@
 import currency from "currency.js"
 
 import { ICategory } from "../types"
-import { PREFIXES } from "@/constants/data"
+import { PREFIXES, PREFIXES_NOT_SLICE } from "@/constants/data"
 
 export const FormatNumber = (value: number) => {
     return currency(value, { symbol: '', precision: 0 }).format()
@@ -47,6 +47,9 @@ export const arrayChecked = (options: ICategory[] | undefined, values: any) => {
         const city = options.find((area) => area.id === id);
         if (!city) return "";
         let name = "";
+        if (PREFIXES_NOT_SLICE.includes(city.name_vi)) {
+            return name = city.name_vi
+        }
         for (const { prefix, length } of PREFIXES) {
             if (city.name_vi.startsWith(prefix)) {
                 name = city.name_vi.slice(length);
