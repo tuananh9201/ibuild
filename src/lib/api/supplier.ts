@@ -17,9 +17,15 @@ export const fetchListSupplierBySearch = async (params: { skip: number, limit: n
     }
 }
 
-export const fetchListSupplierByCategoryId = async (params: { category_id: string, skip: number, limit: number, sort_by: string }): Promise<ResponseSupplierInfo | undefined> => {
+export const fetchListSupplierByCategoryId = async (params: { category_id: string, skip: number, limit: number, sort_by: string, cities: Array<string> }): Promise<ResponseSupplierInfo | undefined> => {
+    let urlCity = ``
+    if (params.cities.length > 0 && params.cities[0] !== '0') {
+        params.cities.forEach((city) => {
+            urlCity += `&cities=${city}`
+        })
+    }
     try {
-        const res = await api.get(`/supplier/by-category-id/${params.category_id}?skip=${params.skip}&limit=${params.limit}&sort_by=${params.sort_by}`)
+        const res = await api.get(`/supplier/by-category-id/${params.category_id}?skip=${params.skip}&limit=${params.limit}&sort_by=${params.sort_by}${urlCity ? urlCity : ''}`)
         return res.data?.data
     } catch (error) {
         console.warn(error)
