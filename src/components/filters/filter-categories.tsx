@@ -9,6 +9,8 @@ import { ICategory, SearchProduct } from "@/lib/types";
 import { QUANTITIES_OPTIONS } from "@/constants/data";
 import { arrayChecked } from "@/lib/hooks";
 import { LoadingIcon } from "@/images/icons/product_types/icon_wrapper";
+import { message } from "antd";
+import { ERRORS } from "@/constants/msg";
 
 interface FilterCategoriesProps {
   categoryId?: string;
@@ -140,6 +142,16 @@ const FilterCategories = ({
     };
   };
   const handleApplyFilter = () => {
+    if (!fromPrice && toPrice) {
+      setFromPrice("0");
+    }
+    if (fromPrice && !toPrice) {
+      setToPrice("999.999.999");
+    }
+    if (Number(toPrice) < Number(fromPrice)) {
+      message.error(ERRORS.MSG014);
+      return;
+    }
     const listAreaChecked = arrayChecked(areaList, areaChecked);
     const price = getMinMaxQuantity(quantityChecked);
     const payload: SearchProduct = {

@@ -12,4 +12,5 @@ export enum ERRORS {
   "PLEASE_INPUT_EMAIL" = "Vui lòng nhập email",
   "MSG011" = "Số điện thoại không chính xác",
   "MSG012" = "Email hoặc số điện thoại không chính xác",
+  "MSG014" = "Giá trị ô 'Đến' không được nhỏ hơn giá trị ô 'Từ'"
 }
