@@ -14,6 +14,7 @@ import {
 } from "@/lib/api/supplier";
 import { ICategory, ISupplierInfo } from "@/lib/types";
 import { NextPageWithLayout } from "../_app";
+import { scrollToTop } from "@/lib/hooks";
 
 const ListProductCategory: NextPageWithLayout = () => {
   const router = useRouter();
@@ -39,6 +40,7 @@ const ListProductCategory: NextPageWithLayout = () => {
   );
 
   const onChangePagination = (page: number) => {
+    scrollToTop();
     setPaging({ ...paging, current: page });
     setParams({
       ...params,

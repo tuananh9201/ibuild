@@ -22,6 +22,7 @@ import { searchProduct } from "src/lib/api/product";
 import { ICategory, Product, SearchProduct } from "src/lib/types";
 import { NextPageWithLayout } from "../../_app";
 import { OPTIONS_SELECT } from "@/constants/data";
+import { scrollToTop } from "@/lib/hooks";
 
 type Props = {
   category: ICategory;
@@ -108,6 +109,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
     });
   };
   const onChangePagination = (page: number) => {
+    scrollToTop();
     setPaging({ ...paging, current: page });
     setPayload({ ...payload, skip: page !== 1 ? page * 12 : 0 });
   };

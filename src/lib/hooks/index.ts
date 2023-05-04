@@ -60,3 +60,10 @@ export const arrayChecked = (options: ICategory[] | undefined, values: any) => {
 
     return names
 }
+
+export const scrollToTop = () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    })
+}

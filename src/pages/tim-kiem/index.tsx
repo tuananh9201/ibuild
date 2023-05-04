@@ -14,7 +14,7 @@ import noSearchResult from "@/images/no_search_result.png";
 import { searchProduct } from "@/lib/api/product";
 import { Product, SearchProduct } from "@/lib/types";
 import { NextPageWithLayout } from "../_app";
-import { FormatNumber } from "@/lib/hooks";
+import { FormatNumber, scrollToTop } from "@/lib/hooks";
 
 const SearchPage: NextPageWithLayout = () => {
   const router = useRouter();
@@ -135,6 +135,10 @@ const SearchPage: NextPageWithLayout = () => {
       category_id: categoryId || [],
     });
   };
+  const onChangePagination = (page: number) => {
+    setPaging({ ...paging, current: page });
+    scrollToTop();
+  };
 
   return (
     <>
@@ -184,7 +188,7 @@ const SearchPage: NextPageWithLayout = () => {
             <ListProduct products={products} />
           )}
         </section>
-        {products.length === 0 && (
+        {products.length === 0 && !isLoadingData && (
           <section className="mt-16">
             <div className="w-full text-center">
               <Image
@@ -205,9 +209,7 @@ const SearchPage: NextPageWithLayout = () => {
         <section className="mt-4">
           <div className="w-full text-center">
             <Pagination
-              onChange={(page: number) =>
-                setPaging({ ...paging, current: page })
-              }
+              onChange={onChangePagination}
               current={paging.current}
               pageSize={12}
               total={paging.total}

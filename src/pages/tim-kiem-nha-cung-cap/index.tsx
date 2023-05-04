@@ -13,7 +13,7 @@ import { OPTIONS_SELECT } from "@/constants/data";
 import { fetchListSupplierBySearch } from "@/lib/api/supplier";
 import { ISupplierInfo } from "@/lib/types";
 import { NextPageWithLayout } from "../_app";
-import { FormatNumber } from "@/lib/hooks";
+import { FormatNumber, scrollToTop } from "@/lib/hooks";
 
 const SearchSupplier: NextPageWithLayout = () => {
   const router = useRouter();
@@ -54,6 +54,7 @@ const SearchSupplier: NextPageWithLayout = () => {
     });
   };
   const onChangePagination = (page: number) => {
+    scrollToTop();
     setPaging({ ...paging, current: page });
     setPayload({
       ...payload,
