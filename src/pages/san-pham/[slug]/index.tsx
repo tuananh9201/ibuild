@@ -247,6 +247,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const { slug } = context.params as IParams;
 
   const category = await fetchCategorySlug(slug);
+  console.log(category);
   return {
     props: {
       category: category || [],
