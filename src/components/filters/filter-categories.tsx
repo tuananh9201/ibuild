@@ -146,9 +146,9 @@ const FilterCategories = ({
       setFromPrice("0");
     }
     if (fromPrice && !toPrice) {
-      setToPrice("999.999.999");
+      setToPrice("999999999");
     }
-    if (Number(toPrice) < Number(fromPrice)) {
+    if (Number(toPrice) < Number(fromPrice) && fromPrice && toPrice) {
       message.error(ERRORS.MSG014);
       return;
     }
