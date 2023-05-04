@@ -164,6 +164,8 @@ const ProductSearch = ({
 
       getSuggestion();
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounceValue]);
 
   useEffect(() => {
@@ -204,6 +206,8 @@ const ProductSearch = ({
     !type && localStorage.setItem("search_type", "0");
 
     type && onSelectValue && onSelectValue(type);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   useEffect(() => {

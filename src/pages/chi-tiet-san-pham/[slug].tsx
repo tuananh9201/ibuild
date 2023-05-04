@@ -62,6 +62,8 @@ const ProductDetail: NextPageWithLayout = () => {
         ...data.images[0],
       });
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const addOrRemoveProductFavorite = async () => {

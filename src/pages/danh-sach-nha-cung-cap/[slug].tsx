@@ -83,6 +83,8 @@ const ListProductCategory: NextPageWithLayout = () => {
         category_id: categoryInfo.id,
       });
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryInfo]);
 
   return (

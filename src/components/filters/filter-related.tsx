@@ -54,6 +54,8 @@ const FilterRelated = ({
     if (reset) {
       handleSelectValue(1);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset]);
 
   return (

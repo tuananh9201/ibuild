@@ -23,6 +23,8 @@ const RegisterSuccess = (props: Props) => {
       }, 1000);
     }, 5000);
     return () => clearTimeout(timeout);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispath]);
 
   return (

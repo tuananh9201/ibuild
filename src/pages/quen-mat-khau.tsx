@@ -7,7 +7,7 @@ import { backIcon, logo, unsplashSignUp } from "@/constants/images";
 import {
   loginApi,
   passwordRecovery,
-  verifyPasswordRecoveryCode
+  verifyPasswordRecoveryCode,
 } from "src/lib/api/auth";
 import { NextPageWithLayout } from "./_app";
 
@@ -157,6 +157,8 @@ const ForgetPassword: NextPageWithLayout = () => {
     return () => {
       clearTimeout(t);
     };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentStep]);
   useEffect(() => {
     if (currentStep === 2) {

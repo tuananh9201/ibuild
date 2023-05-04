@@ -3,7 +3,7 @@ export default function Document() {
   return (
     <Html lang="vi">
       <Head>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/ibuild.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"

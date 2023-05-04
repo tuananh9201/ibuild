@@ -65,6 +65,8 @@ const MainHeader = () => {
   };
   useEffect(() => {
     autoLogin();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const userRole = user?.user_type || "user";
   const menusByUser = menus.filter((m) => m.role.find((r) => r === userRole));

@@ -127,6 +127,8 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
 
   useEffect(() => {
     loadProduct();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [payload]);
 
   const handleToRedirectToSearchPage = () => {
@@ -247,7 +249,6 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const { slug } = context.params as IParams;
 
   const category = await fetchCategorySlug(slug);
-  console.log(category);
   return {
     props: {
       category: category || [],

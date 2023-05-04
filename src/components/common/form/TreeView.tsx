@@ -78,6 +78,8 @@ const TreeView = ({ options, setOutputValue, refresh }: TreeViewProps) => {
   useEffect(() => {
     if (!refresh) return;
     handleReset();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refresh]);
 
   return (

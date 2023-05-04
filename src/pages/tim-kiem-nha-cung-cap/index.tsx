@@ -112,11 +112,15 @@ const SearchSupplier: NextPageWithLayout = () => {
         total: 0,
       });
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query?.search]);
 
   useEffect(() => {
     if (!payload.name) return;
     loadData();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [payload]);
 
   return (
