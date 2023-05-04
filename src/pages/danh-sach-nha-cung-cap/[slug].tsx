@@ -31,8 +31,12 @@ const ListProductCategory: NextPageWithLayout = () => {
     sort_by: "PRODUCTS",
     cities: [],
   });
-  const [data, setData] = useState<ISupplierInfo[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const { data: xx, isLoading } = useSWR(
+    params,
+    fetchListSupplierByCategoryId
+    // { refreshInterval: 1000 }
+  );
+  const data = xx?.data;
 
   const { data: categoryInfo } = useSWR<ICategory>(
     query?.slug,
@@ -46,18 +50,6 @@ const ListProductCategory: NextPageWithLayout = () => {
       ...params,
       skip: page === 1 ? 0 : (page - 1) * 8,
     });
-  };
-  const loadData = async () => {
-    setIsLoading(true);
-    const res = await fetchListSupplierByCategoryId(params);
-    setIsLoading(false);
-    if (res) {
-      setData(res.data);
-      setPaging({
-        ...paging,
-        total: res.paging.total,
-      });
-    }
   };
   const changeSort = (sort: string) => {
     setPaging({
@@ -93,12 +85,6 @@ const ListProductCategory: NextPageWithLayout = () => {
     }
   }, [categoryInfo]);
 
-  useEffect(() => {
-    if (params.category_id) {
-      loadData();
-    }
-  }, [params]);
-
   return (
     <section>
       <h1 className="text-text-color font-medium text-2xl my-8">
@@ -109,7 +95,7 @@ const ListProductCategory: NextPageWithLayout = () => {
       {!isLoading && data && data.length > 0 && (
         <SupplierContainer data={data} />
       )}
-      {!isLoading && data.length === 0 && (
+      {!isLoading && data?.length === 0 && (
         <NoFoundProduct
           title={categoryInfo?.name_vi || ""}
           content="Không tìm thấy nhà cung cấp"
