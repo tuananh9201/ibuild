@@ -28,11 +28,11 @@ export const RELATED_LIST = [
 ];
 
 export const PREFIXES = [
-    { prefix: "Thành", length: 10 },
-    { prefix: "Tỉnh", length: 5 },
-    { prefix: "Huyện", length: 6 },
-    { prefix: "Thị xã", length: 7 },
-    { prefix: "Quận", length: 5 },
+    { prefix: "Thành", length: 10, type: 1 },
+    { prefix: "Tỉnh", length: 5, type: 1 },
+    { prefix: "Huyện", length: 6, type: 2 },
+    { prefix: "Thị xã", length: 7, type: 2 },
+    { prefix: "Quận", length: 5, type: 2 },
 ];
 
 export const PREFIXES_NOT_SLICE = ['Quận 1', 'Quận 2', 'Quận 3', 'Quận 4', 'Quận 5', 'Quận 6', 'Quận 7', 'Quận 8', 'Quận 9', 'Quận 10', 'Quận 11', 'Quận 12',]
@@ -62,4 +62,28 @@ export const QUANTITIES_OPTIONS = [
         min_quantity: 1000,
         max_quantity: 9999,
     }
+]
+
+export const RANGE_QUANTITY = [
+    {
+        text: "Đang cập nhật",
+        min: 0,
+        max: 0
+    },
+    {
+        text: '1-99',
+        min: 1,
+        max: 99
+    },
+    {
+        text: "100-999",
+        min: 100,
+        max: 999
+    },
+    {
+        text: "Trên 1000",
+        min: 1000,
+        max: 100000000000
+    },
+
 ]

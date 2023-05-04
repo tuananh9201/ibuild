@@ -99,7 +99,9 @@ const FilterCategories = ({
       setCategories(categoryList);
     } else if (keywordSearch.category && categoryList) {
       const newCategories = categoryList.filter((category) =>
-        category.name_vi.includes(keywordSearch.category.trim())
+        category.name_vi
+          .toLocaleLowerCase()
+          .includes(keywordSearch.category.trim().toLocaleLowerCase())
       );
       setCategories(newCategories || []);
     }
@@ -153,6 +155,10 @@ const FilterCategories = ({
       return;
     }
     const listAreaChecked = arrayChecked(areaList, areaChecked);
+    const listCity = listAreaChecked?.filter((item: any) => item.type === 1);
+    const listDistrict = listAreaChecked?.filter(
+      (item: any) => item.type === 2
+    );
     const price = getMinMaxQuantity(quantityChecked);
     const payload: SearchProduct = {
       category_id: categoryChecked || [categoryId || ""],
@@ -162,7 +168,10 @@ const FilterCategories = ({
       min_quantity: price.min,
       max_price: !toPrice ? 10000000000 : Number(toPrice),
       min_price: !fromPrice ? 0 : Number(fromPrice),
-      cities: listAreaChecked || [],
+      cities: listCity ? listCity.map((city: any) => city.value) : [],
+      districts: listDistrict
+        ? listDistrict.map((district: any) => district.value)
+        : [],
     };
     onHandleApplyFilter && onHandleApplyFilter(payload);
   };

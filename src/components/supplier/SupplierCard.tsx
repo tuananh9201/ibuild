@@ -14,7 +14,7 @@ import {
   SupervisionIcon,
 } from "@/images/icons/product_types/icon_wrapper";
 import { followSupplier } from "@/lib/api/supplier";
-import { FormatNumber } from "@/lib/hooks";
+import { FormatNumber, getAddress } from "@/lib/hooks";
 import { ISupplierInfo } from "@/lib/types";
 
 interface SupplierCardProps {
@@ -59,22 +59,22 @@ const ButtonFollow = ({ supplierId, follow }: ButtonFollowProps) => {
 const SupplierCard = ({ supplier }: SupplierCardProps) => {
   const [logo, setLogo] = useState(supplier.logo || IBuildLogo);
 
-  const getAddress = () => {
-    if (supplier?.addresses && supplier?.addresses.length > 0) {
-      const add = supplier.addresses[0];
-      const addressArr = [];
-      if (add.wards) {
-        addressArr.push(add.wards);
-      }
-      if (add.district) {
-        addressArr.push(add.district);
-      }
-      if (add.city) {
-        addressArr.push(add.city);
-      }
-      return addressArr.join(", ") || "";
-    }
-  };
+  // const getAddress = () => {
+  //   if (supplier?.addresses && supplier?.addresses.length > 0) {
+  //     const add = supplier.addresses[0];
+  //     const addressArr = [];
+  //     if (add.wards) {
+  //       addressArr.push(add.wards);
+  //     }
+  //     if (add.district) {
+  //       addressArr.push(add.district);
+  //     }
+  //     if (add.city) {
+  //       addressArr.push(add.city);
+  //     }
+  //     return addressArr.join(", ") || "";
+  //   }
+  // };
 
   return (
     <div className="w-full bg-[#f8f9ff] rounded-lg p-4 flex flex-row items-center relative">
@@ -105,7 +105,7 @@ const SupplierCard = ({ supplier }: SupplierCardProps) => {
         <div className="flex flex-row items-center gap-3">
           <LocationIcon className="fill-text-color" />
           <span className="font-normal text-base leading-[150%] text-text-color line-clamp-1">
-            {getAddress()}
+            {getAddress(supplier?.addresses, true)}
           </span>
         </div>
         <div className="flex flex-row items-center gap-8">

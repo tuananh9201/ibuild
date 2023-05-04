@@ -105,6 +105,7 @@ export type SearchProduct = {
   max_price: number;
   min_price: number;
   cities: string[];
+  districts: string[];
 };
 type ProductData = {
   category?: string[];
@@ -152,6 +153,7 @@ type CategoryInfo = {
   slug?: string;
   parent_id?: string;
 };
+
 export type Product = {
   id: string;
   category_id: string;
@@ -165,6 +167,7 @@ export type Product = {
   supplier?: Supplier;
   category_info?: CategoryInfo;
   is_bookmark?: boolean;
+  addresses?: IAddresses[]
 };
 type Paging = {
   limit: number;

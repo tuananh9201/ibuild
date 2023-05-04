@@ -30,6 +30,7 @@ const ListProductCategory: NextPageWithLayout = () => {
     limit: 8,
     sort_by: "PRODUCTS",
     cities: [],
+    districts: [],
   });
   const { data: xx, isLoading } = useSWR(
     params,
@@ -64,6 +65,8 @@ const ListProductCategory: NextPageWithLayout = () => {
     });
   };
   const changeChecked = (values: any) => {
+    const listCity = values?.filter((item: any) => item.type === 1);
+    const listDistrict = values?.filter((item: any) => item.type === 2);
     setPaging({
       ...paging,
       current: 1,
@@ -72,7 +75,10 @@ const ListProductCategory: NextPageWithLayout = () => {
     setParams({
       ...params,
       skip: 0,
-      cities: values,
+      cities: listCity ? listCity.map((city: any) => city.value) : [],
+      districts: listDistrict
+        ? listDistrict.map((district: any) => district.value)
+        : [],
     });
   };
 

@@ -31,6 +31,7 @@ const SearchSupplier: NextPageWithLayout = () => {
     name: router.query?.search as string,
     sort_by: "PRODUCTS",
     cities: [],
+    districts: [],
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -86,6 +87,8 @@ const SearchSupplier: NextPageWithLayout = () => {
     });
   };
   const changeChecked = (values: any) => {
+    const listCity = values?.filter((item: any) => item.type === 1);
+    const listDistrict = values?.filter((item: any) => item.type === 2);
     setPaging({
       ...paging,
       current: 1,
@@ -94,7 +97,10 @@ const SearchSupplier: NextPageWithLayout = () => {
     setPayload({
       ...payload,
       skip: 0,
-      cities: values,
+      cities: listCity ? listCity.map((city: any) => city.value) : [],
+      districts: listDistrict
+        ? listDistrict.map((district: any) => district.value)
+        : [],
     });
   };
 

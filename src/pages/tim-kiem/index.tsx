@@ -37,6 +37,7 @@ const SearchPage: NextPageWithLayout = () => {
     max_quantity: 9999999,
     min_quantity: 0,
     cities: [],
+    districts: [],
   });
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(false);
@@ -58,6 +59,7 @@ const SearchPage: NextPageWithLayout = () => {
     setPayload({
       ...payload,
       cities: [],
+      districts: [],
       max_quantity: 10000,
       min_quantity: 0,
       max_price: 10000000000,

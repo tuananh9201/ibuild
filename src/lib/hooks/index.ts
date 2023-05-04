@@ -1,7 +1,8 @@
 import currency from "currency.js"
 
-import { ICategory } from "../types"
+import { IAddresses, ICategory } from "../types"
 import { PREFIXES, PREFIXES_NOT_SLICE } from "@/constants/data"
+import { RANGE_QUANTITY } from "@/constants/data"
 
 export const FormatNumber = (value: number) => {
     return currency(value, { symbol: '', precision: 0 }).format()
@@ -46,13 +47,19 @@ export const arrayChecked = (options: ICategory[] | undefined, values: any) => {
     const names = ids.map((id) => {
         const city = options.find((area) => area.id === id);
         if (!city) return "";
-        let name = "";
+        let name = {};
         if (PREFIXES_NOT_SLICE.includes(city.name_vi)) {
-            return name = city.name_vi
+            return name = {
+                value: city.name_vi,
+                type: 2
+            }
         }
-        for (const { prefix, length } of PREFIXES) {
+        for (const { prefix, length, type } of PREFIXES) {
             if (city.name_vi.startsWith(prefix)) {
-                name = city.name_vi.slice(length);
+                name = {
+                    value: city.name_vi.slice(length),
+                    type: type
+                }
             }
         }
         return name;
@@ -66,4 +73,37 @@ export const scrollToTop = () => {
         top: 0,
         behavior: 'smooth'
     })
+}
+
+export const getRangeQuantity = (quantity: number | undefined) => {
+    if (!quantity) return 'Đang cập nhật'
+    if (quantity === 0) return 'Đang cập nhật'
+    const op = RANGE_QUANTITY.find((range) => range.min <= quantity && range.max >= quantity)
+    return op?.text || 'Đang cập nhật'
+}
+
+export const getAddress = (address: IAddresses[] | undefined, showWards: boolean) => {
+    if (!address) return ''
+    const add = address[0]
+    const addressArr = []
+    if (showWards) {
+        if (add.wards) {
+            addressArr.push(add.wards);
+        }
+        if (add.district) {
+            addressArr.push(add.district);
+        }
+        if (add.city) {
+            addressArr.push(add.city);
+        }
+    } else {
+        if (add.district) {
+            addressArr.push(add.district);
+        }
+        if (add.city) {
+            addressArr.push(add.city);
+        }
+    }
+
+    return addressArr.join(", ") || "";
 }

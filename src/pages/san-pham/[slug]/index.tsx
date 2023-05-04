@@ -34,6 +34,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   const [payload, setPayload] = useState<SearchProduct>({
     category_id: [props.category.id],
     cities: [],
+    districts: [],
     min_price: 0,
     max_price: 9999999999,
     min_quantity: 0,
@@ -80,6 +81,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
       ...payload,
       category_id: [props.category.id],
       cities: [],
+      districts: [],
       max_quantity: 10000,
       min_quantity: 0,
       max_price: 10000000000,
@@ -99,6 +101,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
     setPayload({
       ...payload,
       cities: [],
+      districts: [],
       max_quantity: 10000,
       min_quantity: 0,
       max_price: 10000000000,

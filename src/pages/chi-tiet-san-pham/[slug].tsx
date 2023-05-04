@@ -25,7 +25,7 @@ import { Product, ProductImage } from "@/lib/types";
 import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
 import { NextPageWithLayout } from "src/pages/_app";
-import { FormatNumber } from "@/lib/hooks";
+import { FormatNumber, getAddress, getRangeQuantity } from "@/lib/hooks";
 import { GetStaticPropsContext } from "next";
 
 const ProductDetail: NextPageWithLayout = () => {
@@ -147,8 +147,7 @@ const ProductDetail: NextPageWithLayout = () => {
               <div className="flex flex-row gap-[13px] mb-2">
                 <LocationIcon className="" />
                 <span className="font-roboto not-italic font-normal text-base text-text-color leading-[150%]">
-                  {data?.supplier?.district}{" "}
-                  {data?.supplier?.district ? "," : ""} {data?.supplier?.city}
+                  {getAddress(data?.addresses, false)}
                 </span>
               </div>
               <div className="mb-2">
@@ -189,7 +188,8 @@ const ProductDetail: NextPageWithLayout = () => {
                   Số lượng
                 </span>
                 <span className="font-roboto not-italic text-text-color font-normal text-base leading-[150%]">
-                  {data?.data?.quantity || "Đang cập nhật"}
+                  {/* {data?.data?.quantity || "Đang cập nhật"} */}
+                  {getRangeQuantity(data?.data?.quantity)}
                 </span>
               </div>
               <div className="flex mb-4">

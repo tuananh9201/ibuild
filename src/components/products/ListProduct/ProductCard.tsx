@@ -11,11 +11,11 @@ import {
   PhoneIcon,
 } from "@/images/icons/product_types/icon_wrapper";
 import { locationIcon, productLogo } from "@/images";
-import { Product } from "src/lib/types";
+import { IAddresses, Product } from "src/lib/types";
 import { RootState } from "src/store/store";
 import { addProductFavorite } from "src/lib/api/user";
 import { Button } from "@/components/common";
-import { FormatNumber } from "@/lib/hooks";
+import { FormatNumber, getAddress, getRangeQuantity } from "@/lib/hooks";
 
 interface ProductCardProps {
   product: Product;
@@ -77,21 +77,15 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <div>
         <div
           className={
-            product?.supplier?.district || product?.supplier?.city ? "" : "h-4"
+            product?.addresses && product?.addresses?.length > 0 ? "" : "h-4"
           }
         >
-          {product?.supplier?.district || product?.supplier?.city ? (
-            <div className="flex justify-start items-center gap-2 mb-[9px] cursor-pointer">
-              <Image src={locationIcon} alt="location product" />
-              <span className="font-roboto not-italic text-xs leading-[calc(18 / 12) text-text-color]">
-                {product?.supplier?.district}{" "}
-                {product?.supplier?.district ? "," : ""}{" "}
-                {product?.supplier?.city}
-              </span>
-            </div>
-          ) : (
-            <></>
-          )}
+          <div className="flex justify-start items-center gap-2 mb-[9px] cursor-pointer">
+            <Image src={locationIcon} alt="location product" />
+            <span className="font-roboto not-italic text-xs leading-[calc(18 / 12) text-text-color] line-clamp-2">
+              {getAddress(product?.addresses, false)}
+            </span>
+          </div>
         </div>
         <div
           className="flex flex-row mb-4 cursor-pointer"
@@ -143,7 +137,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             Số lượng sản phẩm
           </span>
           <span className="font-roboto not-italic text-sm leading-[150%] text-text-color font-normal">
-            {product.data.quantity || "Đang cập nhật"}
+            {getRangeQuantity(product.data.quantity)}
           </span>
         </div>
         <div className="mb-3">
