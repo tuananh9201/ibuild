@@ -106,6 +106,7 @@ const SearchProductGroup: NextPageWithLayout = () => {
           <NoFoundProduct
             title={keyword}
             content="Không tìm thấy nhóm sản phẩm"
+            category="nhóm sản phẩm"
           />
         )}
       </section>

@@ -49,7 +49,7 @@ const ListProductCategory: NextPageWithLayout = () => {
     setPaging({ ...paging, current: page });
     setParams({
       ...params,
-      skip: page === 1 ? 0 : (page - 1) * 8,
+      skip: (page - 1) * 8,
     });
   };
   const changeSort = (sort: string) => {
@@ -107,6 +107,7 @@ const ListProductCategory: NextPageWithLayout = () => {
         <NoFoundProduct
           title={categoryInfo?.name_vi || ""}
           content="Không tìm thấy nhà cung cấp"
+          category="nhà cung cấp"
         />
       )}
       <div className="w-full text-center mt-4">

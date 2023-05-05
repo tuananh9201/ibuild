@@ -85,7 +85,7 @@ const SearchPage: NextPageWithLayout = () => {
   useEffect(() => {
     setPayload({
       ...payload,
-      skip: paging.current !== 1 ? paging.current * 12 : 0,
+      skip: (paging.current - 1) * 12,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paging.current]);
