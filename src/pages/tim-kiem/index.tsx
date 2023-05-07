@@ -38,6 +38,7 @@ const SearchPage: NextPageWithLayout = () => {
     min_quantity: 0,
     cities: [],
     districts: [],
+    quantity_ranges: [],
   });
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(false);
@@ -67,6 +68,7 @@ const SearchPage: NextPageWithLayout = () => {
       limit: 12,
       skip: 0,
       category_id: [],
+      quantity_ranges: [],
     });
   };
 

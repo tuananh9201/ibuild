@@ -94,6 +94,12 @@ export enum SORT_BY {
   "LIEN_QUAN_NHAT" = "LIEN_QUAN_NHAT",
   "SAN_PHAM_MOI" = "SAN_PHAM_MOI",
 }
+
+export type QuantityRange = {
+  min: number;
+  max: number;
+}
+
 export type SearchProduct = {
   keyword?: string;
   category_id?: string[];
@@ -106,6 +112,7 @@ export type SearchProduct = {
   min_price: number;
   cities: string[];
   districts: string[];
+  quantity_ranges?: QuantityRange[]
 };
 type ProductData = {
   category?: string[];
@@ -146,6 +153,7 @@ type Supplier = {
   district?: string;
   phone?: string;
   slug?: string;
+  logo?: string
 };
 
 type CategoryInfo = {
@@ -158,10 +166,10 @@ export type Product = {
   id: string;
   category_id: string;
   product_name: string
-  model_number?:string;
-  description:string
-  technical_details?:string
-  unit?:string
+  model_number?: string;
+  description: string
+  technical_details?: string
+  unit?: string
   brand_name?: string
   images: ProductImage[];
   supplier_id: string;

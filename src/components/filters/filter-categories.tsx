@@ -5,7 +5,7 @@ import FilterTree from "./filter-tree";
 import { Input } from "@/components/common";
 import { fetchChildCategories } from "@/lib/api/category";
 import { getAreas } from "@/lib/api/information";
-import { ICategory, SearchProduct } from "@/lib/types";
+import { ICategory, QuantityRange, SearchProduct } from "@/lib/types";
 import { QUANTITIES_OPTIONS } from "@/constants/data";
 import { arrayChecked } from "@/lib/hooks";
 import { LoadingIcon } from "@/images/icons/product_types/icon_wrapper";
@@ -120,28 +120,20 @@ const FilterCategories = ({
     });
   };
   const getMinMaxQuantity = (levels: string[] | undefined) => {
-    if (!levels || levels.length === 0)
-      return {
-        min: 0,
-        max: 10000,
-      };
-    if (levels.includes("0"))
-      return {
-        min: 0,
-        max: 10000,
-      };
-    const quantities: number[] = [];
+    if (!levels || levels.length === 0) return [];
+    if (levels.includes("0")) return [];
+    const quantities: QuantityRange[] = [];
     levels.forEach((level) => {
       const option = QUANTITIES_OPTIONS.find((q) => q.id === level);
       if (option) {
-        quantities.push(option.min_quantity, option.max_quantity);
+        quantities.push({
+          min: option.min_quantity,
+          max: option.max_quantity,
+        });
       }
     });
 
-    return {
-      min: Math.min(...quantities),
-      max: Math.max(...quantities),
-    };
+    return quantities;
   };
   const handleApplyFilter = () => {
     if (!fromPrice && toPrice) {
@@ -164,14 +156,15 @@ const FilterCategories = ({
       category_id: categoryChecked || [categoryId || ""],
       limit: 12,
       skip: 0,
-      max_quantity: price.max,
-      min_quantity: price.min,
+      max_quantity: 10000,
+      min_quantity: 0,
       max_price: !toPrice ? 10000000000 : Number(toPrice),
       min_price: !fromPrice ? 0 : Number(fromPrice),
       cities: listCity ? listCity.map((city: any) => city.value) : [],
       districts: listDistrict
         ? listDistrict.map((district: any) => district.value)
         : [],
+      quantity_ranges: price,
     };
     onHandleApplyFilter && onHandleApplyFilter(payload);
   };

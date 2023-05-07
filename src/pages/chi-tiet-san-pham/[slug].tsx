@@ -1,9 +1,9 @@
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import useSWR from "swr";
-import Head from "next/head";
 import { useRouter } from "next/router";
 import { ReactElement, useEffect, useState } from "react";
+import useSWR from "swr";
 
 import { Button } from "@/components/common";
 import MainLayout from "@/components/main-layout";
@@ -21,12 +21,11 @@ import {
 import defaultProductDetail from "@/images/product/imageoffline-co-placeholder-image.png";
 import { getProductDetail } from "@/lib/api/product";
 import { addProductFavorite } from "@/lib/api/user";
+import { FormatNumber, getAddress, getRangeQuantity } from "@/lib/hooks";
 import { Product, ProductImage } from "@/lib/types";
 import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
 import { NextPageWithLayout } from "src/pages/_app";
-import { FormatNumber, getAddress, getRangeQuantity } from "@/lib/hooks";
-import { GetStaticPropsContext } from "next";
 
 const ProductDetail: NextPageWithLayout = () => {
   const router = useRouter();
@@ -47,11 +46,11 @@ const ProductDetail: NextPageWithLayout = () => {
     },
   });
 
-  const [logo, setLogo] = useState("");
+  const [logo, setLogo] = useState(productLogo.src);
 
   useEffect(() => {
-    if (data?.supplier?.feature_image) {
-      setLogo(data?.supplier?.feature_image);
+    if (data?.supplier?.logo) {
+      setLogo(data?.supplier?.logo);
     }
   }, [data]);
 
@@ -104,7 +103,7 @@ const ProductDetail: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>{ data?.product_name ||  "Chi tiết sản phẩm"}</title>
+        <title>{data?.product_name || "Chi tiết sản phẩm"}</title>
       </Head>
       <div className="w-full mt-[60px] px-3 lg:px-0">
         <div className="max-w-[1280px] mx-auto my-0 flex flex-col gap-5 lg:flex-row lg:gap-0 min-h-[615px]">
@@ -131,7 +130,7 @@ const ProductDetail: NextPageWithLayout = () => {
                     url: defaultProductDetail.src,
                   })
                 }
-              />technical_details
+              />
             </div>
           )}
 
@@ -173,8 +172,7 @@ const ProductDetail: NextPageWithLayout = () => {
               <div className="mb-2">
                 <span className="font-roboto not-italic font-semibold text-text-color text-[28px] leading-[125%]">
                   {`${
-                    data?.reference_price &&
-                    data.reference_price > 0
+                    data?.reference_price && data.reference_price > 0
                       ? `${FormatNumber(data?.reference_price)} VNĐ${
                           data?.unit ? `/${data?.unit}` : ""
                         }`

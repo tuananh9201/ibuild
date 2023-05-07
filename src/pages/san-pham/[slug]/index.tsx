@@ -42,6 +42,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
     limit: 12,
     skip: 0,
     sort_by: "LIEN_QUAN_NHAT",
+    quantity_ranges: [],
   });
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [paging, setPaging] = useState({
@@ -88,6 +89,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
       min_price: 0,
       limit: 12,
       skip: 0,
+      quantity_ranges: [],
     });
   };
 
@@ -109,12 +111,13 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
       limit: 12,
       skip: 0,
       category_id: categoryId ? [categoryId] : [],
+      quantity_ranges: [],
     });
   };
   const onChangePagination = (page: number) => {
     scrollToTop();
     setPaging({ ...paging, current: page });
-    setPayload({ ...payload, skip: (page - 1) * 12});
+    setPayload({ ...payload, skip: (page - 1) * 12 });
   };
 
   const loadProduct = async () => {

@@ -1,21 +1,21 @@
-import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useRouter } from "next/router";
 import { Tooltip } from "antd";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
+import { Button } from "@/components/common";
+import { locationIcon, productLogo } from "@/images";
 import defaultProductImage from "@/images/default_product_image.png";
 import {
   HeartIcon,
   PhoneIcon,
 } from "@/images/icons/product_types/icon_wrapper";
-import { locationIcon, productLogo } from "@/images";
-import { IAddresses, Product } from "src/lib/types";
-import { RootState } from "src/store/store";
-import { addProductFavorite } from "src/lib/api/user";
-import { Button } from "@/components/common";
 import { FormatNumber, getAddress, getRangeQuantity } from "@/lib/hooks";
+import { addProductFavorite } from "src/lib/api/user";
+import { Product } from "src/lib/types";
+import { RootState } from "src/store/store";
 
 interface ProductCardProps {
   product: Product;
@@ -29,9 +29,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [logoImage, setLogoImage] = useState(productLogo.src);
 
-  const prodImageSrc =
-    product.images[0].url ||
-    defaultProductImage;
+  const prodImageSrc = product.images[0].url || defaultProductImage;
 
   const [featureImageSrc, setFeatureImageSrc] = useState(prodImageSrc);
 
@@ -66,8 +64,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   useEffect(() => {
-    if (product.supplier?.feature_image) {
-      setLogoImage(product.supplier?.feature_image);
+    if (product.supplier?.logo) {
+      setLogoImage(product.supplier?.logo);
     }
   }, [product]);
 

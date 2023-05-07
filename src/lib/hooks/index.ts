@@ -86,24 +86,17 @@ export const getAddress = (address: IAddresses[] | undefined, showWards: boolean
     if (!address) return ''
     const add = address[0]
     const addressArr = []
-    if (showWards) {
-        if (add.wards) {
-            addressArr.push(add.wards);
-        }
-        if (add.district) {
-            addressArr.push(add.district);
-        }
-        if (add.city) {
-            addressArr.push(add.city);
-        }
-    } else {
-        if (add.district) {
-            addressArr.push(add.district);
-        }
-        if (add.city) {
-            addressArr.push(add.city);
-        }
+
+    if (add.wards && showWards) {
+        addressArr.push(add.wards);
     }
+    if (add.district) {
+        addressArr.push(add.district);
+    }
+    if (add.city) {
+        addressArr.push(add.city);
+    }
+
 
     return addressArr.join(", ") || "";
 }
