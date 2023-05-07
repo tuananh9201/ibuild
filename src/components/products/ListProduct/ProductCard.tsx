@@ -30,8 +30,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const [logoImage, setLogoImage] = useState(productLogo.src);
 
   const prodImageSrc =
-    product.data?.product_image ||
-    product.data?.product_image_s3 ||
+    product.images[0].url ||
     defaultProductImage;
 
   const [featureImageSrc, setFeatureImageSrc] = useState(prodImageSrc);
@@ -44,12 +43,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
       return;
     }
     setIsLoading(true);
-    await addProductFavorite(product.data.product_id);
+    await addProductFavorite(product.id);
     setIsLoading(false);
   };
 
   const handleToSupplier = () => {
-    router.push(`/nha-cung-cap/${product.data}`);
+    router.push(`/nha-cung-cap/${product.supplier?.slug}`);
   };
 
   const handleShowTitle = () => {
@@ -106,19 +105,19 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </h3>
         </div>
         <p className="text-secondary-color font-roboto not-italic text-sm leading-[150%] font-normal mb-1 line-clamp-2 min-h-[42px]">
-          {product.data.product_name}
+          {product.product_name}
         </p>
         <div className="px-3 py-[3px] bg-[#0000001a] inline-block rounded mb-3">
           <span className="text-xs font-robot not-italic font-normal leading-[150%] line-clamp-1">
-            Mã: {product.data.model_num}
+            Mã: {product?.model_number}
           </span>
         </div>
         <div className="mb-[13.5px]">
           <span className="font-roboto not-italic font-semibold text-lg leading-[150%] text-secondary-color">
             {`${
-              product.data?.reference_price && product.data.reference_price > 0
-                ? `${FormatNumber(product?.data?.reference_price)} VNĐ${
-                    product?.data?.unit ? `/${product?.data?.unit}` : ""
+              product.reference_price && product.reference_price > 0
+                ? `${FormatNumber(product.reference_price)} VNĐ${
+                    product?.unit ? `/${product?.unit}` : ""
                   }`
                 : "Liên hệ"
             }`}
@@ -129,7 +128,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             Hãng
           </span>
           <span className="text-sm dark:text-white font-normal">
-            {product.data?.brand_name || ""}
+            {product?.brand_name || ""}
           </span>
         </div>
         <div className="flex flex-row justify-between items-center mb-3">
@@ -137,7 +136,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             Số lượng sản phẩm
           </span>
           <span className="font-roboto not-italic text-sm leading-[150%] text-text-color font-normal">
-            {getRangeQuantity(product.data.quantity)}
+            {getRangeQuantity(product.quantity)}
           </span>
         </div>
         <div className="mb-3">
@@ -148,7 +147,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             onError={() => setFeatureImageSrc(defaultProductImage)}
             placeholder="blur"
             blurDataURL="https://placehold.co/270x140"
-            alt={product.data.product_name}
+            alt={product.product_name}
             className="w-full h-[140px] rounded-lg object-cover"
           />
         </div>

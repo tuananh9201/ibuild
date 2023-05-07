@@ -67,10 +67,10 @@ const ProductDetail: NextPageWithLayout = () => {
   }, [data]);
 
   const addOrRemoveProductFavorite = async () => {
-    if (!data?.data.product_id) return;
+    if (!data?.id) return;
     setLoading(true);
     try {
-      await addProductFavorite(data?.data.product_id);
+      await addProductFavorite(data?.id);
     } catch (error) {
       console.warn(error);
     }
@@ -104,7 +104,7 @@ const ProductDetail: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Chi tiết sản phẩm</title>
+        <title>{ data?.product_name ||  "Chi tiết sản phẩm"}</title>
       </Head>
       <div className="w-full mt-[60px] px-3 lg:px-0">
         <div className="max-w-[1280px] mx-auto my-0 flex flex-col gap-5 lg:flex-row lg:gap-0 min-h-[615px]">
@@ -131,16 +131,16 @@ const ProductDetail: NextPageWithLayout = () => {
                     url: defaultProductDetail.src,
                   })
                 }
-              />
+              />technical_details
             </div>
           )}
 
           <div className="flex-base flex flex-col">
             <div className="relative">
-              {data?.data?.model_num && (
+              {data?.model_number && (
                 <div className="px-3 py-[3px] bg-[#0000001a] inline-block rounded mb-2">
                   <span className="text-base font-robot not-italic font-normal leading-[150%] text-[#333333]">
-                    Mã: {data?.data?.model_num || ""}
+                    Mã: {data?.model_number || ""}
                   </span>
                 </div>
               )}
@@ -152,7 +152,7 @@ const ProductDetail: NextPageWithLayout = () => {
               </div>
               <div className="mb-2">
                 <h1 className="font-roboto not-italic font-normal text-2xl text-[#333333] leading-[150%]">
-                  {data?.data?.product_name}
+                  {data?.product_name}
                 </h1>
               </div>
               <div className="flex flex-row gap-2 mb-4 h-8">
@@ -173,10 +173,10 @@ const ProductDetail: NextPageWithLayout = () => {
               <div className="mb-2">
                 <span className="font-roboto not-italic font-semibold text-text-color text-[28px] leading-[125%]">
                   {`${
-                    data?.data?.reference_price &&
-                    data?.data.reference_price > 0
-                      ? `${FormatNumber(data?.data?.reference_price)} VNĐ${
-                          data?.data?.unit ? `/${data?.data?.unit}` : ""
+                    data?.reference_price &&
+                    data.reference_price > 0
+                      ? `${FormatNumber(data?.reference_price)} VNĐ${
+                          data?.unit ? `/${data?.unit}` : ""
                         }`
                       : "Liên hệ"
                   }`}
@@ -189,7 +189,7 @@ const ProductDetail: NextPageWithLayout = () => {
                 </span>
                 <span className="font-roboto not-italic text-text-color font-normal text-base leading-[150%]">
                   {/* {data?.data?.quantity || "Đang cập nhật"} */}
-                  {getRangeQuantity(data?.data?.quantity)}
+                  {getRangeQuantity(data?.quantity)}
                 </span>
               </div>
               <div className="flex mb-4">
@@ -205,15 +205,15 @@ const ProductDetail: NextPageWithLayout = () => {
                   Mô tả sản phẩm
                 </h3>
 
-                {data?.data?.description && (
+                {data?.description && (
                   <ul
                     className={`pl-7 font-roboto font-normal text-[#343434] text-base leading-[150%] transition ${
                       isHidden ? "h-[240px] overflow-y-hidden" : ""
                     }`}
                   >
-                    {data?.data?.description &&
-                      data?.data?.description.split("|") &&
-                      data?.data?.description.split("|").map((item, idx) => {
+                    {data?.description &&
+                      data?.description.split("|") &&
+                      data?.description.split("|").map((item, idx) => {
                         return (
                           <li key={idx} className="list-disc">
                             {item}
@@ -223,9 +223,9 @@ const ProductDetail: NextPageWithLayout = () => {
                   </ul>
                 )}
               </div>
-              {data?.data?.description &&
-                data.data?.description.split("|") &&
-                data.data?.description.split("|").length > 5 && (
+              {data?.description &&
+                data?.description.split("|") &&
+                data?.description.split("|").length > 5 && (
                   <button
                     className={`w-full flex gap-[5px] items-center justify-center h-[70px] bottom-0 left-0 ${
                       isHidden
@@ -274,19 +274,20 @@ const ProductDetail: NextPageWithLayout = () => {
         <div className="max-w-[1280px] mx-auto my-0 mt-10">
           <TechnicalParametersProduct
             title="Thông số kỹ thuật"
-            parameters={data?.data?.technical_details}
+            parameters={data?.technical_details}
           />
         </div>
         <ProductSection
           title="Cùng nhà cung cấp"
           supplierId={data?.supplier?.id}
           productId={data?.id}
+          slug={data?.supplier?.slug}
         />
         {data && (
           <SameCategory
             title="Cùng danh mục"
             categoryId={data?.category_id}
-            slug={data?.category_info?.slug}
+            slug={data?.category?.slug}
           />
         )}
       </div>

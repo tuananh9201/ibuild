@@ -19,10 +19,10 @@ const SameCategory = ({ title, categoryId, slug }: SameCategoryProps) => {
 
   const payload = {
     category_id: [categoryId],
-    cities: [categoryId],
-    max_quantity: 0,
+    cities: [],
+    max_quantity: 99999,
     min_quantity: 0,
-    max_price: 0,
+    max_price: 999999999,
     min_price: 0,
     sort_by: "LIEN_QUAN_NHAT",
     limit: 4,

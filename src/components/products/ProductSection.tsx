@@ -11,12 +11,14 @@ interface ProductSectionProps {
   title: string;
   supplierId?: string;
   productId?: string;
+  slug?:string
 }
 
 const ProductSection = ({
   title,
   supplierId,
   productId,
+  slug
 }: ProductSectionProps) => {
   const { data, isLoading } = useSWR<Product[]>(
     { supplierId, productId },
@@ -29,7 +31,7 @@ const ProductSection = ({
         <h3 className="font-roboto not-italic font-medium text-xl leading-[150%] text-text-color">
           Cùng nhà cung cấp
         </h3>
-        <Link href="/nha-cung-cap/ddddddddddd">
+        <Link href={`/nha-cung-cap/${slug}`}>
           <button className="text-primary-color font-roboto not-italic font-medium text-base leading-[150%]">
             Xem thêm
           </button>

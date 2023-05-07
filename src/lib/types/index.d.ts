@@ -157,17 +157,25 @@ type CategoryInfo = {
 export type Product = {
   id: string;
   category_id: string;
-  data: ProductData;
+  product_name: string
+  model_number?:string;
+  description:string
+  technical_details?:string
+  unit?:string
+  brand_name?: string
   images: ProductImage[];
-  website_id: string;
-  verified: string;
+  supplier_id: string;
   created_at: string;
   updated_at: string;
-  score?: number;
   supplier?: Supplier;
-  category_info?: CategoryInfo;
+  category?: CategoryInfo;
   is_bookmark?: boolean;
-  addresses?: IAddresses[]
+  addresses?: IAddresses[],
+  available: number,
+  quantity: number,
+  reference_price: number,
+  likes: number,
+  views: number
 };
 type Paging = {
   limit: number;
