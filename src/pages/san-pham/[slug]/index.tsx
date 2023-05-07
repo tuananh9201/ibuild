@@ -114,7 +114,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
   const onChangePagination = (page: number) => {
     scrollToTop();
     setPaging({ ...paging, current: page });
-    setPayload({ ...payload, skip: page !== 1 ? page * 12 : 0 });
+    setPayload({ ...payload, skip: (page - 1) * 12});
   };
 
   const loadProduct = async () => {

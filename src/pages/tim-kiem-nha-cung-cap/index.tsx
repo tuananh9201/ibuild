@@ -59,7 +59,7 @@ const SearchSupplier: NextPageWithLayout = () => {
     setPaging({ ...paging, current: page });
     setPayload({
       ...payload,
-      skip: page === 1 ? 0 : (page - 1) * 8,
+      skip: (page - 1) * 8,
     });
   };
   const loadData = async () => {
@@ -162,6 +162,7 @@ const SearchSupplier: NextPageWithLayout = () => {
           <NoFoundProduct
             title={keyword}
             content="Không tìm thấy nhà cung cấp"
+            category="nhà cung cấp"
           />
         )}
         <div className="w-full text-center mt-6">
