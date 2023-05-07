@@ -130,7 +130,7 @@ const ProductSearch = ({
   const [suggestion, setSuggestion] = useState<ISuggestionKeyword[]>([]);
   const [userRole, setUserRole] = useState("");
   const [highLightOption, setHighLightOption] = useState(-1);
-  const [suggestionSelected, setSuggestionSelected] = useState("");
+  const [inputValue, setInputValue] = useState("");
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -139,7 +139,7 @@ const ProductSearch = ({
     setHistories(data);
   };
 
-  const debounceValue = useDebounce(initialValue, 500);
+  const debounceValue = useDebounce(inputValue, 500);
 
   useEffect(() => {
     if (initialValue?.length > 0) return;
@@ -210,13 +210,6 @@ const ProductSearch = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  useEffect(() => {
-    if (suggestionSelected.length > 0) {
-      handler();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [suggestionSelected]);
-
   const onFocusInput = useMemo(() => {
     return (e: React.FocusEvent<HTMLInputElement, Element>) => {
       setIsActivateSearch(true);
@@ -233,6 +226,7 @@ const ProductSearch = ({
     handler();
   };
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
     if (setInputValueToParent) {
       setInputValueToParent(e.target.value);
       setHighLightOption(-1);
@@ -240,24 +234,27 @@ const ProductSearch = ({
   };
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      if (highLightOption === -1) {
-        handler();
-      } else {
-        if (!setInputValueToParent) return;
-        if (!initialValue) {
-          setInputValueToParent(histories[highLightOption].keyword);
-          setSuggestionSelected(histories[highLightOption].keyword);
-        } else {
-          setInputValueToParent(suggestion[highLightOption].name);
-          setSuggestionSelected(suggestion[highLightOption].name);
-        }
-      }
+      handler();
     }
     if (e.key === "ArrowDown") {
-      setHighLightOption((prev) => Math.min(prev + 1, 4));
+      const index = Math.min(highLightOption + 1, 4);
+      setHighLightOption(index);
+      if (!setInputValueToParent) return;
+      if (!initialValue) {
+        setInputValueToParent(histories[index].keyword);
+      } else {
+        setInputValueToParent(suggestion[index].name);
+      }
     }
     if (e.key === "ArrowUp") {
-      setHighLightOption((prev) => Math.max(prev - 1, 0));
+      const index = Math.max(highLightOption - 1, 0);
+      setHighLightOption(index);
+      if (!setInputValueToParent) return;
+      if (!initialValue) {
+        setInputValueToParent(histories[index].keyword);
+      } else {
+        setInputValueToParent(suggestion[index].name);
+      }
     }
   };
   const handleSelect = (value: string) => {
@@ -266,7 +263,6 @@ const ProductSearch = ({
   };
   const handleSelectItem = (item: string) => {
     setInputValueToParent && setInputValueToParent(item);
-    setSuggestionSelected(item);
   };
 
   const className =
