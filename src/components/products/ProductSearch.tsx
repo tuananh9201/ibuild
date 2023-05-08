@@ -147,6 +147,7 @@ const ProductSearch = ({
   }, [initialValue]);
 
   useEffect(() => {
+    setSuggestion([]);
     if (debounceValue && debounceValue?.length && debounceValue?.length > 1) {
       const getSuggestion = async () => {
         const res = await getSuggestionKeyword({
@@ -156,7 +157,7 @@ const ProductSearch = ({
               : selectValue === "1"
               ? "CATEGORY"
               : "SUPPLIER",
-          limit: 5,
+          limit: 10,
           keyword: debounceValue,
         });
         setSuggestion(res);
@@ -237,7 +238,7 @@ const ProductSearch = ({
       handler();
     }
     if (e.key === "ArrowDown") {
-      const index = Math.min(highLightOption + 1, 4);
+      const index = Math.min(highLightOption + 1, 9);
       setHighLightOption(index);
       if (!setInputValueToParent) return;
       if (!initialValue) {

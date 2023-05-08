@@ -275,12 +275,14 @@ const ProductDetail: NextPageWithLayout = () => {
             parameters={data?.technical_details}
           />
         </div>
-        <ProductSection
-          title="Cùng nhà cung cấp"
-          supplierId={data?.supplier?.id}
-          productId={data?.id}
-          slug={data?.supplier?.slug}
-        />
+        {data?.supplier?.id && data?.id && (
+          <ProductSection
+            title="Cùng nhà cung cấp"
+            supplierId={data?.supplier?.id}
+            productId={data?.id}
+            slug={data?.supplier?.slug}
+          />
+        )}
         {data && (
           <SameCategory
             title="Cùng danh mục"
