@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { FilterIcon } from "@/images/icons/product_types/icon_wrapper";
 import { SearchProduct } from "@/lib/types";
@@ -64,6 +64,7 @@ interface FilterProductProps {
   resetFilter: Function;
   onChangeSort: (sortSlug: string) => void;
   onHandleApplyFilter?: (params: SearchProduct) => void;
+  handleResetWhenHiddenFilter: () => void;
 }
 
 const FilterProduct = ({
@@ -74,6 +75,7 @@ const FilterProduct = ({
   resetFilter,
   onChangeSort,
   onHandleApplyFilter,
+  handleResetWhenHiddenFilter,
 }: FilterProductProps) => {
   const [isActiveFilterIcon, setIsActiveFilterIcon] = useState(false);
   const [options, setOptions] = useState(() => {
@@ -84,6 +86,12 @@ const FilterProduct = ({
     const sortSelected = options.find((s) => s.id === id);
     sortSelected && onChangeSort(sortSelected.slug);
   };
+
+  useEffect(() => {
+    !isActiveFilterIcon && handleResetWhenHiddenFilter();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isActiveFilterIcon]);
 
   return (
     <div className="w-full">

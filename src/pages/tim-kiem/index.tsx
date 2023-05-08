@@ -71,6 +71,22 @@ const SearchPage: NextPageWithLayout = () => {
       quantity_ranges: [],
     });
   };
+  const handleResetWhenHiddenFilter = () => {
+    console.log("click");
+    setPayload({
+      ...payload,
+      cities: [],
+      districts: [],
+      max_quantity: 10000,
+      min_quantity: 0,
+      max_price: 10000000000,
+      min_price: 0,
+      limit: 12,
+      skip: 0,
+      category_id: [],
+      quantity_ranges: [],
+    });
+  };
 
   useEffect(() => {
     setKeywordSearch(router.query.search as string);
@@ -184,6 +200,7 @@ const SearchPage: NextPageWithLayout = () => {
           onChangeSort={onChangeSort}
           resetFilter={handleResetFilter}
           onHandleApplyFilter={onHandleApplyFilter}
+          handleResetWhenHiddenFilter={handleResetWhenHiddenFilter}
         />
         <section className="mt-4">
           {isLoadingData ? (

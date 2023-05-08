@@ -92,6 +92,21 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
       quantity_ranges: [],
     });
   };
+  const handleResetWhenHiddenFilter = () => {
+    setPayload({
+      ...payload,
+      category_id: [props.category.id],
+      cities: [],
+      districts: [],
+      max_quantity: 10000,
+      min_quantity: 0,
+      max_price: 10000000000,
+      min_price: 0,
+      limit: 12,
+      skip: 0,
+      quantity_ranges: [],
+    });
+  };
 
   const onClickFilterCategory = async (id: string) => {
     let categoryId: string | undefined = id;
@@ -119,7 +134,6 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
     setPaging({ ...paging, current: page });
     setPayload({ ...payload, skip: (page - 1) * 12 });
   };
-
   const loadProduct = async () => {
     setIsLoadingData(true);
     const data = await searchProduct(payload);
@@ -204,6 +218,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
           onChangeSort={onChangeSort}
           onHandleApplyFilter={onHandleApplyFilter}
           resetFilter={handleResetFilter}
+          handleResetWhenHiddenFilter={handleResetWhenHiddenFilter}
         />
         <div className="mt-4 mb-4 w-full">
           {isLoading || isLoadingData ? (
