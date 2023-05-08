@@ -23,10 +23,12 @@ const nextConfig = {
     domains: ["googleapis.com", "amazonaws.com"],
   },
   staticPageGenerationTimeout: 90,
+  experimental: {
+    outputStandalone: true,
+  },
 };
 
 module.exports = withBundleAnalyzer(nextConfig);
-
 
 // Inected Content via Sentry Wizard Below
 
