@@ -37,6 +37,7 @@ next-env.d.ts
 .vscode
 
 .env
+.env.production
 # Sentry Auth Token
 .sentryclirc
 

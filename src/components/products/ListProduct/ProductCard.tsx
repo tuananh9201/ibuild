@@ -103,7 +103,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </h3>
         </div>
         <p className="text-secondary-color font-roboto not-italic text-sm leading-[150%] font-normal mb-1 line-clamp-2 min-h-[42px]">
-          {product.product_name}
+          {product?.product_name || ""}
         </p>
         <div className="px-3 py-[3px] bg-[#0000001a] inline-block rounded mb-3">
           <span className="text-xs font-robot not-italic font-normal leading-[150%] line-clamp-1">
