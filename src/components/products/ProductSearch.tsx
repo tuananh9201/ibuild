@@ -72,7 +72,7 @@ const SearchHistoryItem = (props: HistoryItem) => {
         <div className="icon w-5 h-5">
           <Image src={historyIcon} alt="" />
         </div>
-        <div className="font-normal text-base text-black-900 ">
+        <div className="font-normal text-base text-black-900 line-clamp-1">
           {props.item}
         </div>
       </div>
@@ -107,7 +107,7 @@ const SearchSuggestionItem = (props: SearchSuggestionProps) => {
         <div className="icon w-5 h-5">
           <SearchIcon />
         </div>
-        <div className="font-normal text-base text-black-900 ">
+        <div className="font-normal text-base text-black-900 line-clamp-1">
           {props.item}
         </div>
       </div>
