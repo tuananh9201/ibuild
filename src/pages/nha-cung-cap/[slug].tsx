@@ -35,7 +35,7 @@ const TABS_NAME = [
 const NhaCungCap: NextPageWithLayout = () => {
   const { query } = useRouter();
 
-  const [currentTab, setCurrentTab] = useState("1");
+  const [currentTab, setCurrentTab] = useState("2");
 
   const handleOnchangeTab = (key: string) => {
     console.log(key);
@@ -105,9 +105,9 @@ const NhaCungCap: NextPageWithLayout = () => {
           </div>
         </div>
       </div>
-      <div className="mt-14">
+      <div className="mt-14 custom-width-tab">
         <Tabs
-          defaultActiveKey="1"
+          defaultActiveKey={currentTab}
           centered
           items={TABS_NAME}
           onChange={handleOnchangeTab}

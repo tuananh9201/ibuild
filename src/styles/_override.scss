@@ -296,12 +296,15 @@
 }
 
 // custom tabs
-.ant-tabs-nav::before {
+.ant-tabs-nav::before,
+.ant-tabs-content-holder {
   border-color: transparent !important;
 }
 
-.ant-tabs-ink-bar.ant-tabs-ink-bar-animated {
-  width: 40px !important;
+.custom-width-tab {
+  .ant-tabs-ink-bar.ant-tabs-ink-bar-animated {
+    width: 40px !important;
+  }
 }
 
 .ant-tabs-tab-btn {
@@ -310,4 +313,10 @@
 
 .ant-tabs-nav-wrap {
   justify-content: flex-start !important;
+}
+
+.custom-position-tab {
+  .ant-tabs {
+    display: block;
+  }
 }
