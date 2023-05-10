@@ -183,7 +183,8 @@ export type Product = {
   quantity: number,
   reference_price: number,
   likes: number,
-  views: number
+  views: number,
+  status?: string
 };
 type Paging = {
   limit: number;

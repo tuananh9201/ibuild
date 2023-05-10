@@ -195,7 +195,7 @@ const ProductDetail: NextPageWithLayout = () => {
                   Tình trạng
                 </span>
                 <span className="font-roboto not-italic text-text-color font-normal text-base leading-[150%]">
-                  Liên hệ
+                  {data?.available === 1 ? "Còn hàng" : "Hết hàng"}
                 </span>
               </div>
               <div>
