@@ -267,6 +267,47 @@
   position: static;
 }
 
+.banner {
+  position: relative;
+
+  .react-multi-carousel-dot-list {
+    bottom: -25px;
+  }
+
+  .react-multiple-carousel__arrow {
+    display: none;
+  }
+
+  .react-multi-carousel-track {
+    height: 673px;
+  }
+
+  .react-multi-carousel-dot button {
+    border-color: $primary-color;
+  }
+
+  .react-multi-carousel-dot--active button {
+    background-color: $primary-color;
+  }
+}
+
 .react-multi-carousel-list.container {
   width: 100% !important;
+}
+
+// custom tabs
+.ant-tabs-nav::before {
+  border-color: transparent !important;
+}
+
+.ant-tabs-ink-bar.ant-tabs-ink-bar-animated {
+  width: 40px !important;
+}
+
+.ant-tabs-tab-btn {
+  font-size: 16px !important;
+}
+
+.ant-tabs-nav-wrap {
+  justify-content: flex-start !important;
 }

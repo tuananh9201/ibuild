@@ -1,9 +1,8 @@
+import defaultImageError from "@/images/product/defaultFlickityError.png";
+import Image from "next/image";
 import { useState } from "react";
 import Flickity from "react-flickity-component";
-import Image from "next/image";
-import defaultImageError from "@/images/product/defaultFlickityError.png";
 
-import { miniExampleProductDetail } from "@/images/index";
 import { ProductImage } from "@/lib/types";
 
 const flickityOptions = {
