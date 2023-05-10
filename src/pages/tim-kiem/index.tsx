@@ -72,7 +72,6 @@ const SearchPage: NextPageWithLayout = () => {
     });
   };
   const handleResetWhenHiddenFilter = () => {
-    console.log("click");
     setPayload({
       ...payload,
       cities: [],

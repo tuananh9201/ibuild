@@ -131,6 +131,7 @@ const ProductSearch = ({
   const [userRole, setUserRole] = useState("");
   const [highLightOption, setHighLightOption] = useState(-1);
   const [inputValue, setInputValue] = useState("");
+  const [suggestionSelected, setSuggestionSelected] = useState("");
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -142,7 +143,10 @@ const ProductSearch = ({
   const debounceValue = useDebounce(inputValue, 500);
 
   useEffect(() => {
-    if (initialValue?.length > 0) return;
+    if (initialValue?.length > 0) {
+      setHistories([]);
+      return;
+    }
     getSearchHistory();
   }, [initialValue]);
 
@@ -238,23 +242,23 @@ const ProductSearch = ({
       handler();
     }
     if (e.key === "ArrowDown") {
-      const index = Math.min(highLightOption + 1, 9);
-      setHighLightOption(index);
       if (!setInputValueToParent) return;
+      const index = Math.min(highLightOption + 1, initialValue ? 9 : 4);
+      setHighLightOption(index);
       if (!initialValue) {
-        setInputValueToParent(histories[index].keyword);
+        setInputValueToParent(histories[index]?.keyword || "");
       } else {
-        setInputValueToParent(suggestion[index].name);
+        setInputValueToParent(suggestion[index]?.name || "");
       }
     }
     if (e.key === "ArrowUp") {
+      if (!setInputValueToParent) return;
       const index = Math.max(highLightOption - 1, 0);
       setHighLightOption(index);
-      if (!setInputValueToParent) return;
       if (!initialValue) {
-        setInputValueToParent(histories[index].keyword);
+        setInputValueToParent(histories[index]?.keyword || "");
       } else {
-        setInputValueToParent(suggestion[index].name);
+        setInputValueToParent(suggestion[index]?.name || "");
       }
     }
   };
@@ -264,7 +268,14 @@ const ProductSearch = ({
   };
   const handleSelectItem = (item: string) => {
     setInputValueToParent && setInputValueToParent(item);
+    setSuggestionSelected(item);
   };
+
+  useEffect(() => {
+    suggestionSelected && handler();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [suggestionSelected]);
 
   const className =
     "flex flex-row justify-start items-center p-2 gap-2 lg:max-w-3/4 bg-white rounded-lg h-16 ";
@@ -324,7 +335,7 @@ const ProductSearch = ({
         <input
           className="input-search w-full lg:w-96 placeholder:text-black text-base font-normal line-clamp-1"
           placeholder="Bạn đang muốn tìm sản phẩm nào?"
-          value={initialValue}
+          value={initialValue || ""}
           onChange={handleInputChange}
           onFocus={onFocusInput}
           onKeyDown={handleEnter}
@@ -342,21 +353,18 @@ const ProductSearch = ({
             <div className="line h-px w-full border-solid border border-gray-100"></div>
           ) : null}
           {histories &&
-            (!initialValue || initialValue?.length === 0) &&
-            histories.map((h, idx) => {
-              if (idx > 4) return;
-              return (
-                <SearchHistoryItem
-                  key={h.id}
-                  id={h.id}
-                  item={h.keyword}
-                  isHighLight={highLightOption === idx}
-                  closeSearchModal={setIsActivateSearch}
-                  setKeywordSearch={handleSelectItem}
-                  getSearchResultAgain={getSearchHistory}
-                />
-              );
-            })}
+            histories.length > 0 &&
+            histories.map((h, idx) => (
+              <SearchHistoryItem
+                key={h.id}
+                id={h.id}
+                item={h.keyword}
+                isHighLight={highLightOption === idx}
+                closeSearchModal={setIsActivateSearch}
+                setKeywordSearch={handleSelectItem}
+                getSearchResultAgain={getSearchHistory}
+              />
+            ))}
           {suggestion &&
             initialValue &&
             initialValue.length > 0 &&
