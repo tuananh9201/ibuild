@@ -12,6 +12,7 @@ interface ProductTypesProps {
   parentId: string;
   currentActive: string;
   setCurrentActive: Function;
+  itemsOnScreen: number[];
   onClickItem: (id: string) => void;
 }
 
@@ -74,6 +75,7 @@ const ProductTypes = ({
   parentId,
   currentActive,
   setCurrentActive,
+  itemsOnScreen,
   onClickItem,
 }: ProductTypesProps) => {
   const {
@@ -81,6 +83,7 @@ const ProductTypes = ({
     error,
     isLoading,
   } = useSWR<ICategory[]>(parentId || "", fetchChildCategories);
+
   const firstItem = {
     id: "all",
     name: "Tất cả sản phẩm",
@@ -126,7 +129,7 @@ const ProductTypes = ({
               max: 3000,
               min: 1024,
             },
-            items: 5,
+            items: itemsOnScreen[0],
             partialVisibilityGutter: 40,
           },
           mobile: {
@@ -134,7 +137,7 @@ const ProductTypes = ({
               max: 464,
               min: 0,
             },
-            items: 1,
+            items: itemsOnScreen[1],
             partialVisibilityGutter: 30,
           },
           tablet: {
@@ -142,7 +145,7 @@ const ProductTypes = ({
               max: 1024,
               min: 464,
             },
-            items: 2,
+            items: itemsOnScreen[2],
             partialVisibilityGutter: 30,
           },
         }}

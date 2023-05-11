@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { Tabs } from "antd";
+import { useState } from "react";
 import CategoryPageBySupplier from "./common/CategoryPageBySupplier";
 
 const TABS_NAME = [
@@ -41,26 +41,28 @@ const AllProducts = () => {
     setCurrentTab(key);
   };
   return (
-    <div className="mt-11 flex gap-3">
-      <div className="custom-position-tab">
-        <h2 className="text-text-color font-normal text-xl mb-6">
-          Danh mục sản phẩm
-        </h2>
-        <Tabs
-          defaultActiveKey={currentTab}
-          centered
-          items={TABS_NAME}
-          onChange={handleOnchangeTab}
-          tabPosition="right"
-        />
+    <>
+      <div className="mt-11 flex gap-3">
+        <div className="custom-position-tab w-1/4">
+          <h2 className="text-text-color font-normal text-xl mb-6">
+            Danh mục sản phẩm
+          </h2>
+          <Tabs
+            defaultActiveKey={currentTab}
+            centered
+            items={TABS_NAME}
+            onChange={handleOnchangeTab}
+            tabPosition="right"
+          />
+        </div>
+        <div className="w-3/4">
+          <h2 className="text-text-color font-normal text-xl mb-6">
+            Tất cả sản phẩm
+          </h2>
+          <CategoryPageBySupplier />
+        </div>
       </div>
-      <div className="flex-base">
-        <h2 className="text-text-color font-normal text-xl mb-6">
-          Tất cả sản phẩm
-        </h2>
-        <CategoryPageBySupplier />
-      </div>
-    </div>
+    </>
   );
 };
 

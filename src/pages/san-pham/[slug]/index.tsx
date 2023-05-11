@@ -207,6 +207,7 @@ const ListCategoriesBySlug: NextPageWithLayout<Props> = (props: Props) => {
         <ProductTypes
           parentId={category?.id || ""}
           currentActive={currentActive}
+          itemsOnScreen={[5, 1, 2]}
           setCurrentActive={setCurrentActive}
           onClickItem={onClickFilterCategory}
         />

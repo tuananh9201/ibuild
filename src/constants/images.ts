@@ -14,12 +14,9 @@ import btnPhoneIconPri from "../images/icons/phone_in_talk_red.svg";
 import btnPhoneIconTranf from "../images/icons/phone_in_talk_tranf.svg";
 import btnPhoneIconBlack from "../images/icons/phone_in_talk_black.svg";
 import btnBookmarkIcon from "../images/icons/bookmark_border.svg";
-import Supplier1 from "../images/Supplier1.svg";
 import toiletIcon from "../images/icons/toilet.svg";
 import showerIcon from "../images/icons/shower.svg";
 import Supp2 from "../images/Supp2.png";
-import Supp3 from "../images/Supp3.png";
-import Supp4 from "../images/Supp4.png";
 import arrowBackIos from "../images/icons/arrow_back_ios.svg";
 import filterIcon from "../images/icons/filter_alt.svg";
 import shoppingBasket from "../images/icons/shopping_basket.svg";
@@ -30,8 +27,6 @@ import thumb4 from "../images/C4.png";
 import imgFeat from "../images/Feat.png";
 import supplierBg from "../images/supplier_bg.png";
 import supplierAvatarLarge from "../images/SupplierAvatarLarge.png";
-import bgProject from "../images/bg-project.jpg";
-import projectAvata from "../images/projectAvata.svg";
 import retailFeature from "../images/retailFeature.png";
 import suppAbout from "../images/supp-about.png";
 import news1 from "../images/news/news1.png";
@@ -42,8 +37,6 @@ import newsDetail from "../images/new.png";
 import newsDetail2 from "../images/newDetail2.png";
 import rightIcon from "../images/icons/rightIcon.png";
 import breadcrumIcon from "../images/icons/arrow_forward_ios_black.png";
-import bgRootCategory from "../images/image 6.png";
-import bgRootCategoryMobile from "../images/bg_category_mobile.png";
 import signUpSuccess from "../images/SignUpSuccess.png";
 import useIcon from "../images/icons/User.png";
 import logoutIcon from "../images/icons/Logout.png";
@@ -90,12 +83,9 @@ export {
   btnPhoneIconBlack,
   btnPhoneIconTranf,
   btnBookmarkIcon,
-  Supplier1,
   toiletIcon,
   showerIcon,
   Supp2,
-  Supp3,
-  Supp4,
   arrowBackIos,
   filterIcon,
   shoppingBasket,
@@ -106,8 +96,6 @@ export {
   imgFeat,
   supplierBg,
   supplierAvatarLarge,
-  bgProject,
-  projectAvata,
   retailFeature,
   suppAbout,
   news1,
@@ -118,8 +106,6 @@ export {
   breadcrumIcon,
   newsDetail,
   newsDetail2,
-  bgRootCategory,
-  bgRootCategoryMobile,
   signUpSuccess,
   useIcon,
   logoutIcon,

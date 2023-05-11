@@ -3,6 +3,9 @@ import { useRouter } from "next/router";
 import { ReactElement, useState } from "react";
 
 import MainLayout from "@/components/main-layout";
+import AllProducts from "@/components/supplier/sections/AllProducts";
+import GeneralIntroduction from "@/components/supplier/sections/GeneralIntroduction";
+import SupplierInformation from "@/components/supplier/sections/SupplierInformation";
 import { IBuildLogo, SupplierBgDefault } from "@/images";
 import {
   DateRangeIcon,
@@ -11,11 +14,8 @@ import {
   ShopIcon,
   SupervisionIcon,
 } from "@/images/icons/product_types/icon_wrapper";
-import { NextPageWithLayout } from "../_app";
 import { Tabs } from "antd";
-import SupplierInformation from "@/components/supplier/sections/SupplierInformation";
-import AllProducts from "@/components/supplier/sections/AllProducts";
-import GeneralIntroduction from "@/components/supplier/sections/GeneralIntroduction";
+import { NextPageWithLayout } from "../_app";
 
 const TABS_NAME = [
   {
