@@ -33,8 +33,8 @@ const QuanLyTaiKhoan: NextPageWithLayout = () => {
       <Head>
         <title>Quản lý tài khoản</title>
       </Head>
-      <section className="">
-        <div className="mt-14 custom-position-tab">
+      <section className="flex flex-row mt-14">
+        <div className="custom-position-tab w-1/4">
           <h2 className="text-text-color font-medium text-2xl mb-6">
             Quản lý tài khoản
           </h2>
@@ -46,7 +46,9 @@ const QuanLyTaiKhoan: NextPageWithLayout = () => {
             tabPosition="right"
           />
         </div>
-        <div>{currentTab === "1" && <AccountInfo />}</div>
+        <div className="w-3/4 pt-14">
+          {currentTab === "1" && <AccountInfo />}
+        </div>
       </section>
     </>
   );

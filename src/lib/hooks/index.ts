@@ -100,3 +100,17 @@ export const getAddress = (address: IAddresses[] | undefined, showWards: boolean
 
     return addressArr.join(", ") || "";
 }
+
+export const getRangeAddress = (address: IAddresses[] | undefined, showWards: boolean) => {
+    if (!address) return []
+    if (address.length === 0) return []
+    const names = address.map((ad) => {
+        const arr = []
+        ad.wards && showWards && arr.push(ad.wards)
+        ad.district && arr.push(ad.district)
+        ad.city && arr.push(ad.city)
+
+        return arr.join(', ')
+    })
+    return names
+}

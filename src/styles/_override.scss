@@ -321,3 +321,23 @@
     display: block;
   }
 }
+
+.account-info {
+  .ant-input-lg {
+    border-radius: 4px !important;
+    padding: 11px 11px !important;
+  }
+
+  .ant-col {
+    width: auto !important;
+  }
+
+  label {
+    height: 100% !important;
+    width: 120px !important;
+
+    &::after {
+      display: none !important;
+    }
+  }
+}

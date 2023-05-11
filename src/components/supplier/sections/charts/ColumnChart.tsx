@@ -1,8 +1,59 @@
-import Highcharts from "highcharts";
+import { useState, useEffect, useLayoutEffect } from "react";
 import { HighchartsReact } from "highcharts-react-official";
-import { useState } from "react";
+import Highcharts from "highcharts";
+import useSWR from "swr";
 
-const ColumnChart = () => {
+import { getCategoriesViewer } from "@/lib/api/supplier";
+import { IChartParams } from "@/lib/types";
+interface ColumnChartProps {
+  supplierId: string;
+}
+
+type ClickItemProps = {
+  id: number;
+  content: string;
+  isActive: boolean;
+  onClick: (id: number) => void;
+};
+
+const CLICK_ITEMS = [
+  {
+    id: 7,
+    content: "7 ngày trước",
+  },
+  {
+    id: 30,
+    content: "30 ngày trước",
+  },
+  {
+    id: 120,
+    content: "120 ngày trước",
+  },
+];
+
+const ClickItem = ({ id, content, isActive, onClick }: ClickItemProps) => {
+  return (
+    <li
+      className={`flex flex-row items-center gap-2 py-3 px-[10px] cursor-pointer ${
+        isActive ? "bg-primary-color rounded" : "bg-inherit"
+      }`}
+      onClick={() => onClick(id)}
+    >
+      <div
+        className={`w-3 h-3 rounded-full ${isActive ? "bg-white" : "bg-black"}`}
+      ></div>
+      <span
+        className={`${
+          isActive ? "text-white" : "text-black"
+        } font-medium text-xs`}
+      >
+        {content}
+      </span>
+    </li>
+  );
+};
+
+const ColumnChart = ({ supplierId }: ColumnChartProps) => {
   const [optionsChart, setOptionsChart] = useState({
     chart: {
       type: "column",
@@ -16,16 +67,7 @@ const ColumnChart = () => {
     },
     colors: ["#F8961E"],
     xAxis: {
-      categories: [
-        "Cung cấp công trường",
-        "Vật liệu kết cấu xây dựng",
-        "Vật liệu hoàn thiện",
-        "Hệ thống ống - phụ kiện",
-        "Đồ dùng & Đồ đạc",
-        "Hệ thống bếp",
-        "Cửa - Cửa sổ và phụ kiện",
-        "Vật dụng gia đình và đồ làm vuờn",
-      ],
+      categories: [""],
       offset: 40,
       labels: {
         // useHTML: true,
@@ -77,21 +119,64 @@ const ColumnChart = () => {
     },
     series: [
       {
-        name: "education",
+        name: "viewer",
         colorByPoint: true,
-        data: [50000, 50000, 50000, 50000, 50000, 50000, 35000, 12000],
+        data: [0],
       },
     ],
     credits: {
       enabled: false,
     },
   });
+  const [params, setParams] = useState<IChartParams>({
+    supplierId: supplierId,
+    limit: 7,
+    rangeTime: 7,
+  });
+
+  const { data } = useSWR(params, getCategoriesViewer);
+
+  const handleSelectRange = (id: number) => {
+    setParams((prev) => ({
+      ...prev,
+      rangeTime: id,
+    }));
+  };
+
+  useLayoutEffect(() => {
+    if (!data) return;
+    setOptionsChart((prev) => ({
+      ...prev,
+      xAxis: {
+        ...prev.xAxis,
+        categories: data.map((d) => d.name_vi),
+      },
+      series: [
+        {
+          ...prev.series[0],
+          data: data.map((d) => d.count),
+        },
+      ],
+    }));
+  }, [data]);
+
   return (
-    <div className="px-7 py-6 bg-[#F8F9FF] rounded-lg">
+    <div className="px-7 py-6 bg-[#F8F9FF] rounded-lg relative">
       <h2 className="text-text-color font-normal text-xl mb-4">
         Nhóm sản phẩm được xem nhiều nhất
       </h2>
       <HighchartsReact highcharts={Highcharts} options={optionsChart} />
+      <ul className="absolute top-4 right-5 bg-white rounded px-1 py-[2px] flex flex-row">
+        {CLICK_ITEMS.map((item) => (
+          <ClickItem
+            key={item.id}
+            id={item.id}
+            content={item.content}
+            isActive={item.id === params.rangeTime}
+            onClick={handleSelectRange}
+          />
+        ))}
+      </ul>
     </div>
   );
 };

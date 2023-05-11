@@ -1,6 +1,8 @@
-import { Tabs } from "antd";
-import { useState } from "react";
+import { Pagination, Tabs } from "antd";
+import { useState, useEffect } from "react";
 import CategoryPageBySupplier from "./common/CategoryPageBySupplier";
+import { Product, SearchProduct } from "@/lib/types";
+import { searchProduct } from "@/lib/api/product";
 
 const TABS_NAME = [
   {
@@ -33,13 +35,21 @@ const TABS_NAME = [
   },
 ];
 
-const AllProducts = () => {
+interface AllProductsProps {
+  supplierId: string;
+}
+
+const AllProducts = ({ supplierId }: AllProductsProps) => {
   const [currentTab, setCurrentTab] = useState("1");
+
+  // variable
+  const categoryTitle = TABS_NAME.find((tab) => tab.key === currentTab);
 
   // function
   const handleOnchangeTab = (key: string) => {
     setCurrentTab(key);
   };
+
   return (
     <>
       <div className="mt-11 flex gap-3">
@@ -48,7 +58,7 @@ const AllProducts = () => {
             Danh mục sản phẩm
           </h2>
           <Tabs
-            defaultActiveKey={currentTab}
+            activeKey={currentTab}
             centered
             items={TABS_NAME}
             onChange={handleOnchangeTab}
@@ -57,9 +67,12 @@ const AllProducts = () => {
         </div>
         <div className="w-3/4">
           <h2 className="text-text-color font-normal text-xl mb-6">
-            Tất cả sản phẩm
+            {categoryTitle?.label || ""}
           </h2>
-          <CategoryPageBySupplier />
+          <CategoryPageBySupplier
+            supplierId={supplierId}
+            resetTab={setCurrentTab}
+          />
         </div>
       </div>
     </>

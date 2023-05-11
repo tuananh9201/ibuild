@@ -112,7 +112,8 @@ export type SearchProduct = {
   min_price: number;
   cities: string[];
   districts: string[];
-  quantity_ranges?: QuantityRange[]
+  quantity_ranges?: QuantityRange[];
+  supplier_id?: string
 };
 type ProductData = {
   category?: string[];
@@ -206,7 +207,9 @@ export type ISupplierInfo = {
   participation_date?: string;
   addresses: IAddresses[];
   is_follow: boolean;
-  products: number
+  products: number;
+  cover_image: string;
+  promotion_banners: string[];
 }
 
 export type ResponseSupplierInfo = {
@@ -214,3 +217,28 @@ export type ResponseSupplierInfo = {
   paging: Paging
 }
 
+
+export type ICategoryViewer = {
+  name_vi: string
+  count: number
+}
+
+export type IChartParams = {
+  limit: number;
+  rangeTime: number;
+  supplierId: string;
+}
+
+export type IProject = {
+  id: string;
+  name: string;
+  description: string;
+  investor: string;
+  feature_image?: string;
+  supplier_id: string
+}
+
+export type IProjectResponse = {
+  data: IProject[],
+  paging: Paging
+}

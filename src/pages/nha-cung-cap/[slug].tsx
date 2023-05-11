@@ -1,7 +1,10 @@
-import Image from "next/image";
+import moment from "moment";
 import { useRouter } from "next/router";
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import useSWR from "swr";
 
+import { RenderImageError } from "@/components/common";
 import MainLayout from "@/components/main-layout";
 import AllProducts from "@/components/supplier/sections/AllProducts";
 import GeneralIntroduction from "@/components/supplier/sections/GeneralIntroduction";
@@ -14,6 +17,10 @@ import {
   ShopIcon,
   SupervisionIcon,
 } from "@/images/icons/product_types/icon_wrapper";
+import { fetchSupplierInfoBySlug } from "@/lib/api/supplier";
+import { FormatNumber, getRangeAddress } from "@/lib/hooks";
+import { ISupplierInfo } from "@/lib/types";
+import { RootState } from "@/store/store";
 import { Tabs } from "antd";
 import { NextPageWithLayout } from "../_app";
 
@@ -33,28 +40,58 @@ const TABS_NAME = [
 ];
 
 const NhaCungCap: NextPageWithLayout = () => {
-  const { query } = useRouter();
+  const token = useSelector((state: RootState) => state.auth.accessToken);
+  const router = useRouter();
+  const { query } = router;
+  const { slug } = query;
 
-  const [currentTab, setCurrentTab] = useState("2");
+  const [currentTab, setCurrentTab] = useState("3");
 
+  const { data: supplier } = useSWR<ISupplierInfo | undefined>(
+    slug,
+    fetchSupplierInfoBySlug
+  );
+
+  console.log(supplier);
+
+  //function
   const handleOnchangeTab = (key: string) => {
-    console.log(key);
     setCurrentTab(key);
   };
+  const handleClickPhone = () => {
+    if (!token) {
+      router.push({
+        pathname: "/dang-nhap",
+        query: {
+          redirect: router.asPath,
+        },
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (!supplier) return;
+  }, [supplier]);
 
   return (
     <section>
       <div className="relative">
-        <Image
-          src={SupplierBgDefault}
-          alt="background supplier"
+        <RenderImageError
+          defaultImage={SupplierBgDefault.src}
+          image={supplier?.cover_image || ""}
+          width={1280}
+          height={230}
+          title="bg supplier"
           className="mx-auto w-full object-cover"
         />
         <div className="w-[170px] h-[170px] rounded-full overflow-hidden absolute bottom-0 left-20 translate-y-1/2">
-          <Image
-            src={IBuildLogo}
-            alt="ibuild logo"
-            className="w-[170px] h-[170px] object-cover"
+          <RenderImageError
+            defaultImage={IBuildLogo.src}
+            image={supplier?.logo || ""}
+            width={170}
+            height={170}
+            title="logo"
+            className="w-[170] h-[170] object-cover"
           />
         </div>
       </div>
@@ -62,28 +99,42 @@ const NhaCungCap: NextPageWithLayout = () => {
         <div className="flex flex-col gap-4 lg:gap-0 lg:flex-row lg:justify-between items-center">
           <div>
             <div className="flex flex-row gap-3 mb-2">
-              <span className="flex gap-2 text-text-color font-normal text-base">
-                <LocationIcon className="fill-text-color" />
-                Cầu Giấy, Hà Nội
-              </span>
-              <span className="flex gap-2 text-text-color font-normal text-base">
-                <LocationIcon className="fill-text-color" />
-                Bắc Từ Liêm, Hà Nội
-              </span>
-              <span className="flex gap-2 text-text-color font-normal text-base">
-                <LocationIcon className="fill-text-color" />
-                +3
-              </span>
+              {getRangeAddress(supplier?.addresses, false).map((add, idx) => {
+                if (idx < 2) {
+                  return (
+                    <span
+                      key={idx}
+                      className="flex gap-2 text-text-color font-normal text-base"
+                    >
+                      <LocationIcon className="fill-text-color" />
+                      {add}
+                    </span>
+                  );
+                } else {
+                  return (
+                    <span
+                      key={idx}
+                      className="flex gap-2 text-text-color font-normal text-base"
+                    >
+                      <LocationIcon className="fill-text-color" />
+                      +3
+                    </span>
+                  );
+                }
+              })}
             </div>
-            <h1 className="font-semibold text-[28px] text-text-color leading-[125%]">
-              Trung tâm VLXD Thống nhất
+            <h1 className="font-semibold text-[28px] text-text-color leading-[125%] line-clamp-1">
+              {supplier?.name || ""}
             </h1>
           </div>
 
-          <button className="flex flex-row items-center gap-3 px-8 py-3 bg-primary-color rounded">
+          <button
+            className="flex flex-row items-center gap-3 px-8 py-3 bg-primary-color rounded"
+            onClick={handleClickPhone}
+          >
             <PhoneIcon className="fill-white" />
             <span className="text-white text-base font-normal">
-              Đăng nhập để xem thông tin
+              {!token ? "Đăng nhập để xem thông tin" : supplier?.phone || ""}
             </span>
           </button>
         </div>
@@ -91,17 +142,21 @@ const NhaCungCap: NextPageWithLayout = () => {
           <div className="flex flex-row gap-2 line-clamp-1">
             <ShopIcon className="" />
             <span>Sản phẩm</span>
-            <span>70</span>
+            <span>{FormatNumber(supplier?.products || 0)}</span>
           </div>
           <div className="flex flex-row gap-2 line-clamp-1">
             <SupervisionIcon className="" />
             <span>Người theo dõi</span>
-            <span>1,000</span>
+            <span>{FormatNumber(supplier?.followers || 0)}</span>
           </div>
           <div className="flex flex-row gap-2 line-clamp-1">
             <DateRangeIcon className="" />
             <span>Ngày tham gia</span>
-            <span>12/10/2019</span>
+            <span>
+              {supplier?.participation_date
+                ? moment(supplier.participation_date).format("DD/MM/YYYY")
+                : "Không rõ"}
+            </span>
           </div>
         </div>
       </div>
@@ -116,9 +171,18 @@ const NhaCungCap: NextPageWithLayout = () => {
           }}
         />
       </div>
-      {currentTab === "1" && <SupplierInformation />}
-      {currentTab === "2" && <AllProducts />}
-      {currentTab === "3" && <GeneralIntroduction />}
+      {currentTab === "1" && supplier?.id && (
+        <SupplierInformation supplierId={supplier?.id} />
+      )}
+      {currentTab === "2" && supplier?.id && (
+        <AllProducts supplierId={supplier.id} />
+      )}
+      {currentTab === "3" && supplier?.id && (
+        <GeneralIntroduction
+          aboutSupplier={supplier.about}
+          supplierId={supplier.id}
+        />
+      )}
     </section>
   );
 };

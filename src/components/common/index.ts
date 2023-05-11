@@ -23,3 +23,4 @@ export { default as Button } from "./form/Button"
 
 // result
 export { default as NoFoundResult } from './NoFoundResult'
+export { default as RenderImageError } from './RenderImageError'
