@@ -24,7 +24,6 @@ const AllProducts = ({ supplierId }: AllProductsProps) => {
         key: r.id,
         label: r.name_vi,
       }));
-      console.log(newRes);
       setTabs(() => [
         {
           key: "0",
