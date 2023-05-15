@@ -25,3 +25,12 @@ export const getRootUrlImage = (name: string): string => {
   }
   return ''
 }
+
+export const getSellImage = (name: string): string => {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+  if (baseUrl) {
+    const rootUrl = baseUrl.split('/api/v1')
+    return `${rootUrl[0]}${name}`
+  }
+  return ''
+}
