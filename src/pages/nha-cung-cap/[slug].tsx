@@ -45,14 +45,12 @@ const NhaCungCap: NextPageWithLayout = () => {
   const { query } = router;
   const { slug } = query;
 
-  const [currentTab, setCurrentTab] = useState("3");
+  const [currentTab, setCurrentTab] = useState("1");
 
   const { data: supplier } = useSWR<ISupplierInfo | undefined>(
     slug,
     fetchSupplierInfoBySlug
   );
-
-  console.log(supplier);
 
   //function
   const handleOnchangeTab = (key: string) => {

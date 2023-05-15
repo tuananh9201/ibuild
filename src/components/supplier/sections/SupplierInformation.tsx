@@ -11,7 +11,7 @@ const SupplierInformation = ({ supplierId }: SupplierInformationProps) => {
     <>
       <div className="flex flex-col lg:flex-row gap-2 justify-between mb-10">
         <div className="w-[40%] lg:w-[30%]">
-          <PieChart />
+          <PieChart supplierId={supplierId} />
         </div>
         <div className="flex-base">
           <ColumnChart supplierId={supplierId} />

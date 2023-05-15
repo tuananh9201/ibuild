@@ -8,10 +8,11 @@ import AvatarInfo from "./AvatarInfo";
 type ButtonProps = {
   children: React.ReactElement;
   className?: string;
+  onClick: Function
 };
 
-const Button = ({ children }: ButtonProps) => {
-  return <button>{children}</button>;
+const Button = ({ children, className, onClick }: ButtonProps) => {
+  return <button className={className ? className : ""}>{children}</button>;
 };
 
 const AccountInfo = () => {
@@ -58,9 +59,18 @@ const AccountInfo = () => {
             </div>
           </div>
           <Form.Item>
-            <Button>
-              <>Lưu thay đổi</>
-            </Button>
+            <div className="flex justify-end">
+              <Button className="text-white bg-primary-color px-9 py-3 rounded mt-6" onClick={() => {}}>
+                <span className="text-base">Lưu thay đổi</span>
+              </Button>
+            </div>
+          </Form.Item>
+          <Form.Item>
+            <div className="w-full">
+              <Button className="w-full bg-[#F8F9FF] border border-solid border-primary-color rounded py-3 pl-4 flex flex-start text-primary-color" onClick={() => {}}>
+                <span>Nâng cấp tài khoản</span>
+              </Button>
+            </div>
           </Form.Item>
         </Form>
       </div>

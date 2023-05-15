@@ -13,6 +13,7 @@ type ClickItemProps = {
   id: number;
   content: string;
   isActive: boolean;
+  isLoading: boolean;
   onClick: (id: number) => void;
 };
 
@@ -31,11 +32,21 @@ const CLICK_ITEMS = [
   },
 ];
 
-const ClickItem = ({ id, content, isActive, onClick }: ClickItemProps) => {
+const ClickItem = ({
+  id,
+  content,
+  isActive,
+  isLoading,
+  onClick,
+}: ClickItemProps) => {
   return (
     <li
-      className={`flex flex-row items-center gap-2 py-3 px-[10px] cursor-pointer ${
-        isActive ? "bg-primary-color rounded" : "bg-inherit"
+      className={`flex flex-row items-center gap-2 py-3 px-[10px] ${
+        isLoading ? "cursor-none" : "cursor-pointer"
+      } ${
+        isActive
+          ? `bg-primary-color rounded ${isLoading && "opacity-50"}`
+          : "bg-inherit"
       }`}
       onClick={() => onClick(id)}
     >
@@ -134,7 +145,7 @@ const ColumnChart = ({ supplierId }: ColumnChartProps) => {
     rangeTime: 7,
   });
 
-  const { data } = useSWR(params, getCategoriesViewer);
+  const { data, isLoading } = useSWR(params, getCategoriesViewer);
 
   const handleSelectRange = (id: number) => {
     setParams((prev) => ({
@@ -171,6 +182,7 @@ const ColumnChart = ({ supplierId }: ColumnChartProps) => {
           <ClickItem
             key={item.id}
             id={item.id}
+            isLoading={isLoading}
             content={item.content}
             isActive={item.id === params.rangeTime}
             onClick={handleSelectRange}

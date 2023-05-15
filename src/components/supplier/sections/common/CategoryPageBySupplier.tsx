@@ -7,20 +7,45 @@ import {
   ProductTypes,
 } from "@/components/common";
 import { SearchIcon } from "@/images/icons/product_types/icon_wrapper";
-import { RELATED_LIST } from "@/constants/data";
 import { Product, SearchProduct } from "@/lib/types";
 import { searchProduct } from "@/lib/api/product";
 import ProductCard from "@/components/products/ListProduct/ProductCard";
 import { Pagination } from "antd";
 import { scrollToTop } from "@/lib/hooks";
+import CategoryCarousel from "./CategoryCarousel";
 
 interface CategoryPageBySupplierProps {
   supplierId: string;
+  rootCategoryId: string;
   resetTab: (id: string) => void;
 }
 
+const RELATED_LIST = [
+  {
+    id: 1,
+    value: "Sản phẩm mới",
+    slug: "SAN_PHAM_MOI",
+  },
+  {
+    id: 2,
+    value: "Giá tăng dần",
+    slug: "GIA_TANG_DAN",
+  },
+  {
+    id: 3,
+    value: "Giá giảm dần",
+    slug: "GIA_GIAM_DAN",
+  },
+  {
+    id: 4,
+    value: "Theo dõi nhiều nhất",
+    slug: "THEO_DOI_NHIEU_NHAT",
+  },
+];
+
 const CategoryPageBySupplier = ({
   supplierId,
+  rootCategoryId,
   resetTab,
 }: CategoryPageBySupplierProps) => {
   const [currentActive, setCurrentActive] = useState("all");
@@ -58,22 +83,71 @@ const CategoryPageBySupplier = ({
     setIsLoading(false);
   };
 
-  const handleClickCategory = (id: string) => {};
-
   const onChangePagination = (page: number) => {
     setPaging({ ...paging, current: page });
-    scrollToTop();
+    setParams((prev) => ({
+      ...prev,
+      skip: (page - 1) * 9,
+    }));
+    scrollToTop(700);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
+      setPaging((prev) => ({
+        ...prev,
+        current: 1,
+      }));
       setParams((prev) => ({
         ...prev,
+        skip: 0,
         keyword: inputValue,
       }));
-      resetTab("1");
+      resetTab("0");
     }
   };
+
+  const handleChangeSort = (id: number) => {
+    const sort = RELATED_LIST.find((r) => r.id === id);
+    if (sort) {
+      setPaging((prev) => ({
+        ...prev,
+        current: 1,
+      }));
+      setParams((prev) => ({
+        ...prev,
+        skip: 0,
+        sort_by: sort.slug,
+      }));
+    }
+  };
+
+  useEffect(() => {
+    setPaging((prev) => ({
+      ...prev,
+      current: 1,
+    }));
+    setParams((prev) => ({
+      ...prev,
+      skip: 0,
+      category_id: rootCategoryId !== "0" ? [rootCategoryId] : [],
+    }));
+    setCurrentActive("all");
+  }, [rootCategoryId]);
+
+  useEffect(() => {
+    setPaging((prev) => ({
+      ...prev,
+      current: 1,
+    }));
+    setParams((prev) => ({
+      ...prev,
+      skip: 0,
+      category_id: currentActive === "all" ? [rootCategoryId] : [currentActive],
+    }));
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentActive]);
 
   useEffect(() => {
     getSearchResult();
@@ -96,18 +170,17 @@ const CategoryPageBySupplier = ({
         />
       </div>
       <div className="flex flex-col gap-6 mt-8">
-        <ProductTypes
-          parentId="b15afc56-6e9e-11ec-af53-a3bfea3fbc56"
+        <CategoryCarousel
+          supplierId={supplierId}
+          rootCategoryId={rootCategoryId}
           currentActive={currentActive}
-          itemsOnScreen={[4, 1, 2]}
           setCurrentActive={setCurrentActive}
-          onClickItem={handleClickCategory}
         />
         <div className="w-[300px]">
           <FilterRelated
             defaultValue={1}
             options={RELATED_LIST}
-            onSelect={() => {}}
+            onSelect={handleChangeSort}
           />
         </div>
         <div className="mt-16">
@@ -135,7 +208,7 @@ const CategoryPageBySupplier = ({
         <Pagination
           onChange={onChangePagination}
           current={paging.current}
-          pageSize={12}
+          pageSize={9}
           total={paging.total}
           hideOnSinglePage
         />
