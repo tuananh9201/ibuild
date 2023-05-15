@@ -16,3 +16,12 @@ export const getCategoriesIcon = (name: string, isActive: boolean): string => {
   }
   return "";
 };
+
+export const getRootUrlImage = (name: string): string => {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+  if (baseUrl) {
+    const rootUrl = baseUrl.split('/api/v1')
+    return `${rootUrl[0]}/public/images/${name}`
+  }
+  return ''
+}

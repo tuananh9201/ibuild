@@ -23,3 +23,5 @@ export { default as miniExampleProductDetail } from './product/mini_example_prod
 
 export { default as searchIcon } from "./icons/SearchIcon.svg"
 export { default as IBuildLogo } from './IBuildLogo.png'
+
+export { default as SupplierBgDefault } from './using/SupplierBgDefault.png'

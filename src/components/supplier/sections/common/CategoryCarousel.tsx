@@ -1,29 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Carousel, { ArrowProps } from "react-multi-carousel";
-import Image from "next/image";
 import useSWR from "swr";
 
+import { RenderImageError } from "@/components/common";
 import { LeftRightIcon } from "@/images/icons/product_types/icon_wrapper";
+import { getCategoriesByRootCategory } from "@/lib/api/supplier";
 import { getCategoriesIcon } from "@/lib/utils";
-import { fetchChildCategories } from "src/lib/api/category";
-import { ICategory } from "src/lib/types";
 
-interface ProductTypesProps {
-  parentId: string;
+interface CategoryCarouselProps {
+  supplierId: string;
+  rootCategoryId: string;
   currentActive: string;
-  setCurrentActive: Function;
-  itemsOnScreen: number[];
-  onClickItem: (id: string) => void;
+  setCurrentActive: (id: string) => void;
 }
 
 interface ButtonIconProps extends ArrowProps {
   children: React.ReactNode;
 }
-
-type RenderImageProps = {
-  url: string;
-  currentActive: boolean;
-};
 
 const ButtonLeftIcon = ({ children, onClick }: ButtonIconProps) => {
   return (
@@ -41,48 +34,16 @@ const ButtonRightIcon = ({ children, onClick }: ButtonIconProps) => {
   );
 };
 
-const RenderImage = ({ url, currentActive }: RenderImageProps) => {
-  const [img, setImg] = useState("");
-  useEffect(() => {
-    setImg(url);
-  }, [url]);
-
-  const handleErrorImage = () => {
-    setImg(
-      currentActive
-        ? getCategoriesIcon("all", true)
-        : getCategoriesIcon("all", false)
-    );
-  };
-
-  return (
-    <>
-      {img.length > 0 && (
-        <Image
-          src={img}
-          alt=""
-          className="h-6 w-6"
-          width={24}
-          height={24}
-          onError={handleErrorImage}
-        />
-      )}
-    </>
-  );
-};
-
-const ProductTypes = ({
-  parentId,
+const CategoryCarousel = ({
+  supplierId,
+  rootCategoryId,
   currentActive,
   setCurrentActive,
-  itemsOnScreen,
-  onClickItem,
-}: ProductTypesProps) => {
-  const {
-    data: childrend,
-    error,
-    isLoading,
-  } = useSWR<ICategory[]>(parentId || "", fetchChildCategories);
+}: CategoryCarouselProps) => {
+  const { data: categories } = useSWR(
+    { supplierId, rootCategoryId },
+    getCategoriesByRootCategory
+  );
 
   const firstItem = {
     id: "all",
@@ -90,9 +51,9 @@ const ProductTypes = ({
     icon: getCategoriesIcon("all", false),
     iconActive: getCategoriesIcon("all", true),
   };
-  if (!childrend) return null;
-  const childsTopLevel = childrend?.filter((cate) => cate.level === 0);
-  const childs = childsTopLevel?.map((c, idx) => {
+  if (!categories) return null;
+
+  const newCategories = categories?.map((c, idx) => {
     return {
       id: c.id,
       name: c.name_vi,
@@ -100,13 +61,12 @@ const ProductTypes = ({
       iconActive: getCategoriesIcon(c?.icon || "", true),
     };
   });
-  const menus = [firstItem].concat(childs);
 
-  if (!menus) return null;
+  const menus = [firstItem].concat(newCategories);
 
+  // function
   const onClick = (id: string) => {
     setCurrentActive(id);
-    onClickItem(id);
   };
 
   return (
@@ -129,7 +89,7 @@ const ProductTypes = ({
               max: 3000,
               min: 1024,
             },
-            items: itemsOnScreen[0],
+            items: 4,
             partialVisibilityGutter: 40,
           },
           mobile: {
@@ -137,7 +97,7 @@ const ProductTypes = ({
               max: 464,
               min: 0,
             },
-            items: itemsOnScreen[1],
+            items: 1,
             partialVisibilityGutter: 30,
           },
           tablet: {
@@ -145,7 +105,7 @@ const ProductTypes = ({
               max: 1024,
               min: 464,
             },
-            items: itemsOnScreen[2],
+            items: 2,
             partialVisibilityGutter: 30,
           },
         }}
@@ -176,11 +136,18 @@ const ProductTypes = ({
                 onClick={() => onClick(menu.id)}
               >
                 <div className="h-6 w-6 min-w-[24px] min-h-[24px]">
-                  <RenderImage
-                    url={
+                  <RenderImageError
+                    defaultImage={
                       currentActive === menu.id ? menu.iconActive : menu.icon
                     }
-                    currentActive={currentActive === menu.id}
+                    image={
+                      currentActive === menu.id
+                        ? getCategoriesIcon("all", true)
+                        : getCategoriesIcon("all", false)
+                    }
+                    width={20}
+                    height={20}
+                    title={menu.name}
                   />
                 </div>
                 <span className="font-roboto not-italic font-medium text-base leading-[150%] text-inherit ml-2">
@@ -195,4 +162,4 @@ const ProductTypes = ({
   );
 };
 
-export default ProductTypes;
+export default CategoryCarousel;

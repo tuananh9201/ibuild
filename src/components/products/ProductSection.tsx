@@ -1,24 +1,23 @@
-import { useState } from "react";
-import useSWR from "swr";
 import Link from "next/link";
+import useSWR from "swr";
 
-import { Product } from "@/lib/types";
-import ListProduct from "./ListProduct";
 import { getListProductBySupplier } from "@/lib/api/product";
+import { Product } from "@/lib/types";
 import ListProductLoading from "../common/ListProductLoading";
+import ListProduct from "./ListProduct";
 
 interface ProductSectionProps {
   title: string;
   supplierId?: string;
   productId?: string;
-  slug?:string
+  slug?: string;
 }
 
 const ProductSection = ({
   title,
   supplierId,
   productId,
-  slug
+  slug,
 }: ProductSectionProps) => {
   const { data, isLoading } = useSWR<Product[]>(
     { supplierId, productId },
@@ -38,7 +37,10 @@ const ProductSection = ({
         </Link>
       </div>
       {isLoading ? (
-        <ListProductLoading items={4} />
+        <ListProductLoading
+          items={4}
+          className="grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+        />
       ) : (
         <ListProduct products={data || []} />
       )}

@@ -203,7 +203,10 @@ const SearchPage: NextPageWithLayout = () => {
         />
         <section className="mt-4">
           {isLoadingData ? (
-            <LitsProductLoading items={12} />
+            <LitsProductLoading
+              items={12}
+              className="grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+            />
           ) : (
             <ListProduct products={products} />
           )}

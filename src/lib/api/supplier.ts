@@ -1,6 +1,6 @@
 import axios from './api'
 import api from './api';
-import { ICategory, ResponseSupplierInfo } from "../types";
+import { ICategory, ICategoryViewer, IChart, IChartParams, ISupplierInfo, ResponseSupplierInfo } from "../types";
 
 export const fetchListSupplierBySearch = async (params: { skip: number, limit: number, name: string, sort_by: string, cities: Array<string>; districts: Array<string> }): Promise<ResponseSupplierInfo | undefined> => {
     let urlCity = ``
@@ -59,4 +59,57 @@ export const followSupplier = async (id: string) => {
     } catch (error) {
         console.warn(error)
     }
+}
+
+export const fetchSupplierInfoBySlug = async (supplierSlug: string): Promise<ISupplierInfo | undefined> => {
+    try {
+        const res = await axios.get(`/supplier/by-slug/${supplierSlug}`)
+        return res.data?.data
+    } catch (error) {
+        console.warn(error)
+    }
+    return undefined
+}
+
+export const getCategoriesViewer = async (params: IChartParams): Promise<ICategoryViewer[]> => {
+    try {
+        const res = await axios.get(`/supplier/chart-categories-viewer/?limit=${params.limit}&range_time=${params.rangeTime}&supplier_id=${params.supplierId}`)
+        return res.data?.data || []
+    } catch (error) {
+        console.warn(error)
+    }
+    return []
+}
+
+export const categoriesForSupplier = async (supplierId: string): Promise<IChart[] | null> => {
+    if (!supplierId) return null
+    try {
+        const res = await axios.get(`/supplier/chart-root-categories/?supplier_id=${supplierId}`)
+        return res.data?.data
+    } catch (error) {
+        console.warn(error)
+    }
+    return null
+}
+
+export const rootsCategoryBySupplierId = async (supplierId: string): Promise<ICategory[] | null> => {
+    if (!supplierId) return null
+    try {
+        const res = await axios.get(`/supplier/roots-by-supplier-id/${supplierId}`)
+        return res.data?.data
+    } catch (error) {
+        console.warn(error)
+    }
+    return null
+}
+
+export const getCategoriesByRootCategory = async (params: { supplierId: string, rootCategoryId: string }): Promise<ICategory[] | null> => {
+    if (!params.supplierId) return null
+    try {
+        const res = await axios.get(`/supplier/get-categories-by-parent/${params.supplierId}${params.rootCategoryId !== '0' ? `?category_id=${params.rootCategoryId}` : ''}`)
+        return res.data?.data
+    } catch (error) {
+        console.warn(error)
+    }
+    return null
 }

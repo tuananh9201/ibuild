@@ -1,7 +1,13 @@
+
 type IAddresses = {
   city?: string;
   wards?: string;
   district?: string;
+}
+
+export type ITab = {
+  key: string
+  label: string
 }
 
 export interface IBrand {
@@ -36,15 +42,6 @@ export interface ISupplier {
   brandsPopulate: IBrand[];
   phoneNumber: string;
   priceRange: string;
-}
-
-export interface IProject {
-  id: number;
-  name: string;
-  owner: string;
-  des: string;
-  avata: StaticImageData;
-  image: StaticImageData;
 }
 
 export interface IRetailProduct {
@@ -112,7 +109,8 @@ export type SearchProduct = {
   min_price: number;
   cities: string[];
   districts: string[];
-  quantity_ranges?: QuantityRange[]
+  quantity_ranges?: QuantityRange[];
+  supplier_id?: string
 };
 type ProductData = {
   category?: string[];
@@ -207,7 +205,9 @@ export type ISupplierInfo = {
   participation_date?: string;
   addresses: IAddresses[];
   is_follow: boolean;
-  products: number
+  products: number;
+  cover_image: string;
+  promotion_banners: string[];
 }
 
 export type ResponseSupplierInfo = {
@@ -215,3 +215,33 @@ export type ResponseSupplierInfo = {
   paging: Paging
 }
 
+
+export type ICategoryViewer = {
+  name_vi: string
+  count: number
+}
+
+export type IChart = {
+  root_name: string
+  sum_products: number
+}
+
+export type IChartParams = {
+  limit: number;
+  rangeTime: number;
+  supplierId: string;
+}
+
+export type IProject = {
+  id: string;
+  name: string;
+  description: string;
+  investor: string;
+  feature_image?: string;
+  supplier_id: string
+}
+
+export type IProjectResponse = {
+  data: IProject[],
+  paging: Paging
+}

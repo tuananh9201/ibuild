@@ -43,6 +43,7 @@ export default function App({
       theme={{
         token: {
           colorPrimary: colorPrimary,
+          fontFamily: "Roboto",
         },
       }}
     >
