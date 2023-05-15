@@ -170,7 +170,7 @@ const NhaCungCap: NextPageWithLayout = () => {
         />
       </div>
       {currentTab === "1" && supplier?.id && (
-        <SupplierInformation supplierId={supplier?.id} />
+        <SupplierInformation supplierId={supplier?.id} supplier={supplier} />
       )}
       {currentTab === "2" && supplier?.id && (
         <AllProducts supplierId={supplier.id} />

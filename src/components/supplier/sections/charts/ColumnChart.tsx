@@ -26,10 +26,6 @@ const CLICK_ITEMS = [
     id: 30,
     content: "30 ngày trước",
   },
-  {
-    id: 120,
-    content: "120 ngày trước",
-  },
 ];
 
 const ClickItem = ({
