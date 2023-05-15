@@ -12,7 +12,12 @@ import {
   HeartIcon,
   PhoneIcon,
 } from "@/images/icons/product_types/icon_wrapper";
-import { FormatNumber, getAddress, getRangeQuantity } from "@/lib/hooks";
+import {
+  FormatNumber,
+  getAddress,
+  getRangeAddress,
+  getRangeQuantity,
+} from "@/lib/hooks";
 import { addProductFavorite } from "src/lib/api/user";
 import { Product } from "src/lib/types";
 import { RootState } from "src/store/store";
@@ -72,6 +77,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
     }
   }, [product]);
 
+  const listAddress = getRangeAddress(product?.addresses, false);
+
   return (
     <div className="bg-[#f8f9ff] rounded p-4 h-full flex flex-col justify-between">
       <div>
@@ -81,10 +88,29 @@ const ProductCard = ({ product }: ProductCardProps) => {
           }
         >
           <div className="flex justify-start items-center gap-2 mb-[9px] cursor-pointer">
-            <Image src={locationIcon} alt="location product" />
-            <span className="font-roboto not-italic text-xs leading-[calc(18 / 12) text-text-color] line-clamp-2">
-              {getAddress(product?.addresses, false)}
-            </span>
+            {listAddress.length <= 2 &&
+              listAddress.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="flex gap-2 text-text-color font-normal text-xs bg-[#dddada7f] rounded p-1"
+                >
+                  {item}
+                </div>
+              ))}
+            {listAddress.length > 2 &&
+              listAddress.slice(0, 2).map((item, idx) => (
+                <div
+                  key={idx}
+                  className="flex gap-2 text-text-color font-normal text-xs bg-[#dddada7f] rounded p-1"
+                >
+                  {item}
+                </div>
+              ))}
+            {listAddress.length > 2 && (
+              <div className="flex gap-2 text-text-color font-normal text-xs bg-[#dddada7f] rounded p-1">
+                +{listAddress.length - 2}
+              </div>
+            )}
           </div>
         </div>
         <div

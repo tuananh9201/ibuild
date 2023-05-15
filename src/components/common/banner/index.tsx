@@ -1,12 +1,14 @@
 import Carousel from "react-multi-carousel";
 
 import { RenderImageError } from "@/components/common";
+import { getSellImage } from "@/lib/utils";
 
 interface BannerProps {
   images: string[];
 }
 
 const Banner = ({ images }: BannerProps) => {
+  console.log(images);
   return (
     <div className="banner">
       <h3 className="text-text-color text-xl font-medium mb-6">
@@ -48,17 +50,20 @@ const Banner = ({ images }: BannerProps) => {
         sliderClass=""
         slidesToSlide={1}
       >
-        {images.map((image, idx) => (
-          <RenderImageError
-            key={idx}
-            defaultImage="https://placehold.co/1280x670"
-            image={image}
-            width={1280}
-            height={670}
-            title="banner"
-            className="max-w-[1280px] h-[670px] mx-auto"
-          />
-        ))}
+        {images.map((image, idx) => {
+          console.log(getSellImage(image));
+          return (
+            <RenderImageError
+              key={idx}
+              defaultImage="https://placehold.co/1280x670"
+              image={`${getSellImage(image)}`}
+              width={1280}
+              height={670}
+              title="banner"
+              className="max-w-[1280px] h-[670px] mx-auto"
+            />
+          );
+        })}
       </Carousel>
     </div>
   );

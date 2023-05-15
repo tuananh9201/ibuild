@@ -465,3 +465,30 @@ export const TrashCanIcon = ({ className }: IconProps) => {
     </svg>
   );
 };
+
+export const CloseIcon = () => {
+  return (
+    <svg
+      width="9"
+      height="8"
+      viewBox="0 0 9 8"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M7.63055 1L1.63055 7"
+        stroke="#CCCCCC"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M1.63055 1L7.63055 7"
+        stroke="#CCCCCC"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};

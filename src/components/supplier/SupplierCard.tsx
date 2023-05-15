@@ -59,23 +59,6 @@ const ButtonFollow = ({ supplierId, follow }: ButtonFollowProps) => {
 const SupplierCard = ({ supplier }: SupplierCardProps) => {
   const [logo, setLogo] = useState(supplier.logo || IBuildLogo);
 
-  // const getAddress = () => {
-  //   if (supplier?.addresses && supplier?.addresses.length > 0) {
-  //     const add = supplier.addresses[0];
-  //     const addressArr = [];
-  //     if (add.wards) {
-  //       addressArr.push(add.wards);
-  //     }
-  //     if (add.district) {
-  //       addressArr.push(add.district);
-  //     }
-  //     if (add.city) {
-  //       addressArr.push(add.city);
-  //     }
-  //     return addressArr.join(", ") || "";
-  //   }
-  // };
-
   return (
     <div className="w-full bg-[#f8f9ff] rounded-lg p-4 flex flex-row items-center relative">
       <div className="w-[170px] h-[150px] overflow-hidden rounded-[6px] mr-4">

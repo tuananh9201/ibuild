@@ -1,5 +1,5 @@
-import React from "react";
-import { Form, Input } from "antd";
+import React, { useState } from "react";
+import { Form, Input, Modal } from "antd";
 
 import { FilterRelated } from "../common";
 import { RELATED_LIST } from "@/constants/data";
@@ -8,7 +8,7 @@ import AvatarInfo from "./AvatarInfo";
 type ButtonProps = {
   children: React.ReactElement;
   className?: string;
-  onClick: Function
+  onClick: Function;
 };
 
 const Button = ({ children, className, onClick }: ButtonProps) => {
@@ -17,6 +17,9 @@ const Button = ({ children, className, onClick }: ButtonProps) => {
 
 const AccountInfo = () => {
   const [form] = Form.useForm();
+
+  const [openModal, setOpenModal] = useState(false);
+
   return (
     <div>
       <AvatarInfo />
@@ -60,14 +63,20 @@ const AccountInfo = () => {
           </div>
           <Form.Item>
             <div className="flex justify-end">
-              <Button className="text-white bg-primary-color px-9 py-3 rounded mt-6" onClick={() => {}}>
+              <Button
+                className="text-white bg-primary-color px-9 py-3 rounded mt-6"
+                onClick={() => {}}
+              >
                 <span className="text-base">Lưu thay đổi</span>
               </Button>
             </div>
           </Form.Item>
           <Form.Item>
             <div className="w-full">
-              <Button className="w-full bg-[#F8F9FF] border border-solid border-primary-color rounded py-3 pl-4 flex flex-start text-primary-color" onClick={() => {}}>
+              <Button
+                className="w-full bg-[#F8F9FF] border border-solid border-primary-color rounded py-3 pl-4 flex flex-start text-primary-color"
+                onClick={() => {}}
+              >
                 <span>Nâng cấp tài khoản</span>
               </Button>
             </div>

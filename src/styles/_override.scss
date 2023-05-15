@@ -341,3 +341,33 @@
     }
   }
 }
+
+// custom crop image
+.custom-crop-image {
+  .reactEasyCrop_CropArea {
+    color: #ffffff !important;
+  }
+}
+
+// custom slider antd
+.custom-dot {
+  .ant-slider-handle {
+    &::after {
+      display: none;
+    }
+
+    &::before {
+      display: none;
+    }
+
+    width: 4px;
+    height: 12px;
+    background-color: #333333;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  .ant-slider-track {
+    background-color: #333333 !important;
+  }
+}
