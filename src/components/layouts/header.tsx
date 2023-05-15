@@ -29,19 +29,19 @@ const menus = [
     name: "Mẫu thiết kế",
     href: "/mau-thiet-ke",
     role: ["user", "expert"],
-    isActive: [],
+    isActive: ["/mau-thiet-ke"],
   },
   {
     name: "Thông tin xây dựng",
     href: "/thong-tin-xay-dung",
     role: ["user", "expert"],
-    isActive: [],
+    isActive: ["/thong-tin-xay-dung"],
   },
   {
     name: "Văn bản pháp lý",
     href: "/van-ban-phap-ly",
     role: ["user", "expert"],
-    isActive: [],
+    isActive: ["/van-ban-phap-ly"],
   },
 ];
 const pathsShowBackButton = ["/"];
