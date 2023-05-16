@@ -27,3 +27,4 @@ export { default as RenderImageError } from './RenderImageError'
 
 // common
 export { default as Modal } from './Modal'
+export { default as FileInput } from './FileInput'

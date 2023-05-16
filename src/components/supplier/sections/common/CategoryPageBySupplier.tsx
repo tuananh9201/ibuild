@@ -17,6 +17,7 @@ import CategoryCarousel from "./CategoryCarousel";
 interface CategoryPageBySupplierProps {
   supplierId: string;
   rootCategoryId: string;
+  categoryId?: string;
   resetTab: (id: string) => void;
 }
 
@@ -46,6 +47,7 @@ const RELATED_LIST = [
 const CategoryPageBySupplier = ({
   supplierId,
   rootCategoryId,
+  categoryId,
   resetTab,
 }: CategoryPageBySupplierProps) => {
   const [currentActive, setCurrentActive] = useState("all");
@@ -174,6 +176,7 @@ const CategoryPageBySupplier = ({
           supplierId={supplierId}
           rootCategoryId={rootCategoryId}
           currentActive={currentActive}
+          categoryId={categoryId}
           setCurrentActive={setCurrentActive}
         />
         <div className="w-[300px]">

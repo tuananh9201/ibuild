@@ -34,8 +34,15 @@ const ListProductCategory: NextPageWithLayout = () => {
   });
   const { data: xx, isLoading } = useSWR(
     params,
-    fetchListSupplierByCategoryId
-    // { refreshInterval: 1000 }
+    fetchListSupplierByCategoryId,
+    {
+      onSuccess: (data) => {
+        setPaging((prev) => ({
+          ...prev,
+          total: data?.paging.total || 0,
+        }));
+      },
+    }
   );
   const data = xx?.data;
 
@@ -93,6 +100,15 @@ const ListProductCategory: NextPageWithLayout = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryInfo]);
 
+  // useEffect(() => {
+  //   if (xx) {
+  //     setPaging((prev) => ({
+  //       ...prev,
+  //       total: xx.paging.total,
+  //     }));
+  //   }
+  // }, [xx]);
+
   return (
     <section>
       <h1 className="text-text-color font-medium text-2xl my-8">
@@ -101,7 +117,7 @@ const ListProductCategory: NextPageWithLayout = () => {
       <FilterSingle changeSort={changeSort} changeChecked={changeChecked} />
       {isLoading && <SupplierContainerLoading items={8} />}
       {!isLoading && data && data.length > 0 && (
-        <SupplierContainer data={data} />
+        <SupplierContainer data={data} categoryId={categoryInfo?.id} />
       )}
       {!isLoading && data?.length === 0 && (
         <NoFoundProduct

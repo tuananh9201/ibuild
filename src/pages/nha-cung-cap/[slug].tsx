@@ -43,7 +43,7 @@ const NhaCungCap: NextPageWithLayout = () => {
   const token = useSelector((state: RootState) => state.auth.accessToken);
   const router = useRouter();
   const { query } = router;
-  const { slug } = query;
+  const { slug, category, tab } = query;
 
   const [currentTab, setCurrentTab] = useState("1");
 
@@ -70,6 +70,12 @@ const NhaCungCap: NextPageWithLayout = () => {
   useEffect(() => {
     if (!supplier) return;
   }, [supplier]);
+
+  useEffect(() => {
+    if (tab) {
+      setCurrentTab(tab as string);
+    }
+  }, [tab]);
 
   return (
     <section>
@@ -160,7 +166,7 @@ const NhaCungCap: NextPageWithLayout = () => {
       </div>
       <div className="mt-14 custom-width-tab">
         <Tabs
-          defaultActiveKey={currentTab}
+          activeKey={currentTab}
           centered
           items={TABS_NAME}
           onChange={handleOnchangeTab}
@@ -173,7 +179,7 @@ const NhaCungCap: NextPageWithLayout = () => {
         <SupplierInformation supplierId={supplier?.id} supplier={supplier} />
       )}
       {currentTab === "2" && supplier?.id && (
-        <AllProducts supplierId={supplier.id} />
+        <AllProducts supplierId={supplier.id} categoryId={category as string} />
       )}
       {currentTab === "3" && supplier?.id && (
         <GeneralIntroduction

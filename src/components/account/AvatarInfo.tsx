@@ -9,14 +9,13 @@ import {
   ReloadIcon,
   TrashCanIcon,
 } from "@/images/icons/product_types/icon_wrapper";
-import { Modal } from "../common";
+import { Modal, FileInput } from "../common";
 import { getCroppedImg } from "@/lib/hooks/useCropImage";
 
 const AvatarInfo = () => {
   const [openModal, setOpenModal] = useState(false);
   const [image, setImage] = useState({
-    imageSrc:
-      "https://img.huffingtonpost.com/asset/5ab4d4ac2000007d06eb2c56.jpeg?cache=sih0jwle4e&ops=1910_1000",
+    imageSrc: "",
     crop: { x: 0, y: 0 },
     zoom: 1,
     aspect: 1,
@@ -64,19 +63,26 @@ const AvatarInfo = () => {
   // element
   const bodyContentModal = (
     <div>
-      <div className="relative min-h-[300px] mb-8 custom-crop-image">
-        <Cropper
-          image={image.imageSrc}
-          crop={image.crop}
-          zoom={image.zoom}
-          aspect={image.aspect}
-          cropShape="round"
-          showGrid={false}
-          onCropChange={onCropChange}
-          onCropComplete={onCropComplete}
-          onZoomChange={onZoomChange}
+      {image.imageSrc ? (
+        <div className="relative min-h-[300px] mb-8 custom-crop-image">
+          <Cropper
+            image={image.imageSrc}
+            crop={image.crop}
+            zoom={image.zoom}
+            aspect={image.aspect}
+            cropShape="round"
+            showGrid={false}
+            onCropChange={onCropChange}
+            onCropComplete={onCropComplete}
+            onZoomChange={onZoomChange}
+          />
+        </div>
+      ) : (
+        <FileInput
+          typeImage={["image/jpeg", "image/jpg", "image/png"]}
+          size={3}
         />
-      </div>
+      )}
       <div className="custom-dot mb-8">
         <Slider
           min={1}

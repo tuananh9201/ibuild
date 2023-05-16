@@ -19,6 +19,7 @@ import { ISupplierInfo } from "@/lib/types";
 
 interface SupplierCardProps {
   supplier: ISupplierInfo;
+  categoryId?: string;
 }
 
 type ButtonFollowProps = {
@@ -56,7 +57,7 @@ const ButtonFollow = ({ supplierId, follow }: ButtonFollowProps) => {
   );
 };
 
-const SupplierCard = ({ supplier }: SupplierCardProps) => {
+const SupplierCard = ({ supplier, categoryId }: SupplierCardProps) => {
   const [logo, setLogo] = useState(supplier.logo || IBuildLogo);
 
   return (
@@ -74,7 +75,11 @@ const SupplierCard = ({ supplier }: SupplierCardProps) => {
         )}
       </div>
       <div className="flex-base flex flex-col gap-4">
-        <Link href={`/nha-cung-cap/${supplier.slug}`}>
+        <Link
+          href={`/nha-cung-cap/${supplier.slug}?tab=2${
+            categoryId && `&category=${categoryId}`
+          }`}
+        >
           <h1 className="font-medium text-xl leading-[150%] text-text-secondary-color line-clamp-1 cursor-pointer">
             {supplier?.name || ""}
           </h1>

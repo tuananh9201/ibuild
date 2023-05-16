@@ -11,6 +11,7 @@ interface CategoryCarouselProps {
   supplierId: string;
   rootCategoryId: string;
   currentActive: string;
+  categoryId?: string;
   setCurrentActive: (id: string) => void;
 }
 
@@ -37,6 +38,7 @@ const ButtonRightIcon = ({ children, onClick }: ButtonIconProps) => {
 const CategoryCarousel = ({
   supplierId,
   rootCategoryId,
+  categoryId,
   currentActive,
   setCurrentActive,
 }: CategoryCarouselProps) => {
@@ -51,6 +53,18 @@ const CategoryCarousel = ({
     icon: getCategoriesIcon("all", false),
     iconActive: getCategoriesIcon("all", true),
   };
+
+  React.useEffect(() => {
+    if (categories) {
+      if (categoryId) {
+        const tabActive = menus.find((mn) => mn.id === categoryId);
+        tabActive && setCurrentActive(tabActive.id);
+      }
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categories]);
+
   if (!categories) return null;
 
   const newCategories = categories?.map((c, idx) => {

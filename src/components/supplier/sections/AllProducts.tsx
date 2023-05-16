@@ -7,9 +7,10 @@ import { ITab } from "@/lib/types";
 
 interface AllProductsProps {
   supplierId: string;
+  categoryId?: string;
 }
 
-const AllProducts = ({ supplierId }: AllProductsProps) => {
+const AllProducts = ({ supplierId, categoryId }: AllProductsProps) => {
   const [currentTab, setCurrentTab] = useState("0");
   const [tabs, setTabs] = useState<ITab[]>([]);
 
@@ -24,6 +25,10 @@ const AllProducts = ({ supplierId }: AllProductsProps) => {
         key: r.id,
         label: r.name_vi,
       }));
+      if (categoryId) {
+        const activeTab = newRes.find((n) => n.key === categoryId);
+        activeTab && setCurrentTab(activeTab.key);
+      }
       setTabs(() => [
         {
           key: "0",
@@ -67,6 +72,7 @@ const AllProducts = ({ supplierId }: AllProductsProps) => {
           <CategoryPageBySupplier
             supplierId={supplierId}
             rootCategoryId={currentTab}
+            categoryId={categoryId}
             resetTab={setCurrentTab}
           />
         </div>
