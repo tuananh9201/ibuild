@@ -77,7 +77,7 @@ const SupplierCard = ({ supplier, categoryId }: SupplierCardProps) => {
       <div className="flex-base flex flex-col gap-4">
         <Link
           href={`/nha-cung-cap/${supplier.slug}?tab=2${
-            categoryId && `&category=${categoryId}`
+            categoryId ? `&category=${categoryId}` : ""
           }`}
         >
           <h1 className="font-medium text-xl leading-[150%] text-text-secondary-color line-clamp-1 cursor-pointer">

@@ -8,6 +8,7 @@ import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 interface FileInputProps {
   typeImage: string[];
   size: number;
+  setUrlImage: (url: string) => void;
 }
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
@@ -28,9 +29,8 @@ const beforeUpload = (file: RcFile, types: string[], size: number) => {
   return isJpgOrPng && sizeLimit;
 };
 
-const FileInput = ({ typeImage, size }: FileInputProps) => {
+const FileInput = ({ typeImage, size, setUrlImage }: FileInputProps) => {
   const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState<string>();
 
   const handleChange: UploadProps["onChange"] = (
     info: UploadChangeParam<UploadFile>
@@ -42,7 +42,7 @@ const FileInput = ({ typeImage, size }: FileInputProps) => {
     if (info.file.status === "done") {
       getBase64(info.file.originFileObj as RcFile, (url) => {
         setLoading(false);
-        setImageUrl(url);
+        setUrlImage(url);
       });
     }
   };
@@ -64,17 +64,7 @@ const FileInput = ({ typeImage, size }: FileInputProps) => {
         beforeUpload={(file) => beforeUpload(file, typeImage, size)}
         onChange={handleChange}
       >
-        {imageUrl ? (
-          <Image
-            src={imageUrl}
-            alt="avatar"
-            style={{ width: "100%" }}
-            width={0}
-            height={0}
-          />
-        ) : (
-          uploadButton
-        )}
+        {uploadButton}
       </Upload>
     </div>
   );

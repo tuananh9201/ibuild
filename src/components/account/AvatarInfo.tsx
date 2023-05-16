@@ -26,6 +26,7 @@ const AvatarInfo = () => {
       y: 0,
     },
   });
+  const [deleteAvatarModal, setDeleteAvatarModal] = useState(false);
 
   // function
   const onCropChange = (crop: Point) => {
@@ -60,6 +61,17 @@ const AvatarInfo = () => {
     console.log(res);
   };
 
+  const handleGetUrlImage = (url: string) => {
+    setImage((prev) => ({
+      ...prev,
+      imageSrc: url,
+    }));
+  };
+
+  const handleDeleteAvatar = () => {
+    console.log("delete avatar");
+  };
+
   // element
   const bodyContentModal = (
     <div>
@@ -81,6 +93,7 @@ const AvatarInfo = () => {
         <FileInput
           typeImage={["image/jpeg", "image/jpg", "image/png"]}
           size={3}
+          setUrlImage={handleGetUrlImage}
         />
       )}
       <div className="custom-dot mb-8">
@@ -102,6 +115,7 @@ const AvatarInfo = () => {
         <button
           className="text-white font-medium text-base w-[150px] py-3 rounded bg-primary-color"
           onClick={handleCropImage}
+          disabled={!image.imageSrc}
         >
           Thay ảnh
         </button>
@@ -109,10 +123,27 @@ const AvatarInfo = () => {
     </div>
   );
 
-  // function
-  const handleOpenModal = () => {
-    setOpenModal(true);
-  };
+  const bodyDeleteContent = (
+    <div>
+      <h2 className="text-center text-secondary-color font-medium text-2xl mb-4">
+        Bạn muốn xóa ảnh hồ sơ?
+      </h2>
+      <div className="flex flex-row justify-center items-center gap-3">
+        <button
+          className="w-[120px] py-3 rounded font-medium text-base"
+          onClick={() => setDeleteAvatarModal(false)}
+        >
+          Hủy bỏ
+        </button>
+        <button
+          className="w-[120px] py-3 rounded bg-[#E54545] text-white font-medium text-base"
+          onClick={handleDeleteAvatar}
+        >
+          Đồng ý
+        </button>
+      </div>
+    </div>
+  );
 
   return (
     <div className="flex flex-row items-center gap-10">
@@ -122,18 +153,22 @@ const AvatarInfo = () => {
         <div className="flex flex-row items-center gap-5">
           <span
             className="flex flex-row items-center gap-2 text-primary-color font-normal text-base cursor-pointer"
-            onClick={handleOpenModal}
+            onClick={() => setOpenModal(true)}
           >
             <ReloadIcon className="fill-primary-color" />
             Thay ảnh
           </span>
-          <span className="flex flex-row items-center gap-2 text-primary-color font-normal text-base cursor-pointer">
+          <span
+            className="flex flex-row items-center gap-2 text-primary-color font-normal text-base cursor-pointer"
+            onClick={() => setDeleteAvatarModal(true)}
+          >
             <TrashCanIcon className="fill-primary-color" />
             Xóa
           </span>
         </div>
       </div>
       <Modal isOpen={openModal} body={bodyContentModal} />
+      <Modal isOpen={deleteAvatarModal} body={bodyDeleteContent} />
     </div>
   );
 };
