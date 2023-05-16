@@ -19,9 +19,9 @@ function FormChangePass({ onSuccess, email, code }: Props) {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [isValidPassword, setIsValidPassword] = useState(false);
-  const [disabledSubmit, setDisabledSubmit] = useState(true);
   const [rules, setRules] = useState<RulePassword[]>(rulePassword);
   const [password, setPassword] = useState("");
+  const [disabledSubmit, setDisabledSubmit] = useState(true);
   const [cPassword, setCPassword] = useState("");
 
   const onSubmit = async (values: any) => {
@@ -110,7 +110,9 @@ function FormChangePass({ onSuccess, email, code }: Props) {
                 {rules.map((rule) => (
                   <li
                     key={rule.code}
-                    className={`list-disc ${rule.init ? "" : rule.success ? "text-[#4d993d]" : ""}`}
+                    className={`list-disc ${
+                      rule.init ? "" : rule.success ? "text-[#4d993d]" : ""
+                    }`}
                   >
                     {rule.message}
                   </li>

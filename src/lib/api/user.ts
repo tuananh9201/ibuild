@@ -1,6 +1,7 @@
+
 import { User } from "src/lib/types";
-import api from "./api";
 import { SearchResultModel } from "../models";
+import api from "./api";
 
 export const authWithAccessToken = async (): Promise<User | undefined> => {
   const resp = await api.get("/users/me");
@@ -59,5 +60,15 @@ export const deleteSearchHistory = async (id: string) => {
     await api.delete(`/search-history/${id}`)
   } catch (error) {
     console.warn(error)
+  }
+}
+
+export const changePasswordByToken = async (payload: { current_password: string, new_password: string }) => {
+  try {
+    const res = await api.put('/users/change-password/', payload)
+    return res
+  } catch (error: any) {
+    console.warn(error)
+    return error?.response?.data
   }
 }

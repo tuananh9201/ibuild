@@ -4,7 +4,7 @@ import Head from "next/head";
 import { NextPageWithLayout } from "../_app";
 import MainLayout from "@/components/main-layout";
 import { Tabs } from "antd";
-import { AccountInfo } from "@/components/account";
+import { AccountInfo, ChangePassword } from "@/components/account";
 
 const TABS_NAME = [
   {
@@ -48,6 +48,7 @@ const QuanLyTaiKhoan: NextPageWithLayout = () => {
         </div>
         <div className="w-3/4 pt-14">
           {currentTab === "1" && <AccountInfo />}
+          {currentTab === "3" && <ChangePassword />}
         </div>
       </section>
     </>

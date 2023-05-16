@@ -3,7 +3,6 @@ import { Form, Input } from "antd";
 
 import AvatarInfo from "./AvatarInfo";
 import useUser from "@/lib/hooks/user";
-import { User } from "@/lib/types";
 import AddressInfo from "./AddressInfo";
 
 type ButtonProps = {
@@ -21,19 +20,14 @@ const AccountInfo = () => {
 
   const { user } = useUser();
 
-  const [initialValues, setInitialValues] = useState<User>({
-    id: 0,
-    full_name: "sai",
-    email: "",
-    phone_number: "",
+  // state
+  const [districtAndCity, setDistrictAndCity] = useState({
+    cityId: "",
+    districtId: "",
   });
 
   useEffect(() => {
     if (user) {
-      setInitialValues((prev) => ({
-        ...prev,
-        ...user,
-      }));
       form.setFieldsValue(user);
     }
 
@@ -42,6 +36,21 @@ const AccountInfo = () => {
 
   const onFinish = (values: any) => {
     console.log(values);
+    console.log(districtAndCity);
+  };
+
+  const handleSelectCity = (id: string) => {
+    setDistrictAndCity((prev) => ({
+      ...prev,
+      cityId: id,
+    }));
+  };
+
+  const handleSelectDistrict = (id: string) => {
+    setDistrictAndCity((prev) => ({
+      ...prev,
+      districtId: id,
+    }));
   };
 
   return (
@@ -54,7 +63,6 @@ const AccountInfo = () => {
           scrollToFirstError
           requiredMark={false}
           className="max-w-[620px]"
-          initialValues={initialValues}
           onFinish={onFinish}
         >
           <Form.Item
@@ -83,10 +91,28 @@ const AccountInfo = () => {
           <Form.Item label="Email" name="email">
             <Input size="large" placeholder="Nhập email" />
           </Form.Item>
-          <Form.Item label="Địa chỉ" name="address">
+          <Form.Item
+            label="Địa chỉ"
+            name="address"
+            rules={[
+              {
+                pattern: /^[a-zA-Z0-9\/\s\u00C0-\u017F.,!?]+$/u,
+                message: "Chưa kí tự không phù hợp",
+              },
+              {
+                max: 100,
+                message: "Không được quá 100 kí tự",
+              },
+            ]}
+          >
             <Input size="large" placeholder="Nhập địa chỉ" />
           </Form.Item>
-          <AddressInfo />
+          <AddressInfo
+            cityId={districtAndCity.cityId}
+            districtId={districtAndCity.districtId}
+            onSelectCity={handleSelectCity}
+            onSelectDistrict={handleSelectDistrict}
+          />
           <Form.Item>
             <div className="flex justify-end">
               <Button

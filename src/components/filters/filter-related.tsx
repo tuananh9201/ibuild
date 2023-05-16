@@ -10,9 +10,10 @@ interface ItemFilter {
 
 interface FilterRelatedProps {
   placeHolder?: string;
-  defaultValue?: number;
+  defaultValue?: any;
   options?: ItemFilter[];
   reset?: boolean;
+  onClick?: (id: string) => void;
   onSelect: (value: number) => void;
 }
 
@@ -20,6 +21,7 @@ const FilterRelated = ({
   placeHolder,
   defaultValue,
   options,
+  onClick,
   onSelect,
   reset,
 }: FilterRelatedProps) => {
@@ -44,11 +46,15 @@ const FilterRelated = ({
     () => window.removeEventListener("click", () => {});
   }, []);
 
-  const handleSelectValue = (id: number) => {
+  const handleSelectValue = (id: number | string) => {
     setIsOpenMenu(false);
     const value = options?.find((option) => option.id === id)?.value;
     setValueSelected(value);
-    onSelect(id);
+    if (onClick) {
+      onClick(id as string);
+      return;
+    }
+    onSelect(id as number);
   };
   useEffect(() => {
     if (reset) {
@@ -83,7 +89,7 @@ const FilterRelated = ({
         </span>
       </div>
       {isOpenMenu && (
-        <div className="absolute transition z-10 w-full bg-white border border-solid border-primary-color rounded-b-lg">
+        <div className="absolute transition z-10 w-full bg-white border border-solid border-primary-color rounded-b-lg max-h-96 overflow-y-auto">
           <ul className="font-roboto font-normal text-base leading-[calc(24 / 16)] text-text-color cursor-pointer">
             {options &&
               options.map((option) => (
