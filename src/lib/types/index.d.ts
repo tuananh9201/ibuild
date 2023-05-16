@@ -78,6 +78,7 @@ export type User = {
   access_token?: string;
   picture?: string;
   user_type?: string;
+  phone_number?: string
 };
 
 export type RulePassword = {

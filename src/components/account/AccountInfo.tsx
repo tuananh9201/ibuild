@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { Form, Input, Modal } from "antd";
+import React, { useState, useEffect } from "react";
+import { Form, Input } from "antd";
 
-import { FilterRelated } from "../common";
-import { RELATED_LIST } from "@/constants/data";
 import AvatarInfo from "./AvatarInfo";
+import useUser from "@/lib/hooks/user";
+import { User } from "@/lib/types";
+import AddressInfo from "./AddressInfo";
 
 type ButtonProps = {
   children: React.ReactElement;
@@ -18,7 +19,30 @@ const Button = ({ children, className, onClick }: ButtonProps) => {
 const AccountInfo = () => {
   const [form] = Form.useForm();
 
-  const [openModal, setOpenModal] = useState(false);
+  const { user } = useUser();
+
+  const [initialValues, setInitialValues] = useState<User>({
+    id: 0,
+    full_name: "sai",
+    email: "",
+    phone_number: "",
+  });
+
+  useEffect(() => {
+    if (user) {
+      setInitialValues((prev) => ({
+        ...prev,
+        ...user,
+      }));
+      form.setFieldsValue(user);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  const onFinish = (values: any) => {
+    console.log(values);
+  };
 
   return (
     <div>
@@ -30,9 +54,28 @@ const AccountInfo = () => {
           scrollToFirstError
           requiredMark={false}
           className="max-w-[620px]"
+          initialValues={initialValues}
+          onFinish={onFinish}
         >
-          <Form.Item label="Họ và tên" name="name">
-            <Input size="large" placeholder="" />
+          <Form.Item
+            label="Họ và tên"
+            name="full_name"
+            rules={[
+              {
+                required: true,
+                message: "Tên không được để trống",
+              },
+              {
+                pattern: /^[\p{L}\s]+$/u,
+                message: "Chỉ nhận các kí tự chữ cái",
+              },
+              {
+                max: 30,
+                message: "Tối đa 30 kí tự",
+              },
+            ]}
+          >
+            <Input size="large" placeholder="" maxLength={30} />
           </Form.Item>
           <Form.Item label="Số điện thoại" name="phoneNumber">
             <Input size="large" placeholder="" />
@@ -43,24 +86,7 @@ const AccountInfo = () => {
           <Form.Item label="Địa chỉ" name="address">
             <Input size="large" placeholder="Nhập địa chỉ" />
           </Form.Item>
-          <div className="w-full flex flex-row gap-3 pl-[120px]">
-            <div className="w-1/2">
-              <FilterRelated
-                defaultValue={0}
-                options={RELATED_LIST}
-                placeHolder="Quận/Huyện"
-                onSelect={() => {}}
-              />
-            </div>
-            <div className="flex-base">
-              <FilterRelated
-                defaultValue={0}
-                options={RELATED_LIST}
-                placeHolder="Tỉnh/Thành phố"
-                onSelect={() => {}}
-              />
-            </div>
-          </div>
+          <AddressInfo />
           <Form.Item>
             <div className="flex justify-end">
               <Button

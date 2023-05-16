@@ -1,5 +1,5 @@
 import axios from "./api"
-import { AreasModal } from "@/lib/models"
+import { AreasModal, IBaseModel } from "@/lib/models"
 
 export const getAreas = async (): Promise<AreasModal[] | any> => {
   try {
@@ -15,4 +15,20 @@ export const getAreas = async (): Promise<AreasModal[] | any> => {
     console.warn(error)
     return error
   }
+}
+
+export const getCities = async (): Promise<IBaseModel[] | null> => {
+  try {
+    const res = await axios.get('/area/city')
+    return res?.data?.data.map((item: any) => {
+      return {
+        id: item.id,
+        value: item.name,
+        slug: item.code
+      }
+    })
+  } catch (error) {
+    console.warn(error)
+  }
+  return null
 }

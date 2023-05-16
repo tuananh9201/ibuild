@@ -14,3 +14,8 @@ export interface SearchResultModel {
     user_id: string;
     keyword: string;
 }
+
+export interface IBaseModel {
+    id: number;
+    value: string;
+}

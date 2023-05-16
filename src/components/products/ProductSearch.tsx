@@ -199,7 +199,8 @@ const ProductSearch = ({
   }, []);
 
   useEffect(() => {
-    if (!user) return;
+    const token = localStorage.getItem("access_token");
+    if (!token) return;
     const userType = localStorage.getItem("user_type");
 
     userType && setUserRole(userType);

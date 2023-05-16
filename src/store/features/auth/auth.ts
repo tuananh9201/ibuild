@@ -22,6 +22,8 @@ export const authSlice = createSlice({
     logout: (state) => {
       state.accessToken = null;
       localStorage.removeItem("access_token");
+      localStorage.removeItem("user_type");
+      localStorage.removeItem("search_type");
       state.unAuthorized = true;
     },
     unAuthorized: (state) => {

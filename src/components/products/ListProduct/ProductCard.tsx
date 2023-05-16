@@ -34,7 +34,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [logoImage, setLogoImage] = useState(productLogo.src);
 
-  const prodImageSrc = product.images[0].url || defaultProductImage;
+  const prodImageSrc = product?.images[0]?.url || defaultProductImage;
 
   const [featureImageSrc, setFeatureImageSrc] = useState(prodImageSrc);
 
