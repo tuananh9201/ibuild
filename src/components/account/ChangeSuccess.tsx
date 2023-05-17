@@ -11,7 +11,7 @@ interface ChangeSuccessProps {
 
 const ChangeSuccess = ({ title }: ChangeSuccessProps) => {
   const bodyContent = (
-    <motion.div>
+    <motion.div className="flex flex-col items-center justify-center h-[450px]">
       <div className="w-full text-center flex justify-center items-center">
         <Image
           src={ChangePassSuccessImage}

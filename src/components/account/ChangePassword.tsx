@@ -86,7 +86,7 @@ const ChangePassword = () => {
 
     const t = setTimeout(() => {
       setChangeSuccess(false);
-    }, 3000);
+    }, 5000);
 
     return () => {
       clearTimeout(t);

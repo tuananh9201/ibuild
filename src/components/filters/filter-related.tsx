@@ -26,13 +26,7 @@ const FilterRelated = ({
   reset,
 }: FilterRelatedProps) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const [valueSelected, setValueSelected] = useState(() => {
-    return options && defaultValue
-      ? options.find((option) => option.id === defaultValue)?.value
-      : placeHolder
-      ? placeHolder
-      : "Lựa chọn";
-  });
+  const [valueSelected, setValueSelected] = useState("");
 
   const selectElement = useRef<HTMLDivElement>(null);
 
@@ -49,7 +43,7 @@ const FilterRelated = ({
   const handleSelectValue = (id: number | string) => {
     setIsOpenMenu(false);
     const value = options?.find((option) => option.id === id)?.value;
-    setValueSelected(value);
+    setValueSelected(value || "");
     if (onClick) {
       onClick(id as string);
       return;
@@ -63,6 +57,15 @@ const FilterRelated = ({
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset]);
+
+  useEffect(() => {
+    if (options && defaultValue) {
+      const o = options.find((option) => option.id === defaultValue);
+      setValueSelected(o?.value || placeHolder || "");
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [options, defaultValue]);
 
   return (
     <div className="relative min-w-[205px]">

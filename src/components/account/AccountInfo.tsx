@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input } from "antd";
+import { Form, Input, message } from "antd";
+import useSWR from "swr";
 
 import AvatarInfo from "./AvatarInfo";
 import useUser from "@/lib/hooks/user";
 import AddressInfo from "./AddressInfo";
+import { IbuildButton } from "../common";
+import { validateOnlyNumber } from "@/lib/utils";
+import { User } from "@/lib/types";
+import { getUser, updateUser } from "@/lib/api/user";
+import { ERRORS } from "@/constants/msg";
+import FormInputOtp from "./FormInputOtp";
+import ChangeSuccess from "./ChangeSuccess";
 
 type ButtonProps = {
   children: React.ReactElement;
@@ -18,12 +26,33 @@ const Button = ({ children, className, onClick }: ButtonProps) => {
 const AccountInfo = () => {
   const [form] = Form.useForm();
 
-  const { user } = useUser();
-
   // state
   const [districtAndCity, setDistrictAndCity] = useState({
     cityId: "",
     districtId: "",
+  });
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [image, setImage] = useState("");
+  const [maxLength, setMaxLength] = useState(10);
+  const [isOpenOtpModal, setIsOpenOtpModal] = useState(false);
+  const [content, setContent] = useState("");
+  const [payload, setPayload] = useState<User>({
+    id: 0,
+    full_name: "",
+    email: "",
+  });
+  const [errors, setErrors] = useState("");
+  const [changeSuccess, setChangeSuccess] = useState(false);
+
+  const { data: user } = useSWR("ss", getUser, {
+    onSuccess: function (data) {
+      setDistrictAndCity((prev) => ({
+        ...prev,
+        cityId: data?.city_id || "",
+        districtId: data?.district_id || "",
+      }));
+    },
   });
 
   useEffect(() => {
@@ -34,9 +63,49 @@ const AccountInfo = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  const onFinish = (values: any) => {
-    console.log(values);
-    console.log(districtAndCity);
+  const onFinish = async (values: any) => {
+    const userInfo: User = {
+      id: 0,
+      full_name: values?.full_name,
+      phone_number: values?.phone_number,
+      email: values?.email,
+      address: values?.address,
+      city_id: districtAndCity.cityId,
+      district_id: districtAndCity.districtId,
+      picture: image || "",
+    };
+
+    setPayload((prev) => ({
+      ...prev,
+      ...userInfo,
+    }));
+
+    const res: any = await updateUser(userInfo);
+    if (res?.response?.data?.status_code === 400) {
+      setIsOpenOtpModal(true);
+      res?.response?.data?.otp_type === "phone"
+        ? setContent(`số điện thoại ${values?.phone_number}`)
+        : setContent(`email ${values?.email}`);
+      if (res?.response?.data?.message) {
+        setErrors(res?.response?.data?.message);
+      }
+    }
+  };
+
+  const updateUserInfo = async (otp: string) => {
+    const userInfo: User = {
+      ...payload,
+      otp_code: otp,
+    };
+    const res: any = await updateUser(userInfo);
+    console.log(res);
+    if (res?.response?.data?.status_code === 400) {
+      setErrors(res?.response?.data?.message);
+    }
+    if (res?.data?.status_code === 200) {
+      setIsOpenOtpModal(false);
+      setChangeSuccess(true);
+    }
   };
 
   const handleSelectCity = (id: string) => {
@@ -53,9 +122,41 @@ const AccountInfo = () => {
     }));
   };
 
+  const handleFieldChange = () => {
+    const values = form.getFieldsValue();
+
+    if (((values?.phone_number as string) || "").startsWith("84")) {
+      setMaxLength(12);
+    } else {
+      setMaxLength(10);
+    }
+
+    const hasValue = Object.values(values).some(
+      (value) => value !== undefined && value !== ""
+    );
+    setIsSubmitDisabled(!hasValue);
+  };
+
+  const handleCloseModal = () => {
+    setIsOpenOtpModal(false);
+    setErrors("");
+  };
+
+  useEffect(() => {
+    if (!changeSuccess) return;
+
+    const t = setTimeout(() => {
+      setChangeSuccess(false);
+    }, 5000);
+
+    return () => {
+      clearTimeout(t);
+    };
+  }, [changeSuccess]);
+
   return (
     <div>
-      <AvatarInfo />
+      <AvatarInfo url={image} onChange={setImage} />
       <div className="account-info mt-9">
         <Form
           layout="horizontal"
@@ -83,20 +184,59 @@ const AccountInfo = () => {
               },
             ]}
           >
-            <Input size="large" placeholder="" maxLength={30} />
+            <Input
+              size="large"
+              placeholder=""
+              maxLength={30}
+              onChange={handleFieldChange}
+            />
           </Form.Item>
-          <Form.Item label="Số điện thoại" name="phoneNumber">
-            <Input size="large" placeholder="" />
+          <Form.Item
+            label="Số điện thoại"
+            name="phone_number"
+            rules={[
+              () => ({
+                validator(rule, value) {
+                  if (value) {
+                    console.log(validateOnlyNumber(value));
+                    if (!validateOnlyNumber(value)) {
+                      return Promise.reject(ERRORS.MSG011);
+                    }
+                  }
+                  return Promise.resolve();
+                },
+              }),
+            ]}
+          >
+            <Input
+              size="large"
+              placeholder=""
+              maxLength={maxLength}
+              onChange={handleFieldChange}
+            />
           </Form.Item>
-          <Form.Item label="Email" name="email">
-            <Input size="large" placeholder="Nhập email" />
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              {
+                pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                message: "Email không đúng định dạng",
+              },
+            ]}
+          >
+            <Input
+              size="large"
+              placeholder="Nhập email"
+              onChange={handleFieldChange}
+            />
           </Form.Item>
           <Form.Item
             label="Địa chỉ"
             name="address"
             rules={[
               {
-                pattern: /^[a-zA-Z0-9\/\s\u00C0-\u017F.,!?]+$/u,
+                pattern: /^[a-zA-Z0-9\s\/\p{L}]+$/u,
                 message: "Chưa kí tự không phù hợp",
               },
               {
@@ -105,7 +245,12 @@ const AccountInfo = () => {
               },
             ]}
           >
-            <Input size="large" placeholder="Nhập địa chỉ" />
+            <Input
+              size="large"
+              placeholder="Nhập địa chỉ"
+              maxLength={100}
+              onChange={handleFieldChange}
+            />
           </Form.Item>
           <AddressInfo
             cityId={districtAndCity.cityId}
@@ -113,15 +258,17 @@ const AccountInfo = () => {
             onSelectCity={handleSelectCity}
             onSelectDistrict={handleSelectDistrict}
           />
-          <Form.Item>
-            <div className="flex justify-end">
-              <Button
-                className="text-white bg-primary-color px-9 py-3 rounded mt-6"
-                onClick={() => {}}
-              >
-                <span className="text-base">Lưu thay đổi</span>
-              </Button>
-            </div>
+          <Form.Item shouldUpdate>
+            {() => (
+              <div className="w-[170px] mr-0 ml-auto mt-6">
+                <IbuildButton
+                  prefix={<span>Lưu thay đổi</span>}
+                  type="submit"
+                  disabled={isSubmitDisabled || isLoading}
+                  isLoading={isLoading}
+                />
+              </div>
+            )}
           </Form.Item>
           <Form.Item>
             <div className="w-full">
@@ -132,9 +279,19 @@ const AccountInfo = () => {
                 <span>Nâng cấp tài khoản</span>
               </Button>
             </div>
+            <div></div>
           </Form.Item>
         </Form>
       </div>
+      <FormInputOtp
+        isOpen={isOpenOtpModal}
+        content={content}
+        error={errors}
+        onClose={handleCloseModal}
+        onSend={updateUserInfo}
+      />
+
+      {changeSuccess && <ChangeSuccess title="Thay đổi thành công" />}
     </div>
   );
 };

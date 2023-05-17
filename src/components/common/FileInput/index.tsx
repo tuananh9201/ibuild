@@ -4,6 +4,8 @@ import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { message, Upload } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
+import { importFile } from "@/lib/api";
+import { getSellImage } from "@/lib/utils";
 
 interface FileInputProps {
   typeImage: string[];
@@ -32,18 +34,18 @@ const beforeUpload = (file: RcFile, types: string[], size: number) => {
 const FileInput = ({ typeImage, size, setUrlImage }: FileInputProps) => {
   const [loading, setLoading] = useState(false);
 
-  const handleChange: UploadProps["onChange"] = (
-    info: UploadChangeParam<UploadFile>
-  ) => {
-    if (info.file.status === "uploading") {
-      setLoading(true);
-      return;
-    }
-    if (info.file.status === "done") {
-      getBase64(info.file.originFileObj as RcFile, (url) => {
-        setLoading(false);
-        setUrlImage(url);
-      });
+  const handleChange = async (options: any) => {
+    setLoading(true);
+    const { file } = options;
+
+    const formData = new FormData();
+    formData.append("file", file);
+    const res: any = await importFile(formData);
+    setLoading(false);
+
+    if (res?.status === 200) {
+      const imagePath = res?.data?.image_path || "";
+      setUrlImage(imagePath || "");
     }
   };
 
@@ -62,7 +64,7 @@ const FileInput = ({ typeImage, size, setUrlImage }: FileInputProps) => {
         className="avatar-uploader"
         showUploadList={false}
         beforeUpload={(file) => beforeUpload(file, typeImage, size)}
-        onChange={handleChange}
+        customRequest={handleChange}
       >
         {uploadButton}
       </Upload>

@@ -17,8 +17,6 @@ const AddressInfo = ({
   onSelectCity,
   onSelectDistrict,
 }: AddressInfoProps) => {
-  // state
-
   const { data: cities } = useSWR("address", getCities);
   const { data: districts } = useSWR(cityId, getDistricts);
 

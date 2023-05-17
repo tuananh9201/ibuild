@@ -72,3 +72,38 @@ export const changePasswordByToken = async (payload: { current_password: string,
     return error?.response?.data
   }
 }
+
+export const updateUser = async (payload: User) => {
+  const user: User = {
+    id: 0,
+    full_name: payload.full_name,
+    phone_number: payload.phone_number,
+    email: payload.email,
+    address: payload.address,
+    city_id: payload.city_id,
+    district_id: payload.district_id,
+    picture: payload.picture,
+    otp_code: payload.otp_code
+  }
+
+  const { id, ...data } = user
+
+  try {
+    const res = await api.put('/users/me', data)
+    console.log(res)
+    return res
+  } catch (error) {
+    console.warn(error)
+    return error
+  }
+}
+
+export const getUser = async (): Promise<User | null> => {
+  try {
+    const res = await api.get("/users/me");
+    return res?.data?.data
+  } catch (error) {
+    console.warn(error)
+    return null
+  }
+};
