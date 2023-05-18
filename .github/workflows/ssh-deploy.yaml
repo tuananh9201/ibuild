@@ -12,6 +12,7 @@ jobs:
         # check this thread to understand why its needed:
         # https://stackoverflow.com/a/70447517
         run: |
+          mkdir -p -m 0700 ~/.ssh
           install -m 600 -D /dev/null ~/.ssh/id_rsa
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           ssh-keyscan ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
