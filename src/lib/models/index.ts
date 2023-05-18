@@ -1,4 +1,4 @@
-export interface TreeOptionOriginModel {
+export interface SelectOptionModel {
     id: string;
     name: string;
 }

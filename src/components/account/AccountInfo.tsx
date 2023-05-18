@@ -1,4 +1,4 @@
-import { Form, Input, message } from "antd";
+import { Form, Input, Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import useSWRImmutable from "swr/immutable";
 
@@ -11,19 +11,32 @@ import AddressInfo from "./AddressInfo";
 import AvatarInfo from "./AvatarInfo";
 import ChangeSuccess from "./ChangeSuccess";
 import FormInputOtp from "./FormInputOtp";
-import { getSellImage } from "@/lib/utils";
+import { getBusinessServiceType, getJobs, getPositionJob } from "@/lib/api";
+import { SelectOptionModel } from "@/lib/models";
+
+interface AccountInfoProps {
+  onClick: () => void;
+}
 
 type ButtonProps = {
   children: React.ReactElement;
   className?: string;
-  onClick: Function;
+  onClick: () => void;
 };
 
 const Button = ({ children, className, onClick }: ButtonProps) => {
-  return <button className={className ? className : ""}>{children}</button>;
+  return (
+    <button
+      type="button"
+      className={className ? className : ""}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  );
 };
 
-const AccountInfo = () => {
+const AccountInfo = ({ onClick }: AccountInfoProps) => {
   const [form] = Form.useForm();
 
   // state
@@ -54,10 +67,14 @@ const AccountInfo = () => {
       }));
       setImage(data?.picture ? data.picture : "");
     },
-    onError: function (error) {
-      console.log(error);
-    },
+    onError: function (error) {},
   });
+  const { data: jobs } = useSWRImmutable("jobs", getJobs);
+  const { data: positions } = useSWRImmutable("positions", getPositionJob);
+  const { data: businessServiceType } = useSWRImmutable(
+    "businessServiceType",
+    getBusinessServiceType
+  );
 
   useEffect(() => {
     if (user) {
@@ -68,6 +85,7 @@ const AccountInfo = () => {
   }, [user]);
 
   const onFinish = async (values: any) => {
+    setIsLoading(true);
     const userInfo: User = {
       id: 0,
       full_name: values?.full_name,
@@ -85,6 +103,7 @@ const AccountInfo = () => {
     }));
 
     const res: any = await updateUser(userInfo);
+    setIsLoading(false);
     if (res?.response?.data?.status_code === 400) {
       setIsOpenOtpModal(true);
       res?.response?.data?.otp_type === "phone"
@@ -94,7 +113,6 @@ const AccountInfo = () => {
         setErrors(res?.response?.data?.message);
       }
     }
-    console.log(res?.data);
     if (res?.data?.status_code === 200) {
       setChangeSuccess(true);
     }
@@ -106,7 +124,6 @@ const AccountInfo = () => {
       otp_code: otp,
     };
     const res: any = await updateUser(userInfo);
-    console.log(res);
     if (res?.response?.data?.status_code === 400) {
       setErrors(res?.response?.data?.message);
     }
@@ -155,6 +172,7 @@ const AccountInfo = () => {
 
     const t = setTimeout(() => {
       setChangeSuccess(false);
+      window.location.reload();
     }, 5000);
 
     return () => {
@@ -165,6 +183,15 @@ const AccountInfo = () => {
   useEffect(() => {
     setIsSubmitDisabled(false);
   }, [image]);
+
+  // function get category
+  const getCategoryById = (id: string, options: SelectOptionModel[]) => {
+    if (!id) {
+      return "";
+    }
+    const option = options.find((op) => op.id === id);
+    return option?.name || "";
+  };
 
   return (
     <div>
@@ -184,7 +211,7 @@ const AccountInfo = () => {
             rules={[
               {
                 required: true,
-                message: "Tên không được để trống",
+                message: "Không được để trống",
               },
               {
                 pattern: /^[\p{L}\s]+$/u,
@@ -210,7 +237,6 @@ const AccountInfo = () => {
               () => ({
                 validator(rule, value) {
                   if (value) {
-                    console.log(validateOnlyNumber(value));
                     if (!validateOnlyNumber(value)) {
                       return Promise.reject(ERRORS.MSG011);
                     }
@@ -227,6 +253,65 @@ const AccountInfo = () => {
               onChange={handleFieldChange}
             />
           </Form.Item>
+          {user?.user_type && jobs && user.user_type === "expert" && (
+            <Form.Item label="Nghề nghiệp">
+              <Input
+                size="large"
+                value={getCategoryById(user.job_id || "", jobs)}
+                disabled
+              />
+            </Form.Item>
+          )}
+          {user?.user_type && positions && user.user_type === "expert" && (
+            <Form.Item label="Chức vụ">
+              <Input
+                size="large"
+                value={getCategoryById(user.position_id || "", positions)}
+                disabled
+              />
+            </Form.Item>
+          )}
+          {user?.user_type && user.user_type === "expert" && (
+            <Form.Item label="Doanh nghiệp">
+              <Input size="large" value={user.enterprise_name || ""} disabled />
+            </Form.Item>
+          )}
+          {user?.user_type && user.user_type === "expert" && (
+            <Form.Item
+              label={
+                <span className="text-left">
+                  Email doanh <br /> nghiệp
+                </span>
+              }
+            >
+              <Input
+                size="large"
+                value={user.enterprise_email || ""}
+                disabled
+              />
+            </Form.Item>
+          )}
+          {user?.user_type &&
+            businessServiceType &&
+            user.user_type === "expert" && (
+              <Form.Item
+                label={
+                  <span className="text-left">
+                    Loại hình dịch vụ <br /> doanh nghiệp
+                  </span>
+                }
+              >
+                <div>
+                  {user.business_type &&
+                    user.business_type.length > 0 &&
+                    user.business_type.map((bus) => (
+                      <Tag key={bus}>
+                        {getCategoryById(bus, businessServiceType)}
+                      </Tag>
+                    ))}
+                </div>
+              </Form.Item>
+            )}
           <Form.Item
             label="Email"
             name="email"
@@ -284,12 +369,14 @@ const AccountInfo = () => {
           </Form.Item>
           <Form.Item>
             <div className="w-full">
-              <Button
-                className="w-full bg-[#F8F9FF] border border-solid border-primary-color rounded py-3 pl-4 flex flex-start text-primary-color"
-                onClick={() => {}}
-              >
-                <span>Nâng cấp tài khoản</span>
-              </Button>
+              {user?.user_type && user.user_type !== "expert" && (
+                <Button
+                  className="w-full bg-[#F8F9FF] border border-solid border-primary-color rounded py-3 pl-4 flex flex-start text-primary-color"
+                  onClick={onClick}
+                >
+                  <span>Nâng cấp tài khoản</span>
+                </Button>
+              )}
             </div>
             <div></div>
           </Form.Item>

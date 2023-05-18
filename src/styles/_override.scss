@@ -340,6 +340,17 @@
       display: none !important;
     }
   }
+
+  .ant-tag {
+    padding: 16px 12px !important;
+    color: #333333;
+    font-size: 16px;
+    font-weight: 400;
+    border: none !important;
+    margin-bottom: 16px;
+    margin-inline-end: 16px;
+    border-radius: 8px;
+  }
 }
 
 .account-change-password {
@@ -392,4 +403,31 @@
 
 .avatar-uploader {
   text-align: center !important;
+}
+
+.upgrade-account {
+  .ant-input {
+    padding: 11px !important;
+  }
+
+  .ant-select-selector {
+    padding: 7px 11px !important;
+  }
+
+  .ant-select-selection-placeholder {
+    color: #333333 !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+  }
+
+  .ant-col {
+    width: auto !important;
+  }
+}
+
+.circle-checkbox {
+  .ant-checkbox-inner,
+  .ant-checkbox-input {
+    border-radius: 50% !important;
+  }
 }

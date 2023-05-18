@@ -21,9 +21,8 @@ const RenderImageError = ({
   const [url, setUrl] = useState(defaultImage);
 
   useEffect(() => {
-    if (image) {
-      setUrl(image);
-    }
+    setUrl(image || defaultImage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [image]);
 
   return (

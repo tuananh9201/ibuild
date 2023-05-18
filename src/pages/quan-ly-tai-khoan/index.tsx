@@ -37,6 +37,10 @@ const QuanLyTaiKhoan: NextPageWithLayout = () => {
     setCurrentTab(key);
   };
 
+  const handleUpgradeAccount = () => {
+    setIsOpenExpertModal(true);
+  };
+
   useEffect(() => {
     if (!query) return;
     if (query?.tab) {
@@ -66,11 +70,14 @@ const QuanLyTaiKhoan: NextPageWithLayout = () => {
           />
         </div>
         <div className="w-3/4 pt-14">
-          {currentTab === "1" && <AccountInfo />}
+          {currentTab === "1" && <AccountInfo onClick={handleUpgradeAccount} />}
           {currentTab === "3" && <ChangePassword />}
         </div>
 
-        <BecomeExpertModal isOpen={isOpenExpertModal} />
+        <BecomeExpertModal
+          isOpen={isOpenExpertModal}
+          onClose={setIsOpenExpertModal}
+        />
       </section>
     </>
   );

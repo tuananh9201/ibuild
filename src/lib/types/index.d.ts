@@ -84,10 +84,11 @@ export type User = {
   district_id?: string;
   job_id?: string;
   position_id?: string;
-  business_type?: string;
+  business_type?: string[];
   enterprise_name?: string;
   enterprise_email?: string;
-  otp_code?: string
+  otp_code?: string;
+  is_individual_business?: boolean
 };
 
 export type RulePassword = {

@@ -106,3 +106,23 @@ export const getUser = async (): Promise<User | null> => {
     return null
   }
 };
+
+export const updateBecomeExpert = async (payload: User) => {
+  let data: any
+  if (!payload.is_individual_business) {
+    const { enterprise_name, is_individual_business, business_type, job_id, position_id, enterprise_email } = payload
+    data = {
+      enterprise_name, is_individual_business, business_type, job_id, position_id, enterprise_email
+    }
+  } else {
+    const { enterprise_name, is_individual_business, business_type } = payload
+    data = { enterprise_name, is_individual_business, business_type }
+  }
+  try {
+    const res = await api.put('/users/me', data)
+    return res?.data
+  } catch (error) {
+    console.warn(error)
+    return error
+  }
+}

@@ -61,7 +61,6 @@ const FilterRelated = ({
   useEffect(() => {
     if (options) {
       const o = options.find((option) => option.id === defaultValue);
-      console.log(o?.value);
       setValueSelected(o?.value || placeHolder || "");
     }
 

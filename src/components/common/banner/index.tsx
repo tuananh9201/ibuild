@@ -8,7 +8,6 @@ interface BannerProps {
 }
 
 const Banner = ({ images }: BannerProps) => {
-  console.log(images);
   return (
     <div className="banner">
       <h3 className="text-text-color text-xl font-medium mb-6">
@@ -51,7 +50,6 @@ const Banner = ({ images }: BannerProps) => {
         slidesToSlide={1}
       >
         {images.map((image, idx) => {
-          console.log(getSellImage(image));
           return (
             <RenderImageError
               key={idx}
