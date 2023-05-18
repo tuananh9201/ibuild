@@ -16,16 +16,15 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
       - name: connect and pull
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /home/ibuild/frontend  && git pull && exit"
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{secrets.SSH_PORT}} "cd /home/ibuild/frontend  && git pull && exit"
       - name: install packages and clear build cache
-        script: |
+        run: |
           cd /home/ibuild/frontend
           npm install
           rm -rf .next
       - name: build
-        script: |
+        run: |
           cd /home/ibuild/frontend
           npm run build
       - name: deploy with pm2
-        script: |
-          pm2 restart all
+        run: pm2 restart all
