@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Cropper from "react-easy-crop";
 import { Area, Point } from "react-easy-crop/types";
 import { Slider } from "antd";
@@ -9,10 +9,17 @@ import {
   ReloadIcon,
   TrashCanIcon,
 } from "@/images/icons/product_types/icon_wrapper";
-import { Modal, FileInput } from "../common";
+import { Modal, FileInput, RenderImageError } from "../common";
 import { getCroppedImg } from "@/lib/hooks/useCropImage";
+import { importFile } from "@/lib/api";
+import { getSellImage } from "@/lib/utils";
 
-const AvatarInfo = () => {
+interface AvatarInfoProps {
+  url: string;
+  onChange: (url: string) => void;
+}
+
+const AvatarInfo = ({ url, onChange }: AvatarInfoProps) => {
   const [openModal, setOpenModal] = useState(false);
   const [image, setImage] = useState({
     imageSrc: "",
@@ -57,8 +64,29 @@ const AvatarInfo = () => {
   };
 
   const handleCropImage = async () => {
-    const res = await getCroppedImg(image.imageSrc, image.croppedAreaPixels, 0);
-    console.log(res);
+    const res: any = await getCroppedImg(
+      getSellImage(image.imageSrc),
+      image.croppedAreaPixels,
+      0
+    );
+
+    const { file } = res;
+
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      const r: any = await importFile(formData);
+
+      if (r?.status === 200) {
+        setImage((prev) => ({
+          ...prev,
+          zoom: 1,
+          imageSrc: r?.data?.image_path || "",
+        }));
+        onChange(r?.data?.image_path || "");
+        setOpenModal(false);
+      }
+    }
   };
 
   const handleGetUrlImage = (url: string) => {
@@ -69,7 +97,13 @@ const AvatarInfo = () => {
   };
 
   const handleDeleteAvatar = () => {
-    console.log("delete avatar");
+    setImage((prev) => ({
+      ...prev,
+      imageSrc: "",
+      zoom: 1,
+    }));
+    onChange("");
+    setDeleteAvatarModal(false);
   };
 
   // element
@@ -78,7 +112,7 @@ const AvatarInfo = () => {
       {image.imageSrc ? (
         <div className="relative min-h-[300px] mb-8 custom-crop-image">
           <Cropper
-            image={image.imageSrc}
+            image={image.imageSrc ? getSellImage(image.imageSrc) : ""}
             crop={image.crop}
             zoom={image.zoom}
             aspect={image.aspect}
@@ -145,9 +179,23 @@ const AvatarInfo = () => {
     </div>
   );
 
+  useEffect(() => {
+    setImage((prev) => ({
+      ...prev,
+      imageSrc: url || "",
+    }));
+  }, [url]);
+
   return (
     <div className="flex flex-row items-center gap-10">
-      <Image src={AvatarDefault} alt="avatar" />
+      <RenderImageError
+        defaultImage={AvatarDefault.src}
+        image={image.imageSrc ? getSellImage(image.imageSrc) : ""}
+        width={80}
+        height={80}
+        title="avatar"
+        className="object-cover rounded-full"
+      />
       <div>
         <p className="text-text-color font-medium text-base mb-2">Ảnh hồ sơ</p>
         <div className="flex flex-row items-center gap-5">

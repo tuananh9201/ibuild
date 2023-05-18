@@ -32,3 +32,20 @@ export const getCities = async (): Promise<IBaseModel[] | null> => {
   }
   return null
 }
+
+export const getDistricts = async (cityId: string): Promise<IBaseModel[] | null> => {
+  if (!cityId) return null
+  try {
+    const res = await axios.get(`/area/districst?city_id=${cityId}`)
+    return res?.data?.data.map((item: any) => {
+      return {
+        id: item.id,
+        value: item.name,
+        slug: item.code
+      }
+    })
+  } catch (error) {
+    console.warn(error)
+  }
+  return null
+}

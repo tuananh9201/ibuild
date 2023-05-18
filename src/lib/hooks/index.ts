@@ -114,3 +114,13 @@ export const getRangeAddress = (address: IAddresses[] | undefined, showWards: bo
     })
     return names
 }
+
+export const convertUserName = (name: string): string => {
+    if (!name) return ''
+    const words = name.split('')
+
+    const convertedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+
+    const convertedString = convertedWords.join(' ');
+    return convertedString;
+}

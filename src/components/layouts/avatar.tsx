@@ -13,6 +13,10 @@ import {
   useIcon,
   userAvata,
 } from "@/constants/images";
+import {
+  HeartBgWhiteIcon,
+  StarIcon,
+} from "@/images/icons/product_types/icon_wrapper";
 interface IUserAvatarProps {
   user: User;
 }
@@ -39,15 +43,6 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
       },
     });
   };
-  const handleCheck = (value: boolean) => {
-    if (value) {
-      localStorage.setItem("user_type", "expert");
-      window.dispatchEvent(new Event("storage"));
-    } else {
-      localStorage.setItem("user_type", "user");
-      window.dispatchEvent(new Event("storage"));
-    }
-  };
 
   const name = props.user.full_name || props.user.email || "Nguyễn Văn A";
   let displayName = name.substring(0, 13);
@@ -57,9 +52,14 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
     {
       key: "1",
       label: (
-        <div className="flex gap-2 w-full p-2">
+        <div
+          className="flex gap-2 w-full p-2"
+          onClick={() => {
+            router.push("/quan-ly-tai-khoan");
+          }}
+        >
           <Image width={20} height={20} src={useIcon} alt="" />
-          <span>Thông tin tài khoản</span>
+          <span>Quản lý tài khoản</span>
         </div>
       ),
     },
@@ -69,12 +69,14 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
     {
       key: "2",
       label: (
-        <div className="flex gap-4 w-full p-2">
-          <span>Chuyên gia </span>
-          <Switch
-            defaultChecked={userRole === "expert"}
-            onChange={handleCheck}
-          />
+        <div
+          className="flex gap-2 w-full p-2 items-center"
+          onClick={() => {
+            router.push("/quan-ly-tai-khoan?tab=2");
+          }}
+        >
+          <HeartBgWhiteIcon className="fill-[#323232]" />
+          <span>Danh sách theo dõi</span>
         </div>
       ),
     },
@@ -83,6 +85,20 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
     },
     {
       key: "3",
+      label: (
+        <div
+          className="flex gap-2 w-full p-2 items-center"
+          onClick={() => {
+            router.push("/quan-ly-tai-khoan?openModal=true");
+          }}
+        >
+          <StarIcon className="fill-[#323232]" />
+          <span>Nâng cấp tài khoản</span>
+        </div>
+      ),
+    },
+    {
+      key: "4",
       onClick: () => {
         handleLougout();
       },
@@ -94,19 +110,6 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
       ),
     },
   ];
-
-  React.useEffect(() => {
-    const handleChangeStorage = () => {
-      const newRole = localStorage.getItem("user_type");
-      if (newRole) {
-        setUserRole(newRole);
-      }
-    };
-
-    window.addEventListener("storage", handleChangeStorage);
-
-    return () => window.removeEventListener("storage", handleChangeStorage);
-  }, []);
 
   React.useEffect(() => {
     const userType = localStorage.getItem("user_type");

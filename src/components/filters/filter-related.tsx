@@ -10,9 +10,10 @@ interface ItemFilter {
 
 interface FilterRelatedProps {
   placeHolder?: string;
-  defaultValue?: number;
+  defaultValue?: any;
   options?: ItemFilter[];
   reset?: boolean;
+  onClick?: (id: string) => void;
   onSelect: (value: number) => void;
 }
 
@@ -20,17 +21,12 @@ const FilterRelated = ({
   placeHolder,
   defaultValue,
   options,
+  onClick,
   onSelect,
   reset,
 }: FilterRelatedProps) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const [valueSelected, setValueSelected] = useState(() => {
-    return options && defaultValue
-      ? options.find((option) => option.id === defaultValue)?.value
-      : placeHolder
-      ? placeHolder
-      : "Lựa chọn";
-  });
+  const [valueSelected, setValueSelected] = useState("");
 
   const selectElement = useRef<HTMLDivElement>(null);
 
@@ -44,11 +40,15 @@ const FilterRelated = ({
     () => window.removeEventListener("click", () => {});
   }, []);
 
-  const handleSelectValue = (id: number) => {
+  const handleSelectValue = (id: number | string) => {
     setIsOpenMenu(false);
     const value = options?.find((option) => option.id === id)?.value;
-    setValueSelected(value);
-    onSelect(id);
+    setValueSelected(value || "");
+    if (onClick) {
+      onClick(id as string);
+      return;
+    }
+    onSelect(id as number);
   };
   useEffect(() => {
     if (reset) {
@@ -57,6 +57,16 @@ const FilterRelated = ({
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset]);
+
+  useEffect(() => {
+    if (options) {
+      const o = options.find((option) => option.id === defaultValue);
+      console.log(o?.value);
+      setValueSelected(o?.value || placeHolder || "");
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [options, defaultValue]);
 
   return (
     <div className="relative min-w-[205px]">
@@ -83,7 +93,7 @@ const FilterRelated = ({
         </span>
       </div>
       {isOpenMenu && (
-        <div className="absolute transition z-10 w-full bg-white border border-solid border-primary-color rounded-b-lg">
+        <div className="absolute transition z-10 w-full bg-white border border-solid border-primary-color rounded-b-lg max-h-96 overflow-y-auto">
           <ul className="font-roboto font-normal text-base leading-[calc(24 / 16)] text-text-color cursor-pointer">
             {options &&
               options.map((option) => (

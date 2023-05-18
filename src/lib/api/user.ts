@@ -1,6 +1,7 @@
+
 import { User } from "src/lib/types";
-import api from "./api";
 import { SearchResultModel } from "../models";
+import api from "./api";
 
 export const authWithAccessToken = async (): Promise<User | undefined> => {
   const resp = await api.get("/users/me");
@@ -61,3 +62,47 @@ export const deleteSearchHistory = async (id: string) => {
     console.warn(error)
   }
 }
+
+export const changePasswordByToken = async (payload: { current_password: string, new_password: string }) => {
+  try {
+    const res = await api.put('/users/change-password/', payload)
+    return res
+  } catch (error: any) {
+    console.warn(error)
+    return error?.response?.data
+  }
+}
+
+export const updateUser = async (payload: User) => {
+  const user: User = {
+    id: 0,
+    full_name: payload.full_name,
+    phone_number: payload.phone_number,
+    email: payload.email,
+    address: payload.address,
+    city_id: payload.city_id,
+    district_id: payload.district_id,
+    picture: payload.picture,
+    otp_code: payload.otp_code
+  }
+
+  const { id, ...data } = user
+
+  try {
+    const res = await api.put('/users/me', data)
+    return res
+  } catch (error) {
+    console.warn(error)
+    return error
+  }
+}
+
+export const getUser = async (): Promise<User | null> => {
+  try {
+    const res = await api.get("/users/me");
+    return res?.data?.data
+  } catch (error) {
+    console.warn(error)
+    return null
+  }
+};

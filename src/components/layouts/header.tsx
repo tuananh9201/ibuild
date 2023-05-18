@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { Drawer } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import { Drawer } from "antd";
 import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import UserAvatar from "./avatar";
-import useUser from "src/lib/hooks/user";
 import { arrowBackIos, logo, menuIcon } from "@/constants/images";
 import { setToken } from "src/lib/api/api";
+import useUser from "src/lib/hooks/user";
 import { login } from "src/store/features/auth/auth";
 import { RootState } from "src/store/store";
+import UserAvatar from "./avatar";
 const menus = [
   {
     name: "Sản phẩm",

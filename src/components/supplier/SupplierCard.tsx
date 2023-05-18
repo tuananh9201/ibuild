@@ -129,7 +129,9 @@ const SupplierCard = ({ supplier, categoryId }: SupplierCardProps) => {
           </div>
         </div>
         <Link
-          href={`/nha-cung-cap/${supplier.slug}`}
+          href={`/nha-cung-cap/${supplier.slug}?tab=2${
+            categoryId ? `&category=${categoryId}` : ""
+          }`}
           className="mt-4 text-primary-color text-base leading-[150%] font-medium"
         >
           <span>Xem chi tiết</span>

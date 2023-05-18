@@ -466,29 +466,34 @@ export const TrashCanIcon = ({ className }: IconProps) => {
   );
 };
 
-export const CloseIcon = () => {
+export const CloseIcon = ({ className }: IconProps) => {
   return (
     <svg
-      width="9"
-      height="8"
-      viewBox="0 0 9 8"
+      width="18"
+      height="18"
+      viewBox="0 0 18 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M7.63055 1L1.63055 7"
-        stroke="#CCCCCC"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        d="M17.4 0.613295C16.88 0.0932946 16.04 0.0932946 15.52 0.613295L8.99996 7.11996L2.47996 0.599961C1.95996 0.0799609 1.11996 0.0799609 0.599961 0.599961C0.0799609 1.11996 0.0799609 1.95996 0.599961 2.47996L7.11996 8.99996L0.599961 15.52C0.0799609 16.04 0.0799609 16.88 0.599961 17.4C1.11996 17.92 1.95996 17.92 2.47996 17.4L8.99996 10.88L15.52 17.4C16.04 17.92 16.88 17.92 17.4 17.4C17.92 16.88 17.92 16.04 17.4 15.52L10.88 8.99996L17.4 2.47996C17.9066 1.97329 17.9066 1.11996 17.4 0.613295Z"
+        fill="black"
       />
-      <path
-        d="M1.63055 1L7.63055 7"
-        stroke="#CCCCCC"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+    </svg>
+  );
+};
+
+export const StarIcon = ({ className }: IconProps) => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <path d="M8.00001 12.8916L12.3083 15.4916C12.625 15.6833 13.0167 15.4 12.9333 15.0416L11.7917 10.1416L15.5917 6.84998C15.8667 6.60831 15.725 6.14998 15.35 6.11664L10.3417 5.69164L8.38334 1.07498C8.24167 0.733309 7.75834 0.733309 7.61667 1.07498L5.65834 5.69164L0.650006 6.11664C0.283339 6.14998 0.133339 6.60831 0.416672 6.84998L4.21667 10.1416L3.07501 15.0416C2.99167 15.4 3.38334 15.6833 3.70001 15.4916L8.00001 12.8916Z" />
     </svg>
   );
 };

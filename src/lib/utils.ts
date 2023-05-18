@@ -34,3 +34,25 @@ export const getSellImage = (name: string): string => {
   }
   return ''
 }
+
+
+
+export const validateOnlyNumber = (str: string) => {
+  const regex = /^\d+$/;
+  if (str?.length === 0) return true
+
+  const newStr = str.trim().replace(/\s/g, "")
+
+  let output: string = ''
+  if (newStr.startsWith('0')) {
+    output = newStr
+  } else if (newStr.startsWith('84')) {
+    output = newStr.slice(3)
+  } else {
+    output = ''
+  }
+
+  const isValid = regex.test(output);
+
+  return isValid
+}

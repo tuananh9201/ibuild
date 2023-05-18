@@ -5,19 +5,23 @@ import { motion } from "framer-motion";
 import { ChangePassSuccessImage } from "@/constants/images";
 import { Modal } from "@/components/common";
 
-const UpdateAvatar = () => {
+interface ChangeSuccessProps {
+  title: string;
+}
+
+const ChangeSuccess = ({ title }: ChangeSuccessProps) => {
   const bodyContent = (
-    <motion.div>
+    <motion.div className="flex flex-col items-center justify-center h-[450px]">
       <div className="w-full text-center flex justify-center items-center">
         <Image
           src={ChangePassSuccessImage}
-          alt="thay doi mat khau thanh cong"
+          alt={title}
           priority={true}
           className="w-fit"
         />
       </div>
-      <p className="mt-6 font-normal text-base text-[#333333] leading-6">
-        Thay đổi thành công
+      <p className="mt-6 font-normal text-base text-[#333333] leading-6 text-center">
+        {title}
       </p>
     </motion.div>
   );
@@ -25,4 +29,4 @@ const UpdateAvatar = () => {
   return <Modal isOpen body={bodyContent} />;
 };
 
-export default memo(UpdateAvatar);
+export default memo(ChangeSuccess);
