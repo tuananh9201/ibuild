@@ -17,9 +17,10 @@ import { getSellImage } from "@/lib/utils";
 interface AvatarInfoProps {
   url: string;
   onChange: (url: string) => void;
+  onChangeImage: Function;
 }
 
-const AvatarInfo = ({ url, onChange }: AvatarInfoProps) => {
+const AvatarInfo = ({ url, onChange, onChangeImage }: AvatarInfoProps) => {
   const [openModal, setOpenModal] = useState(false);
   const [image, setImage] = useState({
     imageSrc: "",
@@ -34,6 +35,7 @@ const AvatarInfo = ({ url, onChange }: AvatarInfoProps) => {
     },
   });
   const [deleteAvatarModal, setDeleteAvatarModal] = useState(false);
+  const [disableChangeImage, setDisableChangeImage] = useState(true);
 
   // function
   const onCropChange = (crop: Point) => {
@@ -85,6 +87,7 @@ const AvatarInfo = ({ url, onChange }: AvatarInfoProps) => {
         }));
         onChange(r?.data?.image_path || "");
         setOpenModal(false);
+        onChangeImage(false);
       }
     }
   };
@@ -94,6 +97,7 @@ const AvatarInfo = ({ url, onChange }: AvatarInfoProps) => {
       ...prev,
       imageSrc: url,
     }));
+    setDisableChangeImage(false);
   };
 
   const handleDeleteAvatar = () => {
@@ -104,6 +108,7 @@ const AvatarInfo = ({ url, onChange }: AvatarInfoProps) => {
     }));
     onChange("");
     setDeleteAvatarModal(false);
+    onChangeImage(false);
   };
 
   // element
@@ -149,7 +154,7 @@ const AvatarInfo = ({ url, onChange }: AvatarInfoProps) => {
         <button
           className="text-white font-medium text-base w-[150px] py-3 rounded bg-primary-color"
           onClick={handleCropImage}
-          disabled={!image.imageSrc}
+          disabled={disableChangeImage}
         >
           Thay ảnh
         </button>

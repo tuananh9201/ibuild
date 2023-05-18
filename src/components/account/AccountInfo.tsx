@@ -180,10 +180,6 @@ const AccountInfo = ({ onClick }: AccountInfoProps) => {
     };
   }, [changeSuccess]);
 
-  useEffect(() => {
-    setIsSubmitDisabled(false);
-  }, [image]);
-
   // function get category
   const getCategoryById = (id: string, options: SelectOptionModel[]) => {
     if (!id) {
@@ -195,7 +191,11 @@ const AccountInfo = ({ onClick }: AccountInfoProps) => {
 
   return (
     <div>
-      <AvatarInfo url={image} onChange={setImage} />
+      <AvatarInfo
+        url={image}
+        onChange={setImage}
+        onChangeImage={setIsSubmitDisabled}
+      />
       <div className="account-info mt-9">
         <Form
           layout="horizontal"
