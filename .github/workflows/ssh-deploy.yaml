@@ -12,11 +12,9 @@ jobs:
         # check this thread to understand why its needed:
         # https://stackoverflow.com/a/70447517
         run: |
-          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          mkdir -p ~/.ssh/
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          touch ~/.ssh/known_hosts
-          chmod 600 ~/.ssh/known_hosts
-          ssh-keyscan -t rsa -H ${{ secrets.SSH_HOST }}
+          ssh-keyscan -p ${{secrets.SSH_PORT}} {{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
       - name: connect and pull
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{secrets.SSH_PORT}} "cd /home/ibuild/frontend  && git pull && exit"
       - name: install packages and clear build cache
