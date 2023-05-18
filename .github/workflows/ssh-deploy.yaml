@@ -17,15 +17,5 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -p ${{secrets.SSH_PORT}} ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
       - name: connect and pull
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{secrets.SSH_PORT}} "cd /home/ibuild/frontend  && git pull && exit"
-      - name: install packages and clear build cache
-        run: |
-          cd /home/ibuild/frontend
-          npm install
-          rm -rf .next
-      - name: build
-        run: |
-          cd /home/ibuild/frontend
-          npm run build
-      - name: deploy with pm2
-        run: pm2 restart all
+        # run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{secrets.SSH_PORT}} "cd /home/ibuild/frontend  && git pull && exit"
+        run: ssh -i /home/runner/.ssh/id_rsa -p ${{secrets.SSH_PORT}} -o "StrictHostKeyChecking=no" ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /home/ibuild/frontend && git pull && npm install && rm -rf .next && npm run build && pm2 restart all"
