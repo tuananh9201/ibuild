@@ -1,15 +1,16 @@
-import { ReactElement, useState, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-
-import { NextPageWithLayout } from "../_app";
-import MainLayout from "@/components/main-layout";
+import { ReactElement, useEffect, useState } from "react";
 import { Tabs } from "antd";
+
 import {
   AccountInfo,
   BecomeExpertModal,
   ChangePassword,
+  WatchList,
 } from "@/components/account";
+import MainLayout from "@/components/main-layout";
+import { NextPageWithLayout } from "../_app";
 
 const TABS_NAME = [
   {
@@ -30,7 +31,7 @@ const QuanLyTaiKhoan: NextPageWithLayout = () => {
   const router = useRouter();
   const { query } = router;
 
-  const [currentTab, setCurrentTab] = useState("1");
+  const [currentTab, setCurrentTab] = useState("2");
   const [isOpenExpertModal, setIsOpenExpertModal] = useState(false);
 
   const handleOnchangeTab = (key: string) => {
@@ -71,6 +72,7 @@ const QuanLyTaiKhoan: NextPageWithLayout = () => {
         </div>
         <div className="w-3/4 pt-14">
           {currentTab === "1" && <AccountInfo onClick={handleUpgradeAccount} />}
+          {currentTab === "2" && <WatchList />}
           {currentTab === "3" && <ChangePassword />}
         </div>
 

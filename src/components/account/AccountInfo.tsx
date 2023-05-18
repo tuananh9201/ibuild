@@ -3,7 +3,9 @@ import React, { useEffect, useState } from "react";
 import useSWRImmutable from "swr/immutable";
 
 import { ERRORS } from "@/constants/msg";
+import { getBusinessServiceType, getJobs, getPositionJob } from "@/lib/api";
 import { getUser, updateUser } from "@/lib/api/user";
+import { SelectOptionModel } from "@/lib/models";
 import { User } from "@/lib/types";
 import { validateOnlyNumber } from "@/lib/utils";
 import { IbuildButton } from "../common";
@@ -11,8 +13,6 @@ import AddressInfo from "./AddressInfo";
 import AvatarInfo from "./AvatarInfo";
 import ChangeSuccess from "./ChangeSuccess";
 import FormInputOtp from "./FormInputOtp";
-import { getBusinessServiceType, getJobs, getPositionJob } from "@/lib/api";
-import { SelectOptionModel } from "@/lib/models";
 
 interface AccountInfoProps {
   onClick: () => void;
@@ -67,7 +67,9 @@ const AccountInfo = ({ onClick }: AccountInfoProps) => {
       }));
       setImage(data?.picture ? data.picture : "");
     },
-    onError: function (error) {},
+    onError: function (error) {
+      console.log(error);
+    },
   });
   const { data: jobs } = useSWRImmutable("jobs", getJobs);
   const { data: positions } = useSWRImmutable("positions", getPositionJob);

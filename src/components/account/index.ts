@@ -1,11 +1,7 @@
 export { default as AccountInfo } from './AccountInfo'
 export { default as AddressInfo } from './AddressInfo'
-
-//password
 export { default as ChangePassword } from './ChangePassword'
-
-// notify
-export { default as ChangeSuccess } from './ChangeSuccess'
-
-// expert
 export { default as BecomeExpertModal } from './BecomeExpertModal'
+export { default as WatchList } from './WatchList'
+export { default as WatchListProduct } from './WatchListProduct'
+export { default as ChangeSuccess } from './ChangeSuccess'
