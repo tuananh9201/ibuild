@@ -90,7 +90,6 @@ export const updateUser = async (payload: User) => {
 
   try {
     const res = await api.put('/users/me', data)
-    console.log(res)
     return res
   } catch (error) {
     console.warn(error)

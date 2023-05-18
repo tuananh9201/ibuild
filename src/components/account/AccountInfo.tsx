@@ -1,4 +1,4 @@
-import { Form, Input } from "antd";
+import { Form, Input, message } from "antd";
 import React, { useEffect, useState } from "react";
 import useSWRImmutable from "swr/immutable";
 
@@ -11,6 +11,7 @@ import AddressInfo from "./AddressInfo";
 import AvatarInfo from "./AvatarInfo";
 import ChangeSuccess from "./ChangeSuccess";
 import FormInputOtp from "./FormInputOtp";
+import { getSellImage } from "@/lib/utils";
 
 type ButtonProps = {
   children: React.ReactElement;
@@ -51,6 +52,7 @@ const AccountInfo = () => {
         cityId: data?.city_id || "",
         districtId: data?.district_id || "",
       }));
+      setImage(data?.picture ? data.picture : "");
     },
     onError: function (error) {
       console.log(error);
@@ -91,6 +93,10 @@ const AccountInfo = () => {
       if (res?.response?.data?.message) {
         setErrors(res?.response?.data?.message);
       }
+    }
+    console.log(res?.data);
+    if (res?.data?.status_code === 200) {
+      setChangeSuccess(true);
     }
   };
 
@@ -155,6 +161,10 @@ const AccountInfo = () => {
       clearTimeout(t);
     };
   }, [changeSuccess]);
+
+  useEffect(() => {
+    setIsSubmitDisabled(false);
+  }, [image]);
 
   return (
     <div>
