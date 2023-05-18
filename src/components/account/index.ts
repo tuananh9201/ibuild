@@ -6,3 +6,6 @@ export { default as ChangePassword } from './ChangePassword'
 
 // notify
 export { default as ChangeSuccess } from './ChangeSuccess'
+
+// expert
+export { default as BecomeExpertModal } from './BecomeExpertModal'

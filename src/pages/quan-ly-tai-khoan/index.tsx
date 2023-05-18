@@ -1,10 +1,15 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useState, useEffect } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 import { NextPageWithLayout } from "../_app";
 import MainLayout from "@/components/main-layout";
 import { Tabs } from "antd";
-import { AccountInfo, ChangePassword } from "@/components/account";
+import {
+  AccountInfo,
+  BecomeExpertModal,
+  ChangePassword,
+} from "@/components/account";
 
 const TABS_NAME = [
   {
@@ -22,11 +27,25 @@ const TABS_NAME = [
 ];
 
 const QuanLyTaiKhoan: NextPageWithLayout = () => {
+  const router = useRouter();
+  const { query } = router;
+
   const [currentTab, setCurrentTab] = useState("1");
+  const [isOpenExpertModal, setIsOpenExpertModal] = useState(false);
 
   const handleOnchangeTab = (key: string) => {
     setCurrentTab(key);
   };
+
+  useEffect(() => {
+    if (!query) return;
+    if (query?.tab) {
+      setCurrentTab(query.tab as string);
+    }
+    if (query?.openModal) {
+      setIsOpenExpertModal(true);
+    }
+  }, [query]);
 
   return (
     <>
@@ -39,7 +58,7 @@ const QuanLyTaiKhoan: NextPageWithLayout = () => {
             Quản lý tài khoản
           </h2>
           <Tabs
-            defaultActiveKey={currentTab}
+            activeKey={currentTab}
             centered
             items={TABS_NAME}
             onChange={handleOnchangeTab}
@@ -50,6 +69,8 @@ const QuanLyTaiKhoan: NextPageWithLayout = () => {
           {currentTab === "1" && <AccountInfo />}
           {currentTab === "3" && <ChangePassword />}
         </div>
+
+        <BecomeExpertModal isOpen={isOpenExpertModal} />
       </section>
     </>
   );

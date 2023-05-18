@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Form, Input, message } from "antd";
-import useSWR from "swr";
+import { Form, Input } from "antd";
+import React, { useEffect, useState } from "react";
+import useSWRImmutable from "swr/immutable";
 
-import AvatarInfo from "./AvatarInfo";
-import useUser from "@/lib/hooks/user";
-import AddressInfo from "./AddressInfo";
-import { IbuildButton } from "../common";
-import { validateOnlyNumber } from "@/lib/utils";
-import { User } from "@/lib/types";
-import { getUser, updateUser } from "@/lib/api/user";
 import { ERRORS } from "@/constants/msg";
-import FormInputOtp from "./FormInputOtp";
+import { getUser, updateUser } from "@/lib/api/user";
+import { User } from "@/lib/types";
+import { validateOnlyNumber } from "@/lib/utils";
+import { IbuildButton } from "../common";
+import AddressInfo from "./AddressInfo";
+import AvatarInfo from "./AvatarInfo";
 import ChangeSuccess from "./ChangeSuccess";
+import FormInputOtp from "./FormInputOtp";
 
 type ButtonProps = {
   children: React.ReactElement;
@@ -45,13 +44,16 @@ const AccountInfo = () => {
   const [errors, setErrors] = useState("");
   const [changeSuccess, setChangeSuccess] = useState(false);
 
-  const { data: user } = useSWR("ss", getUser, {
+  const { data: user } = useSWRImmutable("ss", getUser, {
     onSuccess: function (data) {
       setDistrictAndCity((prev) => ({
         ...prev,
         cityId: data?.city_id || "",
         districtId: data?.district_id || "",
       }));
+    },
+    onError: function (error) {
+      console.log(error);
     },
   });
 

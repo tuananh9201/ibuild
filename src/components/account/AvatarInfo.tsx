@@ -97,7 +97,13 @@ const AvatarInfo = ({ url, onChange }: AvatarInfoProps) => {
   };
 
   const handleDeleteAvatar = () => {
-    console.log("delete avatar");
+    setImage((prev) => ({
+      ...prev,
+      imageSrc: "",
+      zoom: 1,
+    }));
+    onChange("");
+    setDeleteAvatarModal(false);
   };
 
   // element

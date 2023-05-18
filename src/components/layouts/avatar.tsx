@@ -13,6 +13,10 @@ import {
   useIcon,
   userAvata,
 } from "@/constants/images";
+import {
+  HeartBgWhiteIcon,
+  StarIcon,
+} from "@/images/icons/product_types/icon_wrapper";
 interface IUserAvatarProps {
   user: User;
 }
@@ -48,9 +52,14 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
     {
       key: "1",
       label: (
-        <div className="flex gap-2 w-full p-2">
+        <div
+          className="flex gap-2 w-full p-2"
+          onClick={() => {
+            router.push("/quan-ly-tai-khoan");
+          }}
+        >
           <Image width={20} height={20} src={useIcon} alt="" />
-          <span>Thông tin tài khoản</span>
+          <span>Quản lý tài khoản</span>
         </div>
       ),
     },
@@ -60,8 +69,13 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
     {
       key: "2",
       label: (
-        <div className="flex gap-2 w-full p-2">
-          <Image width={20} height={20} src={useIcon} alt="" />
+        <div
+          className="flex gap-2 w-full p-2 items-center"
+          onClick={() => {
+            router.push("/quan-ly-tai-khoan?tab=2");
+          }}
+        >
+          <HeartBgWhiteIcon className="fill-[#323232]" />
           <span>Danh sách theo dõi</span>
         </div>
       ),
@@ -72,8 +86,13 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
     {
       key: "3",
       label: (
-        <div className="flex gap-2 w-full p-2">
-          <Image width={20} height={20} src={useIcon} alt="" />
+        <div
+          className="flex gap-2 w-full p-2 items-center"
+          onClick={() => {
+            router.push("/quan-ly-tai-khoan?openModal=true");
+          }}
+        >
+          <StarIcon className="fill-[#323232]" />
           <span>Nâng cấp tài khoản</span>
         </div>
       ),
