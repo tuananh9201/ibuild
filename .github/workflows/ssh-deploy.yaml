@@ -13,9 +13,8 @@ jobs:
         # https://stackoverflow.com/a/70447517
         run: |
           install -m 600 -D /dev/null ~/.ssh/id_rsa
-          ssh-keyscan "${{ secrets.SSH_HOST }}" > ~/.ssh/known_hosts
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          ssh-add ~/.ssh/id_rsa
+          ssh-keyscan ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
       - name: connect and pull
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{secrets.SSH_PORT}} "cd /home/ibuild/frontend  && git pull && exit"
       - name: install packages and clear build cache
