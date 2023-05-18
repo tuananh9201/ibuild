@@ -20,9 +20,9 @@ jobs:
           cat ~/.ssh/known_hosts
           cat >>~/.ssh/config <<END
           Host staging
-            HostName $SSH_HOST
-            User $SSH_USER
-            IdentityFile ~/.ssh/staging.key
+            HostName ${{ secrets.SSH_HOST }}
+            User ${{ secrets.SSH_USER }}
+            IdentityFile ~/.ssh/id_rsa
             StrictHostKeyChecking no
           END
       - name: connect and pull
