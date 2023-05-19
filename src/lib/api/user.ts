@@ -1,7 +1,8 @@
 
-import { User } from "src/lib/types";
+import { Product, ResponseSearchProduct, User } from "src/lib/types";
 import { SearchResultModel } from "../models";
 import api from "./api";
+import { convertUserName } from "../hooks";
 
 export const authWithAccessToken = async (): Promise<User | undefined> => {
   const resp = await api.get("/users/me");
@@ -76,7 +77,7 @@ export const changePasswordByToken = async (payload: { current_password: string,
 export const updateUser = async (payload: User) => {
   const user: User = {
     id: 0,
-    full_name: payload.full_name,
+    full_name: convertUserName(payload.full_name),
     phone_number: payload.phone_number,
     email: payload.email,
     address: payload.address,
@@ -125,4 +126,14 @@ export const updateBecomeExpert = async (payload: User) => {
     console.warn(error)
     return error
   }
+}
+
+export const getWatchListProduct = async (params: { limit: number, skip: number }): Promise<ResponseSearchProduct | null> => {
+  try {
+    const res = await api.get(`/bookmark/by-me/?limit=${params.limit}&skip=${params.skip}`)
+    return res?.data?.data
+  } catch (error) {
+    console.warn(error)
+  }
+  return null
 }

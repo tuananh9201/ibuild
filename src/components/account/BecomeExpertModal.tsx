@@ -1,13 +1,13 @@
+import { Checkbox, Form, Input, Select } from "antd";
 import { useEffect, useState } from "react";
-import { Form, Input, Checkbox, Select } from "antd";
 import useSWRImmutable from "swr/immutable";
 
 import { IbuildButton, Modal } from "../common";
 
-import type { CheckboxChangeEvent } from "antd/es/checkbox";
 import { getBusinessServiceType, getJobs, getPositionJob } from "@/lib/api";
 import { updateBecomeExpert } from "@/lib/api/user";
 import { User } from "@/lib/types";
+import type { CheckboxChangeEvent } from "antd/es/checkbox";
 import ChangeSuccess from "./ChangeSuccess";
 interface BecomeExpertModalProps {
   isOpen: boolean;
@@ -34,6 +34,7 @@ const BecomeExpertModal = ({ isOpen, onClose }: BecomeExpertModalProps) => {
 
   const onChangeCheckbox = (e: CheckboxChangeEvent) => {
     setIsCheckbox(e.target.checked);
+    form.resetFields(["job_id", "position_id", "enterprise_email"]);
   };
 
   const onFinish = async (values: any) => {
@@ -88,7 +89,7 @@ const BecomeExpertModal = ({ isOpen, onClose }: BecomeExpertModalProps) => {
           rules={[
             {
               pattern: /^[\p{L}\d&\s]+$/u,
-              message: "Tên doanh nghiệp có độ dài từ 13 đến 100 ký tự",
+              message: "Tên doanh nghiệp không được chứa ký tự đặc biệt",
             },
             {
               min: 13,

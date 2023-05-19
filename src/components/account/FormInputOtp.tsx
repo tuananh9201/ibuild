@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { createRef, useEffect, useState } from "react";
+import { createRef, useEffect, useState, useRef } from "react";
 
 import { IbuildButton, Modal } from "@/components/common";
 import IBuildText from "@/images/iBuildText.png";
@@ -20,6 +20,9 @@ const FormInputOtp = ({
   error,
   onSend,
 }: FormInputOtpProps) => {
+  // ref
+  const intervalId = useRef<any>();
+
   // state
   const [isLoading, setIsLoading] = useState(false);
   const [otp, setOtp] = useState("");
@@ -52,10 +55,11 @@ const FormInputOtp = ({
   };
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
+    intervalId.current = setInterval(() => {
       setTimeRemaining((prevTime) => {
+        console.log(prevTime);
         if (prevTime === 0) {
-          clearInterval(intervalId);
+          clearInterval(intervalId.current);
           setErrors((prev) => ({
             ...prev,
             buttonSubmit: "Mã xác nhận hết hiệu lực",
@@ -66,7 +70,7 @@ const FormInputOtp = ({
         }
       });
     }, 1000);
-    return () => clearInterval(intervalId);
+    return () => clearInterval(intervalId.current);
   }, [timeRemaining]);
 
   useEffect(() => {
@@ -75,6 +79,7 @@ const FormInputOtp = ({
         ...prev,
         buttonSubmit: "",
       }));
+      clearInterval(intervalId.current);
       return;
     }
     setTimeRemaining(10 * 60);

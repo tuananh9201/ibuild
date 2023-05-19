@@ -33,7 +33,6 @@ export const getListMostRelevantProduct = async (payload: { product_name: string
   try {
     const res = await axios.get(`/products/most-relevant/?product_name=${payload.product_name}&product_id=${payload.product_id}&skip=${payload.skip}&limit=${payload.limit}`)
     return res.data?.data?.data || []
-    return []
   } catch (error) {
     console.warn(error)
     return []

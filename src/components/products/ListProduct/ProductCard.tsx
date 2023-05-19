@@ -6,18 +6,13 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import { Button } from "@/components/common";
-import { locationIcon, productLogo } from "@/images";
+import { productLogo } from "@/images";
 import defaultProductImage from "@/images/default_product_image.png";
 import {
   HeartIcon,
   PhoneIcon,
 } from "@/images/icons/product_types/icon_wrapper";
-import {
-  FormatNumber,
-  getAddress,
-  getRangeAddress,
-  getRangeQuantity,
-} from "@/lib/hooks";
+import { FormatNumber, getRangeAddress, getRangeQuantity } from "@/lib/hooks";
 import { addProductFavorite } from "src/lib/api/user";
 import { Product } from "src/lib/types";
 import { RootState } from "src/store/store";

@@ -100,15 +100,6 @@ const ListProductCategory: NextPageWithLayout = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryInfo]);
 
-  // useEffect(() => {
-  //   if (xx) {
-  //     setPaging((prev) => ({
-  //       ...prev,
-  //       total: xx.paging.total,
-  //     }));
-  //   }
-  // }, [xx]);
-
   return (
     <section>
       <h1 className="text-text-color font-medium text-2xl my-8">

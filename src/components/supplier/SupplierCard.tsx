@@ -20,6 +20,7 @@ import { ISupplierInfo } from "@/lib/types";
 interface SupplierCardProps {
   supplier: ISupplierInfo;
   categoryId?: string;
+  disabledClickName?: boolean;
 }
 
 type ButtonFollowProps = {
@@ -57,7 +58,11 @@ const ButtonFollow = ({ supplierId, follow }: ButtonFollowProps) => {
   );
 };
 
-const SupplierCard = ({ supplier, categoryId }: SupplierCardProps) => {
+const SupplierCard = ({
+  supplier,
+  categoryId,
+  disabledClickName,
+}: SupplierCardProps) => {
   const [logo, setLogo] = useState(supplier.logo || IBuildLogo);
 
   return (
@@ -75,15 +80,21 @@ const SupplierCard = ({ supplier, categoryId }: SupplierCardProps) => {
         )}
       </div>
       <div className="flex-base flex flex-col gap-4">
-        <Link
-          href={`/nha-cung-cap/${supplier.slug}?tab=2${
-            categoryId ? `&category=${categoryId}` : ""
-          }`}
-        >
+        {disabledClickName ? (
           <h1 className="font-medium text-xl leading-[150%] text-text-secondary-color line-clamp-1 cursor-pointer">
             {supplier?.name || ""}
           </h1>
-        </Link>
+        ) : (
+          <Link
+            href={`/nha-cung-cap/${supplier.slug}?tab=2${
+              categoryId ? `&category=${categoryId}` : ""
+            }`}
+          >
+            <h1 className="font-medium text-xl leading-[150%] text-text-secondary-color line-clamp-1 cursor-pointer">
+              {supplier?.name || ""}
+            </h1>
+          </Link>
+        )}
         <div className="flex flex-row items-center gap-3">
           <PhoneIcon className="fill-text-color" />
           <span className="font-normal text-base leading-[150%] text-text-color">

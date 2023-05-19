@@ -31,8 +31,9 @@ const QuanLyTaiKhoan: NextPageWithLayout = () => {
   const router = useRouter();
   const { query } = router;
 
-  const [currentTab, setCurrentTab] = useState("2");
+  const [currentTab, setCurrentTab] = useState("1");
   const [isOpenExpertModal, setIsOpenExpertModal] = useState(false);
+  const [userType, setUserType] = useState("");
 
   const handleOnchangeTab = (key: string) => {
     setCurrentTab(key);
@@ -47,10 +48,10 @@ const QuanLyTaiKhoan: NextPageWithLayout = () => {
     if (query?.tab) {
       setCurrentTab(query.tab as string);
     }
-    if (query?.openModal) {
+    if (query?.openModal && userType !== "expert") {
       setIsOpenExpertModal(true);
     }
-  }, [query]);
+  }, [query, userType]);
 
   return (
     <>
@@ -71,7 +72,12 @@ const QuanLyTaiKhoan: NextPageWithLayout = () => {
           />
         </div>
         <div className="w-3/4 pt-14">
-          {currentTab === "1" && <AccountInfo onClick={handleUpgradeAccount} />}
+          {currentTab === "1" && (
+            <AccountInfo
+              onClick={handleUpgradeAccount}
+              onIsExpert={setUserType}
+            />
+          )}
           {currentTab === "2" && <WatchList />}
           {currentTab === "3" && <ChangePassword />}
         </div>

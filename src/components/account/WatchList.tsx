@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Tabs } from "antd";
 import { WatchListProduct } from "@/components/account";
+import WatchListSupplier from "./WatchListSupplier";
 
 const TABS_NAME = [
   {
@@ -29,6 +30,7 @@ const WatchList = () => {
         onChange={handleOnchangeTab}
       />
       {currentTab === "1" && <WatchListProduct />}
+      {currentTab === "2" && <WatchListSupplier />}
     </div>
   );
 };

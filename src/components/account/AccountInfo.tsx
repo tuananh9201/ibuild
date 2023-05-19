@@ -13,14 +13,17 @@ import AddressInfo from "./AddressInfo";
 import AvatarInfo from "./AvatarInfo";
 import ChangeSuccess from "./ChangeSuccess";
 import FormInputOtp from "./FormInputOtp";
+import WarningUnsaveModal from "./WarningUnsaveModal";
 
 interface AccountInfoProps {
   onClick: () => void;
+  onIsExpert: Function;
 }
 
 type ButtonProps = {
   children: React.ReactElement;
   className?: string;
+
   onClick: () => void;
 };
 
@@ -36,7 +39,7 @@ const Button = ({ children, className, onClick }: ButtonProps) => {
   );
 };
 
-const AccountInfo = ({ onClick }: AccountInfoProps) => {
+const AccountInfo = ({ onClick, onIsExpert }: AccountInfoProps) => {
   const [form] = Form.useForm();
 
   // state
@@ -55,7 +58,11 @@ const AccountInfo = ({ onClick }: AccountInfoProps) => {
     full_name: "",
     email: "",
   });
-  const [errors, setErrors] = useState("");
+  const [errors, setErrors] = useState({
+    button: "",
+    modal: "",
+    email: "",
+  });
   const [changeSuccess, setChangeSuccess] = useState(false);
 
   const { data: user } = useSWRImmutable("ss", getUser, {
@@ -66,6 +73,7 @@ const AccountInfo = ({ onClick }: AccountInfoProps) => {
         districtId: data?.district_id || "",
       }));
       setImage(data?.picture ? data.picture : "");
+      onIsExpert(data?.user_type);
     },
     onError: function (error) {
       console.log(error);
@@ -107,16 +115,39 @@ const AccountInfo = ({ onClick }: AccountInfoProps) => {
     const res: any = await updateUser(userInfo);
     setIsLoading(false);
     if (res?.response?.data?.status_code === 400) {
-      setIsOpenOtpModal(true);
-      res?.response?.data?.otp_type === "phone"
-        ? setContent(`số điện thoại ${values?.phone_number}`)
-        : setContent(`email ${values?.email}`);
-      if (res?.response?.data?.message) {
-        setErrors(res?.response?.data?.message);
+      if (res?.response?.data?.otp_type) {
+        setIsOpenOtpModal(true);
+        res?.response?.data?.otp_type === "phone"
+          ? setContent(`số điện thoại ${values?.phone_number}`)
+          : setContent(`email ${values?.email}`);
+        if (res?.response?.data?.message) {
+          setErrors((prev) => ({
+            ...prev,
+            modal: res?.response?.data?.message,
+          }));
+        }
+        return;
       }
+      setErrors((prev) => ({
+        ...prev,
+        button:
+          res?.response?.data?.field === "phone"
+            ? res?.response?.data?.message
+            : "",
+        email:
+          res?.response?.data?.field === "email"
+            ? res?.response?.data?.message
+            : "",
+      }));
     }
     if (res?.data?.status_code === 200) {
       setChangeSuccess(true);
+      setErrors((prev) => ({
+        ...prev,
+        button: "",
+        modal: "",
+        email: "",
+      }));
     }
   };
 
@@ -127,11 +158,20 @@ const AccountInfo = ({ onClick }: AccountInfoProps) => {
     };
     const res: any = await updateUser(userInfo);
     if (res?.response?.data?.status_code === 400) {
-      setErrors(res?.response?.data?.message);
+      setErrors((prev) => ({
+        ...prev,
+        modal: res?.response?.data?.message,
+      }));
     }
     if (res?.data?.status_code === 200) {
       setIsOpenOtpModal(false);
       setChangeSuccess(true);
+      setErrors((prev) => ({
+        ...prev,
+        button: "",
+        modal: "",
+        email: "",
+      }));
     }
   };
 
@@ -140,6 +180,7 @@ const AccountInfo = ({ onClick }: AccountInfoProps) => {
       ...prev,
       cityId: id,
     }));
+    setIsSubmitDisabled(false);
   };
 
   const handleSelectDistrict = (id: string) => {
@@ -147,6 +188,7 @@ const AccountInfo = ({ onClick }: AccountInfoProps) => {
       ...prev,
       districtId: id,
     }));
+    setIsSubmitDisabled(false);
   };
 
   const handleFieldChange = () => {
@@ -166,7 +208,12 @@ const AccountInfo = ({ onClick }: AccountInfoProps) => {
 
   const handleCloseModal = () => {
     setIsOpenOtpModal(false);
-    setErrors("");
+    setErrors((prev) => ({
+      ...prev,
+      button: "",
+      modal: "",
+      email: "",
+    }));
   };
 
   useEffect(() => {
@@ -181,6 +228,24 @@ const AccountInfo = ({ onClick }: AccountInfoProps) => {
       clearTimeout(t);
     };
   }, [changeSuccess]);
+
+  const handleKeydownInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const regax = /^[\p{L}\s]+$/u;
+    const isValid = regax.test(e.key);
+    if (!isValid) {
+      e.preventDefault();
+      return;
+    }
+  };
+
+  const handleAddressKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const regax = /^[a-zA-Z0-9\s\/\p{L}]+$/u;
+    const isValid = regax.test(e.key);
+    if (!isValid) {
+      e.preventDefault();
+      return;
+    }
+  };
 
   // function get category
   const getCategoryById = (id: string, options: SelectOptionModel[]) => {
@@ -230,6 +295,7 @@ const AccountInfo = ({ onClick }: AccountInfoProps) => {
               placeholder=""
               maxLength={30}
               onChange={handleFieldChange}
+              onKeyDown={handleKeydownInput}
             />
           </Form.Item>
           <Form.Item
@@ -247,6 +313,7 @@ const AccountInfo = ({ onClick }: AccountInfoProps) => {
                 },
               }),
             ]}
+            className={errors.button ? "mb-0" : ""}
           >
             <Input
               size="large"
@@ -255,6 +322,13 @@ const AccountInfo = ({ onClick }: AccountInfoProps) => {
               onChange={handleFieldChange}
             />
           </Form.Item>
+          {errors.button && (
+            <Form.Item className="pl-[120px]">
+              <div className="text-[#ff4d4f] mt-1 text-sm font-medium">
+                {errors.button}
+              </div>
+            </Form.Item>
+          )}
           {user?.user_type && jobs && user.user_type === "expert" && (
             <Form.Item label="Nghề nghiệp">
               <Input
@@ -323,6 +397,7 @@ const AccountInfo = ({ onClick }: AccountInfoProps) => {
                 message: "Email không đúng định dạng",
               },
             ]}
+            className={errors.email ? "mb-0" : ""}
           >
             <Input
               size="large"
@@ -330,6 +405,13 @@ const AccountInfo = ({ onClick }: AccountInfoProps) => {
               onChange={handleFieldChange}
             />
           </Form.Item>
+          {errors.email && (
+            <Form.Item className="pl-[120px]">
+              <div className="text-[#ff4d4f] mt-1 text-sm font-medium">
+                {errors.email}
+              </div>
+            </Form.Item>
+          )}
           <Form.Item
             label="Địa chỉ"
             name="address"
@@ -349,6 +431,7 @@ const AccountInfo = ({ onClick }: AccountInfoProps) => {
               placeholder="Nhập địa chỉ"
               maxLength={100}
               onChange={handleFieldChange}
+              onKeyDown={handleAddressKeydown}
             />
           </Form.Item>
           <AddressInfo
@@ -387,12 +470,13 @@ const AccountInfo = ({ onClick }: AccountInfoProps) => {
       <FormInputOtp
         isOpen={isOpenOtpModal}
         content={content}
-        error={errors}
+        error={errors.modal}
         onClose={handleCloseModal}
         onSend={updateUserInfo}
       />
 
       {changeSuccess && <ChangeSuccess title="Thay đổi thành công" />}
+      <WarningUnsaveModal isChange={isSubmitDisabled} />
     </div>
   );
 };

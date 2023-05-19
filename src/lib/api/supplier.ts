@@ -113,3 +113,13 @@ export const getCategoriesByRootCategory = async (params: { supplierId: string, 
     }
     return null
 }
+
+export const getWatchListSupplier = async (params: { limit: number, skip: number }): Promise<ResponseSupplierInfo | null> => {
+    try {
+        const res = await api.get(`/supplier/follows-by-user/?limit=${params.limit}&skip=${params.skip}`)
+        return res?.data?.data
+    } catch (error) {
+        console.warn(error)
+    }
+    return null
+}

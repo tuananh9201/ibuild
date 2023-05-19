@@ -21,12 +21,13 @@ const RenderImageError = ({
   const [url, setUrl] = useState(defaultImage);
 
   useEffect(() => {
-    setUrl(image || defaultImage);
+    setUrl(image);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [image]);
 
   return (
-    <Image
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
       src={url}
       alt={title}
       width={width}
