@@ -1,24 +1,21 @@
 name: Deployment Workflow
 on:
   push:
-    branches: [staging]
+    branches: [development]
 
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: SSH to server
-        uses: appleboy/ssh-action@v0.1.4
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
-            cd /home/ibuild/frontend
-            git pull origin staging
-            npm install
-            rm -rf .next
-            yarn build
-            pm2 restart 0
+      - name: install ssh keys
+        # check this thread to understand why its needed:
+        # https://stackoverflow.com/a/70447517
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -p ${{secrets.SSH_PORT}} ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
+      - name: connect and pull
+        # run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{secrets.SSH_PORT}} "cd /home/ibuild/frontend  && git pull && exit"
+        run: ssh -i /home/runner/.ssh/id_rsa -p ${{secrets.SSH_PORT}} -o "StrictHostKeyChecking=no" ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /home/ibuild/frontend && git pull && npm install && rm -rf .next && npm run build && pm2 restart all"
