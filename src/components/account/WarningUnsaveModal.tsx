@@ -17,7 +17,6 @@ const WarningUnsaveModal = ({ isChange }: WarningUnsaveModalProps) => {
   // function
   const onRouteChangeStart = useCallback(
     (nextPath: string) => {
-      console.log(isChange);
       if (isChange) return;
       if (!isConfirm) {
         setIsOpen(true);
@@ -25,9 +24,8 @@ const WarningUnsaveModal = ({ isChange }: WarningUnsaveModalProps) => {
 
         throw "cancelRouteChange";
       }
-
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [isChange]
   );
 
@@ -36,8 +34,13 @@ const WarningUnsaveModal = ({ isChange }: WarningUnsaveModalProps) => {
   };
 
   const onConfirmRouteChange = () => {
-    setIsConfirm(true);
     setIsOpen(false);
+
+    if (!nextRouterPath) {
+      window.location.reload();
+    }
+
+    setIsConfirm(true);
     removeListener();
   };
 
@@ -52,10 +55,28 @@ const WarningUnsaveModal = ({ isChange }: WarningUnsaveModalProps) => {
   useEffect(() => {
     if (nextRouterPath) {
       router.push(nextRouterPath);
+      return;
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConfirm]);
+
+  useEffect(() => {
+    if (isChange) return;
+
+    const handleKeyBoard = (e: KeyboardEvent) => {
+      if (e.keyCode === 116) {
+        setIsOpen(true);
+        e.preventDefault();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyBoard);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyBoard);
+    };
+  }, [isChange]);
 
   const body = (
     <div>

@@ -131,7 +131,7 @@ const AccountInfo = ({ onClick, onIsExpert }: AccountInfoProps) => {
       setErrors((prev) => ({
         ...prev,
         button:
-          res?.response?.data?.field === "phone"
+          res?.response?.data?.field === "phone_number"
             ? res?.response?.data?.message
             : "",
         email:
@@ -148,6 +148,7 @@ const AccountInfo = ({ onClick, onIsExpert }: AccountInfoProps) => {
         modal: "",
         email: "",
       }));
+      setIsSubmitDisabled(true);
     }
   };
 
@@ -172,6 +173,7 @@ const AccountInfo = ({ onClick, onIsExpert }: AccountInfoProps) => {
         modal: "",
         email: "",
       }));
+      setIsSubmitDisabled(true);
     }
   };
 
@@ -230,7 +232,8 @@ const AccountInfo = ({ onClick, onIsExpert }: AccountInfoProps) => {
   }, [changeSuccess]);
 
   const handleKeydownInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    const regax = /^[\p{L}\s]+$/u;
+    if (e.keyCode === 231) return;
+    const regax = /^[a-zA-Z\s]+$/;
     const isValid = regax.test(e.key);
     if (!isValid) {
       e.preventDefault();
@@ -281,7 +284,7 @@ const AccountInfo = ({ onClick, onIsExpert }: AccountInfoProps) => {
                 message: "Không được để trống",
               },
               {
-                pattern: /^[\p{L}\s]+$/u,
+                pattern: /^[a-zA-ZÀ-Ỹà-ỹ\s]+$/,
                 message: "Chỉ nhận các kí tự chữ cái",
               },
               {

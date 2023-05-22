@@ -36,6 +36,7 @@ const AvatarInfo = ({ url, onChange, onChangeImage }: AvatarInfoProps) => {
   });
   const [deleteAvatarModal, setDeleteAvatarModal] = useState(false);
   const [disableChangeImage, setDisableChangeImage] = useState(true);
+  const [avatar, setAvatar] = useState("");
 
   // function
   const onCropChange = (crop: Point) => {
@@ -88,6 +89,11 @@ const AvatarInfo = ({ url, onChange, onChangeImage }: AvatarInfoProps) => {
         onChange(r?.data?.image_path || "");
         setOpenModal(false);
         onChangeImage(false);
+        setAvatar(r?.data?.image_path || "");
+        setImage((prev) => ({
+          ...prev,
+          imageSrc: "",
+        }));
       }
     }
   };
@@ -185,17 +191,14 @@ const AvatarInfo = ({ url, onChange, onChangeImage }: AvatarInfoProps) => {
   );
 
   useEffect(() => {
-    setImage((prev) => ({
-      ...prev,
-      imageSrc: url || "",
-    }));
+    setAvatar(url);
   }, [url]);
 
   return (
     <div className="flex flex-row items-center gap-10">
       <RenderImageError
         defaultImage={AvatarDefault.src}
-        image={image.imageSrc ? getSellImage(image.imageSrc) : ""}
+        image={avatar ? getSellImage(avatar) : ""}
         width={80}
         height={80}
         title="avatar"

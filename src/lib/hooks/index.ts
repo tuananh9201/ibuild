@@ -126,3 +126,8 @@ export const convertUserName = (name: string): string => {
     const convertedString = convertedWords.join(' ');
     return convertedString;
 }
+
+export const normalizesPhoneNumber = (phone: string | undefined): string => {
+    if (!phone) return ''
+    return phone.replace(/\s/g, '')
+}

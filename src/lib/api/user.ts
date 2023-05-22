@@ -2,7 +2,7 @@
 import { Product, ResponseSearchProduct, User } from "src/lib/types";
 import { SearchResultModel } from "../models";
 import api from "./api";
-import { convertUserName } from "../hooks";
+import { convertUserName, normalizesPhoneNumber } from "../hooks";
 
 export const authWithAccessToken = async (): Promise<User | undefined> => {
   const resp = await api.get("/users/me");
@@ -78,7 +78,7 @@ export const updateUser = async (payload: User) => {
   const user: User = {
     id: 0,
     full_name: convertUserName(payload.full_name),
-    phone_number: payload.phone_number,
+    phone_number: normalizesPhoneNumber(payload.phone_number),
     email: payload.email,
     address: payload.address,
     city_id: payload.city_id,
