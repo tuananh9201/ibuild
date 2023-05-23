@@ -17,6 +17,8 @@ import {
   HeartBgWhiteIcon,
   StarIcon,
 } from "@/images/icons/product_types/icon_wrapper";
+import { RenderImageError } from "../common";
+import { getSellImage } from "@/lib/utils";
 interface IUserAvatarProps {
   user: User;
 }
@@ -26,6 +28,7 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
   const router = useRouter();
 
   const [userRole, setUserRole] = React.useState("");
+  const [avatar, setAvatar] = React.useState("");
 
   const handleLougout = () => {
     dispatch(logout());
@@ -119,6 +122,7 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
     if (props.user.user_type && !userType) {
       setUserRole(props.user.user_type);
     }
+    setAvatar(props.user?.picture || "");
   }, [props]);
 
   return (
@@ -126,7 +130,15 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
       <Dropdown menu={{ items }}>
         <Space>
           <div>
-            <Image width={32} height={32} src={userAvata} alt="user-avatar" />
+            {/* <Image width={32} height={32} src={userAvata} alt="user-avatar" /> */}
+            <RenderImageError
+              defaultImage={userAvata.src}
+              image={getSellImage(avatar)}
+              width={32}
+              height={32}
+              title="user-avatar"
+              className="w-8 h-8 rounded-full object-cover overflow-hidden"
+            />
           </div>
           {userRole === "expert" && (
             <div className="w-[67px] h-[22px] bg-[#5C84D6] rounded flex items-center justify-center">

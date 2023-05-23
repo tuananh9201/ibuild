@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Tabs } from "antd";
+import { motion } from "framer-motion";
+
 import { WatchListProduct } from "@/components/account";
 import WatchListSupplier from "./WatchListSupplier";
 
@@ -22,7 +24,16 @@ const WatchList = () => {
   };
 
   return (
-    <div>
+    <motion.div
+      initial={{ y: 300, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ x: 300, opacity: 0 }}
+      transition={{
+        type: "spring",
+        stiffness: 260,
+        damping: 20,
+      }}
+    >
       <Tabs
         activeKey={currentTab}
         centered
@@ -31,7 +42,7 @@ const WatchList = () => {
       />
       {currentTab === "1" && <WatchListProduct />}
       {currentTab === "2" && <WatchListSupplier />}
-    </div>
+    </motion.div>
   );
 };
 

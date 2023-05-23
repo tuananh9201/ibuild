@@ -1,6 +1,7 @@
 import { Form, Input, Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import useSWRImmutable from "swr/immutable";
+import { motion } from "framer-motion";
 
 import { ERRORS } from "@/constants/msg";
 import { getBusinessServiceType, getJobs, getPositionJob } from "@/lib/api";
@@ -258,7 +259,16 @@ const AccountInfo = ({ onClick, onIsExpert }: AccountInfoProps) => {
   };
 
   return (
-    <div>
+    <motion.div
+      initial={{ y: 300, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ x: 300, opacity: 0 }}
+      transition={{
+        type: "spring",
+        stiffness: 260,
+        damping: 20,
+      }}
+    >
       <AvatarInfo
         url={image}
         onChange={setImage}
@@ -478,7 +488,7 @@ const AccountInfo = ({ onClick, onIsExpert }: AccountInfoProps) => {
 
       {changeSuccess && <ChangeSuccess title="Thay đổi thành công" />}
       <WarningUnsaveModal isChange={isSubmitDisabled} />
-    </div>
+    </motion.div>
   );
 };
 

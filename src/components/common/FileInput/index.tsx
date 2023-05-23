@@ -59,6 +59,7 @@ const FileInput = ({ typeImage, size, setUrlImage }: FileInputProps) => {
   return (
     <div>
       <Upload
+        accept="image/png, image/jpeg, image/jpg"
         name="avatar"
         listType="picture-circle"
         className="avatar-uploader"

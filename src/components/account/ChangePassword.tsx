@@ -1,5 +1,6 @@
 import { Form, Input } from "antd";
 import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 import { rulePassword } from "@/constants/rules";
 import { changePasswordByToken } from "@/lib/api/user";
@@ -94,7 +95,17 @@ const ChangePassword = () => {
   }, [changeSuccess]);
 
   return (
-    <div className="max-w-[684px]">
+    <motion.div
+      initial={{ y: 300, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ x: 300, opacity: 0 }}
+      transition={{
+        type: "spring",
+        stiffness: 260,
+        damping: 20,
+      }}
+      className="max-w-[684px]"
+    >
       <h2 className="text-[#666666] font-normal text-base text-justify mb-6">
         * Việc thay đổi mật khẩu của bạn sẽ khiến đăng xuất khỏi tất cả các
         thiết bị. Bạn cần phải nhập mật khẩu mới trên tất cả các thiết bị khi
@@ -196,7 +207,7 @@ const ChangePassword = () => {
         </Form>
       </div>
       {changeSuccess && <ChangeSuccess title="Thay đổi thành công" />}
-    </div>
+    </motion.div>
   );
 };
 

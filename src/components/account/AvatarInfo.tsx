@@ -116,6 +116,7 @@ const AvatarInfo = ({ url, onChange, onChangeImage }: AvatarInfoProps) => {
     onChange("");
     setDeleteAvatarModal(false);
     onChangeImage(false);
+    setAvatar("");
   };
 
   const handleCancelChangeImage = () => {

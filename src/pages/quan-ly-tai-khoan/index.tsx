@@ -36,7 +36,13 @@ const QuanLyTaiKhoan: NextPageWithLayout = () => {
   const [userType, setUserType] = useState("");
 
   const handleOnchangeTab = (key: string) => {
-    setCurrentTab(key);
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        tab: key,
+      },
+    });
   };
 
   const handleUpgradeAccount = () => {
