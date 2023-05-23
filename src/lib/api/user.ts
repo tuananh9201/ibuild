@@ -83,10 +83,10 @@ export const updateUser = async (payload: User) => {
     otp_code: payload.otp_code
   }
 
-  const { id, ...data } = user
+  const newUser = Object.fromEntries(Object.entries(user).filter(([_, value]) => value))
 
   try {
-    const res = await api.put('/users/me', data)
+    const res = await api.put('/users/me', newUser)
     return res
   } catch (error) {
     console.warn(error)
