@@ -12,6 +12,7 @@ import defaultProductImage from "@/images/default_product_image.png";
 import { addProductFavorite } from "@/lib/api/user";
 import { FormatNumber } from "@/lib/hooks";
 import { RenderImageError } from "../common";
+import { getSupplierById } from "@/lib/api/supplier";
 
 interface ProductCardHorizontalProps {
   product: Product;
@@ -54,11 +55,26 @@ const ButtonFollow = ({ supplierId, follow }: ButtonFollowProps) => {
 
 const ProductCardHorizontal = ({ product }: ProductCardHorizontalProps) => {
   const [productImage, setProductImage] = useState(defaultProductImage.src);
+  const [logo, setLogo] = useState("");
+
+  // function
+  const fetchSupplierById = async () => {
+    const res = await getSupplierById(product.supplier_id);
+    if (res) {
+      setLogo(res.logo);
+    }
+  };
 
   useEffect(() => {
     if (product?.images[0]?.url) {
       setProductImage(product.images[0].url);
     }
+
+    if (product.supplier_id) {
+      fetchSupplierById();
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product]);
 
   return (
@@ -76,7 +92,7 @@ const ProductCardHorizontal = ({ product }: ProductCardHorizontalProps) => {
           <div className="flex flex-row items-center gap-1 mb-2">
             <RenderImageError
               defaultImage={IBuildLogo.src}
-              image={productImage}
+              image={logo}
               width={24}
               height={24}
               title={product?.product_name}

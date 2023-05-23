@@ -57,7 +57,6 @@ const FormInputOtp = ({
   useEffect(() => {
     intervalId.current = setInterval(() => {
       setTimeRemaining((prevTime) => {
-        console.log(prevTime);
         if (prevTime === 0) {
           clearInterval(intervalId.current);
           setErrors((prev) => ({

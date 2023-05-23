@@ -66,9 +66,7 @@ const AccountInfo = ({ onClick, onIsExpert }: AccountInfoProps) => {
   const [changeSuccess, setChangeSuccess] = useState(false);
 
   const { data: user } = useSWRImmutable("ss", getUser, {
-    onError: function (error) {
-      console.log(error);
-    },
+    onError: function (error) {},
   });
   const { data: jobs } = useSWRImmutable("jobs", getJobs);
   const { data: positions } = useSWRImmutable("positions", getPositionJob);

@@ -123,3 +123,13 @@ export const getWatchListSupplier = async (params: { limit: number, skip: number
     }
     return null
 }
+
+export const getSupplierById = async (supplierId: string): Promise<ISupplierInfo | null> => {
+    try {
+        const res = await axios.get(`/supplier/${supplierId}`)
+        return res?.data?.data
+    } catch (error) {
+        console.warn(error)
+    }
+    return null
+}
