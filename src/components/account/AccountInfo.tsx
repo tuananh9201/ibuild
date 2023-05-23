@@ -66,15 +66,6 @@ const AccountInfo = ({ onClick, onIsExpert }: AccountInfoProps) => {
   const [changeSuccess, setChangeSuccess] = useState(false);
 
   const { data: user } = useSWRImmutable("ss", getUser, {
-    onSuccess: function (data) {
-      setDistrictAndCity((prev) => ({
-        ...prev,
-        cityId: data?.city_id || "",
-        districtId: data?.district_id || "",
-      }));
-      setImage(data?.picture ? data.picture : "");
-      onIsExpert(data?.user_type);
-    },
     onError: function (error) {
       console.log(error);
     },
@@ -89,6 +80,14 @@ const AccountInfo = ({ onClick, onIsExpert }: AccountInfoProps) => {
   useEffect(() => {
     if (user) {
       form.setFieldsValue(user);
+      setImage(user?.picture ? user.picture : "");
+      setDistrictAndCity((prev) => ({
+        ...prev,
+        cityId: user?.city_id || "",
+        districtId: user?.district_id || "",
+      }));
+
+      onIsExpert(user?.user_type);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -242,6 +241,7 @@ const AccountInfo = ({ onClick, onIsExpert }: AccountInfoProps) => {
   };
 
   const handleAddressKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.keyCode === 231) return;
     const regax = /^[a-zA-Z0-9\s\/\p{L}]+$/u;
     const isValid = regax.test(e.key);
     if (!isValid) {

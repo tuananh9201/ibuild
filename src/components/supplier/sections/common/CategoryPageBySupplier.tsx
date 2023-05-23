@@ -133,8 +133,11 @@ const CategoryPageBySupplier = ({
       ...prev,
       skip: 0,
       category_id: rootCategoryId !== "0" ? [rootCategoryId] : [],
+      keyword: inputValue,
     }));
     setCurrentActive("all");
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rootCategoryId]);
 
   useEffect(() => {

@@ -201,6 +201,8 @@ const AvatarInfo = ({ url, onChange, onChangeImage }: AvatarInfoProps) => {
   );
 
   useEffect(() => {
+    if (!url) return;
+    console.log(url);
     setAvatar(url);
   }, [url]);
 
