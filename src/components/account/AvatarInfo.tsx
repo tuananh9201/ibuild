@@ -94,6 +94,7 @@ const AvatarInfo = ({ url, onChange, onChangeImage }: AvatarInfoProps) => {
           ...prev,
           imageSrc: "",
         }));
+        setDisableChangeImage(true);
       }
     }
   };
@@ -115,6 +116,15 @@ const AvatarInfo = ({ url, onChange, onChangeImage }: AvatarInfoProps) => {
     onChange("");
     setDeleteAvatarModal(false);
     onChangeImage(false);
+  };
+
+  const handleCancelChangeImage = () => {
+    setOpenModal((prev) => !prev);
+    setImage((prev) => ({
+      ...prev,
+      imageSrc: "",
+    }));
+    setDisableChangeImage(true);
   };
 
   // element
@@ -153,7 +163,7 @@ const AvatarInfo = ({ url, onChange, onChangeImage }: AvatarInfoProps) => {
       <div className="flex flex-row gap-2 items-center justify-center">
         <button
           className="text-text-color font-medium text-base w-[150px] py-3 rounded hover:bg-red-100"
-          onClick={() => setOpenModal((prev) => !prev)}
+          onClick={handleCancelChangeImage}
         >
           Hủy bỏ
         </button>

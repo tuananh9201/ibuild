@@ -55,22 +55,18 @@ const WatchListSupplier = () => {
   if (isLoading) return <SupplierContainerLoading items={5} />;
 
   return (
-    <div>
-      <div className="w-full mt-4">
-        {suppliers && suppliers?.length > 0 && (
-          <SupplierContainer
-            data={suppliers}
-            categoryId={""}
-            disabledClickName
-          />
-        )}
-        {suppliers?.length === 0 && (
-          <NoFoundResult content="Danh sách yêu thích trống" />
-        )}
+    <div className="w-full mt-4">
+      {suppliers && suppliers?.length > 0 && (
+        <SupplierContainer data={suppliers} categoryId={""} disabledClickName />
+      )}
+      {suppliers?.length === 0 && (
+        <NoFoundResult content="Danh sách yêu thích trống" />
+      )}
+      <div className="w-full text-center mt-6">
         <Pagination
           onChange={onChangePagination}
           current={paging.current}
-          pageSize={12}
+          pageSize={5}
           total={paging.total}
           hideOnSinglePage
         />

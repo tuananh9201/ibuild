@@ -152,12 +152,12 @@ const CategoryCarousel = ({
                 <div className="h-6 w-6 min-w-[24px] min-h-[24px]">
                   <RenderImageError
                     defaultImage={
-                      currentActive === menu.id ? menu.iconActive : menu.icon
-                    }
-                    image={
                       currentActive === menu.id
                         ? getCategoriesIcon("all", true)
                         : getCategoriesIcon("all", false)
+                    }
+                    image={
+                      currentActive === menu.id ? menu.iconActive : menu.icon
                     }
                     width={20}
                     height={20}

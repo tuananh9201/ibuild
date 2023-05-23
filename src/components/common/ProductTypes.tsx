@@ -83,7 +83,6 @@ const ProductTypes = ({
     error,
     isLoading,
   } = useSWR<ICategory[]>(parentId || "", fetchChildCategories);
-
   const firstItem = {
     id: "all",
     name: "Tất cả sản phẩm",

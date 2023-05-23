@@ -20,9 +20,11 @@ const GeneralIntroduction = ({
     <>
       <div>{aboutSupplier}</div>
       <div className="mt-8">
-        <h3 className="text-text-color font-medium text-xl mb-6">
-          Dự án tham gia của nhà cung cấp
-        </h3>
+        {data && data?.length > 0 && (
+          <h3 className="text-text-color font-medium text-xl mb-6">
+            Dự án tham gia của nhà cung cấp
+          </h3>
+        )}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {data &&
             !isLoading &&

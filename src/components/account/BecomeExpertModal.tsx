@@ -93,11 +93,11 @@ const BecomeExpertModal = ({ isOpen, onClose }: BecomeExpertModalProps) => {
             },
             {
               min: 13,
-              message: "Tối thiểu 13 ký tự",
+              message: "Tên doanh nghiệp có độ dài từ 13 đến 100 ký tự",
             },
             {
               max: 100,
-              message: "Tối đa 100 ký tự",
+              message: "Tên doanh nghiệ có độ dài từ 13 đến 100 ký tự",
             },
             {
               required: true,
@@ -247,6 +247,7 @@ const BecomeExpertModal = ({ isOpen, onClose }: BecomeExpertModalProps) => {
 
     const t = setTimeout(() => {
       setChangeSuccess(false);
+      window.location.reload();
     }, 5000);
 
     return () => {

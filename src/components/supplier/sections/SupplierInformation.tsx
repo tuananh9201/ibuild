@@ -48,10 +48,14 @@ const SupplierInformation = ({
           <ColumnChart supplierId={supplierId} />
         </div>
       </div>
-      {supplier?.promotion_banners && (
-        <Banner images={supplier?.promotion_banners} />
-      )}
+      {supplier?.promotion_banners &&
+        supplier?.promotion_banners?.length > 0 && (
+          <Banner images={supplier?.promotion_banners} />
+        )}
       <div className="mt-16">
+        <h2 className="text-text-color font-medium text-xl mb-6">
+          Sản phẩm được theo dõi nhiều nhất
+        </h2>
         {!isLoading && (
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {products &&

@@ -64,7 +64,7 @@ const WatchListProduct = () => {
       <div className="w-full text-center">
         <Pagination
           current={paging.current}
-          pageSize={12}
+          pageSize={5}
           total={paging.total}
           hideOnSinglePage
           onChange={onChangePagination}

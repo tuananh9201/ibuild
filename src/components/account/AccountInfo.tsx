@@ -399,6 +399,10 @@ const AccountInfo = ({ onClick, onIsExpert }: AccountInfoProps) => {
                 pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
                 message: "Email không đúng định dạng",
               },
+              {
+                required: true,
+                message: "Email không được để trống",
+              },
             ]}
             className={errors.email ? "mb-0" : ""}
           >

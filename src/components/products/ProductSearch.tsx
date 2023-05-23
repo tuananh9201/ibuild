@@ -13,6 +13,7 @@ import {
 } from "@/images/icons/product_types/icon_wrapper";
 import { ISuggestionKeyword, getSuggestionKeyword } from "@/lib/api/suggestion";
 import {
+  authWithAccessToken,
   createSearchHistory,
   deleteSearchHistory,
   getSearchHistories,
@@ -182,35 +183,25 @@ const ProductSearch = ({
         setIsActivateSearch(false);
       }
     };
-    const handleChangeStorage = () => {
-      const newRole = localStorage.getItem("user_type");
-      if (newRole) {
-        setUserRole(newRole);
-      }
+    const getUser = async () => {
+      const res = await authWithAccessToken();
+      res && setUserRole(res?.user_type || "user");
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    window.addEventListener("storage", handleChangeStorage);
+    getUser();
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
-      window.removeEventListener("storage", handleChangeStorage);
     };
   }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
     if (!token) return;
-    const userType = localStorage.getItem("user_type");
-
-    userType && setUserRole(userType);
-
-    user?.user_type && !userType && setUserRole(user.user_type);
 
     const type = localStorage.getItem("search_type");
-
     !type && localStorage.setItem("search_type", "0");
-
     type && onSelectValue && onSelectValue(type);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

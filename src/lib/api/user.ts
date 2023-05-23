@@ -8,10 +8,6 @@ export const authWithAccessToken = async (): Promise<User | undefined> => {
   const resp = await api.get("/users/me");
   if (resp.status === 200) {
     const user = resp.data.data;
-    // set user type to localStorage
-    if (user.user_type && !localStorage.getItem("user_type")) {
-      localStorage.setItem("user_type", user.user_type);
-    }
     return user;
   }
   throw "Not authenticated";
