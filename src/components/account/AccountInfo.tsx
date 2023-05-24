@@ -309,6 +309,7 @@ const AccountInfo = ({ onClick, onIsExpert }: AccountInfoProps) => {
                 message: "Tối đa 30 kí tự",
               },
             ]}
+            validateTrigger="onSubmit"
           >
             <Input
               size="large"
@@ -334,6 +335,7 @@ const AccountInfo = ({ onClick, onIsExpert }: AccountInfoProps) => {
               }),
             ]}
             className={errors.button ? "mb-0" : ""}
+            validateTrigger="onSubmit"
           >
             <Input
               size="large"
@@ -418,6 +420,7 @@ const AccountInfo = ({ onClick, onIsExpert }: AccountInfoProps) => {
               },
             ]}
             className={errors.email ? "mb-0" : ""}
+            validateTrigger="onSubmit"
           >
             <Input
               size="large"
@@ -445,6 +448,7 @@ const AccountInfo = ({ onClick, onIsExpert }: AccountInfoProps) => {
                 message: "Không được quá 100 kí tự",
               },
             ]}
+            validateTrigger="onSubmit"
           >
             <Input
               size="large"

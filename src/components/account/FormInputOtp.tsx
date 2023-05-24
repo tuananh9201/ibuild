@@ -139,7 +139,7 @@ const FormInputOtp = ({
       <div className="mt-6 w-full">
         <IbuildButton
           onClick={handleClickContinue}
-          disabled={otp.trim().length < 6 || isLoading || timeRemaining <= 0}
+          disabled={otp.trim().length < 6 || isLoading}
           prefix="Xác nhận"
           isLoading={isLoading}
         />

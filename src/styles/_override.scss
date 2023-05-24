@@ -408,6 +408,11 @@
 .upgrade-account {
   .ant-input {
     padding: 11px !important;
+    border-color: #9a9a9a;
+
+    &:hover {
+      border-color: #eb7a01;
+    }
   }
 
   .ant-select-selector {

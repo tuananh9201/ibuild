@@ -66,6 +66,8 @@ const BecomeExpertModal = ({ isOpen, onClose }: BecomeExpertModalProps) => {
     }
   };
 
+  const lengthName = Form.useWatch("enterprise_name", form);
+
   const body = (
     <div className="w-full upgrade-account">
       <h3 className="text-text-color font-medium text-2xl text-center mb-2">
@@ -104,20 +106,19 @@ const BecomeExpertModal = ({ isOpen, onClose }: BecomeExpertModalProps) => {
               message: "Không được để trống",
             },
           ]}
+          validateTrigger="onSubmit"
         >
           <div>
             <span className="text-text-color text-base font-medium block mb-2">
               Doanh nghiệp <span className="text-[#E54545]">*</span>
             </span>
-            <Input
-              placeholder="Nhập tên doanh nghiệp"
-              maxLength={100}
-              minLength={13}
-            />
+            <Input placeholder="Nhập tên doanh nghiệp" maxLength={100} />
           </div>
         </Form.Item>
         <Form.Item>
-          <span className="block text-right mt-1 text-[#9a9a9a]">{}</span>
+          <span className="block text-right mt-1 text-[#9a9a9a]">
+            {lengthName?.length || 0}/200
+          </span>
         </Form.Item>
         <Form.Item
           className="mb-4"
