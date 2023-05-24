@@ -1,15 +1,16 @@
-import moment from "moment";
 import { useRouter } from "next/router";
 import { ReactElement, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Tabs } from "antd";
 import useSWR from "swr";
 import Head from "next/head";
+import moment from "moment";
 
-import { RenderImageError } from "@/components/common";
 import MainLayout from "@/components/main-layout";
 import AllProducts from "@/components/supplier/sections/AllProducts";
 import GeneralIntroduction from "@/components/supplier/sections/GeneralIntroduction";
 import SupplierInformation from "@/components/supplier/sections/SupplierInformation";
+import { RenderImageError } from "@/components/common";
 import { IBuildLogo, SupplierBgDefault } from "@/images";
 import {
   DateRangeIcon,
@@ -22,7 +23,6 @@ import { fetchSupplierInfoBySlug } from "@/lib/api/supplier";
 import { FormatNumber, getRangeAddress } from "@/lib/hooks";
 import { ISupplierInfo } from "@/lib/types";
 import { RootState } from "@/store/store";
-import { Tabs } from "antd";
 import { NextPageWithLayout } from "../_app";
 
 const TABS_NAME = [

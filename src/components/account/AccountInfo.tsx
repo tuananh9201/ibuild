@@ -65,10 +65,12 @@ const AccountInfo = ({ onClick, onIsExpert }: AccountInfoProps) => {
     email: "",
   });
   const [changeSuccess, setChangeSuccess] = useState(false);
-
-  const { data: user } = useSWRImmutable("ss", getUser, {
-    onError: function (error) {},
+  const [user, setUser] = useState<User>({
+    id: 0,
+    full_name: "",
+    email: "",
   });
+
   const { data: jobs } = useSWRImmutable("jobs", getJobs);
   const { data: positions } = useSWRImmutable("positions", getPositionJob);
   const { data: businessServiceType } = useSWRImmutable(
@@ -77,20 +79,27 @@ const AccountInfo = ({ onClick, onIsExpert }: AccountInfoProps) => {
   );
 
   useEffect(() => {
-    if (user) {
-      form.setFieldsValue(user);
-      setImage(user?.picture ? user.picture : "");
-      setDistrictAndCity((prev) => ({
-        ...prev,
-        cityId: user?.city_id || "",
-        districtId: user?.district_id || "",
-      }));
+    const fetchUser = async () => {
+      const res = await getUser();
+      if (res) {
+        form.setFieldsValue(res);
+        setImage(res?.picture ? res.picture : "");
+        setDistrictAndCity((prev) => ({
+          ...prev,
+          cityId: res?.city_id || "",
+          districtId: res?.district_id || "",
+        }));
 
-      onIsExpert(user?.user_type);
-    }
+        onIsExpert(res?.user_type);
+
+        setUser(res);
+      }
+    };
+
+    fetchUser();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  }, []);
 
   const onFinish = async (values: any) => {
     setIsLoading(true);

@@ -11,6 +11,7 @@ import {
 } from "@/components/account";
 import MainLayout from "@/components/main-layout";
 import { NextPageWithLayout } from "../_app";
+import useUser from "@/lib/hooks/user";
 
 const TABS_NAME = [
   {
@@ -30,6 +31,7 @@ const TABS_NAME = [
 const QuanLyTaiKhoan: NextPageWithLayout = () => {
   const router = useRouter();
   const { query } = router;
+  const { user, loading } = useUser();
 
   const [currentTab, setCurrentTab] = useState("1");
   const [isOpenExpertModal, setIsOpenExpertModal] = useState(false);
@@ -54,10 +56,23 @@ const QuanLyTaiKhoan: NextPageWithLayout = () => {
     if (query?.tab) {
       setCurrentTab(query.tab as string);
     }
-    if (query?.openModal && userType !== "expert") {
+    if (query?.openModal && userType === "user") {
       setIsOpenExpertModal(true);
     }
   }, [query, userType]);
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push({
+        pathname: "/dang-nhap",
+        query: {
+          redirect: router.asPath,
+        },
+      });
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, loading]);
 
   return (
     <>

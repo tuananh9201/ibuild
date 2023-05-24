@@ -117,7 +117,7 @@ const BecomeExpertModal = ({ isOpen, onClose }: BecomeExpertModalProps) => {
           </div>
         </Form.Item>
         <Form.Item>
-          <span className="block text-right mt-1 text-[#9a9a9a]">0/100</span>
+          <span className="block text-right mt-1 text-[#9a9a9a]">{}</span>
         </Form.Item>
         <Form.Item
           className="mb-4"
