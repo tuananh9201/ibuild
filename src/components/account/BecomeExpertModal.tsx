@@ -149,6 +149,7 @@ const BecomeExpertModal = ({ isOpen, onClose }: BecomeExpertModalProps) => {
               <span className="text-[#E54545]">*</span>
             </span>
           }
+          validateTrigger="onSubmit"
         >
           <Select placeholder="Chọn loại hình dịch vụ" mode="multiple">
             {businessServiceType &&
@@ -213,6 +214,7 @@ const BecomeExpertModal = ({ isOpen, onClose }: BecomeExpertModalProps) => {
               message: "Không được để trống",
             },
           ]}
+          validateTrigger="onSubmit"
         >
           <div>
             <span className="text-text-color text-base font-medium block mb-2">
