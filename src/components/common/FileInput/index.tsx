@@ -1,11 +1,8 @@
-import Image from "next/image";
-import React, { useState } from "react";
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { message, Upload } from "antd";
-import type { UploadChangeParam } from "antd/es/upload";
-import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 import { importFile } from "@/lib/api";
-import { getSellImage } from "@/lib/utils";
+import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
+import { Upload, message } from "antd";
+import type { RcFile } from "antd/es/upload/interface";
+import { useState } from "react";
 
 interface FileInputProps {
   typeImage: string[];
@@ -19,16 +16,47 @@ const getBase64 = (img: RcFile, callback: (url: string) => void) => {
   reader.readAsDataURL(img);
 };
 
-const beforeUpload = (file: RcFile, types: string[], size: number) => {
+const checkHeightWidthImage = (file: RcFile): Promise<boolean> => {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.addEventListener("load", (event) => {
+      const _loadedImageUrl = event.target?.result;
+      const image = document.createElement("img");
+      image.src = _loadedImageUrl as string;
+
+      image.addEventListener("load", () => {
+        const { width, height } = image;
+
+        if (width >= 80 && height >= 80) {
+          resolve(true);
+          return;
+        }
+
+        message.error("Ảnh phải có kích thước 80x80");
+        resolve(false);
+      });
+    });
+  });
+};
+
+const beforeUpload = async (file: RcFile, types: string[], size: number) => {
+  // check height and width image
+  let conditionImage = await checkHeightWidthImage(file);
+
+  // check image type
   const isJpgOrPng = types.includes(file.type);
   if (!isJpgOrPng) {
-    message.error("You can only upload JPG/PNG/JPEG file!");
+    message.error("Bạn chỉ có thể tải lên ảnh có định dạng JPG/PNG/JPEG");
   }
+
+  // check image size
   const sizeLimit = file.size / 1024 / 1024 < size;
   if (!sizeLimit) {
-    message.error("Image must smaller than 2MB!");
+    message.error("Ảnh có dung lượng nhỏ hơn 3MB");
   }
-  return isJpgOrPng && sizeLimit;
+
+  return isJpgOrPng && sizeLimit && conditionImage;
 };
 
 const FileInput = ({ typeImage, size, setUrlImage }: FileInputProps) => {

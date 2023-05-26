@@ -248,6 +248,15 @@ const AccountInfo = ({ onClick, onIsExpert }: AccountInfoProps) => {
     }
   };
 
+  const handlePasteName = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    const pasteValue = e?.clipboardData?.getData("text") || "";
+
+    const removeNumberText = pasteValue.replace(/\d/g, "");
+    form.setFieldValue("full_name", removeNumberText);
+    setIsSubmitDisabled(false);
+    e.preventDefault();
+  };
+
   const handleAddressKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.keyCode === 231) return;
     const regax = /^[a-zA-Z0-9\s\/\p{L}]+$/u;
@@ -317,6 +326,7 @@ const AccountInfo = ({ onClick, onIsExpert }: AccountInfoProps) => {
               maxLength={30}
               onChange={handleFieldChange}
               onKeyDown={handleKeydownInput}
+              onPaste={handlePasteName}
             />
           </Form.Item>
           <Form.Item
