@@ -34,6 +34,7 @@ type HistoryItem = {
 interface ProductSearchProps {
   initialValue: string;
   selectValue?: string;
+  searchDesign?: boolean;
   onClick?: () => void;
   setInputValueToParent?: Function;
   redirectToSearchPage?: Function;
@@ -119,6 +120,7 @@ const SearchSuggestionItem = (props: SearchSuggestionProps) => {
 const ProductSearch = ({
   initialValue,
   selectValue,
+  searchDesign,
   setInputValueToParent,
   redirectToSearchPage,
   onSelectValue,
@@ -152,6 +154,7 @@ const ProductSearch = ({
   }, [initialValue]);
 
   useEffect(() => {
+    if (!selectValue) return;
     setSuggestion([]);
     if (debounceValue && debounceValue?.length && debounceValue?.length > 1) {
       const getSuggestion = async () => {
@@ -161,7 +164,9 @@ const ProductSearch = ({
               ? "PRODUCT"
               : selectValue === "1"
               ? "CATEGORY"
-              : "SUPPLIER",
+              : selectValue === "2"
+              ? "SUPPLIER"
+              : "",
           limit: 10,
           keyword: debounceValue,
         });
@@ -283,7 +288,7 @@ const ProductSearch = ({
       ref={inputRef}
     >
       <div className={isActivateSearch ? className : classNameActivate}>
-        {userRole === "expert" && (
+        {userRole === "expert" && !searchDesign && (
           <>
             <Select
               defaultValue={selectValue}

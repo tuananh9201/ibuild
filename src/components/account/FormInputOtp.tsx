@@ -59,10 +59,6 @@ const FormInputOtp = ({
       setTimeRemaining((prevTime) => {
         if (prevTime === 0) {
           clearInterval(intervalId.current);
-          setErrors((prev) => ({
-            ...prev,
-            buttonSubmit: "Mã xác nhận hết hiệu lực",
-          }));
           return 0;
         } else {
           return prevTime - 1;

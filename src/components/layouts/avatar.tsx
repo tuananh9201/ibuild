@@ -75,7 +75,7 @@ const UserAvatar: React.FunctionComponent<IUserAvatarProps> = (props) => {
         <div
           className="flex gap-2 w-full p-2 items-center"
           onClick={() => {
-            router.push("/quan-ly-tai-khoan?tab=2");
+            router.push("/quan-ly-tai-khoan?tab=2&tabWatch=1");
           }}
         >
           <HeartBgWhiteIcon className="fill-[#323232]" />

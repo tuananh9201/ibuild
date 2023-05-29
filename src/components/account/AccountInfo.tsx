@@ -251,7 +251,7 @@ const AccountInfo = ({ onClick, onIsExpert }: AccountInfoProps) => {
   const handlePasteName = (e: React.ClipboardEvent<HTMLInputElement>) => {
     const pasteValue = e?.clipboardData?.getData("text") || "";
 
-    const removeNumberText = pasteValue.replace(/\d/g, "");
+    const removeNumberText = pasteValue.replace(/[0-9!@#$%^&*()]/g, "");
     form.setFieldValue("full_name", removeNumberText);
     setIsSubmitDisabled(false);
     e.preventDefault();

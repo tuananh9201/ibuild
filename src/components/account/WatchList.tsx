@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs } from "antd";
 import { motion } from "framer-motion";
+import { useRouter } from "next/router";
 
 import { WatchListProduct } from "@/components/account";
 import WatchListSupplier from "./WatchListSupplier";
@@ -17,11 +18,31 @@ const TABS_NAME = [
 ];
 
 const WatchList = () => {
+  const router = useRouter();
+
+  const { query } = router;
+
+  const { tabWatch } = query;
+
+  // state
   const [currentTab, setCurrentTab] = useState("1");
 
+  // function
   const handleOnchangeTab = (key: string) => {
-    setCurrentTab(key);
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        tabWatch: key,
+      },
+    });
   };
+
+  useEffect(() => {
+    if (tabWatch) {
+      setCurrentTab(tabWatch as string);
+    }
+  }, [tabWatch]);
 
   return (
     <motion.div
