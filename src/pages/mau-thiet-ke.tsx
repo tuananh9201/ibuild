@@ -1,19 +1,19 @@
-import { useState, ReactElement } from "react";
-import { useRouter } from "next/router";
 import Head from "next/head";
+import { ReactElement, useState } from "react";
 import useSWR from "swr";
 
-import { NextPageWithLayout } from "./_app";
 import {
-  MenuDropdown,
-  WrapperDesignCard,
+  DesignCardLoading,
   Search,
+  WrapperDesignCard,
   WrapperDropdown,
 } from "@/components/designs";
 import MainLayout from "@/components/main-layout";
-import { IDesignSearch } from "@/lib/types";
 import { getDesignBySearch } from "@/lib/api/design";
+import { IDesignSearch } from "@/lib/types";
 import { Pagination } from "antd";
+import { NextPageWithLayout } from "./_app";
+import { scrollToTop } from "@/lib/hooks";
 
 const DesignsPage: NextPageWithLayout = () => {
   // state
@@ -49,6 +49,7 @@ const DesignsPage: NextPageWithLayout = () => {
       ...prev,
       skip: (page - 1) * 9,
     }));
+    scrollToTop();
   };
 
   return (
@@ -65,7 +66,10 @@ const DesignsPage: NextPageWithLayout = () => {
           <div className="w-[230px] custom-menu">
             <WrapperDropdown />
           </div>
-          <WrapperDesignCard />
+          {designs && (
+            <WrapperDesignCard designs={designs.data} isLoading={isLoading} />
+          )}
+          {isLoading && <DesignCardLoading />}
         </div>
         <div className="mt-4">
           <div className="w-full text-center">
