@@ -256,3 +256,39 @@ export type IProjectResponse = {
   data: IProject[],
   paging: Paging
 }
+
+export type IMenuDropdown = {
+  id: string,
+  label: string,
+  children?: IMenuDropdown[],
+  isActive?: boolean
+}
+
+export type IDesignCategory = {
+  id: string,
+  name: string,
+  parent_id: string,
+  slug: string
+}
+
+export type IDesignSearch = {
+  limit: number;
+  skip: number;
+  keyword: string;
+  categoryId: string;
+}
+
+export type IDesign = {
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  images: string[];
+  category_id: string;
+  category: IDesignCategory
+}
+
+export type IDesignResponse = {
+  data: IDesign[],
+  paging: Paging
+}
