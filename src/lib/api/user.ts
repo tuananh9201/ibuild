@@ -36,7 +36,7 @@ export const addProductFavorite = async (productId: string) => {
 
 export const getSearchHistories = async (): Promise<SearchResultModel[]> => {
   try {
-    const res = await api.get("/search-history")
+    const res = await api.get("/search-history/?skip=0&limit=5")
     return res.data?.data?.data || []
   } catch (error) {
     console.warn(error)

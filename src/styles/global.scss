@@ -106,6 +106,22 @@ label {
   );
 }
 
+.new-category {
+  position: relative;
+
+  &::after {
+    content: "";
+    width: 40px;
+    height: 6px;
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 4px;
+    background-color: $primary-color;
+  }
+}
+
 h1,
 h2,
 h3,

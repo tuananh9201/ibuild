@@ -4,17 +4,23 @@ import { useRouter } from "next/router";
 import { MenuDropdown } from "@/components/designs";
 
 interface WrapperDropdownProps {
-  onSelect: (id: string) => void;
+  openKeys: string[];
+  selectedKeys: string[];
+  setOpenKeys: Function;
+  setSelectedKeys: Function;
+  setTitle: Function;
 }
 
-const WrapperDropdown = () => {
+const WrapperDropdown = ({
+  openKeys,
+  selectedKeys,
+  setOpenKeys,
+  setSelectedKeys,
+  setTitle,
+}: WrapperDropdownProps) => {
   const router = useRouter();
   const { query } = router;
   const { parentId, currentId } = query;
-
-  // state
-  const [openKeys, setOpenKeys] = useState<string[]>([]);
-  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
 
   return (
     <MenuDropdown
@@ -22,6 +28,7 @@ const WrapperDropdown = () => {
       selectedKeys={selectedKeys}
       setOpenKeys={setOpenKeys}
       setSelectedKeys={setSelectedKeys}
+      setTitle={setTitle}
     />
   );
 };

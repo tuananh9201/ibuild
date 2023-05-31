@@ -1,4 +1,4 @@
-import { INews } from "src/lib/types";
+import { INewCategory, INews, INewsResponse } from "src/lib/types";
 import axios from "./api";
 import data from "@/data/news1.json";
 import newRelateds from "@/data/news-related.json";
@@ -66,3 +66,25 @@ export const fetchDragonById = async (id: string) => {
   const res = await axios.get(`/dragons/${id}`);
   return res.data;
 };
+
+export const listNewCategories = async (): Promise<INewCategory[] | null> => {
+  try {
+    const res = await axios.get('/news-category/all')
+    return res?.data?.data
+  } catch (error) {
+    console.warn(error)
+  }
+  return null
+}
+
+export const getNewByCategoryId = async (params: { skip: number, limit: number, categoryId: string }): Promise<INewsResponse | null> => {
+  if (!params.categoryId) return null
+  try {
+    const res = await axios.get(`/news/?skip=${params.skip}&limit=${params.limit}&category_id=${params.categoryId}`)
+    return res?.data?.data
+  } catch (error) {
+    console.warn(error)
+  }
+
+  return null
+}

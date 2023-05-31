@@ -1,6 +1,9 @@
+import { ReactElement, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { Pagination } from "antd";
 import Head from "next/head";
-import { ReactElement, useState } from "react";
 import useSWR from "swr";
+import Image from "next/image";
 
 import {
   DesignCardLoading,
@@ -11,9 +14,9 @@ import {
 import MainLayout from "@/components/main-layout";
 import { getDesignBySearch } from "@/lib/api/design";
 import { IDesignSearch } from "@/lib/types";
-import { Pagination } from "antd";
 import { NextPageWithLayout } from "./_app";
 import { scrollToTop } from "@/lib/hooks";
+import noSearchResult from "@/images/no_search_result.png";
 
 const DesignsPage: NextPageWithLayout = () => {
   // state
@@ -27,11 +30,13 @@ const DesignsPage: NextPageWithLayout = () => {
     current: 1,
     total: 0,
   });
+  const [openKeys, setOpenKeys] = useState<string[]>([]);
+  const [selectedKeys, setSelectedKeys] = useState<string[]>(["all"]);
+  const [title, setTitle] = useState("");
 
   // swr
   const { data: designs, isLoading } = useSWR(params, getDesignBySearch, {
     onSuccess: (data) => {
-      console.log(data);
       setPaging((prev) => ({
         ...prev,
         total: data?.paging?.total || 0,
@@ -52,6 +57,31 @@ const DesignsPage: NextPageWithLayout = () => {
     scrollToTop();
   };
 
+  const handleChangeSearch = (search: string) => {
+    setParams((prev) => ({
+      ...prev,
+      keyword: search,
+    }));
+    setOpenKeys([]);
+    setSelectedKeys(["all"]);
+  };
+
+  useEffect(() => {
+    setParams((prev) => ({
+      ...prev,
+      categoryId: !selectedKeys[0]
+        ? ""
+        : selectedKeys[0] === "all"
+        ? ""
+        : selectedKeys[0],
+    }));
+    setPaging((prev) => ({
+      ...prev,
+      current: 1,
+      total: 0,
+    }));
+  }, [selectedKeys]);
+
   return (
     <>
       <Head>
@@ -60,26 +90,53 @@ const DesignsPage: NextPageWithLayout = () => {
       </Head>
       <section className="flex flex-col justify-start px-4 pt-[60px] pb-4">
         <div className="w-full h-16 relative">
-          <Search />
+          <Search onChangeInput={handleChangeSearch} />
         </div>
         <div className="w-full flex flex-row mt-8 gap-12">
           <div className="w-[230px] custom-menu">
-            <WrapperDropdown />
-          </div>
-          {designs && (
-            <WrapperDesignCard designs={designs.data} isLoading={isLoading} />
-          )}
-          {isLoading && <DesignCardLoading />}
-        </div>
-        <div className="mt-4">
-          <div className="w-full text-center">
-            <Pagination
-              onChange={onChangePagination}
-              current={paging.current}
-              pageSize={9}
-              total={paging.total}
-              hideOnSinglePage
+            <WrapperDropdown
+              openKeys={openKeys}
+              selectedKeys={selectedKeys}
+              setOpenKeys={setOpenKeys}
+              setSelectedKeys={setSelectedKeys}
+              setTitle={setTitle}
             />
+          </div>
+          <div className="flex flex-col flex-base">
+            <div className="my-4 text-text-color font-medium text-xl">
+              {title}
+            </div>
+            {designs && (
+              <WrapperDesignCard designs={designs.data} isLoading={isLoading} />
+            )}
+            {isLoading && <DesignCardLoading />}
+            {!isLoading && designs && designs.data?.length === 0 && (
+              <div className="text-center w-full">
+                <Image
+                  src={noSearchResult}
+                  alt="no result"
+                  className="mx-auto"
+                />
+                <h3 className="text-text-color font-medium text-xl mt-4 mb-2">
+                  Không tìm thấy mẫu thiết kế
+                </h3>
+                <p>
+                  "{params.keyword}" không trùng khớp với bất cứ sản phẩm nào
+                </p>
+              </div>
+            )}
+
+            <div className="mt-4">
+              <div className="w-full text-center">
+                <Pagination
+                  onChange={onChangePagination}
+                  current={paging.current}
+                  pageSize={9}
+                  total={paging.total}
+                  hideOnSinglePage
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>

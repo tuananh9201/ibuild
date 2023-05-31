@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from "react";
+import { useRouter } from "next/router";
 import Image from "next/image";
 
 import {
@@ -7,9 +8,17 @@ import {
 } from "@/images/icons/product_types/icon_wrapper";
 import { historyIcon } from "@/constants/images";
 import { SearchResultModel } from "@/lib/models";
-import { getSearchHistories } from "@/lib/api/user";
+import { deleteSearchHistory, getSearchHistories } from "@/lib/api/user";
 
-const Search = () => {
+interface SearchProps {
+  onChangeInput: (search: string) => void;
+}
+
+const Search = ({ onChangeInput }: SearchProps) => {
+  const router = useRouter();
+  const { query } = router;
+  const { search } = query;
+
   // state
   const [isActivateSearch, setIsActivateSearch] = useState(false);
   const [histories, setHistories] = useState<SearchResultModel[]>([]);
@@ -21,11 +30,64 @@ const Search = () => {
   // function
   const onFocusInput = useCallback(() => {
     setIsActivateSearch(true);
-  }, []);
+
+    if (inputValue?.length === 0) {
+      getSearchHistory();
+    }
+  }, [inputValue]);
 
   const getSearchHistory = async () => {
     const data = await getSearchHistories();
     setHistories(data);
+  };
+
+  const searchDesign = () => {
+    if (inputValue?.length < 2) return;
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        search: inputValue,
+      },
+    });
+    // onChangeInput(inputValue);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      searchDesign();
+      return;
+    }
+    if (e.keyCode === 231) return;
+    const pattern = /^[a-zA-Z0-9 ]+$/;
+    const isValid = pattern.test(e.key);
+    if (!isValid) {
+      e.preventDefault();
+      return;
+    }
+  };
+
+  const handlePasteName = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    const pasteValue = e?.clipboardData?.getData("text") || "";
+
+    const removeSpecialCharacter = pasteValue.replace(/[^a-zA-Z0-9 ]/g, "");
+    setInputValue(removeSpecialCharacter);
+    e.preventDefault();
+  };
+
+  const handleDeleteHistory = async (id: string) => {
+    const option = histories.find((history) => history.id === id);
+    if (option) {
+      const newHistory = histories.filter(
+        (history) => history.id !== option.id
+      );
+      setHistories(newHistory);
+    }
+    await deleteSearchHistory(id);
+  };
+
+  const handleClickSearch = () => {
+    searchDesign();
   };
 
   // effect
@@ -54,6 +116,15 @@ const Search = () => {
     getSearchHistory();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValue]);
+
+  useEffect(() => {
+    if (search) {
+      setInputValue(search as string);
+      onChangeInput(search as string);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search]);
   return (
     <div
       className={`max-w-[700px] w-full bg-white border ${
@@ -77,8 +148,13 @@ const Search = () => {
           onFocus={onFocusInput}
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+          onPaste={handlePasteName}
         />
-        <button className="text-white bg-primary-color rounded-md px-10 py-4">
+        <button
+          className="text-white bg-primary-color rounded-md px-10 py-4"
+          onClick={handleClickSearch}
+        >
           Tìm kiếm
         </button>
       </div>
@@ -90,8 +166,8 @@ const Search = () => {
               <li key={history.id}>
                 <div className="flex justify-between items-center last:mb-4">
                   <div
-                    className={`flex flex-row items-center gap-4 w-full p-4 hover:bg-zinc-100 hover:rounded-lg hover:cursor-pointer `}
-                    onClick={() => {}}
+                    className={`flex flex-row items-center gap-4 w-full p-4 hover:bg-zinc-100 hover:rounded-lg hover:cursor-pointer`}
+                    onClick={() => setInputValue(history.keyword)}
                   >
                     <div className="icon w-5 h-5">
                       <Image src={historyIcon} alt="" />
@@ -101,7 +177,7 @@ const Search = () => {
                     </div>
                   </div>
                   <div
-                    onClick={() => {}}
+                    onClick={() => handleDeleteHistory(history.id)}
                     className="h-8 w-[10%] flex justify-center items-center cursor-pointer transition hover:rounded-lg hover:scale-125 hover:bg-zinc-100"
                   >
                     <DeleteIcon className="fill-[#666666]" />

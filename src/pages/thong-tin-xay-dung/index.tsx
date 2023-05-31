@@ -1,22 +1,82 @@
+import { Col, Row } from "antd";
+import { ReactElement, useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import Head from "next/head";
+import Image from "next/image";
+
 import MainLayout from "@/components/main-layout";
 import NewCardFeature from "@/components/news/new-card-feature";
 import NewCardNormal from "@/components/news/news-card-normal";
-import { news1, rightIcon } from "@/constants/images";
-
-import { Col, Row } from "antd";
-import Head from "next/head";
-import Image from "next/image";
-import { ReactElement } from "react";
+import { news1 } from "@/constants/images";
 import { NextPageWithLayout } from "../_app";
 
-import { fetchNewsForHome } from "src/lib/api/news";
+import {
+  fetchNewsForHome,
+  getNewByCategoryId,
+  listNewCategories,
+} from "src/lib/api/news";
 import { INews } from "src/lib/types";
 import useSWR from "swr";
+import NewCardLoading from "@/components/news/NewCardLoading";
 
 const ThongTinXayDung: NextPageWithLayout = () => {
+  const router = useRouter();
+  const { query } = router;
+  const { categoryName } = query;
+
+  // state
+  const [currentCategory, setCurrentCategory] = useState("");
+  const [params, setParams] = useState({
+    skip: 0,
+    limit: 8,
+    categoryId: "",
+  });
+  const [totalNew, setTotalNew] = useState(0);
+
+  // api
   const { data, error } = useSWR<INews[], []>("news", fetchNewsForHome, {
     fallbackData: [],
   });
+  const { data: newCategories } = useSWR("category", listNewCategories);
+  const { data: news, isLoading: loadingNew } = useSWR(
+    params,
+    getNewByCategoryId,
+    {
+      onSuccess: (data) => {
+        if (data) {
+          setTotalNew(data.paging.total);
+        }
+      },
+    }
+  );
+  console.log(news);
+
+  // function
+  const handleClickCategory = (slug: string) => {
+    console.log(slug);
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        categoryName: slug,
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (categoryName) {
+      setCurrentCategory(categoryName as string);
+      const option = newCategories?.find((ca) => ca.slug === categoryName);
+      option &&
+        setParams((prev) => ({
+          ...prev,
+          categoryId: option.id,
+        }));
+    } else if (data) {
+      setCurrentCategory(data[0]?.slug);
+    }
+  }, [categoryName, data, newCategories]);
+
   if (!data) {
     return <div>error</div>;
   }
@@ -56,56 +116,51 @@ const ThongTinXayDung: NextPageWithLayout = () => {
         </section>
         <section className="mt-[60px]">
           <div className="flex flex-row gap-4 items-center mb-8">
-            <div className="text-2xl font-medium leading-[150%]">
-              Tin tức & Sự kiện
-            </div>
-            <div className="flex flex-row items-center gap-[5px] hover:cursor-pointer">
-              <div className="text-base font-medium leading-[150%] text-primary-color">
-                Xem tất cả
-              </div>
-              <Image
-                className="w-4 h-4 hover:cursor-pointer"
-                src={rightIcon}
-                alt=""
-              />
-            </div>
+            {newCategories &&
+              newCategories?.length > 0 &&
+              newCategories.map((category) => (
+                <div
+                  key={category.id}
+                  className={`text-2xl cursor-pointer ${
+                    currentCategory === category.slug
+                      ? "new-category text-primary-color"
+                      : "text-[#666666]"
+                  }`}
+                  onClick={() => handleClickCategory(category.slug)}
+                >
+                  {category.name}
+                </div>
+              ))}
           </div>
           <div>
             <Row gutter={[32, 32]}>
-              {data.map((n) => (
-                <Col key={n.id} lg={6} md={24}>
-                  <NewCardNormal news={n} />
-                </Col>
-              ))}
+              {!loadingNew &&
+                news &&
+                news.data?.length > 0 &&
+                news.data.map((n) => (
+                  <Col key={n.id} lg={6} md={24}>
+                    <NewCardNormal news={n} />
+                  </Col>
+                ))}
+
+              {loadingNew &&
+                Array(8)
+                  .fill(0)
+                  .map((n, idx) => (
+                    <Col key={n.id} lg={6} md={24}>
+                      <NewCardLoading key={idx} />
+                    </Col>
+                  ))}
             </Row>
           </div>
         </section>
-        <section className="mt-[60px]">
-          <div className="flex flex-row items-center gap-4 mb-8">
-            <div className="text-2xl font-medium leading-[150%]">
-              Cải cách hành chính
-            </div>
-            <div className="flex flex-row items-center gap-[5px] hover:cursor-pointer">
-              <div className="text-base font-medium leading-[150%] text-primary-color">
-                Xem tất cả
-              </div>
-              <Image
-                className="w-4 h-4 hover:cursor-pointer"
-                src={rightIcon}
-                alt=""
-              />
-            </div>
-          </div>
-          <div>
-            <Row gutter={[32, 32]}>
-              {data.map((n) => (
-                <Col key={n.id} lg={6} md={24}>
-                  <NewCardNormal news={n} />
-                </Col>
-              ))}
-            </Row>
-          </div>
-        </section>
+        {totalNew > 8 && (
+          <section className="mt-8 mb-16 text-center">
+            <button className="text-white font-medium text-base h-[46px] w-[150px] rounded bg-primary-color">
+              Xem tất cả
+            </button>
+          </section>
+        )}
       </div>
     </>
   );

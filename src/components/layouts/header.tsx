@@ -29,7 +29,7 @@ const menus = [
     name: "Mẫu thiết kế",
     href: "/mau-thiet-ke",
     role: ["user", "expert"],
-    isActive: ["/mau-thiet-ke"],
+    isActive: ["/mau-thiet-ke", "/chi-tiet-thiet-ke/[slug]"],
   },
   {
     name: "Thông tin xây dựng",

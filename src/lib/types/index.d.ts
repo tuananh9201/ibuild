@@ -60,12 +60,25 @@ export interface INewCategory {
 export interface INews {
   id: string;
   title: string;
-  date: string;
-  image: string;
-  des: string;
   slug: string;
-  category: INewCategory;
+  date?: string;
+  image?: string;
+  des?: string;
+  feature_image?: string;
+  scrapy_time?: string;
+  source_name?: string;
+  soure_url?: string;
+  intro?: string;
+  pushlish_date?: string;
+  created_at?: string;
+  category?: INewCategory;
 }
+
+export interface INewsResponse {
+  data: INews[];
+  paging: Paging;
+}
+
 export interface IBreadcrums {
   slug: string;
   title: string;
