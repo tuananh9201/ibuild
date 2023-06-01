@@ -32,6 +32,8 @@ const ThongTinXayDung: NextPageWithLayout = () => {
     skip: 0,
     limit: 8,
     categoryId: "",
+    exclude_feature: 1,
+    exclude_id: "",
   });
   const [totalNew, setTotalNew] = useState(0);
 
@@ -168,7 +170,7 @@ const ThongTinXayDung: NextPageWithLayout = () => {
         </section>
         {totalNew > 8 && (
           <section className="mt-8 mb-16 text-center">
-            <Link href={`/thong-tin-xay-dung/tin-tuc`}>
+            <Link href={`/thong-tin-xay-dung/${currentCategory}`}>
               <button className="text-white font-medium text-base h-[46px] w-[150px] rounded bg-primary-color">
                 Xem tất cả
               </button>

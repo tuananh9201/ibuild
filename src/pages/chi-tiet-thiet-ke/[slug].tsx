@@ -16,8 +16,6 @@ const DesignDetail: NextPageWithLayout = () => {
   // api
   const { data } = useSWR(slug, getDetailDesignBySlug);
 
-  console.log(data);
-
   return (
     <>
       <Head>

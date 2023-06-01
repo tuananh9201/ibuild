@@ -92,8 +92,6 @@ const MenuDropdown = ({
     setSelectedKeys([category as string]);
 
     const option = designCategories.find((de) => de.id === category);
-    console.log(option);
-    console.log(rootSubmenuKeys);
     if (option) {
       setOpenKeys([option.parent_id]);
     }

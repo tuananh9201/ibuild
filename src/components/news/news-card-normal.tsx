@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import moment from "moment";
 
 import IBuildImage from "@/images/IBuildLogo.png";
@@ -10,9 +11,23 @@ interface NewsProps {
 }
 
 const NewCardNormal = (props: NewsProps) => {
+  const router = useRouter();
+
+  const handleClickToDetail = () => {
+    if (!props?.news) return;
+    router.push(
+      `/thong-tin-xay-dung/${props.news.category?.slug || ""}/${
+        props.news.slug
+      }`
+    );
+  };
+
   return (
     <div className="flex flex-col items-start px-0 gap-6 max-w-[276px]">
-      <div className="rounded-[4px] min-h-[187px] w-full">
+      <div
+        className="rounded-[4px] min-h-[187px] w-full"
+        onClick={handleClickToDetail}
+      >
         <RenderImageError
           defaultImage={IBuildImage.src}
           image={props.news.feature_image || ""}
@@ -27,7 +42,10 @@ const NewCardNormal = (props: NewsProps) => {
           {props?.news?.created_at &&
             moment(props.news.created_at).format("DD/MM/YYYY")}
         </div>
-        <div className="font-medium text-xl leading-[150%] line-clamp-2 cursor-pointer">
+        <div
+          className="font-medium text-xl leading-[150%] line-clamp-2 cursor-pointer"
+          onClick={handleClickToDetail}
+        >
           {props.news?.title || ""}
         </div>
 

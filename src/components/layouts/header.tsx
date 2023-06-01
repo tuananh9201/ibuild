@@ -35,7 +35,11 @@ const menus = [
     name: "Thông tin xây dựng",
     href: "/thong-tin-xay-dung",
     role: ["user", "expert"],
-    isActive: ["/thong-tin-xay-dung"],
+    isActive: [
+      "/thong-tin-xay-dung",
+      "/thong-tin-xay-dung/[cslug]/[slug]",
+      "/thong-tin-xay-dung/[cslug]",
+    ],
   },
   {
     name: "Văn bản pháp lý",

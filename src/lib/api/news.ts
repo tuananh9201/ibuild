@@ -77,10 +77,19 @@ export const listNewCategories = async (): Promise<INewCategory[] | null> => {
   return null
 }
 
-export const getNewByCategoryId = async (params: { skip: number, limit: number, categoryId: string }): Promise<INewsResponse | null> => {
-  if (!params.categoryId) return null
+export const getNewCategoryBySlug = async (slug: string): Promise<INewCategory | null> => {
   try {
-    const res = await axios.get(`/news/?skip=${params.skip}&limit=${params.limit}&category_id=${params.categoryId}`)
+    const res = await axios.get(`/news-category/by-slug/${slug}`)
+    return res?.data?.data
+  } catch (error) {
+    console.warn(error)
+  }
+  return null
+}
+
+export const getNewByCategoryId = async (params: { skip: number, limit: number, categoryId: string, exclude_feature: number, exclude_id: string }): Promise<INewsResponse | null> => {
+  try {
+    const res = await axios.get(`/news/?skip=${params.skip}&limit=${params.limit}${params.categoryId.length > 0 ? `&category_id=${params.categoryId}` : ""}&exclude_feature=${params.exclude_feature}${params.exclude_id.length > 0 ? `&exclude_id=${params.exclude_id}` : ""}`)
     return res?.data?.data
   } catch (error) {
     console.warn(error)
@@ -93,6 +102,17 @@ export const getNewsFeature = async (): Promise<INews[] | null> => {
   try {
     const res = await axios.get('/news/features')
     return res.data?.data
+  } catch (error) {
+    console.warn(error)
+  }
+
+  return null
+}
+
+export const getDetailNewBySlug = async (slug: string): Promise<INews | null> => {
+  try {
+    const res = await axios.get(`/news/by-slug/${slug}`)
+    return res?.data?.data
   } catch (error) {
     console.warn(error)
   }
