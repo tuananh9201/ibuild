@@ -72,6 +72,7 @@ export interface INews {
   pushlish_date?: string;
   created_at?: string;
   category?: INewCategory;
+  content?: string
 }
 
 export interface INewsResponse {

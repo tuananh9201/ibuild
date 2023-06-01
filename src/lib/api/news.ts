@@ -88,3 +88,14 @@ export const getNewByCategoryId = async (params: { skip: number, limit: number, 
 
   return null
 }
+
+export const getNewsFeature = async (): Promise<INews[] | null> => {
+  try {
+    const res = await axios.get('/news/features')
+    return res.data?.data
+  } catch (error) {
+    console.warn(error)
+  }
+
+  return null
+}

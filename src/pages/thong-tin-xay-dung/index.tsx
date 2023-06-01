@@ -1,23 +1,25 @@
+import { ReactElement, useEffect, useState } from "react";
 import { Col, Row } from "antd";
-import { ReactElement, useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import moment from "moment";
 import Head from "next/head";
-import Image from "next/image";
+import useSWR from "swr";
+import Link from "next/link";
 
-import MainLayout from "@/components/main-layout";
-import NewCardFeature from "@/components/news/new-card-feature";
-import NewCardNormal from "@/components/news/news-card-normal";
-import { news1 } from "@/constants/images";
-import { NextPageWithLayout } from "../_app";
-
+import { RenderImageError } from "@/components/common";
 import {
   fetchNewsForHome,
   getNewByCategoryId,
+  getNewsFeature,
   listNewCategories,
 } from "src/lib/api/news";
-import { INews } from "src/lib/types";
-import useSWR from "swr";
+import MainLayout from "@/components/main-layout";
 import NewCardLoading from "@/components/news/NewCardLoading";
+import NewCardFeature from "@/components/news/new-card-feature";
+import NewCardNormal from "@/components/news/news-card-normal";
+import IBuildImage from "@/images/IBuildLogo.png";
+
+import { NextPageWithLayout } from "../_app";
 
 const ThongTinXayDung: NextPageWithLayout = () => {
   const router = useRouter();
@@ -34,9 +36,6 @@ const ThongTinXayDung: NextPageWithLayout = () => {
   const [totalNew, setTotalNew] = useState(0);
 
   // api
-  const { data, error } = useSWR<INews[], []>("news", fetchNewsForHome, {
-    fallbackData: [],
-  });
   const { data: newCategories } = useSWR("category", listNewCategories);
   const { data: news, isLoading: loadingNew } = useSWR(
     params,
@@ -49,18 +48,20 @@ const ThongTinXayDung: NextPageWithLayout = () => {
       },
     }
   );
-  console.log(news);
+  const { data: newsFeature, isLoading: loadingNewFeature } = useSWR(
+    "newsFeature",
+    getNewsFeature
+  );
 
   // function
   const handleClickCategory = (slug: string) => {
-    console.log(slug);
-    router.push({
-      pathname: router.pathname,
-      query: {
-        ...router.query,
-        categoryName: slug,
-      },
-    });
+    setCurrentCategory(slug);
+    const option = newCategories?.find((ca) => ca.slug === slug);
+    option &&
+      setParams((prev) => ({
+        ...prev,
+        categoryId: option.id,
+      }));
   };
 
   useEffect(() => {
@@ -72,14 +73,17 @@ const ThongTinXayDung: NextPageWithLayout = () => {
           ...prev,
           categoryId: option.id,
         }));
-    } else if (data) {
-      setCurrentCategory(data[0]?.slug);
+    } else if (newCategories) {
+      setCurrentCategory(newCategories[0]?.slug);
+      setParams((prev) => ({
+        ...prev,
+        categoryId: newCategories[0]?.id,
+      }));
     }
-  }, [categoryName, data, newCategories]);
+  }, [categoryName, newCategories]);
 
-  if (!data) {
-    return <div>error</div>;
-  }
+  if (!newCategories) return null;
+
   return (
     <>
       <Head>
@@ -88,30 +92,38 @@ const ThongTinXayDung: NextPageWithLayout = () => {
       </Head>
       <div className="flex flex-col justify-start px-4 pt-[60px] pb-0">
         <section className="flex flex-col lg:flex-row justify-start p-0 gap-8 w-full">
-          <div className="flex-1 flex flex-col items-start p-0 gap-6">
+          <div className="flex-1 flex flex-col items-start p-0 gap-6 max-w-[]">
             <div className="rounded-[4px] w-full">
-              <Image className="w-full" src={news1} alt="" />
+              <RenderImageError
+                defaultImage={IBuildImage.src}
+                image={newsFeature ? newsFeature[0]?.feature_image || "" : ""}
+                width={584}
+                height={358}
+                title={newsFeature ? newsFeature[0]?.title || "" : ""}
+                className="h-[358px] w-full rounded object-cover overflow-hidden"
+              />
             </div>
             <div className="flex flex-col items-start p-0">
               <div className="text-[14px] font-medium leading-[150%] text-[#717171]">
-                25/07/2022
+                {newsFeature &&
+                  moment(newsFeature[0].created_at).format("DD/MM/YYYY")}
               </div>
-              <div className="text-2xl font-medium not-italic leading-[150%]">
-                Triển khai thực hiện Bộ tiêu chí ứng xử trong gia đình đến năm
-                2025 trên địa bàn tỉnh Sơn La
+              <div className="text-2xl font-medium not-italic leading-[150%] line-clamp-2 text-justify">
+                {(newsFeature && newsFeature[0]?.title) || ""}
               </div>
             </div>
-            <div className="text-base font-normal leading-[150%] text-[#717171]">
-              Nullam scelerisque alias nemo repudiandae cupidatat, habitasse
-              adipisicing, hendrerit, aliquet, fusce metus dolor libero? Ab,
-              viverra dictumst penatibus odio, sodales magnam provident non
-              adipiscing adipisicing, laudantium iaculis pede, f
+            <div className="text-base font-normal leading-[150%] text-[#717171] line-clamp-3 text-justify">
+              {(newsFeature && newsFeature[0]?.intro) || ""}
             </div>
           </div>
           <div className="flex-1 flex flex-col items-start p-0 gap-8">
-            <NewCardFeature />
-            <NewCardFeature />
-            <NewCardFeature />
+            {newsFeature &&
+              newsFeature.length > 1 &&
+              newsFeature
+                .slice(1)
+                .map((feature) => (
+                  <NewCardFeature key={feature.id} newFeature={feature} />
+                ))}
           </div>
         </section>
         <section className="mt-[60px]">
@@ -147,8 +159,8 @@ const ThongTinXayDung: NextPageWithLayout = () => {
                 Array(8)
                   .fill(0)
                   .map((n, idx) => (
-                    <Col key={n.id} lg={6} md={24}>
-                      <NewCardLoading key={idx} />
+                    <Col key={idx} lg={6} md={24}>
+                      <NewCardLoading />
                     </Col>
                   ))}
             </Row>
@@ -156,9 +168,11 @@ const ThongTinXayDung: NextPageWithLayout = () => {
         </section>
         {totalNew > 8 && (
           <section className="mt-8 mb-16 text-center">
-            <button className="text-white font-medium text-base h-[46px] w-[150px] rounded bg-primary-color">
-              Xem tất cả
-            </button>
+            <Link href={`/thong-tin-xay-dung/tin-tuc`}>
+              <button className="text-white font-medium text-base h-[46px] w-[150px] rounded bg-primary-color">
+                Xem tất cả
+              </button>
+            </Link>
           </section>
         )}
       </div>
