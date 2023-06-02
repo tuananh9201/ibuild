@@ -87,7 +87,8 @@ const NewDetailPage: NextPageWithLayout = () => {
             {data?.title}
           </h1>
           <div className="font-normal text-base text-center mb-8">
-            {data.created_at && moment(data.pushlish_date).format("DD/MM/YYYY")}
+            {data.pushlish_date &&
+              moment(data.pushlish_date).format("DD/MM/YYYY")}
           </div>
           <div
             dangerouslySetInnerHTML={{ __html: data?.content || "" }}

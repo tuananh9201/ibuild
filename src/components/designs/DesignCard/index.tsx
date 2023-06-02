@@ -13,10 +13,9 @@ const DesignCard = ({ design }: DesignCardProps) => {
       <h1 className="text-secondary-color font-medium text-xl line-clamp-2 mt-4">
         {design.title}
       </h1>
-      <p
-        className="text-[#666666] font-normal text-base line-clamp-3 mt-[10px]"
-        dangerouslySetInnerHTML={{ __html: design.content }}
-      ></p>
+      <p className="text-[#666666] font-normal text-base line-clamp-3 mt-[10px]">
+        {design?.intro || ""}
+      </p>
       <Link href={`/chi-tiet-thiet-ke/${design.slug}`}>
         <button className="text-white bg-primary-color rounded font-medium text-base mt-4 h-11 w-full">
           Xem chi tiết

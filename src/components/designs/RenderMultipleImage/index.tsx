@@ -33,7 +33,7 @@ const RenderMultipleImage = ({ images }: RenderMultipleImageProps) => {
               lenImage === 2 ? "rounded-r h-full" : "rounded-tr h-[73px]"
             }`}
           />
-          {lenImage === 3 && (
+          {lenImage >= 3 && (
             <RenderImageError
               defaultImage={IBuildLogo.src}
               image={images[2]}

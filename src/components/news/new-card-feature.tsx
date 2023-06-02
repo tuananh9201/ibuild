@@ -25,8 +25,8 @@ const NewCardFeature = ({ newFeature }: NewCardFeatureProps) => {
       </div>
       <div className="flex-1 lg:flex-2 flex flex-col items-start p-0">
         <div className="font-normal text-sm leading-[150%] text-[#717171]">
-          {newFeature?.created_at &&
-            moment(newFeature.created_at).format("DD/MM/YYYY")}
+          {newFeature?.pushlish_date &&
+            moment(newFeature.pushlish_date).format("DD/MM/YYYY")}
         </div>
         <div className="font-medium text-xl leading-[150%] hover:cursor-pointer line-clamp-2">
           {newFeature?.title || ""}

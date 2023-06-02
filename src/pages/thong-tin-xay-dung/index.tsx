@@ -108,7 +108,7 @@ const ThongTinXayDung: NextPageWithLayout = () => {
             <div className="flex flex-col items-start p-0">
               <div className="text-[14px] font-medium leading-[150%] text-[#717171]">
                 {newsFeature &&
-                  moment(newsFeature[0].created_at).format("DD/MM/YYYY")}
+                  moment(newsFeature[0].pushlish_date).format("DD/MM/YYYY")}
               </div>
               <div className="text-2xl font-medium not-italic leading-[150%] line-clamp-2 text-justify">
                 {(newsFeature && newsFeature[0]?.title) || ""}

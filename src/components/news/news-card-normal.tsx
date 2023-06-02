@@ -39,8 +39,8 @@ const NewCardNormal = (props: NewsProps) => {
       </div>
       <div>
         <div className="text-[14px] font-normal not-italic">
-          {props?.news?.created_at &&
-            moment(props.news.created_at).format("DD/MM/YYYY")}
+          {props?.news?.pushlish_date &&
+            moment(props.news.pushlish_date).format("DD/MM/YYYY")}
         </div>
         <div
           className="font-medium text-xl leading-[150%] line-clamp-2 cursor-pointer"

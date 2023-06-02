@@ -299,7 +299,8 @@ export type IDesign = {
   content: string;
   images: string[];
   category_id: string;
-  category: IDesignCategory
+  category: IDesignCategory;
+  intro: string;
 }
 
 export type IDesignResponse = {
