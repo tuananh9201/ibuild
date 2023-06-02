@@ -121,7 +121,8 @@ const DesignsPage: NextPageWithLayout = () => {
                   Không tìm thấy mẫu thiết kế
                 </h3>
                 <p>
-                  "{params.keyword}" không trùng khớp với bất cứ sản phẩm nào
+                  {params.keyword ? `"${params.keyword}"` : ""} không trùng khớp
+                  với bất cứ thiết kế hiện có, xin vui lòng kiểm tra lại
                 </p>
               </div>
             )}

@@ -26,7 +26,10 @@ const DesignDetail: NextPageWithLayout = () => {
         <h1 className="text-center mt-10 mb-8 text-text-color font-semibold text-[28px]">
           {data?.title || ""}
         </h1>
-        <div dangerouslySetInnerHTML={{ __html: data?.content || "" }}></div>
+        <div
+          dangerouslySetInnerHTML={{ __html: data?.content || "" }}
+          className="design-detail"
+        ></div>
       </section>
     </>
   );
