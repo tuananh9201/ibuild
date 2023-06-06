@@ -8,7 +8,11 @@ import {
 } from "@/images/icons/product_types/icon_wrapper";
 import { historyIcon } from "@/constants/images";
 import { SearchResultModel } from "@/lib/models";
-import { deleteSearchHistory, getSearchHistories } from "@/lib/api/user";
+import {
+  deleteSearchHistory,
+  getSearchHistories,
+  createSearchHistory,
+} from "@/lib/api/user";
 
 interface SearchProps {
   onChangeInput: (search: string) => void;
@@ -41,6 +45,10 @@ const Search = ({ onChangeInput }: SearchProps) => {
     setHistories(data);
   };
 
+  const postSearchHistory = async (keyword: string) => {
+    await createSearchHistory(keyword);
+  };
+
   const searchDesign = () => {
     if (inputValue?.length < 2) return;
     router.push({
@@ -55,6 +63,7 @@ const Search = ({ onChangeInput }: SearchProps) => {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
+      postSearchHistory(inputValue);
       searchDesign();
       return;
     }
@@ -70,7 +79,8 @@ const Search = ({ onChangeInput }: SearchProps) => {
   const handlePasteName = (e: React.ClipboardEvent<HTMLInputElement>) => {
     const pasteValue = e?.clipboardData?.getData("text") || "";
 
-    const removeSpecialCharacter = pasteValue.replace(/[^a-zA-Z0-9 ]/g, "");
+    const removeSpecialCharacter = pasteValue.replace(/[^a-zA-Z0-9À-ỹ\s]/g, "");
+    console.log(removeSpecialCharacter);
     setInputValue(removeSpecialCharacter);
     e.preventDefault();
   };
@@ -87,6 +97,7 @@ const Search = ({ onChangeInput }: SearchProps) => {
   };
 
   const handleClickSearch = () => {
+    postSearchHistory(inputValue);
     searchDesign();
   };
 

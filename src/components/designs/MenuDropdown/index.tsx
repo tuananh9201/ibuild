@@ -89,7 +89,7 @@ const MenuDropdown = ({
 
   useEffect(() => {
     if (!designCategories) return;
-    setSelectedKeys([category as string]);
+    category && setSelectedKeys([category as string]);
 
     const option = designCategories.find((de) => de.id === category);
     if (option) {

@@ -1,5 +1,6 @@
 import Head from "next/head";
 import useSWR from "swr";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactElement } from "react";
 
@@ -30,6 +31,11 @@ const DesignDetail: NextPageWithLayout = () => {
           dangerouslySetInnerHTML={{ __html: data?.content || "" }}
           className="design-detail"
         ></div>
+        {data?.source_name && (
+          <Link href={data?.source_url || ""}>
+            <h4 className="text-right">{data?.source_name || ""}</h4>
+          </Link>
+        )}
       </section>
     </>
   );

@@ -301,6 +301,8 @@ export type IDesign = {
   category_id: string;
   category: IDesignCategory;
   intro: string;
+  source_name: string;
+  source_url: string;
 }
 
 export type IDesignResponse = {
