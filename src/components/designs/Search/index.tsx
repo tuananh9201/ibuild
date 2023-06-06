@@ -142,7 +142,7 @@ const Search = ({ onChangeInput }: SearchProps) => {
         isActivateSearch
           ? "border-transparent rounded-t-lg"
           : "border-[#dddddd] rounded-lg"
-      } border-solid px-4 mx-auto absolute shadow-[0_0.5px_15px_1px_rgba(0,0,0,0.1)] left-1/4`}
+      } border-solid px-4 mx-auto absolute shadow-[0_0.5px_15px_1px_rgba(0,0,0,0.1)] left-1/2 -translate-x-1/2`}
       ref={inputRef}
     >
       <div
@@ -163,7 +163,7 @@ const Search = ({ onChangeInput }: SearchProps) => {
           onPaste={handlePasteName}
         />
         <button
-          className="text-white bg-primary-color rounded-md px-10 py-4"
+          className="text-white bg-primary-color rounded-md px-2 sm:px-10 py-4"
           onClick={handleClickSearch}
         >
           Tìm kiếm

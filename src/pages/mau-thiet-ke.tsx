@@ -92,7 +92,7 @@ const DesignsPage: NextPageWithLayout = () => {
         <div className="w-full h-16 relative">
           <Search onChangeInput={handleChangeSearch} />
         </div>
-        <div className="w-full flex flex-row mt-8 gap-12">
+        <div className="w-full flex flex-col sm:flex-row mt-8 gap-12">
           <div className="w-[230px] custom-menu">
             <WrapperDropdown
               openKeys={openKeys}

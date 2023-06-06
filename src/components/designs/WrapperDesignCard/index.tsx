@@ -11,7 +11,9 @@ const WrapperDesignCard = ({ designs, isLoading }: WrapperDesignCardProps) => {
     <div className="flex-base">
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
         {designs.map((item, idx) => (
-          <DesignCard key={idx} design={item} />
+          <div key={idx} className="flex items-center justify-center">
+            <DesignCard design={item} />
+          </div>
         ))}
       </div>
     </div>
