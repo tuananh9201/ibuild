@@ -147,13 +147,13 @@ const ThongTinXayDung: NextPageWithLayout = () => {
           </div>
         </section>
         <section className="mt-[60px]">
-          <div className="flex flex-row gap-4 items-center mb-8">
+          <div className="flex flex-row gap-4 items-center mb-8 overflow-x-auto">
             {newCategories &&
               newCategories?.length > 0 &&
               newCategories.map((category) => (
                 <div
                   key={category.id}
-                  className={`text-2xl cursor-pointer ${
+                  className={`text-2xl cursor-pointer whitespace-nowrap ${
                     currentCategory === category.slug
                       ? "new-category text-primary-color"
                       : "text-[#666666]"
