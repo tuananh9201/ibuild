@@ -102,40 +102,42 @@ const ThongTinXayDung: NextPageWithLayout = () => {
       </Head>
       <div className="flex flex-col justify-start px-4 pt-[60px] pb-0">
         <section className="flex flex-col lg:flex-row justify-start p-0 gap-8 w-full">
-          <div className="flex-1 flex flex-col items-start p-0 gap-6 max-w-[]">
-            <div
-              className="rounded-[4px] w-full cursor-pointer"
-              onClick={() =>
-                handleClickToDetail(newsFeature ? newsFeature[0] : null)
-              }
-            >
-              <RenderImageError
-                defaultImage={IBuildImage.src}
-                image={newsFeature ? newsFeature[0]?.feature_image || "" : ""}
-                width={584}
-                height={358}
-                title={newsFeature ? newsFeature[0]?.title || "" : ""}
-                className="h-[358px] w-full rounded object-cover overflow-hidden"
-              />
-            </div>
-            <div className="flex flex-col items-start p-0">
-              <div className="text-[14px] font-medium leading-[150%] text-[#717171]">
-                {newsFeature &&
-                  moment(newsFeature[0].pushlish_date).format("DD/MM/YYYY")}
-              </div>
+          {newsFeature && newsFeature[0] && (
+            <div className="flex-1 flex flex-col items-start p-0 gap-6 max-w-[]">
               <div
-                className="text-2xl font-medium not-italic leading-[150%] line-clamp-2 text-justify cursor-pointer"
+                className="rounded-[4px] w-full cursor-pointer"
                 onClick={() =>
                   handleClickToDetail(newsFeature ? newsFeature[0] : null)
                 }
               >
-                {(newsFeature && newsFeature[0]?.title) || ""}
+                <RenderImageError
+                  defaultImage={IBuildImage.src}
+                  image={newsFeature ? newsFeature[0]?.feature_image || "" : ""}
+                  width={584}
+                  height={358}
+                  title={newsFeature ? newsFeature[0]?.title || "" : ""}
+                  className="h-[358px] w-full rounded object-cover overflow-hidden"
+                />
+              </div>
+              <div className="flex flex-col items-start p-0">
+                <div className="text-[14px] font-medium leading-[150%] text-[#717171]">
+                  {newsFeature &&
+                    moment(newsFeature[0]?.pushlish_date).format("DD/MM/YYYY")}
+                </div>
+                <div
+                  className="text-2xl font-medium not-italic leading-[150%] line-clamp-2 text-justify cursor-pointer"
+                  onClick={() =>
+                    handleClickToDetail(newsFeature ? newsFeature[0] : null)
+                  }
+                >
+                  {(newsFeature && newsFeature[0]?.title) || ""}
+                </div>
+              </div>
+              <div className="text-base font-normal leading-[150%] text-[#717171] line-clamp-3 text-justify">
+                {(newsFeature && newsFeature[0]?.intro) || ""}
               </div>
             </div>
-            <div className="text-base font-normal leading-[150%] text-[#717171] line-clamp-3 text-justify">
-              {(newsFeature && newsFeature[0]?.intro) || ""}
-            </div>
-          </div>
+          )}
           <div className="flex-1 flex flex-col items-start p-0 gap-8">
             {newsFeature &&
               newsFeature.length > 1 &&
@@ -147,7 +149,7 @@ const ThongTinXayDung: NextPageWithLayout = () => {
           </div>
         </section>
         <section className="mt-[60px]">
-          <div className="flex flex-row gap-4 items-center mb-8 overflow-x-auto">
+          <div className="flex flex-row gap-4 items-center mb-8 overflow-x-auto h-[60px]">
             {newCategories &&
               newCategories?.length > 0 &&
               newCategories.map((category) => (
