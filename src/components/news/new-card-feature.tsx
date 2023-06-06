@@ -1,5 +1,6 @@
 import Image from "next/image";
 import moment from "moment";
+import { useRouter } from "next/router";
 
 import { news2 } from "@/constants/images";
 import { INews } from "@/lib/types";
@@ -11,9 +12,23 @@ interface NewCardFeatureProps {
 }
 
 const NewCardFeature = ({ newFeature }: NewCardFeatureProps) => {
+  const router = useRouter();
+
+  const handleClickToDetail = () => {
+    if (!newFeature) return;
+    router.push(
+      `/thong-tin-xay-dung/${newFeature.category?.slug || ""}/${
+        newFeature.slug
+      }`
+    );
+  };
+
   return (
     <div className="flex flex-row items-center p-0 gap-6">
-      <div className="flex-1 rounded-[4px] hover:cursor-pointer">
+      <div
+        className="flex-1 rounded-[4px] hover:cursor-pointer"
+        onClick={handleClickToDetail}
+      >
         <RenderImageError
           defaultImage={IBuildImage.src}
           image={newFeature?.feature_image || ""}
@@ -28,7 +43,10 @@ const NewCardFeature = ({ newFeature }: NewCardFeatureProps) => {
           {newFeature?.pushlish_date &&
             moment(newFeature.pushlish_date).format("DD/MM/YYYY")}
         </div>
-        <div className="font-medium text-xl leading-[150%] hover:cursor-pointer line-clamp-2">
+        <div
+          className="font-medium text-xl leading-[150%] hover:cursor-pointer line-clamp-2"
+          onClick={handleClickToDetail}
+        >
           {newFeature?.title || ""}
         </div>
       </div>

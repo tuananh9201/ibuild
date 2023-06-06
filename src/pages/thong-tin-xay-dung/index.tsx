@@ -18,6 +18,7 @@ import NewCardLoading from "@/components/news/NewCardLoading";
 import NewCardFeature from "@/components/news/new-card-feature";
 import NewCardNormal from "@/components/news/news-card-normal";
 import IBuildImage from "@/images/IBuildLogo.png";
+import { INews } from "src/lib/types";
 
 import { NextPageWithLayout } from "../_app";
 
@@ -66,6 +67,13 @@ const ThongTinXayDung: NextPageWithLayout = () => {
       }));
   };
 
+  const handleClickToDetail = (news: INews | null) => {
+    if (!news) return;
+    router.push(
+      `/thong-tin-xay-dung/${news.category?.slug || ""}/${news.slug}`
+    );
+  };
+
   useEffect(() => {
     if (categoryName) {
       setCurrentCategory(categoryName as string);
@@ -95,7 +103,12 @@ const ThongTinXayDung: NextPageWithLayout = () => {
       <div className="flex flex-col justify-start px-4 pt-[60px] pb-0">
         <section className="flex flex-col lg:flex-row justify-start p-0 gap-8 w-full">
           <div className="flex-1 flex flex-col items-start p-0 gap-6 max-w-[]">
-            <div className="rounded-[4px] w-full">
+            <div
+              className="rounded-[4px] w-full cursor-pointer"
+              onClick={() =>
+                handleClickToDetail(newsFeature ? newsFeature[0] : null)
+              }
+            >
               <RenderImageError
                 defaultImage={IBuildImage.src}
                 image={newsFeature ? newsFeature[0]?.feature_image || "" : ""}
@@ -110,7 +123,12 @@ const ThongTinXayDung: NextPageWithLayout = () => {
                 {newsFeature &&
                   moment(newsFeature[0].pushlish_date).format("DD/MM/YYYY")}
               </div>
-              <div className="text-2xl font-medium not-italic leading-[150%] line-clamp-2 text-justify">
+              <div
+                className="text-2xl font-medium not-italic leading-[150%] line-clamp-2 text-justify cursor-pointer"
+                onClick={() =>
+                  handleClickToDetail(newsFeature ? newsFeature[0] : null)
+                }
+              >
                 {(newsFeature && newsFeature[0]?.title) || ""}
               </div>
             </div>
