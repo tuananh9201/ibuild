@@ -67,7 +67,7 @@ export interface INews {
   feature_image?: string;
   scrapy_time?: string;
   source_name?: string;
-  soure_url?: string;
+  source_url?: string;
   intro?: string;
   pushlish_date?: string;
   created_at?: string;

@@ -94,6 +94,11 @@ const NewDetailPage: NextPageWithLayout = () => {
             dangerouslySetInnerHTML={{ __html: data?.content || "" }}
             className="crawl-data"
           ></div>
+          {data?.source_name && (
+            <Link href={data?.source_url || ""}>
+              <h4 className="text-right mt-5">{data?.source_name || ""}</h4>
+            </Link>
+          )}
         </div>
         {newsRelated?.length > 0 && <NewRelated data={newsRelated} />}
       </div>
