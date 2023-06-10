@@ -4,6 +4,8 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
 const nextConfig = {
+  // output: 'standalone',
+  // distDir: 'dist',
   reactStrictMode: true,
   swcMinify: true,
   sassOptions: {
@@ -13,6 +15,7 @@ const nextConfig = {
   //   esmExternals: "loose",
   // },
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         // protocol: "https",
